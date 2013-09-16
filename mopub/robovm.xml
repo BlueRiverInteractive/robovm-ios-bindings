@@ -1,0 +1,37 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<resources>
+	</resources>
+	<target>ios</target>
+	<!-- Add a reference to this library to your RoboVM project. -->
+	<libs>
+		<lib>libs/libmopub.a</lib>
+	</libs>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<!-- Add these frameworks to your RoboVM project. -->
+	<frameworks>
+		<framework>AudioToolbox</framework>
+		<framework>AVFoundation</framework>
+		<framework>CoreGraphics</framework>
+		<framework>CoreLocation</framework>
+		<framework>CoreTelephony</framework>
+		<framework>EventKit</framework>
+		<framework>EventKitUI</framework>
+		<framework>iAd</framework>
+		<framework>MediaPlayer</framework>
+		<framework>MessageUI</framework>
+		<framework>MobileCoreServices</framework>
+		<framework>QuartzCore</framework>
+		<framework>Security</framework>
+		<framework>SystemConfiguration</framework>
+		<framework>UIKit</framework>
+		<framework>AdSupport</framework>
+		<framework>PassKit</framework>
+		<framework>Social</framework>
+		<framework>StoreKit</framework>
+		<framework>Twitter</framework>
+	</frameworks>
+</config>
