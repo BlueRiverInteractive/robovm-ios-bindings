@@ -40,6 +40,11 @@ public class MPAdConversionTracker extends NSObject {
 		return objc_getInstance(objCClass, getInstance);
 	}
 
+	private static final Selector getInstance = Selector.register("sharedConversionTracker");
+
+	@Bridge
+	private native static MPAdConversionTracker objc_getInstance(ObjCClass __self__, Selector __cmd__);
+
 	/**
 	 * Notifies MoPub that a conversion event should be recorded for the application corresponding to the specified `appID`.
 	 * 
@@ -58,17 +63,7 @@ public class MPAdConversionTracker extends NSObject {
 		objc_reportApplicationOpen(this, reportApplicationOpen, new NSString(appID));
 	}
 
-	// ================
-	// SELECTORS
-	// ================
-	private static final Selector getInstance = Selector.register("sharedConversionTracker");
 	private static final Selector reportApplicationOpen = Selector.register("reportApplicationOpenForApplicationID:");
-
-	// ================
-	// BRIDGES
-	// ================
-	@Bridge
-	private native static MPAdConversionTracker objc_getInstance(ObjCClass __self__, Selector __cmd__);
 
 	@Bridge
 	private native static void objc_reportApplicationOpen(NSObject __self__, Selector __cmd__, NSString appID);

@@ -6,8 +6,11 @@ import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCObject;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.BindSelector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
+import org.robovm.rt.bro.annotation.ByVal;
+import org.robovm.rt.bro.annotation.Callback;
 import org.robovm.rt.bro.annotation.Library;
 
 /**
@@ -42,6 +45,11 @@ public class MPInterstitialAdController extends UIViewController {
 		return objc_getAdController(objCClass, getAdController, new NSString(adUnitId));
 	}
 
+	private static final Selector getAdController = Selector.register("interstitialAdControllerForAdUnitId:");
+
+	@Bridge
+	private native static MPInterstitialAdController objc_getAdController(ObjCClass __self__, Selector __cmd__, NSString adUnitId);
+
 	/**
 	 * Removes the given interstitial object from the shared pool of interstitials available to your application.
 	 * 
@@ -58,12 +66,22 @@ public class MPInterstitialAdController extends UIViewController {
 		objc_removeAdController(objCClass, removeAdController, controller);
 	}
 
-	// /*
+	private static final Selector removeAdController = Selector.register("removeSharedInterstitialAdController:");
+
+	@Bridge
+	private native static void objc_removeAdController(ObjCClass __self__, Selector __cmd__, MPInterstitialAdController controller);
+
+	// /**
 	// * Returns the shared pool of interstitial objects for your application.
 	// */
 	// public static Array getAdControllers() {
 	// TODO when NSMutableArray is implemented
 	// }
+
+	private static final Selector getAdControllers = Selector.register("sharedInterstitialAdControllers");
+
+	// @Bridge
+	// private native static NSMutableArray objc_getAdControllers(ObjCClass __self__, Selector __cmd__); TODO
 
 	/**
 	 * Begins loading ad content for the interstitial.
@@ -74,6 +92,11 @@ public class MPInterstitialAdController extends UIViewController {
 	public void loadAd() {
 		objc_loadAd(this, loadAd);
 	}
+
+	private static final Selector loadAd = Selector.register("loadAd");
+
+	@Bridge
+	private native static void objc_loadAd(MPInterstitialAdController __self__, Selector __cmd__);
 
 	/**
 	 * A Boolean value that represents whether the interstitial ad has loaded an advertisement and is ready to be presented.
@@ -89,13 +112,18 @@ public class MPInterstitialAdController extends UIViewController {
 		return objc_isReady(this, isReady);
 	}
 
+	private static final Selector isReady = Selector.register("ready");
+
+	@Bridge
+	private native static boolean objc_isReady(MPInterstitialAdController __self__, Selector __cmd__);
+
 	/**
 	 * Presents the interstitial ad modally from the specified view controller.
 	 * 
-	 * This method will do nothing if the interstitial ad has not been loaded (i.e. the value of its `ready` property is NO).
+	 * This method will do nothing if the interstitial ad has not been loaded (i.e. {@link #isReady()} returns {@code false}).
 	 * 
-	 * `MPInterstitialAdControllerDelegate` provides optional methods that you may implement to stay informed about when an interstitial takes over or
-	 * relinquishes the screen.
+	 * The {@link MPInterstitialAdControllerDelegate} provides optional methods that you may implement to stay informed about when an interstitial
+	 * takes over or relinquishes the screen.
 	 * 
 	 * @param controller
 	 *            The view controller that should be used to present the interstitial ad.
@@ -104,22 +132,37 @@ public class MPInterstitialAdController extends UIViewController {
 		objc_show(this, show, controller);
 	}
 
+	private static final Selector show = Selector.register("showFromViewController:");
+
+	@Bridge
+	private native static void objc_show(MPInterstitialAdController __self__, Selector __cmd__, UIViewController controller);
+
 	/**
-	 * Get the delegate
+	 * Get the delegate.
 	 * 
 	 * @return the delegate of this ad view.
 	 */
 	public MPInterstitialAdControllerDelegate getDelegate() {
-		return objc_getDelegate(this, delegate$);
+		return objc_getDelegate(this, getDelegate);
 	}
 
+	private static final Selector getDelegate = Selector.register("delegate");
+
+	@Bridge
+	private native static MPInterstitialAdControllerDelegate objc_getDelegate(MPInterstitialAdController __self__, Selector __cmd__);
+
 	/**
-	 * Sets he delegate {@link MPInterstitialAdControllerDelegate} of the interstitial ad object.
+	 * Sets the delegate {@link MPInterstitialAdControllerDelegate} of the interstitial ad object.
 	 */
 	public void setDelegate(MPInterstitialAdControllerDelegate delegate) {
 		this.addStrongRef((ObjCObject) delegate);
-		objc_setDelegate(this, delegate$, delegate);
+		objc_setDelegate(this, setDelegate, delegate);
 	}
+
+	private static final Selector setDelegate = Selector.register("setDelegate:");
+
+	@Bridge
+	private native static void objc_setDelegate(MPInterstitialAdController __self__, Selector __cmd__, MPInterstitialAdControllerDelegate delegate);
 
 	/**
 	 * Get the ad unit ID for this ad view.
@@ -127,8 +170,13 @@ public class MPInterstitialAdController extends UIViewController {
 	 * @return the ad unit ID for this view.
 	 */
 	public String getAdUnitId() {
-		return objc_getAdUnitId(this, adUnitId$).toString();
+		return objc_getAdUnitId(this, getAdUnitId).toString();
 	}
+
+	private static final Selector getAdUnitId = Selector.register("adUnitId");
+
+	@Bridge
+	private native static NSString objc_getAdUnitId(MPInterstitialAdController __self__, Selector __cmd__);
 
 	/**
 	 * Sets he MoPub ad unit ID for this interstitial ad.
@@ -139,8 +187,13 @@ public class MPInterstitialAdController extends UIViewController {
 	 * @param id
 	 */
 	public void setAdUnitId(String id) {
-		objc_setAdUnitId(this, adUnitId$, new NSString(id));
+		objc_setAdUnitId(this, setAdUnitId, new NSString(id));
 	}
+
+	private static final Selector setAdUnitId = Selector.register("setAdUnitId:");
+
+	@Bridge
+	private native static void objc_setAdUnitId(MPInterstitialAdController __self__, Selector __cmd__, NSString adUnitId);
 
 	/**
 	 * Get the keywords.
@@ -148,8 +201,13 @@ public class MPInterstitialAdController extends UIViewController {
 	 * @return keywords
 	 */
 	public String getKeywords() {
-		return objc_getKeywords(this, keywords$).toString();
+		return objc_getKeywords(this, getKeywords).toString();
 	}
+
+	private static final Selector getKeywords = Selector.register("keywords");
+
+	@Bridge
+	private native static NSString objc_getKeywords(MPInterstitialAdController __self__, Selector __cmd__);
 
 	/**
 	 * Sets the keywords that should be passed to the MoPub ad server to receive more relevant advertising.
@@ -162,8 +220,21 @@ public class MPInterstitialAdController extends UIViewController {
 	 * @param keywords
 	 */
 	public void setKeywords(String keywords) {
-		objc_setKeywords(this, keywords$, new NSString(keywords));
+		objc_setKeywords(this, setKeywords, new NSString(keywords));
 	}
+
+	private static final Selector setKeywords = Selector.register("setKeywords:");
+
+	@Bridge
+	private native static void objc_setKeywords(MPInterstitialAdController __self__, Selector __cmd__, NSString keywords);
+
+	private static final Selector getLocation = Selector.register("location"); // TODO location
+
+	// @Bridge
+	// private native static CLLocation objc_getLocation(MPInterstitialAdController __self__, Selector __cmd__);
+	// TODO
+	// @Bridge
+	// private native static void objc_setLocation(MPInterstitialAdController __self__, Selector __cmd__, CLLocation location);
 
 	/**
 	 * Get the testing state.
@@ -171,8 +242,13 @@ public class MPInterstitialAdController extends UIViewController {
 	 * @return {@code true} if the ad view is receiving test ads, else {@code false}.
 	 */
 	public boolean isTesting() {
-		return objc_isTesting(this, testing$);
+		return objc_isTesting(this, isTesting);
 	}
+
+	private static final Selector isTesting = Selector.register("testing");
+
+	@Bridge
+	private native static boolean objc_isTesting(MPInterstitialAdController __self__, Selector __cmd__);
 
 	/**
 	 * Set whether the interstitial ad object should request ads in test mode or not.
@@ -183,74 +259,19 @@ public class MPInterstitialAdController extends UIViewController {
 	 *          App Store.
 	 */
 	public void setTesting(boolean testing) {
-		objc_setTesting(this, testing$, testing);
+		objc_setTesting(this, setTesting, testing);
 	}
 
-	// ================
-	// SELECTORS
-	// ================
-	private static final Selector getAdController = Selector.register("interstitialAdControllerForAdUnitId:");
-	private static final Selector removeAdController = Selector.register("removeSharedInterstitialAdController:");
-	private static final Selector getAdControllers = Selector.register("sharedInterstitialAdControllers");
-
-	private static final Selector loadAd = Selector.register("loadAd");
-	private static final Selector isReady = Selector.register("ready");
-	private static final Selector show = Selector.register("showFromViewController:");
-
-	private static final Selector delegate$ = Selector.register("delegate");
-	private static final Selector adUnitId$ = Selector.register("adUnitId");
-	private static final Selector keywords$ = Selector.register("keywords");
-	private static final Selector location$ = Selector.register("location");
-	private static final Selector testing$ = Selector.register("testing");
-
-	// ================
-	// BRIDGES
-	// ================
-	@Bridge
-	private native static MPInterstitialAdController objc_getAdController(ObjCClass __self__, Selector __cmd__, NSString adUnitId);
-
-	@Bridge
-	private native static void objc_removeAdController(ObjCClass __self__, Selector __cmd__, MPInterstitialAdController controller);
-
-	// @Bridge
-	// private native static NSMutableArray objc_getAdControllers(ObjCClass __self__, Selector __cmd__); TODO
-
-	@Bridge
-	private native static void objc_loadAd(MPInterstitialAdController __self__, Selector __cmd__);
-
-	@Bridge
-	private native static boolean objc_isReady(MPInterstitialAdController __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_show(MPInterstitialAdController __self__, Selector __cmd__, UIViewController controller);
-
-	@Bridge
-	private native static MPInterstitialAdControllerDelegate objc_getDelegate(MPInterstitialAdController __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_setDelegate(MPInterstitialAdController __self__, Selector __cmd__, MPInterstitialAdControllerDelegate delegate);
-
-	@Bridge
-	private native static NSString objc_getAdUnitId(MPInterstitialAdController __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_setAdUnitId(MPInterstitialAdController __self__, Selector __cmd__, NSString adUnitId);
-
-	@Bridge
-	private native static NSString objc_getKeywords(MPInterstitialAdController __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_setKeywords(MPInterstitialAdController __self__, Selector __cmd__, NSString keywords);
-
-	// @Bridge
-	// private native static CLLocation objc_getLocation(MPInterstitialAdController __self__, Selector __cmd__);
-	// TODO
-	// @Bridge
-	// private native static void objc_setLocation(MPInterstitialAdController __self__, Selector __cmd__, CLLocation location);
-
-	@Bridge
-	private native static boolean objc_isTesting(MPInterstitialAdController __self__, Selector __cmd__);
+	private static final Selector setTesting = Selector.register("setTesting:");
 
 	@Bridge
 	private native static void objc_setTesting(MPInterstitialAdController __self__, Selector __cmd__, boolean testing);
+
+	static class Callbacks {
+		@Callback
+		@BindSelector("showFromViewController:")
+		public static void show(MPInterstitialAdController __self__, Selector __cmd__, @ByVal UIViewController controller) {
+			__self__.show(controller);
+		}
+	}
 }
