@@ -90,8 +90,13 @@ public class Flurry extends NSObject {
 	 *            passed launchOptions from the application's didFinishLaunching delegate method.
 	 */
 	public static void startSession(String apiKey, NSDictionary<?, ?> launchOptions) {
-		objc_startSessionWithOptions(objCClass, startSessionWithOptions, new NSString(apiKey), launchOptions);
+		objc_startSessionWithOptions(objCClass, startSession$Options, new NSString(apiKey), launchOptions);
 	}
+
+	private static final Selector startSession$Options = Selector.register("startSession:withOptions:");
+
+	@Bridge
+	private native static void objc_startSessionWithOptions(ObjCClass __self__, Selector __cmd__, NSString apiKey, NSDictionary<?, ?> options);
 
 	/**
 	 * <p>
@@ -111,6 +116,68 @@ public class Flurry extends NSObject {
 	public static void pauseBackgroundSession() {
 		objc_pauseBackgroundSession(objCClass, pauseBackgroundSession);
 	}
+
+	private static final Selector pauseBackgroundSession = Selector.register("pauseBackgroundSession");
+
+	@Bridge
+	private native static void objc_pauseBackgroundSession(ObjCClass __self__, Selector __cmd__);
+
+	/**
+	 * <p>
+	 * Records an app exception. Commonly used to catch unhandled exceptions.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method captures an exception for reporting to Flurry. We recommend adding an uncaught exception listener to capture any exceptions that
+	 * occur during usage that is not anticipated by your app.
+	 * </p>
+	 * 
+	 * @see #logError(String, String, NSError)
+	 * @since 2.7
+	 * 
+	 * @param id
+	 *            Name of the error.
+	 * @param message
+	 *            The message to associate with the error.
+	 * @param exception
+	 *            The exception object to report.
+	 */
+	// public static void logError(String id, String message, NSException exception) {
+	// TODO when RoboVM understands NSException
+	// }
+
+	private static final Selector logException = Selector.register("logError:message:exception:");
+
+	// @Bridge
+	// private native static void objc_logException(ObjCClass __self__, Selector __cmd__, NSString errorId, NSString message, NSException exception);
+
+	/**
+	 * <p>
+	 * Records an app error.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method captures an error for reporting to Flurry.
+	 * </p>
+	 * 
+	 * @see #logError(String, String, NSException)
+	 * @since 2.7
+	 * 
+	 * @param id
+	 *            Name of the error.
+	 * @param message
+	 *            The message to associate with the error.
+	 * @param error
+	 *            The error object to report.
+	 */
+	public static void logError(String id, String message, NSError error) {
+		objc_logError(objCClass, logError, new NSString(id), new NSString(message), error);
+	}
+
+	private static final Selector logError = Selector.register("logError:message:error:");
+
+	@Bridge
+	private native static void objc_logError(ObjCClass __self__, Selector __cmd__, NSString errorId, NSString message, NSError error);
 
 	/**
 	 * <p>
@@ -179,53 +246,6 @@ public class Flurry extends NSObject {
 
 	/**
 	 * <p>
-	 * Records an app exception. Commonly used to catch unhandled exceptions.
-	 * </p>
-	 * 
-	 * <p>
-	 * This method captures an exception for reporting to Flurry. We recommend adding an uncaught exception listener to capture any exceptions that
-	 * occur during usage that is not anticipated by your app.
-	 * </p>
-	 * 
-	 * @see #logError(String, String, NSError)
-	 * @since 2.7
-	 * 
-	 * @param id
-	 *            Name of the error.
-	 * @param message
-	 *            The message to associate with the error.
-	 * @param exception
-	 *            The exception object to report.
-	 */
-	// public static void logError(String id, String message, NSException exception) {
-	// TODO when RoboVM understands NSException
-	// }
-
-	/**
-	 * <p>
-	 * Records an app error.
-	 * </p>
-	 * 
-	 * <p>
-	 * This method captures an error for reporting to Flurry.
-	 * </p>
-	 * 
-	 * @see #logError(String, String, NSException)
-	 * @since 2.7
-	 * 
-	 * @param id
-	 *            Name of the error.
-	 * @param message
-	 *            The message to associate with the error.
-	 * @param error
-	 *            The error object to report.
-	 */
-	public static void logError(String id, String message, NSError error) {
-		objc_logError(objCClass, logError, new NSString(id), new NSString(message), error);
-	}
-
-	/**
-	 * <p>
 	 * Records a timed event specified by {@code eventName}.
 	 * </p>
 	 * 
@@ -282,8 +302,14 @@ public class Flurry extends NSObject {
 	 *            Specifies the event will be timed.
 	 */
 	public static void logEvent(String eventName, NSDictionary<?, ?> parameters, boolean timed) {
-		objc_logEventWithParametersTimed(objCClass, logEventWithParametersTimed, new NSString(eventName), parameters, timed);
+		objc_logEventWithParametersTimed(objCClass, logEvent$Parameters$Timed, new NSString(eventName), parameters, timed);
 	}
+
+	private static final Selector logEvent$Parameters$Timed = Selector.register("logEvent:withParameters:timed:");
+
+	@Bridge
+	private native static void objc_logEventWithParametersTimed(ObjCClass __self__, Selector __cmd__, NSString eventName,
+			NSDictionary<?, ?> parameters, boolean timed);
 
 	/**
 	 * <p>
@@ -312,8 +338,13 @@ public class Flurry extends NSObject {
 	 *            A map containing Name-Value pairs of parameters.
 	 */
 	public static void endTimedEvent(String eventName, NSDictionary<?, ?> parameters) {
-		objc_endTimedEventParameters(objCClass, endTimedEventParameters, new NSString(eventName), parameters);
+		objc_endTimedEventParameters(objCClass, endTimedEvent$Parameters, new NSString(eventName), parameters);
 	}
+
+	private static final Selector endTimedEvent$Parameters = Selector.register("endTimedEvent:withParameters:");
+
+	@Bridge
+	private native static void objc_endTimedEventParameters(ObjCClass __self__, Selector __cmd__, NSString eventName, NSDictionary<?, ?> parameters);
 
 	/**
 	 * <p>
@@ -338,6 +369,11 @@ public class Flurry extends NSObject {
 		objc_setAppVersion(objCClass, setAppVersion, new NSString(version));
 	}
 
+	private static final Selector setAppVersion = Selector.register("setAppVersion:");
+
+	@Bridge
+	private native static void objc_setAppVersion(ObjCClass __self__, Selector __cmd__, NSString appVersion);
+
 	/**
 	 * <p>
 	 * Retrieves the Flurry Agent Build Version.
@@ -360,6 +396,11 @@ public class Flurry extends NSObject {
 	public static String getFlurryAgentVersion() {
 		return objc_getFlurryAgentVersion(objCClass, getFlurryAgentVersion).toString();
 	}
+
+	private static final Selector getFlurryAgentVersion = Selector.register("getFlurryAgentVersion");
+
+	@Bridge
+	private native static NSString objc_getFlurryAgentVersion(ObjCClass __self__, Selector __cmd__);
 
 	/**
 	 * <p>
@@ -386,6 +427,11 @@ public class Flurry extends NSObject {
 		objc_setShowErrorInLogEnabled(objCClass, setShowErrorInLogEnabled, enabled);
 	}
 
+	private static final Selector setShowErrorInLogEnabled = Selector.register("setShowErrorInLogEnabled:");
+
+	@Bridge
+	private native static void objc_setShowErrorInLogEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
+
 	/**
 	 * <p>
 	 * Generates debug logs to console.
@@ -411,6 +457,11 @@ public class Flurry extends NSObject {
 		objc_setDebugLogEnabled(objCClass, setDebugLogEnabled, enabled);
 	}
 
+	private static final Selector setDebugLogEnabled = Selector.register("setDebugLogEnabled:");
+
+	@Bridge
+	private native static void objc_setDebugLogEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
+
 	/**
 	 * <p>
 	 * Generates debug logs to console.
@@ -435,6 +486,11 @@ public class Flurry extends NSObject {
 		objc_setLogLevel(objCClass, setLogLevel, level);
 	}
 
+	private static final Selector setLogLevel = Selector.register("setLogLevel:");
+
+	@Bridge
+	private native static void objc_setLogLevel(ObjCClass __self__, Selector __cmd__, FlurryLogLevel logLevel);
+
 	/**
 	 * <p>
 	 * Set the timeout for expiring a Flurry session.
@@ -458,6 +514,11 @@ public class Flurry extends NSObject {
 		objc_setSessionContinueSeconds(objCClass, setSessionContinueSeconds, seconds);
 	}
 
+	private static final Selector setSessionContinueSeconds = Selector.register("setSessionContinueSeconds:");
+
+	@Bridge
+	private native static void objc_setSessionContinueSeconds(ObjCClass __self__, Selector __cmd__, int seconds);
+
 	/**
 	 * <p>
 	 * Send data over a secure transport.
@@ -480,6 +541,11 @@ public class Flurry extends NSObject {
 		objc_setSecureTransportEnabled(objCClass, setSecureTransportEnabled, enabled);
 	}
 
+	private static final Selector setSecureTransportEnabled = Selector.register("setSecureTransportEnabled:");
+
+	@Bridge
+	private native static void objc_setSecureTransportEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
+
 	/**
 	 * <p>
 	 * Enable automatic collection of crash reports.
@@ -501,6 +567,11 @@ public class Flurry extends NSObject {
 	public static void setCrashReportingEnabled(boolean enabled) {
 		objc_setCrashReportingEnabled(objCClass, setDebugLogEnabled, enabled);
 	}
+
+	private static final Selector setCrashReportingEnabled = Selector.register("setCrashReportingEnabled:");
+
+	@Bridge
+	private native static void objc_setCrashReportingEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
 
 	/**
 	 * <p>
@@ -527,6 +598,11 @@ public class Flurry extends NSObject {
 		objc_logAllPageViews(objCClass, logAllPageViews, target);
 	}
 
+	private static final Selector logAllPageViews = Selector.register("logAllPageViews:");
+
+	@Bridge
+	private native static void objc_logAllPageViews(ObjCClass __self__, Selector __cmd__, NSObject target);
+
 	/**
 	 * <p>
 	 * Explicitly track a page view during a session.
@@ -545,6 +621,11 @@ public class Flurry extends NSObject {
 		objc_logPageView(objCClass, logPageView);
 	}
 
+	private static final Selector logPageView = Selector.register("logPageView");
+
+	@Bridge
+	private native static void objc_logPageView(ObjCClass __self__, Selector __cmd__);
+
 	/**
 	 * <p>
 	 * Assign a unique id for a user in your app.
@@ -562,6 +643,11 @@ public class Flurry extends NSObject {
 	public static void setUserId(String userId) {
 		objc_setUserId(objCClass, setUserId, new NSString(userId));
 	}
+
+	private static final Selector setUserId = Selector.register("setUserID:");
+
+	@Bridge
+	private native static void objc_setUserId(ObjCClass __self__, Selector __cmd__, NSString userId);
 
 	/**
 	 * <p>
@@ -586,6 +672,11 @@ public class Flurry extends NSObject {
 		objc_setAge(objCClass, setAge, age);
 	}
 
+	private static final Selector setAge = Selector.register("setAge:");
+
+	@Bridge
+	private native static void objc_setAge(ObjCClass __self__, Selector __cmd__, int age);
+
 	/**
 	 * <p>
 	 * Set your user's gender.
@@ -608,6 +699,11 @@ public class Flurry extends NSObject {
 	public static void setGender(String gender) {
 		objc_setGender(objCClass, setGender, new NSString(gender));
 	}
+
+	private static final Selector setGender = Selector.register("setGender:");
+
+	@Bridge
+	private native static void objc_setGender(ObjCClass __self__, Selector __cmd__, NSString gender);
 
 	/**
 	 * <p>
@@ -647,6 +743,12 @@ public class Flurry extends NSObject {
 		objc_setLocation(objCClass, setLocation, latitude, longitude, horizontalAccuracy, verticalAccuracy);
 	}
 
+	private static final Selector setLocation = Selector.register("setLatitude:longitude:horizontalAccuracy:verticalAccuracy:");
+
+	@Bridge
+	private native static void objc_setLocation(ObjCClass __self__, Selector __cmd__, double latitude, double longitude, float horizontalAccuracy,
+			float verticalAccuracy);
+
 	/**
 	 * <p>
 	 * Set session to report when app closes.
@@ -670,6 +772,11 @@ public class Flurry extends NSObject {
 		objc_setSessionReportsOnCloseEnabled(objCClass, setSessionReportsOnCloseEnabled, enabled);
 	}
 
+	private static final Selector setSessionReportsOnCloseEnabled = Selector.register("setSessionReportsOnCloseEnabled:");
+
+	@Bridge
+	private native static void objc_setSessionReportsOnCloseEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
+
 	/**
 	 * <p>
 	 * Set session to report when app is sent to the background.
@@ -688,6 +795,11 @@ public class Flurry extends NSObject {
 	public static void setSessionReportsOnPauseEnabled(boolean enabled) {
 		objc_setSessionReportsOnPauseEnabled(objCClass, setSessionReportsOnPauseEnabled, enabled);
 	}
+
+	private static final Selector setSessionReportsOnPauseEnabled = Selector.register("setSessionReportsOnPauseEnabled:");
+
+	@Bridge
+	private native static void objc_setSessionReportsOnPauseEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
 
 	/**
 	 * <p>
@@ -708,6 +820,11 @@ public class Flurry extends NSObject {
 		objc_setBackgroundSessionEnabled(objCClass, setBackgroundSessionEnabled, enabled);
 	}
 
+	private static final Selector setBackgroundSessionEnabled = Selector.register("setBackgroundSessionEnabled:");
+
+	@Bridge
+	private native static void objc_setBackgroundSessionEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
+
 	/**
 	 * <p>
 	 * Enable custom event logging.
@@ -726,6 +843,11 @@ public class Flurry extends NSObject {
 		objc_setEventLoggingEnabled(objCClass, setEventLoggingEnabled, enabled);
 	}
 
+	private static final Selector setEventLoggingEnabled = Selector.register("setEventLoggingEnabled:");
+
+	@Bridge
+	private native static void objc_setEventLoggingEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
+
 	/**
 	 * <p>
 	 * Set device push token.
@@ -743,113 +865,8 @@ public class Flurry extends NSObject {
 		objc_setPushToken(objCClass, setPushToken, new NSString(pushToken));
 	}
 
-	// ================
-	// SELECTORS
-	// ================
-	private static final Selector startSessionWithOptions = Selector.register("startSession:withOptions:");
-	private static final Selector pauseBackgroundSession = Selector.register("pauseBackgroundSession");
-	private static final Selector logEventWithParametersTimed = Selector.register("logEvent:withParameters:timed:");
-	private static final Selector logException = Selector.register("logError:message:exception:");
-	private static final Selector logError = Selector.register("logError:message:error:");
-	private static final Selector endTimedEventParameters = Selector.register("endTimedEvent:withParameters:");
-	private static final Selector logAllPageViews = Selector.register("logAllPageViews:");
-	private static final Selector logPageView = Selector.register("logPageView");
-	private static final Selector setUserId = Selector.register("setUserID:");
-	private static final Selector setAge = Selector.register("setAge:");
-	private static final Selector setGender = Selector.register("setGender:");
-	private static final Selector setLocation = Selector.register("setLatitude:longitude:horizontalAccuracy:verticalAccuracy:");
-	private static final Selector setSessionReportsOnCloseEnabled = Selector.register("setSessionReportsOnCloseEnabled:");
-	private static final Selector setSessionReportsOnPauseEnabled = Selector.register("setSessionReportsOnPauseEnabled:");
-	private static final Selector setBackgroundSessionEnabled = Selector.register("setBackgroundSessionEnabled:");
-	private static final Selector setEventLoggingEnabled = Selector.register("setEventLoggingEnabled:");
 	private static final Selector setPushToken = Selector.register("setPushToken:");
-	private static final Selector setAppVersion = Selector.register("setAppVersion:");
-	private static final Selector getFlurryAgentVersion = Selector.register("getFlurryAgentVersion");
-	private static final Selector setShowErrorInLogEnabled = Selector.register("setShowErrorInLogEnabled:");
-	private static final Selector setDebugLogEnabled = Selector.register("setDebugLogEnabled:");
-	private static final Selector setLogLevel = Selector.register("setLogLevel:");
-	private static final Selector setSessionContinueSeconds = Selector.register("setSessionContinueSeconds:");
-	private static final Selector setSecureTransportEnabled = Selector.register("setSecureTransportEnabled:");
-	private static final Selector setCrashReportingEnabled = Selector.register("setCrashReportingEnabled:");
-
-	// ================
-	// BRIDGES
-	// ================
-	@Bridge
-	private native static void objc_startSessionWithOptions(ObjCClass __self__, Selector __cmd__, NSString apiKey, NSDictionary<?, ?> options);
-
-	@Bridge
-	private native static void objc_pauseBackgroundSession(ObjCClass __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_logEventWithParametersTimed(ObjCClass __self__, Selector __cmd__, NSString eventName,
-			NSDictionary<?, ?> parameters, boolean timed);
-
-	// @Bridge
-	// private native static void objc_logException(ObjCClass __self__, Selector __cmd__, NSString errorId, NSString message, NSException exception);
-
-	@Bridge
-	private native static void objc_logError(ObjCClass __self__, Selector __cmd__, NSString errorId, NSString message, NSError error);
-
-	@Bridge
-	private native static void objc_endTimedEventParameters(ObjCClass __self__, Selector __cmd__, NSString eventName, NSDictionary<?, ?> parameters);
-
-	@Bridge
-	private native static void objc_logAllPageViews(ObjCClass __self__, Selector __cmd__, NSObject target);
-
-	@Bridge
-	private native static void objc_logPageView(ObjCClass __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_setUserId(ObjCClass __self__, Selector __cmd__, NSString userId);
-
-	@Bridge
-	private native static void objc_setAge(ObjCClass __self__, Selector __cmd__, int age);
-
-	@Bridge
-	private native static void objc_setGender(ObjCClass __self__, Selector __cmd__, NSString gender);
-
-	@Bridge
-	private native static void objc_setLocation(ObjCClass __self__, Selector __cmd__, double latitude, double longitude, float horizontalAccuracy,
-			float verticalAccuracy);
-
-	@Bridge
-	private native static void objc_setSessionReportsOnCloseEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	@Bridge
-	private native static void objc_setSessionReportsOnPauseEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	@Bridge
-	private native static void objc_setBackgroundSessionEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	@Bridge
-	private native static void objc_setEventLoggingEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
 
 	@Bridge
 	private native static void objc_setPushToken(ObjCClass __self__, Selector __cmd__, NSString token);
-
-	@Bridge
-	private native static void objc_setAppVersion(ObjCClass __self__, Selector __cmd__, NSString appVersion);
-
-	@Bridge
-	private native static NSString objc_getFlurryAgentVersion(ObjCClass __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_setShowErrorInLogEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	@Bridge
-	private native static void objc_setDebugLogEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	@Bridge
-	private native static void objc_setLogLevel(ObjCClass __self__, Selector __cmd__, FlurryLogLevel logLevel);
-
-	@Bridge
-	private native static void objc_setSessionContinueSeconds(ObjCClass __self__, Selector __cmd__, int seconds);
-
-	@Bridge
-	private native static void objc_setSecureTransportEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	@Bridge
-	private native static void objc_setCrashReportingEnabled(ObjCClass __self__, Selector __cmd__, boolean enabled);
-
 }
