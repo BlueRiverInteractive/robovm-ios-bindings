@@ -15,7 +15,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 
 	@Override
 	public void didFinishLaunching(UIApplication application) {
-		MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController("5da3a7d299ec43dca61c93fed8a335c7");
+		MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController("YOUR_AD_UNIT_ID");
 		MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegate.Adapter() {
 			@Override
 			public void didExpire(MPInterstitialAdController interstitial) {
