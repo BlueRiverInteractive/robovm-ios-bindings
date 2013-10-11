@@ -1,0 +1,13 @@
+<config>
+  <executableName>${app.executable}</executableName>
+  <mainClass>${app.mainclass}</mainClass>
+  <os>ios</os>
+  <arch>thumbv7</arch>
+  <target>ios</target>
+  <iosInfoPList>Info.plist.xml</iosInfoPList>
+  <!-- Add these frameworks to your RoboVM project. -->
+	<frameworks>
+		<framework>Foundation</framework>
+		<framework>StoreKit</framework>
+	</frameworks>
+</config>
