@@ -8,9 +8,9 @@ import org.robovm.cocoatouch.uikit.UIViewController;
 import org.robovm.cocoatouch.uikit.UIWindow;
 
 /**
- * Basic usage of the MoPub advertising SDK.
+ * Basic usage of interstitials.
  */
-public class Sample extends UIApplicationDelegate.Adapter {
+public class InterstitialSample extends UIApplicationDelegate.Adapter {
 	private UIViewController mainViewController;
 
 	@Override
@@ -48,7 +48,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 
 	public static void main(String[] argv) {
 		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
+		UIApplication.main(argv, null, InterstitialSample.class);
 		pool.drain();
 	}
 }
