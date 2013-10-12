@@ -10,15 +10,15 @@ import org.robovm.cocoatouch.uikit.UIViewController;
 import org.robovm.cocoatouch.uikit.UIWindow;
 
 /**
- * Basic usage of interstitials.
+ * Basic usage of banners and interstitials.
  */
 public class Sample extends UIApplicationDelegate.Adapter {
-	private UIViewController mainViewController;
+	private UIViewController interstitialViewController;
 
 	@Override
 	public void didFinishLaunching(UIApplication application) {
 		// We need a view controller to see ads.
-		mainViewController = new UIViewController();
+		interstitialViewController = new UIViewController();
 
 		// Create an interstitial.
 		MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController("YOUR_AD_UNIT_ID");
@@ -35,7 +35,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 				// If the ad is ready, show it.
 				// It's best to call these methods manually and not in didLoadAd().
 				if (interstitial.isReady())
-					interstitial.show(mainViewController);
+					interstitial.show(interstitialViewController);
 			}
 
 			@Override
@@ -44,7 +44,6 @@ public class Sample extends UIApplicationDelegate.Adapter {
 				interstitial.loadAd();
 			}
 		};
-
 		interstitial.setDelegate(delegate);
 		// Load an interstitial ad.
 		interstitial.loadAd();
@@ -68,19 +67,25 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		MPAdViewDelegate bannerDelegate = new MPAdViewDelegate.Adapter() {
 			@Override
 			public UIViewController getViewController() {
-				return mainViewController;
+				return interstitialViewController;
 			}
 		};
 		banner.setDelegate(bannerDelegate);
 		// Add banner to our view controller.
-		mainViewController.getView().addSubview(banner);
+		interstitialViewController.getView().addSubview(banner);
 		// Finally load a banner ad. This ad gets refreshed automatically, although you can refresh it at any time via refreshAd().
 		banner.loadAd();
 
 		// Create a standard UIWindow at screen size, add the view controller and show it.
 		UIWindow window = new UIWindow(UIScreen.getMainScreen().getBounds());
-		window.setRootViewController(mainViewController);
+		window.setRootViewController(interstitialViewController);
 		window.makeKeyAndVisible();
+
+		// If you are already using a UIWindow, you can do the following (f.e. LibGDX):
+		// UIView interstitialView = new UIView(UIScreen.getMainScreen().getBounds());
+		// interstitialView.setUserInteractionEnabled(false);
+		// mainViewController.setView(interstitialView);
+		// application.getKeyWindow().addSubview(mainViewController.getView());
 	}
 
 	public static void main(String[] argv) {
