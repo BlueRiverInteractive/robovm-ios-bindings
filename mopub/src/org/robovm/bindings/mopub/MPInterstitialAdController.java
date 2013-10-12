@@ -155,7 +155,7 @@ public class MPInterstitialAdController extends UIViewController {
 	 * Sets the delegate {@link MPInterstitialAdControllerDelegate} of the interstitial ad object.
 	 */
 	public void setDelegate(MPInterstitialAdControllerDelegate delegate) {
-		this.addStrongRef((ObjCObject) delegate);
+		addStrongRef((ObjCObject) delegate);
 		objc_setDelegate(this, setDelegate, delegate);
 	}
 

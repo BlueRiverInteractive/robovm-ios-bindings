@@ -4,6 +4,7 @@ import org.robovm.cocoatouch.coregraphics.CGSize;
 import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.cocoatouch.uikit.UIView;
 import org.robovm.objc.ObjCClass;
+import org.robovm.objc.ObjCObject;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
@@ -246,6 +247,7 @@ public class MPAdView extends UIView {
 	 * @warning **Important**: Before releasing an instance of MPAdView, you must set its delegate property to {@code null}.
 	 */
 	public void setDelegate(MPAdViewDelegate delegate) {
+		addStrongRef((ObjCObject) delegate);
 		objc_setDelegate(this, setDelegate, delegate);
 	}
 
