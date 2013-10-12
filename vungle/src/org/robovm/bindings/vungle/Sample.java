@@ -18,7 +18,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		viewController = new UIViewController();
 
 		// Setup Vungle.
-		VGVunglePub.start("FEOMEDIA_PIC_WORDS");
+		VGVunglePub.start("YOUR_VUNGLE_APP_ID");
 		VGVunglePub.setDelegate(new VGVunglePubDelegate.Adapter() {
 			@Override
 			public void moviePlayed(VGPlayData playData) {
@@ -30,7 +30,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 
 			@Override
 			public void statusUpdate(VGStatusData statusData) {
-				// Show a video ad. You would normally add this to a buttons tap event.
+				// Show a video ad. You would normally do this in a button tap event.
 				if (VGVunglePub.isAdAvailable()) {
 					VGVunglePub.playIncentivizedAd(viewController, true, false, "");
 				}
