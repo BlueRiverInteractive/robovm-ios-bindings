@@ -84,8 +84,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// If you are already using a UIWindow, you can do the following (f.e. LibGDX):
 		// UIView interstitialView = new UIView(UIScreen.getMainScreen().getBounds());
 		// interstitialView.setUserInteractionEnabled(false);
-		// mainViewController.setView(interstitialView);
-		// application.getKeyWindow().addSubview(mainViewController.getView());
+		// interstitialViewController.setView(interstitialView);
+		// application.getKeyWindow().addSubview(interstitialViewController.getView());
 	}
 
 	public static void main(String[] argv) {
