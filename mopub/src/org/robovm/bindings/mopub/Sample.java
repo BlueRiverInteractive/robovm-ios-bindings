@@ -25,6 +25,11 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// The delegate for an interstitial is optional.
 		MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegate.Adapter() {
 			@Override
+			public void didDisappear(MPInterstitialAdController interstitial) {
+				interstitial.loadAd();
+			}
+
+			@Override
 			public void didExpire(MPInterstitialAdController interstitial) {
 				// If the ad did expire, load a new ad.
 				interstitial.loadAd();
