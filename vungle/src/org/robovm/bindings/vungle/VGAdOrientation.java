@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.vungle;
 
 import org.robovm.rt.bro.ValuedEnum;
@@ -7,12 +8,12 @@ public enum VGAdOrientation implements ValuedEnum {
 
 	private final int n;
 
-	private VGAdOrientation(int n) {
+	private VGAdOrientation (int n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value() {
+	public int value () {
 		return n;
 	}
 }
