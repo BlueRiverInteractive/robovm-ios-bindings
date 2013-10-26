@@ -1,3 +1,4 @@
+
 package org.robovm.cocoatouch.storekit;
 
 import org.robovm.rt.bro.ValuedEnum;
@@ -10,12 +11,12 @@ public enum SKPaymentTransactionState implements ValuedEnum {
 
 	private final int n;
 
-	private SKPaymentTransactionState(int n) {
+	private SKPaymentTransactionState (int n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value() {
+	public int value () {
 		return n;
 	}
 }

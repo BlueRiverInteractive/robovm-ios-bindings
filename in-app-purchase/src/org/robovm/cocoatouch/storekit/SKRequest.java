@@ -1,3 +1,4 @@
+
 package org.robovm.cocoatouch.storekit;
 
 import org.robovm.cocoatouch.foundation.NSObject;
@@ -22,12 +23,12 @@ public class SKRequest extends NSObject {
 	private static final Selector start$ = Selector.register("start");
 
 	@Bridge
-	private native static void objc_start(SKRequest __self__, Selector __cmd__);
+	private native static void objc_start (SKRequest __self__, Selector __cmd__);
 
 	@Bridge
-	private native static void objc_startSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static void objc_startSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public void start() {
+	public void start () {
 		if (customClass) {
 			objc_startSuper(getSuper(), start$);
 		} else {

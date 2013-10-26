@@ -1,9 +1,10 @@
+
 package org.robovm.cocoatouch.storekit;
 
-import org.robovm.cocoatouch.foundation.NSLocale;
 import org.robovm.cocoatouch.foundation.NSNumber;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.cocoatouch.temp.NSLocale;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;
@@ -23,12 +24,12 @@ public class SKProduct extends NSObject {
 	private static final Selector localizedDescription = Selector.register("localizedDescription");
 
 	@Bridge
-	private native static NSString objc_localizedDescription(SKProduct __self__, Selector __cmd__);
+	private native static NSString objc_localizedDescription (SKProduct __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSString objc_localizedDescriptionSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSString objc_localizedDescriptionSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSString getLocalizedDescription() {
+	public NSString getLocalizedDescription () {
 		if (customClass) {
 			return objc_localizedDescriptionSuper(getSuper(), localizedDescription);
 		} else {
@@ -40,12 +41,12 @@ public class SKProduct extends NSObject {
 	private static final Selector localizedTitle = Selector.register("localizedTitle");
 
 	@Bridge
-	private native static NSString objc_localizedTitle(SKProduct __self__, Selector __cmd__);
+	private native static NSString objc_localizedTitle (SKProduct __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSString objc_localizedTitleSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSString objc_localizedTitleSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSString getLocalizedTitle() {
+	public NSString getLocalizedTitle () {
 		if (customClass) {
 			return objc_localizedTitleSuper(getSuper(), localizedTitle);
 		} else {
@@ -57,12 +58,12 @@ public class SKProduct extends NSObject {
 	private static final Selector price = Selector.register("price");
 
 	@Bridge
-	private native static NSNumber objc_getPrice(SKProduct __self__, Selector __cmd__);
+	private native static NSNumber objc_getPrice (SKProduct __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSNumber objc_getPriceSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSNumber objc_getPriceSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSNumber getPrice() {
+	public NSNumber getPrice () {
 		return (customClass) ? objc_getPriceSuper(getSuper(), price) : objc_getPrice(this, price);
 	}
 
@@ -70,12 +71,12 @@ public class SKProduct extends NSObject {
 	private static final Selector priceLocale = Selector.register("priceLocale");
 
 	@Bridge
-	private native static NSLocale objc_getPriceLocale(SKProduct __self__, Selector __cmd__);
+	private native static NSLocale objc_getPriceLocale (SKProduct __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSLocale objc_getPriceLocaleSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSLocale objc_getPriceLocaleSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSLocale getPriceLocale() {
+	public NSLocale getPriceLocale () {
 		return (customClass) ? objc_getPriceLocaleSuper(getSuper(), priceLocale) : objc_getPriceLocale(this, priceLocale);
 	}
 
@@ -83,12 +84,13 @@ public class SKProduct extends NSObject {
 	private static final Selector productIdentifier = Selector.register("productIdentifier");
 
 	@Bridge
-	private native static NSString objc_getProductIdentifier(SKProduct __self__, Selector __cmd__);
+	private native static NSString objc_getProductIdentifier (SKProduct __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSString objc_getProductIdentifierSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSString objc_getProductIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSString getProductIdentifier() {
-		return (customClass) ? objc_getProductIdentifierSuper(getSuper(), productIdentifier) : objc_getProductIdentifier(this, productIdentifier);
+	public NSString getProductIdentifier () {
+		return (customClass) ? objc_getProductIdentifierSuper(getSuper(), productIdentifier) : objc_getProductIdentifier(this,
+			productIdentifier);
 	}
 }

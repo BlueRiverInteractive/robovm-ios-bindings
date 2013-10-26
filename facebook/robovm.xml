@@ -1,0 +1,25 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<resources>
+	    <resource>
+			<directory>resources</directory>
+			<skipPngCrush>true</skipPngCrush>
+		</resource>
+	</resources>
+	<!-- Add a reference to this library to your RoboVM project. -->
+	<libs>
+		<lib>libs/libfacebook.a</lib>
+		<lib>libs/libarclite.a</lib>
+	</libs>
+	<!-- Add these frameworks to your RoboVM project. -->
+	<frameworks>
+		<framework>CoreLocation</framework>
+		<framework>Foundation</framework>
+		<framework>UIKit</framework>
+	</frameworks>
+</config>
