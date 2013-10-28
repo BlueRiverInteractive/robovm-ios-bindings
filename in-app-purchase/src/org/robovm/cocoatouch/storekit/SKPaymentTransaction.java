@@ -1,3 +1,4 @@
+
 package org.robovm.cocoatouch.storekit;
 
 import org.robovm.cocoatouch.foundation.NSError;
@@ -22,12 +23,12 @@ public class SKPaymentTransaction extends NSObject {
 	private static final Selector error = Selector.register("error");
 
 	@Bridge
-	private native static NSError objc_getError(SKPaymentTransaction __self__, Selector __cmd__);
+	private native static NSError objc_getError (SKPaymentTransaction __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSError objc_getErrorSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSError objc_getErrorSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSError getError() {
+	public NSError getError () {
 		return (customClass) ? objc_getErrorSuper(getSuper(), error) : objc_getError(this, error);
 	}
 
@@ -35,39 +36,40 @@ public class SKPaymentTransaction extends NSObject {
 	private static final Selector transactionState = Selector.register("transactionState");
 
 	@Bridge
-	private native static SKPaymentTransactionState objc_getTransactionState(SKPaymentTransaction __self__, Selector __cmd__);
+	private native static SKPaymentTransactionState objc_getTransactionState (SKPaymentTransaction __self__, Selector __cmd__);
 
 	@Bridge
-	private native static SKPaymentTransactionState objc_getTransactionStateSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static SKPaymentTransactionState objc_getTransactionStateSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public SKPaymentTransactionState getTransactionState() {
-		return (customClass) ? objc_getTransactionStateSuper(getSuper(), transactionState) : objc_getTransactionState(this, transactionState);
+	public SKPaymentTransactionState getTransactionState () {
+		return (customClass) ? objc_getTransactionStateSuper(getSuper(), transactionState) : objc_getTransactionState(this,
+			transactionState);
 	}
 
 	// @property(nonatomic, readonly) NSString *transactionIdentifier __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
 	private static final Selector transactionIdentifier = Selector.register("transactionIdentifier");
 
 	@Bridge
-	private native static NSString objc_getTransactionIdentifier(SKPaymentTransaction __self__, Selector __cmd__);
+	private native static NSString objc_getTransactionIdentifier (SKPaymentTransaction __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSString objc_getTransactionIdentifierSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSString objc_getTransactionIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSString getTransactionIdentifier() {
-		return (customClass) ? objc_getTransactionIdentifierSuper(getSuper(), transactionIdentifier) : objc_getTransactionIdentifier(this,
-				transactionIdentifier);
+	public NSString getTransactionIdentifier () {
+		return (customClass) ? objc_getTransactionIdentifierSuper(getSuper(), transactionIdentifier)
+			: objc_getTransactionIdentifier(this, transactionIdentifier);
 	}
 
 	// @property(nonatomic, readonly) SKPayment *payment __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
 	private static final Selector payment = Selector.register("payment");
 
 	@Bridge
-	private native static SKPayment objc_getPayment(SKPaymentTransaction __self__, Selector __cmd__);
+	private native static SKPayment objc_getPayment (SKPaymentTransaction __self__, Selector __cmd__);
 
 	@Bridge
-	private native static SKPayment objc_getPaymentSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static SKPayment objc_getPaymentSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public SKPayment getPayment() {
+	public SKPayment getPayment () {
 		return (customClass) ? objc_getPaymentSuper(getSuper(), payment) : objc_getPayment(this, payment);
 	}
 

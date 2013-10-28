@@ -9,6 +9,12 @@
 	<libs>
 		<lib>libs/libmopub.a</lib>
 	</libs>
+	<resources>
+	    <resource>
+			<directory>resources</directory>
+			<skipPngCrush>true</skipPngCrush>
+		</resource>
+	</resources>
 	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
 		<framework>AudioToolbox</framework>
@@ -26,10 +32,12 @@
 		<framework>Security</framework>
 		<framework>SystemConfiguration</framework>
 		<framework>UIKit</framework>
-		<framework>AdSupport</framework>
+	</frameworks>
+	<weakFrameworks>
+	    <framework>AdSupport</framework>
 		<framework>PassKit</framework>
 		<framework>Social</framework>
 		<framework>StoreKit</framework>
 		<framework>Twitter</framework>
-	</frameworks>
+	</weakFrameworks>
 </config>

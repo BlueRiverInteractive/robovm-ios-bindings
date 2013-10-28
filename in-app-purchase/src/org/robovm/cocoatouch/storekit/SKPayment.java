@@ -1,3 +1,4 @@
+
 package org.robovm.cocoatouch.storekit;
 
 import org.robovm.cocoatouch.foundation.NSObject;
@@ -15,18 +16,19 @@ import org.robovm.rt.bro.annotation.Library;
 public class SKPayment extends NSObject {
 
 	static {
-		ObjCRuntime.bind(/* <name> */SKPayment /* </name> */.class);
+		ObjCRuntime.bind(SKPayment.class);
 	}
 
 	private static final ObjCClass objCClass = ObjCClass.getByType(/* <name> */SKPayment /* </name> */.class);
 
-	// + (id)paymentWithProductIdentifier:(NSString *)identifier __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_NA,__MAC_NA,__IPHONE_3_0,__IPHONE_5_0);
+	// + (id)paymentWithProductIdentifier:(NSString *)identifier
+// __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_NA,__MAC_NA,__IPHONE_3_0,__IPHONE_5_0);
 	private static final Selector paymentWithProductIdentifier$ = Selector.register("paymentWithProductIdentifier:");
 
 	@Bridge
-	private native static SKPayment objc_paymentWithProductIdentifier(ObjCClass __self__, Selector __cmd__, NSString identifier);
+	private native static SKPayment objc_paymentWithProductIdentifier (ObjCClass __self__, Selector __cmd__, NSString identifier);
 
-	public static SKPayment fromProductIdentifier(NSString identifier) {
+	public static SKPayment fromProductIdentifier (NSString identifier) {
 		return objc_paymentWithProductIdentifier(objCClass, paymentWithProductIdentifier$, identifier);
 	}
 
@@ -34,12 +36,12 @@ public class SKPayment extends NSObject {
 	private static final Selector setQuantity$ = Selector.register("setQuantity:");
 
 	@Bridge
-	private native static void objc_setQuantity(SKPayment __self__, Selector __cmd__, int quantity);
+	private native static void objc_setQuantity (SKPayment __self__, Selector __cmd__, int quantity);
 
 	@Bridge
-	private native static void objc_setQuantitySuper(ObjCSuper __super__, Selector __cmd__, int quantity);
+	private native static void objc_setQuantitySuper (ObjCSuper __super__, Selector __cmd__, int quantity);
 
-	public void setQuantity(int quantity) {
+	public void setQuantity (int quantity) {
 		if (customClass) {
 			objc_setQuantitySuper(getSuper(), setQuantity$, quantity);
 		} else {
@@ -51,12 +53,13 @@ public class SKPayment extends NSObject {
 	private static final Selector setApplicationUsername$ = Selector.register("setApplicationUsername:");
 
 	@Bridge
-	private native static void objc_setApplicationUsername(SKPayment __self__, Selector __cmd__, NSString applicationUsername);
+	private native static void objc_setApplicationUsername (SKPayment __self__, Selector __cmd__, NSString applicationUsername);
 
 	@Bridge
-	private native static void objc_setApplicationUsernameSuper(ObjCSuper __super__, Selector __cmd__, NSString applicationUsername);
+	private native static void objc_setApplicationUsernameSuper (ObjCSuper __super__, Selector __cmd__,
+		NSString applicationUsername);
 
-	public void setQuantity(NSString applicationUsername) {
+	public void setQuantity (NSString applicationUsername) {
 		if (customClass) {
 			objc_setApplicationUsernameSuper(getSuper(), setApplicationUsername$, applicationUsername);
 		} else {
@@ -68,12 +71,13 @@ public class SKPayment extends NSObject {
 	private static final Selector productIdentifier = Selector.register("productIdentifier");
 
 	@Bridge
-	private native static NSString objc_getProductIdentifier(SKPayment __self__, Selector __cmd__);
+	private native static NSString objc_getProductIdentifier (SKPayment __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSString objc_getProductIdentifierSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSString objc_getProductIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSString getProductIdentifier() {
-		return (customClass) ? objc_getProductIdentifierSuper(getSuper(), productIdentifier) : objc_getProductIdentifier(this, productIdentifier);
+	public NSString getProductIdentifier () {
+		return (customClass) ? objc_getProductIdentifierSuper(getSuper(), productIdentifier) : objc_getProductIdentifier(this,
+			productIdentifier);
 	}
 }

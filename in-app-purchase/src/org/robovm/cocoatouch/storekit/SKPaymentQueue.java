@@ -1,3 +1,4 @@
+
 package org.robovm.cocoatouch.storekit;
 
 import org.robovm.cocoatouch.foundation.NSObject;
@@ -22,9 +23,9 @@ public class SKPaymentQueue extends NSObject {
 	private static final Selector defaultQueue = Selector.register("defaultQueue");
 
 	@Bridge
-	private native static SKPaymentQueue objc_defaultQueue(ObjCClass __self__, Selector __cmd__);
+	private native static SKPaymentQueue objc_defaultQueue (ObjCClass __self__, Selector __cmd__);
 
-	public static SKPaymentQueue getDefaultQueue() {
+	public static SKPaymentQueue getDefaultQueue () {
 		return objc_defaultQueue(objCClass, defaultQueue);
 	}
 
@@ -32,12 +33,12 @@ public class SKPaymentQueue extends NSObject {
 	private static final Selector addPayment$ = Selector.register("addPayment:");
 
 	@Bridge
-	private native static void objc_addPayment(SKPaymentQueue __self__, Selector __cmd__, SKPayment payment);
+	private native static void objc_addPayment (SKPaymentQueue __self__, Selector __cmd__, SKPayment payment);
 
 	@Bridge
-	private native static void objc_addPaymentSuper(ObjCSuper __super__, Selector __cmd__, SKPayment payment);
+	private native static void objc_addPaymentSuper (ObjCSuper __super__, Selector __cmd__, SKPayment payment);
 
-	public void addPayment(SKPayment payment) {
+	public void addPayment (SKPayment payment) {
 		if (customClass) {
 			objc_addPaymentSuper(getSuper(), addPayment$, payment);
 		} else {
@@ -49,12 +50,12 @@ public class SKPaymentQueue extends NSObject {
 	private static final Selector finishTransaction$ = Selector.register("finishTransaction:");
 
 	@Bridge
-	private native static void objc_finishTransaction(SKPaymentQueue __self__, Selector __cmd__, SKPaymentTransaction transaction);
+	private native static void objc_finishTransaction (SKPaymentQueue __self__, Selector __cmd__, SKPaymentTransaction transaction);
 
 	@Bridge
-	private native static void objc_finishTransactionSuper(ObjCSuper __super__, Selector __cmd__, SKPaymentTransaction transaction);
+	private native static void objc_finishTransactionSuper (ObjCSuper __super__, Selector __cmd__, SKPaymentTransaction transaction);
 
-	public void finishTransaction(SKPaymentTransaction transaction) {
+	public void finishTransaction (SKPaymentTransaction transaction) {
 		if (customClass) {
 			objc_finishTransactionSuper(getSuper(), finishTransaction$, transaction);
 		} else {
@@ -66,12 +67,14 @@ public class SKPaymentQueue extends NSObject {
 	private static final Selector addTransactionObserver$ = Selector.register("addTransactionObserver:");
 
 	@Bridge
-	private native static void objc_addTransactionObserver(SKPaymentQueue __self__, Selector __cmd__, SKPaymentTransactionObserver observer);
+	private native static void objc_addTransactionObserver (SKPaymentQueue __self__, Selector __cmd__,
+		SKPaymentTransactionObserver observer);
 
 	@Bridge
-	private native static void objc_addTransactionObserverSuper(ObjCSuper __super__, Selector __cmd__, SKPaymentTransactionObserver observer);
+	private native static void objc_addTransactionObserverSuper (ObjCSuper __super__, Selector __cmd__,
+		SKPaymentTransactionObserver observer);
 
-	public void addTransactionObserver(SKPaymentTransactionObserver observer) {
+	public void addTransactionObserver (SKPaymentTransactionObserver observer) {
 		if (customClass) {
 			objc_addTransactionObserverSuper(getSuper(), addTransactionObserver$, observer);
 		} else {
@@ -79,16 +82,19 @@ public class SKPaymentQueue extends NSObject {
 		}
 	}
 
-	// - (void)removeTransactionObserver:(id <SKPaymentTransactionObserver>)observer __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
+	// - (void)removeTransactionObserver:(id <SKPaymentTransactionObserver>)observer
+// __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
 	private static final Selector removeTransactionObserver$ = Selector.register("removeTransactionObserver:");
 
 	@Bridge
-	private native static void objc_removeTransactionObserver(SKPaymentQueue __self__, Selector __cmd__, SKPaymentTransactionObserver observer);
+	private native static void objc_removeTransactionObserver (SKPaymentQueue __self__, Selector __cmd__,
+		SKPaymentTransactionObserver observer);
 
 	@Bridge
-	private native static void objc_removeTransactionObserverSuper(ObjCSuper __super__, Selector __cmd__, SKPaymentTransactionObserver observer);
+	private native static void objc_removeTransactionObserverSuper (ObjCSuper __super__, Selector __cmd__,
+		SKPaymentTransactionObserver observer);
 
-	public void removeTransactionObserver(SKPaymentTransactionObserver observer) {
+	public void removeTransactionObserver (SKPaymentTransactionObserver observer) {
 		if (customClass) {
 			objc_removeTransactionObserverSuper(getSuper(), removeTransactionObserver$, observer);
 		} else {
@@ -100,12 +106,12 @@ public class SKPaymentQueue extends NSObject {
 	private static final Selector restoreCompletedTransactions = Selector.register("restoreCompletedTransactions");
 
 	@Bridge
-	private native static void objc_restoreCompletedTransactions(SKPaymentQueue __self__, Selector __cmd__);
+	private native static void objc_restoreCompletedTransactions (SKPaymentQueue __self__, Selector __cmd__);
 
 	@Bridge
-	private native static void objc_restoreCompletedTransactionsSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static void objc_restoreCompletedTransactionsSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public void restoreCompletedTransactions() {
+	public void restoreCompletedTransactions () {
 		if (customClass) {
 			objc_restoreCompletedTransactionsSuper(getSuper(), restoreCompletedTransactions);
 		} else {
@@ -117,9 +123,9 @@ public class SKPaymentQueue extends NSObject {
 	private static final Selector canMakePayments$ = Selector.register("canMakePayments");
 
 	@Bridge
-	private native static boolean objc_canMakePayments(ObjCClass __self__, Selector __cmd__);
+	private native static boolean objc_canMakePayments (ObjCClass __self__, Selector __cmd__);
 
-	public static boolean canMakePayments() {
+	public static boolean canMakePayments () {
 		return objc_canMakePayments(objCClass, canMakePayments$);
 	}
 }

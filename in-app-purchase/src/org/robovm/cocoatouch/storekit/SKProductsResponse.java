@@ -1,3 +1,4 @@
+
 package org.robovm.cocoatouch.storekit;
 
 import org.robovm.cocoatouch.foundation.NSArray;
@@ -22,12 +23,12 @@ public class SKProductsResponse extends NSObject {
 	private static final Selector products = Selector.register("products");
 
 	@Bridge
-	private native static NSArray<SKProduct> objc_getProducts(SKProductsResponse __self__, Selector __cmd__);
+	private native static NSArray<SKProduct> objc_getProducts (SKProductsResponse __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSArray<SKProduct> objc_getProductsSuper(ObjCSuper __super__, Selector __cmd__);
+	private native static NSArray<SKProduct> objc_getProductsSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSArray<SKProduct> getProducts() {
+	public NSArray<SKProduct> getProducts () {
 		return (customClass) ? objc_getProductsSuper(getSuper(), products) : objc_getProducts(this, products);
 	}
 }

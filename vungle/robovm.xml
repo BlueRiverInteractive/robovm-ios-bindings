@@ -8,6 +8,7 @@
 	<resources>
 		<resource>
 			<directory>resources</directory>
+			<skipPngCrush>true</skipPngCrush>
 		</resource>
 	</resources>
 	<!-- Add a reference to this library to your RoboVM project. -->
@@ -16,18 +17,20 @@
 	</libs>
 	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
+		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
 		<framework>CFNetwork</framework>
 		<framework>CoreGraphics</framework>
-		<framework>AudioToolbox</framework>
+		<framework>CoreLocation</framework>
 		<framework>CoreMedia</framework>
 		<framework>Foundation</framework>
 		<framework>MediaPlayer</framework>
 		<framework>QuartzCore</framework>
 		<framework>SystemConfiguration</framework>
 		<framework>UIKit</framework>
-		<framework>CoreLocation</framework>
-		<framework>AdSupport</framework>
-		<framework>StoreKit</framework>
 	</frameworks>
+	<weakFrameworks>
+	    <framework>AdSupport</framework>
+		<framework>StoreKit</framework>
+	</weakFrameworks>
 </config>

@@ -25,6 +25,11 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// The delegate for an interstitial is optional.
 		MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegate.Adapter() {
 			@Override
+			public void didDisappear(MPInterstitialAdController interstitial) {
+				interstitial.loadAd();
+			}
+
+			@Override
 			public void didExpire(MPInterstitialAdController interstitial) {
 				// If the ad did expire, load a new ad.
 				interstitial.loadAd();
@@ -84,8 +89,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// If you are already using a UIWindow, you can do the following (f.e. LibGDX):
 		// UIView interstitialView = new UIView(UIScreen.getMainScreen().getBounds());
 		// interstitialView.setUserInteractionEnabled(false);
-		// mainViewController.setView(interstitialView);
-		// application.getKeyWindow().addSubview(mainViewController.getView());
+		// interstitialViewController.setView(interstitialView);
+		// application.getKeyWindow().addSubview(interstitialViewController.getView());
 	}
 
 	public static void main(String[] argv) {

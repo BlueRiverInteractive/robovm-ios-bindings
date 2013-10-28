@@ -11,20 +11,22 @@
 	</libs>
 	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
-		<framework>AdSupport</framework>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
 		<framework>CoreGraphics</framework>
 		<framework>CoreMedia</framework>
 		<framework>CoreTelephony</framework>
-		<framework>EventKit</framework>
-		<framework>EventKitUI</framework>
 		<framework>MediaPlayer</framework>
 		<framework>MessageUI</framework>
 		<framework>QuartzCore</framework>
-		<framework>Social</framework>
-		<framework>StoreKit</framework>
 		<framework>SystemConfiguration</framework>
 		<framework>UIKit</framework>
 	</frameworks>
+	<weakFrameworks>
+		<framework>AdSupport</framework>
+		<framework>Social</framework>
+		<framework>StoreKit</framework>
+		<framework>EventKit</framework>
+		<framework>EventKitUI</framework>
+	</weakFrameworks>
 </config>
