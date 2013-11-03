@@ -1,0 +1,16 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<!-- Add a reference to this library to your RoboVM project. -->
+	<libs>
+		<lib>libs/libcrashlytics.a</lib>
+	</libs>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<!-- Add these frameworks to your RoboVM project. -->
+	<frameworks>
+		<framework>UIKit</framework>
+	</frameworks>
+</config>
