@@ -45,7 +45,7 @@ public class FacebookManager {
 	private FBSessionStatusCallback sessionStatusCallback;
 
 	private FacebookManager () {
-		sessionStatusCallback = new FBSessionStatusCallback(this);
+		sessionStatusCallback = new FBSessionStatusCallback();
 	}
 
 	public static FacebookManager getInstance () {
@@ -67,6 +67,10 @@ public class FacebookManager {
 	 * 
 	 * @param loginListener */
 	public void login (LoginListener loginListener) {
+		login(loginListener, true);
+	}
+
+	public void login (LoginListener loginListener, boolean read) {
 		if (isLogged()) {
 			System.out.println(TAG + "User is already logged in.");
 
@@ -83,13 +87,13 @@ public class FacebookManager {
 			}
 
 			System.out.println(TAG + "Registering session status callback...");
-			sessionStatusCallback = new FBSessionStatusCallback(this);
+			sessionStatusCallback = new FBSessionStatusCallback();
 			sessionStatusCallback.loginListener = loginListener;
 			session.setStateChangeHandler(sessionStatusCallback);
 
 			// If session is not opened, open it.
 			if (!session.isOpen()) {
-				openSession(true);
+				openSession(read);
 			} else {
 				System.out.println(TAG + "Session already opened!");
 				if (loginListener != null) {
@@ -157,40 +161,90 @@ public class FacebookManager {
 	public void getProfile (final ProfileRequestListener profileRequestListener) {
 		if (isLogged()) {
 			System.out.println(TAG + "Requesting user profile...");
-			FBRequest request = new FBRequest(FBSession.getActiveSession(), "me", null, HttpMethod.GET);
-			request.start(new FBRequestHandler() {
-				@Override
-				public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
-					System.out.println(TAG + "Got profile request answer...");
-					NSDictionary<NSObject, NSObject> graphUser = (NSDictionary<NSObject, NSObject>)((NSMutableDictionary<NSObject, NSObject>)result)
-						.get(new NSString("data"));
 
-					if (error != null) {
-						System.out.println(TAG + "Failed to receive user profile! Error: " + error.description());
+			// Check if session to Facebook has necessary permissions. If not, we will ask user for missing permissions.
+			if (!FBSession.getActiveSession().getPermissions().contains(FBPermission.BASIC_INFO.getValue())) {
+				System.out.println(TAG + "Need to request permissions!");
+				sessionStatusCallback.extendPermissionsListener = new ExtendPermissionsListener() {
+					@Override
+					public void onFail (String reason) {
+					}
 
-						if (profileRequestListener != null) {
-							profileRequestListener.onException(error);
-						}
-					} else {
-						System.out.println(TAG + "Profile received!");
+					@Override
+					public void onException (NSError throwable) {
+					}
 
-						if (profileRequestListener != null) {
-							FBProfile profile = FBProfile.create(graphUser);
-							profileRequestListener.onComplete(profile);
+					@Override
+					public void onRequest () {
+					}
+
+					@Override
+					public void onSuccess () {
+						getProfile(profileRequestListener);
+					}
+				};
+				extendReadPermissions();
+			} else {
+
+				FBRequest request = new FBRequest(FBSession.getActiveSession(), "me", null, HttpMethod.GET);
+				request.start(new FBRequestHandler() {
+					@Override
+					public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
+						System.out.println(TAG + "Got profile request answer...");
+						NSDictionary<NSObject, NSObject> graphUser = (NSDictionary<NSObject, NSObject>)((NSMutableDictionary<NSObject, NSObject>)result)
+							.get(new NSString("data"));
+
+						if (error != null) {
+							System.out.println(TAG + "Failed to receive user profile! Error: " + error.description());
+
+							if (profileRequestListener != null) {
+								profileRequestListener.onException(error);
+							}
+						} else {
+							System.out.println(TAG + "Profile received!");
+
+							if (profileRequestListener != null) {
+								FBProfile profile = FBProfile.create(graphUser);
+								profileRequestListener.onComplete(profile);
+							}
 						}
 					}
+				});
+				if (profileRequestListener != null) {
+					profileRequestListener.onRequest();
 				}
-			});
-			if (profileRequestListener != null) {
-				profileRequestListener.onRequest();
 			}
 		} else {
-			String reason = TAG + "Error: User is not logged in!";
-			System.out.println(reason);
+			System.out.println(TAG + "User not logged in! Auto-login now...");
 
-			if (profileRequestListener != null) {
-				profileRequestListener.onFail(reason);
-			}
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (profileRequestListener != null) {
+						profileRequestListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (profileRequestListener != null) {
+						profileRequestListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					getProfile(profileRequestListener);
+				}
+			});
 		}
 	}
 
@@ -200,49 +254,99 @@ public class FacebookManager {
 	public void getFriends (final FriendsRequestListener friendsRequestListener) {
 		if (isLogged()) {
 			System.out.println(TAG + "Requesting friends...");
-			FBSession session = FBSession.getActiveSession();
-			FBRequest request = new FBRequest(session, "me/friends", null, HttpMethod.GET);
-			request.start(new FBRequestHandler() {
-				@Override
-				public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
-					System.out.println(TAG + "Got friends request answer...");
-					List<NSDictionary<NSObject, NSObject>> graphUsers = new ArrayList<NSDictionary<NSObject, NSObject>>();
-					NSArray<NSObject> friendsData = (NSArray<NSObject>)((NSMutableDictionary<NSObject, NSObject>)result)
-						.get(new NSString("data"));
 
-					for (int i = 0; i < friendsData.size(); ++i) {
-						NSDictionary<NSObject, NSObject> friend = (NSDictionary<NSObject, NSObject>)friendsData.get(i);
-						graphUsers.add(friend);
+			// Check if session to Facebook has necessary permissions. If not, we will ask user for missing permissions.
+			if (!FBSession.getActiveSession().getPermissions().contains(FBPermission.BASIC_INFO.getValue())) {
+				System.out.println(TAG + "Need to request permissions!");
+				sessionStatusCallback.extendPermissionsListener = new ExtendPermissionsListener() {
+					@Override
+					public void onFail (String reason) {
 					}
 
-					if (error != null) {
-						System.out.println(TAG + "Failed to receive friends. Error: " + error.description());
+					@Override
+					public void onException (NSError throwable) {
+					}
 
-						if (friendsRequestListener != null) {
-							friendsRequestListener.onException(error);
+					@Override
+					public void onRequest () {
+					}
+
+					@Override
+					public void onSuccess () {
+						getFriends(friendsRequestListener);
+					}
+				};
+				extendReadPermissions();
+			} else {
+				FBSession session = FBSession.getActiveSession();
+				FBRequest request = new FBRequest(session, "me/friends", null, HttpMethod.GET);
+				request.start(new FBRequestHandler() {
+					@Override
+					public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
+						System.out.println(TAG + "Got friends request answer...");
+						List<NSDictionary<NSObject, NSObject>> graphUsers = new ArrayList<NSDictionary<NSObject, NSObject>>();
+						NSArray<NSObject> friendsData = (NSArray<NSObject>)((NSMutableDictionary<NSObject, NSObject>)result)
+							.get(new NSString("data"));
+
+						for (int i = 0; i < friendsData.size(); ++i) {
+							NSDictionary<NSObject, NSObject> friend = (NSDictionary<NSObject, NSObject>)friendsData.get(i);
+							graphUsers.add(friend);
 						}
-					} else {
-						System.out.println(TAG + "Friends received!");
-						if (friendsRequestListener != null) {
-							List<FBProfile> friends = new ArrayList<FBProfile>(graphUsers.size());
-							for (NSDictionary graphUser : graphUsers) {
-								friends.add(FBProfile.create(graphUser));
+
+						if (error != null) {
+							System.out.println(TAG + "Failed to receive friends. Error: " + error.description());
+
+							if (friendsRequestListener != null) {
+								friendsRequestListener.onException(error);
 							}
-							friendsRequestListener.onComplete(friends);
+						} else {
+							System.out.println(TAG + "Friends received!");
+							if (friendsRequestListener != null) {
+								List<FBProfile> friends = new ArrayList<FBProfile>(graphUsers.size());
+								for (NSDictionary graphUser : graphUsers) {
+									friends.add(FBProfile.create(graphUser));
+								}
+								friendsRequestListener.onComplete(friends);
+							}
 						}
 					}
-				}
-			});
+				});
 
-			if (friendsRequestListener != null) {
-				friendsRequestListener.onRequest();
+				if (friendsRequestListener != null) {
+					friendsRequestListener.onRequest();
+				}
 			}
 		} else {
-			String reason = TAG + "Error: You are not logged in!";
-			System.out.println(reason);
-			if (friendsRequestListener != null) {
-				friendsRequestListener.onFail(reason);
-			}
+			System.out.println(TAG + "User not logged in! Auto-login now...");
+
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (friendsRequestListener != null) {
+						friendsRequestListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (friendsRequestListener != null) {
+						friendsRequestListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					getFriends(friendsRequestListener);
+				}
+			});
 		}
 	}
 
@@ -252,52 +356,103 @@ public class FacebookManager {
 	public void getScores (final ScoresRequestListener scoresRequestListener) {
 		if (isLogged()) {
 			System.out.println(TAG + "Requesting scores...");
-			FBSession session = FBSession.getActiveSession();
-			FBRequest request = new FBRequest(session, configuration.getAppId() + "/scores", null, HttpMethod.GET);
 
-			request.start(new FBRequestHandler() {
-				@Override
-				public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
-					System.out.println(TAG + "Got scores request answer...");
-
-					List<NSDictionary> graphUsers = new ArrayList<NSDictionary>();
-					NSArray<NSObject> friendsData = (NSArray<NSObject>)((NSMutableDictionary)result).get(new NSString("data"));
-
-					for (int i = 0; i < friendsData.size(); ++i) {
-						NSDictionary friend = (NSDictionary)friendsData.get(i);
-						graphUsers.add(friend);
+			// Check if session to Facebook has necessary permissions. If not, we will ask user for missing permissions.
+			if (!FBSession.getActiveSession().getPermissions().contains(FBPermission.USER_GAMES_ACTIVITY.getValue())) {
+				System.out.println(TAG + "Need to request permissions!");
+				sessionStatusCallback.extendPermissionsListener = new ExtendPermissionsListener() {
+					@Override
+					public void onFail (String reason) {
 					}
 
-					if (error != null) {
-						System.out.println(TAG + "Failed to get scores! " + error.description());
+					@Override
+					public void onException (NSError throwable) {
+					}
 
-						if (scoresRequestListener != null) {
-							scoresRequestListener.onException(error);
+					@Override
+					public void onRequest () {
+					}
+
+					@Override
+					public void onSuccess () {
+						getScores(scoresRequestListener);
+					}
+				};
+				extendReadPermissions();
+			} else {
+				FBSession session = FBSession.getActiveSession();
+				FBRequest request = new FBRequest(session, configuration.getAppId() + "/scores", null, HttpMethod.GET);
+
+				request.start(new FBRequestHandler() {
+					@Override
+					public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
+						System.out.println(TAG + "Got scores request answer...");
+
+						List<NSDictionary> graphUsers = new ArrayList<NSDictionary>();
+						NSArray<NSObject> friendsData = (NSArray<NSObject>)((NSMutableDictionary)result).get(new NSString("data"));
+
+						for (int i = 0; i < friendsData.size(); ++i) {
+							NSDictionary friend = (NSDictionary)friendsData.get(i);
+							graphUsers.add(friend);
 						}
-					} else {
-						System.out.println(TAG + "Scores received!");
 
-						if (scoresRequestListener != null) {
-							List<FBScore> scores = new ArrayList<FBScore>(graphUsers.size());
-							for (NSDictionary graphUser : graphUsers) {
-								scores.add(new FBScore(FBProfile.create((NSDictionary)graphUser.get(new NSString("user"))), Integer
-									.valueOf(graphUser.get(new NSString("score")).toString())));
+						if (error != null) {
+							System.out.println(TAG + "Failed to get scores! " + error.description());
+
+							if (scoresRequestListener != null) {
+								scoresRequestListener.onException(error);
 							}
-							scoresRequestListener.onComplete(scores);
+						} else {
+							System.out.println(TAG + "Scores received!");
+
+							if (scoresRequestListener != null) {
+								List<FBScore> scores = new ArrayList<FBScore>(graphUsers.size());
+								for (NSDictionary graphUser : graphUsers) {
+									scores.add(new FBScore(FBProfile.create((NSDictionary)graphUser.get(new NSString("user"))), Integer
+										.valueOf(graphUser.get(new NSString("score")).toString())));
+								}
+								scoresRequestListener.onComplete(scores);
+							}
 						}
+
 					}
+				});
 
+				if (scoresRequestListener != null) {
+					scoresRequestListener.onRequest();
 				}
-			});
-
-			if (scoresRequestListener != null) {
-				scoresRequestListener.onRequest();
 			}
 		} else {
-			System.out.println("Error: You are not logged in!");
-			if (scoresRequestListener != null) {
-				scoresRequestListener.onFail("Error: You are not logged in!");
-			}
+			System.out.println(TAG + "User not logged in! Auto-login now...");
+
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (scoresRequestListener != null) {
+						scoresRequestListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (scoresRequestListener != null) {
+						scoresRequestListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					getScores(scoresRequestListener);
+				}
+			});
 		}
 	}
 
@@ -313,25 +468,27 @@ public class FacebookManager {
 					publishListener.onRequest();
 				}
 
-				// Check if session to facebook has 'publish_action' permission. If not, we will ask user for this permission.
-
+				// Check if session to Facebook has necessary permissions. If not, we will ask user for missing permissions.
 				if (!FBSession.getActiveSession().getPermissions().contains(FBPermission.PUBLISH_ACTION.getValue())) {
-					System.out.println(TAG + "Need to request publish permissions!");
-					sessionStatusCallback.reopenSessionListener = new ReopenSessionListener() {
+					System.out.println(TAG + "Need to request permissions!");
+					sessionStatusCallback.extendPermissionsListener = new ExtendPermissionsListener() {
+						@Override
+						public void onFail (String reason) {
+						}
+
+						@Override
+						public void onException (NSError throwable) {
+						}
+
+						@Override
+						public void onRequest () {
+						}
+
 						@Override
 						public void onSuccess () {
-							publishImpl(feed, publishListener);
-						}
-
-						@Override
-						public void onNotAcceptingPermissions () {
-							String reason = "Publish permissions weren't accepted by user";
-
-							publishListener.onFail(reason);
+							publish(feed, publishListener);
 						}
 					};
-
-					// Extend publish permissions automatically.
 					extendPublishPermissions();
 				} else {
 					publishImpl(feed, publishListener);
@@ -345,11 +502,36 @@ public class FacebookManager {
 				}
 			}
 		} else {
-			if (publishListener != null) {
-				String reason = "You are not logged in";
+			System.out.println(TAG + "User not logged in! Auto-login now...");
 
-				publishListener.onFail(reason);
-			}
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (publishListener != null) {
+						publishListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (publishListener != null) {
+						publishListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					publish(feed, publishListener);
+				}
+			}, false);
 		}
 	}
 
@@ -365,23 +547,27 @@ public class FacebookManager {
 					publishListener.onRequest();
 				}
 
-				// Check if session to Facebook has 'publish_action' permission. If not, we will ask user for this permission.
+				// Check if session to Facebook has necessary permissions. If not, we will ask user for missing permissions.
 				if (!FBSession.getActiveSession().getPermissions().contains(FBPermission.PUBLISH_ACTION.getValue())) {
-					System.out.println(TAG + "Need to request publish permissions!");
+					System.out.println(TAG + "Need to request permissions!");
+					sessionStatusCallback.extendPermissionsListener = new ExtendPermissionsListener() {
+						@Override
+						public void onFail (String reason) {
+						}
 
-					sessionStatusCallback.reopenSessionListener = new ReopenSessionListener() {
+						@Override
+						public void onException (NSError throwable) {
+						}
+
+						@Override
+						public void onRequest () {
+						}
+
 						@Override
 						public void onSuccess () {
-							publishDialogImpl(feed, publishListener);
-						}
-
-						@Override
-						public void onNotAcceptingPermissions () {
-							publishListener.onFail("Publish permissions weren't accepted by the user!");
+							publishWithDialog(feed, publishListener);
 						}
 					};
-
-					// Extend publish permissions automatically.
 					extendPublishPermissions();
 				} else {
 					publishDialogImpl(feed, publishListener);
@@ -394,10 +580,36 @@ public class FacebookManager {
 				}
 			}
 		} else {
-			if (publishListener != null) {
-				String reason = "You are not logged in";
-				publishListener.onFail(reason);
-			}
+			System.out.println(TAG + "User not logged in! Auto-login now...");
+
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (publishListener != null) {
+						publishListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (publishListener != null) {
+						publishListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					publishWithDialog(feed, publishListener);
+				}
+			}, false);
 		}
 	}
 
@@ -468,43 +680,97 @@ public class FacebookManager {
 
 	/** Open invite dialog and can add multiple friends
 	 * 
-	 * @param message The message inside the dialog. It could be <code>null</code>
-	 * @param onInviteListener The listener. It could be <code>null</code> */
-	public void invite (String message, final InviteListener onInviteListener) {
+	 * @param message The message inside the dialog.
+	 * @param onInviteListener The listener. It could be <code>null</code>. */
+	public void invite (final String message, final InviteListener onInviteListener) {
 		if (isLogged()) {
 			System.out.println(TAG + "Inviting friends...");
 			openInviteDialog(message, null, onInviteListener);
 		} else {
-			String reason = "User not logged in";
+			System.out.println(TAG + "User not logged in! Auto-login now...");
 
-			onInviteListener.onFail(reason);
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (onInviteListener != null) {
+						onInviteListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (onInviteListener != null) {
+						onInviteListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					invite(message, onInviteListener);
+				}
+			}, false);
 		}
 	}
 
 	/** Open invite dialog and invite only specific friend
 	 * 
 	 * @param to The id of the friend profile
-	 * @param message The message inside the dialog. It could be <code>null</code>
+	 * @param message The message inside the dialog.
 	 * @param onInviteListener The listener. It could be <code>null</code> */
-	public void invite (String to, String message, final InviteListener onInviteListener) {
+	public void invite (final String to, final String message, final InviteListener onInviteListener) {
 		if (isLogged()) {
 			System.out.println(TAG + "Inviting friends...");
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("to", to);
 			openInviteDialog(message, params, onInviteListener);
 		} else {
-			String reason = "User not logged in";
+			System.out.println(TAG + "User not logged in! Auto-login now...");
 
-			onInviteListener.onFail(reason);
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (onInviteListener != null) {
+						onInviteListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (onInviteListener != null) {
+						onInviteListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					invite(to, message, onInviteListener);
+				}
+			}, false);
 		}
 	}
 
 	/** Open invite dialog and invite several specific friends
 	 * 
-	 * @param suggestedFriends The ids of friends' profiles
-	 * @param message The message inside the dialog. It could be <code>null</code>
+	 * @param suggestedFriends The ids of friends' profiles.
+	 * @param message The message inside the dialog.
 	 * @param onInviteListener The error listener. It could be <code>null</code> */
-	public void invite (String[] suggestedFriends, String message, final InviteListener onInviteListener) {
+	public void invite (final String[] suggestedFriends, final String message, final InviteListener onInviteListener) {
 		if (isLogged()) {
 			System.out.println(TAG + "Inviting friends...");
 
@@ -523,9 +789,36 @@ public class FacebookManager {
 			params.put("suggestions", sb.toString());
 			openInviteDialog(message, params, onInviteListener);
 		} else {
-			String reason = "User not logged in";
+			System.out.println(TAG + "User not logged in! Auto-login now...");
 
-			onInviteListener.onFail(reason);
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (onInviteListener != null) {
+						onInviteListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (onInviteListener != null) {
+						onInviteListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					invite(suggestedFriends, message, onInviteListener);
+				}
+			}, false);
 		}
 	}
 
@@ -534,8 +827,8 @@ public class FacebookManager {
 	 * @param request
 	 * @param method
 	 * @param onRequestListener */
-	public void request (String request, String method, RequestListener onRequestListener) {
-		request(request, method, null, onRequestListener);
+	public void request (String request, String method, RequestListener requestListener) {
+		request(request, method, null, requestListener);
 	}
 
 	/** Make a request to the Facebook API with parameters.
@@ -544,7 +837,8 @@ public class FacebookManager {
 	 * @param method
 	 * @param params
 	 * @param requestListener */
-	public void request (String request, String method, Map<String, String> params, final RequestListener requestListener) {
+	public void request (final String request, final String method, final Map<String, String> params,
+		final RequestListener requestListener) {
 		if (isLogged()) {
 			System.out.println(TAG + "Starting request '" + request + "' (" + method + ")");
 			FBSession session = FBSession.getActiveSession();
@@ -568,7 +862,7 @@ public class FacebookManager {
 							}
 						}
 					} else {
-						System.out.println("The GraphObject in response of publish action has null value. Response="
+						System.out.println(TAG + "The GraphObject in response of publish action has null value. Response="
 							+ result.toString());
 
 						if (requestListener != null) {
@@ -582,8 +876,39 @@ public class FacebookManager {
 				requestListener.onRequest();
 			}
 		} else {
-			String reason = "User not logged in";
-			System.out.println(reason);
+			System.out.println(TAG + "User not logged in! Auto-login now...");
+
+			boolean read = false;
+			if (method.equals(HttpMethod.GET)) read = true;
+
+			login(new LoginListener() {
+				@Override
+				public void onFail (String reason) {
+					if (requestListener != null) {
+						requestListener.onFail(reason);
+					}
+				}
+
+				@Override
+				public void onException (NSError throwable) {
+					if (requestListener != null) {
+						requestListener.onException(throwable);
+					}
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onNotAcceptingPermissions () {
+				}
+
+				@Override
+				public void onLogin () {
+					request(request, method, params, requestListener);
+				}
+			}, read);
 		}
 	}
 
@@ -720,7 +1045,7 @@ public class FacebookManager {
 			@Override
 			public void invoke (FBWebDialogResult result, NSURL url, NSError error) {
 				if (error != null) {
-					System.out.println("Failed to publish" + error);
+					System.out.println(TAG + "Failed to publish! Error: " + error);
 
 					if (error.description().contains("canceled")) {
 						publishListener.onCancel();
@@ -729,9 +1054,11 @@ public class FacebookManager {
 					}
 				} else {
 					if (result == FBWebDialogResult.NotCompleted) {
+						System.out.println(TAG + "Publish action canceled by user!");
 						publishListener.onCancel();
 					} else {
-						publishListener.onComplete(""); // TODO post id extract from url
+						System.out.println(TAG + "Publish action completed successfully!");
+						publishListener.onComplete(url.toString().substring(url.toString().indexOf("post_id=") + 8));
 					}
 				}
 			}
@@ -739,29 +1066,55 @@ public class FacebookManager {
 		// }
 	}
 
-	private void openInviteDialog (String message, Map<String, String> params, final InviteListener onInviteListener) {
-		FBWebDialogs.presentRequestDialog(FBSession.getActiveSession(), message, "", params, new FBWebDialogHandler() {
-			@Override
-			public void invoke (FBWebDialogResult result, NSURL url, NSError error) {
-				if (error != null) {
-					System.out.println("Failed to invite" + error);
+	private void openInviteDialog (final String message, final Map<String, String> params, final InviteListener inviteListener) {
+		// Check if session to Facebook has 'publish_action' permission. If not, we will ask user for this permission.
+		if (!FBSession.getActiveSession().getPermissions().contains(FBPermission.PUBLISH_ACTION.getValue())) {
+			System.out.println(TAG + "Need to request publish permissions!");
+			sessionStatusCallback.extendPermissionsListener = new ExtendPermissionsListener() {
+				@Override
+				public void onFail (String reason) {
+					if (inviteListener != null) inviteListener.onFail(reason);
+				}
 
-					if (error.description().contains("Code=2")) { // TODO get error code and compare with fberror codes canceled
-						onInviteListener.onCancel();
+				@Override
+				public void onException (NSError throwable) {
+					if (inviteListener != null) inviteListener.onException(throwable);
+				}
+
+				@Override
+				public void onRequest () {
+				}
+
+				@Override
+				public void onSuccess () {
+					openInviteDialog(message, params, inviteListener);
+				}
+			};
+			extendPublishPermissions();
+		} else {
+			FBWebDialogs.presentRequestDialog(FBSession.getActiveSession(), message, "", params, new FBWebDialogHandler() {
+				@Override
+				public void invoke (FBWebDialogResult result, NSURL url, NSError error) {
+					if (error != null) {
+						System.out.println("Failed to invite" + error);
+
+						if (error.description().contains("Code=2")) { // TODO get error code and compare with fberror codes canceled
+							inviteListener.onCancel();
+						} else {
+							if (inviteListener != null) {
+								inviteListener.onException(error);
+							}
+						}
 					} else {
-						if (onInviteListener != null) {
-							onInviteListener.onException(error);
+						if (result == FBWebDialogResult.NotCompleted) {
+							inviteListener.onCancel();
+						} else {
+							inviteListener.onComplete();
 						}
 					}
-				} else {
-					if (result == FBWebDialogResult.NotCompleted) {
-						onInviteListener.onCancel();
-					} else {
-						onInviteListener.onComplete();
-					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	private void openSession (boolean read) {
@@ -771,7 +1124,7 @@ public class FacebookManager {
 			FBSession.openForRead(configuration.getReadPermissions(), configuration.getSessionLoginBehavior().value() != 2,
 				sessionStatusCallback);
 		} else {
-			FBSession.openForPublish(configuration.getReadPermissions(), configuration.getSessionDefaultAudience(), configuration
+			FBSession.openForPublish(configuration.getPublishPermissions(), configuration.getSessionDefaultAudience(), configuration
 				.getSessionLoginBehavior().value() != 2, sessionStatusCallback);
 		}
 	}
@@ -790,17 +1143,28 @@ public class FacebookManager {
 		}
 	}
 
-	/** Extend and ask user for PUBLISH permissions */
+	/** Extend and ask user for READ permissions. */
+	public void extendReadPermissions () {
+		System.out.println(TAG + "Asking for extended read permissions...");
+
+		FBSession.getActiveSession().requestNewReadPermissions(configuration.getReadPermissions(),
+			new FBSessionRequestPermissionResultHandler() {
+				@Override
+				public void invoke (FBSession session, NSError error) {
+					System.out.println(TAG + "Extended read permissions request finished!");
+				}
+			});
+	}
+
+	/** Extend and ask user for PUBLISH permissions. */
 	public void extendPublishPermissions () {
 		System.out.println(TAG + "Asking for extended publish permission...");
 
-		FBSession session = FBSession.getActiveSession();
-		session.requestNewPublishPermissions(configuration.getPublishPermissions(), configuration.getSessionDefaultAudience(),
-			new FBSessionRequestPermissionResultHandler() {
+		FBSession.getActiveSession().requestNewPublishPermissions(configuration.getPublishPermissions(),
+			configuration.getSessionDefaultAudience(), new FBSessionRequestPermissionResultHandler() {
 				@Override
 				public void invoke (final FBSession session, final NSError error) {
 					System.out.println(TAG + "Extended publish permissions request finished!");
-					sessionStatusCallback.invoke(session, session.getState(), error);
 				}
 			});
 	}
@@ -813,11 +1177,8 @@ public class FacebookManager {
 		return FBSession.getActiveSession().handleOpenURL(url);
 	}
 
-	// LISTENERS
-	public interface ReopenSessionListener {
+	public interface ExtendPermissionsListener extends ActionListener {
 		void onSuccess ();
-
-		void onNotAcceptingPermissions ();
 	}
 
 	public interface ProfileRequestListener extends ActionListener {
