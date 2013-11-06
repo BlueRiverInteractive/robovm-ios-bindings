@@ -88,9 +88,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 
 		// If you are already using a UIWindow, you can do the following (f.e. LibGDX):
 		// UIView interstitialView = new UIView(UIScreen.getMainScreen().getBounds());
-		// interstitialView.setUserInteractionEnabled(false);
 		// interstitialViewController.setView(interstitialView);
-		// application.getKeyWindow().addSubview(interstitialViewController.getView());
+		// gdxApplication.getUIViewController().getView().addSubview(interstitialViewController.getView()); // gdxApplication - your GDX IOSApplication
 	}
 
 	public static void main(String[] argv) {
