@@ -21,23 +21,23 @@ import org.robovm.cocoatouch.uikit.UIViewController;
 import org.robovm.cocoatouch.uikit.UIWindow;
 
 /** Sample usage of GameKit framework */
-public class Sample extends UIApplicationDelegate.Adapter{
-	
+public class Sample extends UIApplicationDelegate.Adapter {
+
 	private GameCenterManager gcManager;
 
 	@Override
 	public void didFinishLaunching (UIApplication application) {
 		UIWindow window = new UIWindow(UIScreen.getMainScreen().getBounds());
-        window.makeKeyAndVisible();
-        UIViewController viewController = new UIViewController();
-        
+		window.makeKeyAndVisible();
+		UIViewController viewController = new UIViewController();
+
 		UIButton boton = new UIButton(new CGRect(10, 10, 200, 30));
 		boton.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
 		boton.setTitle("Login", UIControlState.Normal);
 		boton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
-				//If you are using LibGDX, use gcManager.loginGDX(); instead
+			public void onTouchUpInside (UIControl control, UIEvent event) {
+				// If you are using LibGDX, use gcManager.loginGDX(); instead
 				gcManager.login();
 			}
 		});
@@ -46,7 +46,7 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		boton2.setTitle("Get Achievement", UIControlState.Normal);
 		boton2.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
+			public void onTouchUpInside (UIControl control, UIEvent event) {
 				gcManager.reportAchievement("ACHIEVEMENT_ID", 100);
 			}
 		});
@@ -55,7 +55,7 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		boton3.setTitle("Load Achievements", UIControlState.Normal);
 		boton3.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
+			public void onTouchUpInside (UIControl control, UIEvent event) {
 				gcManager.loadAchievements();
 			}
 		});
@@ -64,7 +64,7 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		boton4.setTitle("Reset Achievements", UIControlState.Normal);
 		boton4.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
+			public void onTouchUpInside (UIControl control, UIEvent event) {
 				gcManager.resetAchievements();
 			}
 		});
@@ -73,7 +73,7 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		boton5.setTitle("Report Score", UIControlState.Normal);
 		boton5.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
+			public void onTouchUpInside (UIControl control, UIEvent event) {
 				gcManager.reportScore("LEADERBOARD_ID", 3);
 			}
 		});
@@ -82,7 +82,7 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		boton6.setTitle("Load Leaderboards", UIControlState.Normal);
 		boton6.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
+			public void onTouchUpInside (UIControl control, UIEvent event) {
 				gcManager.loadLeaderboards();
 			}
 		});
@@ -91,7 +91,7 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		boton7.setTitle("Show Achievements", UIControlState.Normal);
 		boton7.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
+			public void onTouchUpInside (UIControl control, UIEvent event) {
 				gcManager.showAchievementsView();
 			}
 		});
@@ -100,11 +100,11 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		boton8.setTitle("Show Leaderboards", UIControlState.Normal);
 		boton8.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
-			public void onTouchUpInside(UIControl control, UIEvent event){
+			public void onTouchUpInside (UIControl control, UIEvent event) {
 				gcManager.showLeaderboardsView();
 			}
 		});
-		
+
 		UIView view = new UIView(UIScreen.getMainScreen().getBounds());
 		view.addSubview(boton);
 		view.addSubview(boton2);
@@ -115,67 +115,67 @@ public class Sample extends UIApplicationDelegate.Adapter{
 		view.addSubview(boton7);
 		view.addSubview(boton8);
 		viewController.setView(view);
-		
-        window.setRootViewController(viewController);
-        
-        gcManager = new GameCenterManager(UIApplication.getSharedApplication().getKeyWindow(), new GameCenterListener() {
+
+		window.setRootViewController(viewController);
+
+		gcManager = new GameCenterManager(UIApplication.getSharedApplication().getKeyWindow(), new GameCenterListener() {
 			@Override
-			public void playerLoginFailed(){
+			public void playerLoginFailed () {
 				System.out.println("playerLoginFailed");
 			}
-			
+
 			@Override
-			public void playerLoginCompleted(){
+			public void playerLoginCompleted () {
 				System.out.println("playerLoginCompleted");
 			}
 
 			@Override
-			public void achievementReportCompleted(){
+			public void achievementReportCompleted () {
 				System.out.println("achievementReportCompleted");
 			}
 
 			@Override
-			public void achievementReportFailed(){
+			public void achievementReportFailed () {
 				System.out.println("achievementReportFailed");
 			}
 
 			@Override
-			public void achievementsLoadCompleted(ArrayList<GKAchievement> achievements){
+			public void achievementsLoadCompleted (ArrayList<GKAchievement> achievements) {
 				System.out.println("achievementsLoadCompleted: " + achievements.size());
 			}
 
 			@Override
-			public void achievementsLoadFailed(){
+			public void achievementsLoadFailed () {
 				System.out.println("achievementsLoadFailed");
 			}
 
 			@Override
-			public void achievementsResetCompleted(){
+			public void achievementsResetCompleted () {
 				System.out.println("achievementsResetCompleted");
 			}
 
 			@Override
-			public void achievementsResetFailed(){
+			public void achievementsResetFailed () {
 				System.out.println("achievementsResetFailed");
 			}
 
 			@Override
-			public void scoreReportCompleted(){
+			public void scoreReportCompleted () {
 				System.out.println("scoreReportCompleted");
 			}
 
 			@Override
-			public void scoreReportFailed(){
+			public void scoreReportFailed () {
 				System.out.println("scoreReportFailed");
 			}
 
 			@Override
-			public void leaderboardsLoadCompleted(ArrayList<GKLeaderboard> scores){
+			public void leaderboardsLoadCompleted (ArrayList<GKLeaderboard> scores) {
 				System.out.println("scoresLoadCompleted: " + scores.size());
 			}
 
 			@Override
-			public void leaderboardsLoadFailed(){
+			public void leaderboardsLoadFailed () {
 				System.out.println("scoresLoadFailed");
 			}
 		});

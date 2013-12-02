@@ -18,7 +18,6 @@ public class FBSessionStatusCallback implements FBSessionStateHandler {
 
 	@Override
 	public void invoke (FBSession session, FBSessionState state, NSError error) {
-		System.out.println(TAG + "Invoked...");
 		if (error != null) {
 			System.out.println(TAG + "Exception: " + error.description());
 
@@ -35,7 +34,7 @@ public class FBSessionStatusCallback implements FBSessionStateHandler {
 		System.out.println(TAG + "FBSession: state=" + state.name() + ", session=" + session.toString());
 		switch (state) {
 		case Closed:
-			logoutListener.onLogout();
+			if (logoutListener != null) logoutListener.onLogout();
 			break;
 		case ClosedLoginFailed:
 			break;

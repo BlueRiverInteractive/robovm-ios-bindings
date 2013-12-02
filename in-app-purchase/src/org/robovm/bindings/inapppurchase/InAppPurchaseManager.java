@@ -139,7 +139,7 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 
 	@Override
 	public void requestFailed (SKRequest request, NSError error) {
-		System.out.println(TAG + "Products request failed! Error: " + error.toString());
+		System.out.println(TAG + "Products request failed! Error: " + (error != null ? error.toString() : "unknown"));
 		requestingProducts = false;
 
 		listener.productsRequestFailed(request, error);
@@ -163,7 +163,7 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 
 	void transactionFailed (SKPaymentTransaction transaction) {
 		System.out.println(TAG + "Transaction '" + transaction.getTransactionIdentifier() + "' failed! Error: "
-			+ transaction.getError().toString());
+			+ (transaction.getError() != null ? transaction.getError().toString() : "unknown"));
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
 		purchasingProduct = false;
 

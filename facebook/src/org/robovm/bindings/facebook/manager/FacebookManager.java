@@ -14,7 +14,6 @@ import org.robovm.bindings.facebook.FBRequestHandler;
 import org.robovm.bindings.facebook.FBSession;
 import org.robovm.bindings.facebook.FBSessionRequestPermissionResultHandler;
 import org.robovm.bindings.facebook.FBSessionState;
-import org.robovm.bindings.facebook.FBShareDialogParams;
 import org.robovm.bindings.facebook.FBWebDialogHandler;
 import org.robovm.bindings.facebook.FBWebDialogResult;
 import org.robovm.bindings.facebook.FBWebDialogs;
@@ -1001,12 +1000,12 @@ public class FacebookManager {
 	// }
 
 	private void publishDialogImpl (FBFeed feed, final PublishDialogListener publishListener) {
-		FBShareDialogParams params = new FBShareDialogParams();
-		params.setCaption(feed.getCaption());
-		params.setDescription(feed.getDescription());
-		params.setLink(new NSURL(feed.getLink()));
-		params.setName(feed.getName());
-		params.setPicture(new NSURL(feed.getPicture()));
+// FBShareDialogParams params = new FBShareDialogParams();
+// if (feed.getCaption() != null) params.setCaption(feed.getCaption());
+// if (feed.getDescription() != null) params.setDescription(feed.getDescription());
+// if (feed.getLink() != null) params.setLink(new NSURL(feed.getLink()));
+// if (feed.getName() != null) params.setName(feed.getName());
+// if (feed.getPicture() != null) params.setPicture(new NSURL(feed.getPicture()));
 
 		System.out.println(TAG + "Wants to present share dialog...");
 		// if (FBDialogs.canPresentShareDialog(params)) { // TODO Facebook app crashes after some time on iOS 6

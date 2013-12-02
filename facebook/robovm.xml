@@ -19,6 +19,7 @@
 	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
 		<framework>CoreLocation</framework>
+		<framework>CoreGraphics</framework>
 		<framework>Foundation</framework>
 		<framework>UIKit</framework>
 	</frameworks>

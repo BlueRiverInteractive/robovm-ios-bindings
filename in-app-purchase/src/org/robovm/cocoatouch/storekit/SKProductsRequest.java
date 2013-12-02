@@ -18,7 +18,6 @@ public class SKProductsRequest extends SKRequest {
 		ObjCRuntime.bind(/* <name> */SKProductsRequest /* </name> */.class);
 	}
 
-	// /DELEGATE
 	private static final Selector delegate = Selector.register("delegate");
 
 	@Bridge
