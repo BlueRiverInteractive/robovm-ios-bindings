@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSError;
@@ -29,15 +30,13 @@ import org.robovm.rt.bro.annotation.Pointer;
  */
 @Marshaler(FBRequestHandler.Marshaler.class)
 public interface FBRequestHandler {
-	/**
-	 * Runs this block.
-	 */
-	void invoke(FBRequestConnection connection, NSObject result, NSError error);
+	/** Runs this block. */
+	void invoke (FBRequestConnection connection, NSObject result, NSError error);
 
 	static class Callbacks {
 		@Callback
-		static void run(ObjCBlock block, FBRequestConnection connection, NSObject result, NSError error) {
-			((FBRequestHandler) block.object()).invoke(connection, result, error);
+		static void run (ObjCBlock block, FBRequestConnection connection, NSObject result, NSError error) {
+			((FBRequestHandler)block.object()).invoke(connection, result, error);
 		}
 	}
 
@@ -45,11 +44,11 @@ public interface FBRequestHandler {
 		private static final Wrapper WRAPPER = new Wrapper(Callbacks.class);
 
 		public static @Pointer
-		long toNative(Object o) {
+		long toNative (Object o) {
 			return WRAPPER.toNative(o);
 		}
 
-		public static void updateObject(Object o, long handle) {
+		public static void updateObject (Object o, long handle) {
 		}
 	}
 }

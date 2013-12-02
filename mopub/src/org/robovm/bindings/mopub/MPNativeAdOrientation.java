@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.mopub;
 
 import org.robovm.rt.bro.ValuedEnum;
@@ -7,12 +8,12 @@ public enum MPNativeAdOrientation implements ValuedEnum {
 
 	private final int n;
 
-	private MPNativeAdOrientation(int n) {
+	private MPNativeAdOrientation (int n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value() {
+	public int value () {
 		return n;
 	}
 }

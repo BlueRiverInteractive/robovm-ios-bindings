@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSObject;
@@ -150,9 +151,9 @@ public class FBGraphObject extends NSObject {
 	private static final Selector objectForKey$ = Selector.register("objectForKey:");
 
 	@Bridge
-	private native static NSObject objc_objectForKey$(FBGraphObject __self__, Selector __cmd__, NSObject aKey);
+	private native static NSObject objc_objectForKey$ (FBGraphObject __self__, Selector __cmd__, NSObject aKey);
 
-	public NSObject getProperty(String key) {
+	public NSObject getProperty (String key) {
 		return objc_objectForKey$(this, objectForKey$, new NSString(key));
 	}
 

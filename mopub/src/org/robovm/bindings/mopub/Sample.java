@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.mopub;
 
 import org.robovm.cocoatouch.coregraphics.CGRect;
@@ -9,14 +10,12 @@ import org.robovm.cocoatouch.uikit.UIScreen;
 import org.robovm.cocoatouch.uikit.UIViewController;
 import org.robovm.cocoatouch.uikit.UIWindow;
 
-/**
- * Basic usage of banners and interstitials.
- */
+/** Basic usage of banners and interstitials. */
 public class Sample extends UIApplicationDelegate.Adapter {
 	private UIViewController interstitialViewController;
 
 	@Override
-	public void didFinishLaunching(UIApplication application) {
+	public void didFinishLaunching (UIApplication application) {
 		// We need a view controller to see ads.
 		interstitialViewController = new UIViewController();
 
@@ -25,26 +24,25 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// The delegate for an interstitial is optional.
 		MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegate.Adapter() {
 			@Override
-			public void didDisappear(MPInterstitialAdController interstitial) {
+			public void didDisappear (MPInterstitialAdController interstitial) {
 				interstitial.loadAd();
 			}
 
 			@Override
-			public void didExpire(MPInterstitialAdController interstitial) {
+			public void didExpire (MPInterstitialAdController interstitial) {
 				// If the ad did expire, load a new ad.
 				interstitial.loadAd();
 			}
 
 			@Override
-			public void didLoadAd(MPInterstitialAdController interstitial) {
+			public void didLoadAd (MPInterstitialAdController interstitial) {
 				// If the ad is ready, show it.
 				// It's best to call these methods manually and not in didLoadAd().
-				if (interstitial.isReady())
-					interstitial.show(interstitialViewController);
+				if (interstitial.isReady()) interstitial.show(interstitialViewController);
 			}
 
 			@Override
-			public void didFailToLoadAd(MPInterstitialAdController interstitial) {
+			public void didFailToLoadAd (MPInterstitialAdController interstitial) {
 				// If the ad did fail to load, load a new ad. Check the debug log to see why it didn't load.
 				interstitial.loadAd();
 			}
@@ -64,14 +62,15 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// Position banner on the top.
 		// banner.setFrame(new CGRect(0, 0, bannerWidth, bannerHeight));
 		// Position banner on the bottom.
-		banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getApplicationFrame().size().height() - bannerHeight, bannerWidth, bannerHeight));
+		banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getApplicationFrame().size().height() - bannerHeight, bannerWidth,
+			bannerHeight));
 		// Let's color the background for testing, so we can see if it is positioned correctly, even if no ad is loaded yet.
 		banner.setBackgroundColor(new UIColor(1, 0, 0, 1)); // Remove this after testing.
 
 		// The delegate for the banner. It is required to override getViewController() to get ads.
 		MPAdViewDelegate bannerDelegate = new MPAdViewDelegate.Adapter() {
 			@Override
-			public UIViewController getViewController() {
+			public UIViewController getViewController () {
 				return interstitialViewController;
 			}
 		};
@@ -89,10 +88,11 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// If you are already using a UIWindow, you can do the following (f.e. LibGDX):
 		// UIView interstitialView = new UIView(UIScreen.getMainScreen().getBounds());
 		// interstitialViewController.setView(interstitialView);
-		// gdxApplication.getUIViewController().getView().addSubview(interstitialViewController.getView()); // gdxApplication - your GDX IOSApplication
+		// gdxApplication.getUIViewController().getView().addSubview(interstitialViewController.getView()); // gdxApplication - your
+// GDX IOSApplication
 	}
 
-	public static void main(String[] argv) {
+	public static void main (String[] argv) {
 		NSAutoreleasePool pool = new NSAutoreleasePool();
 		UIApplication.main(argv, null, Sample.class);
 		pool.drain();

@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSObject;
@@ -333,18 +334,22 @@ public class FBRequestConnection extends NSObject {
 	// This method will throw an exception if <[FBSettings defaultAppID]> is `nil`. The appID won't be nil when the pList
 	// includes the appID, or if it's explicitly set.
 	//
-	// The JSON in the request's response will include an "custom_audience_third_party_id" key/value pair, with the value being the ID retrieved.
+	// The JSON in the request's response will include an "custom_audience_third_party_id" key/value pair, with the value being the
+// ID retrieved.
 	// This ID is an encrypted encoding of the Facebook user's ID and the invoking Facebook app ID.
 	// Multiple calls with the same user will return different IDs, thus these IDs cannot be used to correlate behavior
 	// across devices or applications, and are only meaningful when sent back to Facebook for creating Custom Audiences.
 	//
-	// The ID retrieved represents the Facebook user identified in the following way: if the specified session (or activeSession if the specified
-	// session is `nil`) is open, the ID will represent the user associated with the activeSession; otherwise the ID will represent the user logged
+	// The ID retrieved represents the Facebook user identified in the following way: if the specified session (or activeSession if
+// the specified
+	// session is `nil`) is open, the ID will represent the user associated with the activeSession; otherwise the ID will represent
+// the user logged
 	// into the
 	// native Facebook app on the device. If there is no native Facebook app, no one is logged into it, or the user has opted out
 	// at the iOS level from ad tracking, then a `nil` ID will be returned.
 	//
-	// This method returns `nil` if either the user has opted-out (via iOS) from Ad Tracking, the app itself has limited event usage
+	// This method returns `nil` if either the user has opted-out (via iOS) from Ad Tracking, the app itself has limited event
+// usage
 	// via the `[FBAppEvents setLimitEventUsage]` flag, or a specific Facebook user cannot be identified.
 	//
 	// @param handler The handler block to call when the request completes with a success, error, or cancel action.
@@ -376,7 +381,8 @@ public class FBRequestConnection extends NSObject {
 	// HTTP DELETE, then uses an <FBRequestConnection> object to start the connection with Facebook.
 	// The request uses the active session represented by `[FBSession activeSession]`.
 	//
-	// @param object The object to delete, may be an NSString or NSNumber representing an fbid or an NSDictionary with an id property
+	// @param object The object to delete, may be an NSString or NSNumber representing an fbid or an NSDictionary with an id
+// property
 	// @param handler The handler block to call when the request completes with a success, error, or cancel action.
 	// */
 	// + (FBRequestConnection*)startForDeleteObject:(id)object
@@ -412,7 +418,8 @@ public class FBRequestConnection extends NSObject {
 	//
 	// @param graphPath The Graph API endpoint to use for the request, for example "me".
 	//
-	// @param parameters The parameters for the request. A value of nil sends only the automatically handled parameters, for example, the access
+	// @param parameters The parameters for the request. A value of nil sends only the automatically handled parameters, for
+// example, the access
 	// token. The default is nil.
 	//
 	// @param HTTPMethod The HTTP method to use for the request. A nil value implies a GET.

@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSError;
@@ -15,12 +16,12 @@ import org.robovm.rt.bro.annotation.Pointer;
  */
 @Marshaler(FBOSIntegratedShareDialogHandler.Marshaler.class)
 public interface FBOSIntegratedShareDialogHandler {
-	void invoke(FBShareDialogResult result, NSError error);
+	void invoke (FBShareDialogResult result, NSError error);
 
 	static class Callbacks {
 		@Callback
-		static void run(ObjCBlock block, FBShareDialogResult result, NSError error) {
-			((FBOSIntegratedShareDialogHandler) block.object()).invoke(result, error);
+		static void run (ObjCBlock block, FBShareDialogResult result, NSError error) {
+			((FBOSIntegratedShareDialogHandler)block.object()).invoke(result, error);
 		}
 	}
 
@@ -28,11 +29,11 @@ public interface FBOSIntegratedShareDialogHandler {
 		private static final Wrapper WRAPPER = new Wrapper(Callbacks.class);
 
 		public static @Pointer
-		long toNative(Object o) {
+		long toNative (Object o) {
 			return WRAPPER.toNative(o);
 		}
 
-		public static void updateObject(Object o, long handle) {
+		public static void updateObject (Object o, long handle) {
 		}
 	}
 }

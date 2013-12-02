@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.rt.bro.ValuedEnum;
@@ -10,24 +11,24 @@ import org.robovm.rt.bro.ValuedEnum;
  */
 public enum FBWebDialogResult implements ValuedEnum {
 	/*
-	 * ! Indicates that the dialog action completed successfully. Note, that cancel operations represent completed dialog operations. The url argument
-	 * may be used to distinguish between success and user-cancelled cases
+	 * ! Indicates that the dialog action completed successfully. Note, that cancel operations represent completed dialog
+	 * operations. The url argument may be used to distinguish between success and user-cancelled cases
 	 */
 	Completed(0),
 	/*
-	 * ! Indicates that the dialog operation was not completed. This occurs in cases such as the closure of the web-view using the X in the upper left
-	 * corner.
+	 * ! Indicates that the dialog operation was not completed. This occurs in cases such as the closure of the web-view using the
+	 * X in the upper left corner.
 	 */
 	NotCompleted(1);
 
 	private final int n;
 
-	private FBWebDialogResult(int n) {
+	private FBWebDialogResult (int n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value() {
+	public int value () {
 		return n;
 	}
 }

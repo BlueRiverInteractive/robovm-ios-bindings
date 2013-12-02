@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSDictionary;
@@ -30,15 +31,13 @@ import org.robovm.rt.bro.annotation.Pointer;
 @Marshaler(FBDialogAppCallCompletionHandler.Marshaler.class)
 public interface FBDialogAppCallCompletionHandler {
 
-	/**
-	 * Runs this block.
-	 */
-	void invoke(FBAppCall call, NSDictionary results, NSError error);
+	/** Runs this block. */
+	void invoke (FBAppCall call, NSDictionary results, NSError error);
 
 	static class Callbacks {
 		@Callback
-		static void run(ObjCBlock block, FBAppCall call, NSDictionary results, NSError error) {
-			((FBDialogAppCallCompletionHandler) block.object()).invoke(call, results, error);
+		static void run (ObjCBlock block, FBAppCall call, NSDictionary results, NSError error) {
+			((FBDialogAppCallCompletionHandler)block.object()).invoke(call, results, error);
 		}
 	}
 
@@ -46,11 +45,11 @@ public interface FBDialogAppCallCompletionHandler {
 		private static final Wrapper WRAPPER = new Wrapper(Callbacks.class);
 
 		public static @Pointer
-		long toNative(Object o) {
+		long toNative (Object o) {
 			return WRAPPER.toNative(o);
 		}
 
-		public static void updateObject(Object o, long handle) {
+		public static void updateObject (Object o, long handle) {
 		}
 	}
 }

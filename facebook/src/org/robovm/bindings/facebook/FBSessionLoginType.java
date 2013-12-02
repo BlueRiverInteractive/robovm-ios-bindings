@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.rt.bro.ValuedEnum;
@@ -18,12 +19,12 @@ public enum FBSessionLoginType implements ValuedEnum {
 
 	private final int n;
 
-	private FBSessionLoginType(int n) {
+	private FBSessionLoginType (int n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value() {
+	public int value () {
 		return n;
 	}
 

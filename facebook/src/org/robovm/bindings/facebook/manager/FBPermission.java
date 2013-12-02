@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook.manager;
 
 import org.robovm.bindings.facebook.FBSessionAuthorizationType;
@@ -49,12 +50,14 @@ public enum FBPermission {
 
 	USER_GAMES_ACTIVITY("user_games_activity", Type.READ), FRIENDS_GAMES_ACTIVITY("friends_games_activity", Type.READ),
 
-	READ_FRIENDLISTS("read_friendlists", Type.READ), READ_MAILBOX("read_mailbox", Type.READ), READ_REQUESTS("read_requests", Type.READ), READ_STREAM(
-			"read_stream", Type.READ), READ_INSIGHTS("read_insights", Type.READ), XMPP_LOGIN("xmpp_login", Type.READ), EMAIL("email", Type.READ),
+	READ_FRIENDLISTS("read_friendlists", Type.READ), READ_MAILBOX("read_mailbox", Type.READ), READ_REQUESTS("read_requests",
+		Type.READ), READ_STREAM("read_stream", Type.READ), READ_INSIGHTS("read_insights", Type.READ), XMPP_LOGIN("xmpp_login",
+		Type.READ), EMAIL("email", Type.READ),
 
-	PUBLISH_ACTION("publish_actions", Type.PUBLISH), PUBLISH_STREAM("publish_stream", Type.PUBLISH), ADS_MANAGMENT("ads_management", Type.PUBLISH), CREATE_EVENT(
-			"create_event", Type.PUBLISH), RSVP_EVENT("rsvp_event", Type.PUBLISH), MANAGE_FRIENDLIST("manage_friendlists", Type.PUBLISH), MANAGE_NOTIFICATIONS(
-			"manage_notifications", Type.PUBLISH), MANAGE_PAGES("manage_pages", Type.PUBLISH);
+	PUBLISH_ACTION("publish_actions", Type.PUBLISH), PUBLISH_STREAM("publish_stream", Type.PUBLISH), ADS_MANAGMENT(
+		"ads_management", Type.PUBLISH), CREATE_EVENT("create_event", Type.PUBLISH), RSVP_EVENT("rsvp_event", Type.PUBLISH), MANAGE_FRIENDLIST(
+		"manage_friendlists", Type.PUBLISH), MANAGE_NOTIFICATIONS("manage_notifications", Type.PUBLISH), MANAGE_PAGES(
+		"manage_pages", Type.PUBLISH);
 
 	private static class Type {
 		static final FBSessionAuthorizationType PUBLISH = FBSessionAuthorizationType.PUBLISH;
@@ -64,16 +67,16 @@ public enum FBPermission {
 	private String mValue;
 	private FBSessionAuthorizationType mType;
 
-	private FBPermission(String value, FBSessionAuthorizationType type) {
+	private FBPermission (String value, FBSessionAuthorizationType type) {
 		mValue = value;
 		mType = type;
 	}
 
-	public String getValue() {
+	public String getValue () {
 		return mValue;
 	}
 
-	public FBSessionAuthorizationType getType() {
+	public FBSessionAuthorizationType getType () {
 		return mType;
 	}
 }

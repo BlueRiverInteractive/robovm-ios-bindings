@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSArray;
@@ -43,7 +44,8 @@ public class FBAccessTokenData extends NSObject {
 	 * 
 	 * @param urlSchemeSuffix needed in order to verify URL format.
 	 */
-	// + (FBAccessTokenData *) createTokenFromFacebookURL:(NSURL *)url appID:(NSString *)appID urlSchemeSuffix:(NSString *)urlSchemeSuffix;
+	// + (FBAccessTokenData *) createTokenFromFacebookURL:(NSURL *)url appID:(NSString *)appID urlSchemeSuffix:(NSString
+// *)urlSchemeSuffix;
 
 	/*
 	 * !
@@ -96,7 +98,8 @@ public class FBAccessTokenData extends NSObject {
 	 * 
 	 * @param refreshDate The date that token was last refreshed. A value of nil defaults to `[NSDate date]`.
 	 * 
-	 * @param permissionsRefreshDate The date the permissions were last refreshed. A value of nil defaults to `[NSDate distantPast]`.
+	 * @param permissionsRefreshDate The date the permissions were last refreshed. A value of nil defaults to `[NSDate
+	 * distantPast]`.
 	 */
 	// + (FBAccessTokenData *) createTokenFromString:(NSString *)accessToken
 	// permissions:(NSArray *)permissions
@@ -112,16 +115,16 @@ public class FBAccessTokenData extends NSObject {
 	 * 
 	 * @abstract Returns a dictionary representation of this instance.
 	 * 
-	 * @discussion This is provided for backwards compatibility with previous access token related APIs that used a NSDictionary (see
-	 * `FBSessionTokenCachingStrategy`).
+	 * @discussion This is provided for backwards compatibility with previous access token related APIs that used a NSDictionary
+	 * (see `FBSessionTokenCachingStrategy`).
 	 */
 	// - (NSMutableDictionary *) dictionary;
 	private static final Selector dictionary = Selector.register("dictionary");
 
 	@Bridge
-	private native static NSMutableDictionary objc_dictionary(FBAccessTokenData __self__, Selector __cmd__);
+	private native static NSMutableDictionary objc_dictionary (FBAccessTokenData __self__, Selector __cmd__);
 
-	public NSMutableDictionary getDictionary() {
+	public NSMutableDictionary getDictionary () {
 		return objc_dictionary(this, dictionary);
 	}
 
@@ -130,7 +133,8 @@ public class FBAccessTokenData extends NSObject {
 	 * 
 	 * @method
 	 * 
-	 * @abstract Returns a Boolean value that indicates whether a given object is an FBAccessTokenData object and exactly equal the receiver.
+	 * @abstract Returns a Boolean value that indicates whether a given object is an FBAccessTokenData object and exactly equal the
+	 * receiver.
 	 * 
 	 * @param accessTokenData the data to compare to the receiver.
 	 */
@@ -145,9 +149,9 @@ public class FBAccessTokenData extends NSObject {
 	private static final Selector accessToken = Selector.register("accessToken");
 
 	@Bridge
-	private native static String objc_accessToken(FBAccessTokenData __self__, Selector __cmd__);
+	private native static String objc_accessToken (FBAccessTokenData __self__, Selector __cmd__);
 
-	public String getAccessToken() {
+	public String getAccessToken () {
 		return objc_accessToken(this, accessToken);
 	}
 
@@ -160,9 +164,9 @@ public class FBAccessTokenData extends NSObject {
 	private static final Selector permissions = Selector.register("urlSchemeSuffix");
 
 	@Bridge
-	private native static NSArray objc_permissions(FBAccessTokenData __self__, Selector __cmd__);
+	private native static NSArray objc_permissions (FBAccessTokenData __self__, Selector __cmd__);
 
-	public NSArray getPermissions() {
+	public NSArray getPermissions () {
 		return objc_permissions(this, permissions);
 	}
 
@@ -182,9 +186,9 @@ public class FBAccessTokenData extends NSObject {
 	private static final Selector loginType = Selector.register("loginType");
 
 	@Bridge
-	private native static FBSessionLoginType objc_loginType(FBAccessTokenData __self__, Selector __cmd__);
+	private native static FBSessionLoginType objc_loginType (FBAccessTokenData __self__, Selector __cmd__);
 
-	public FBSessionLoginType getLoginType() {
+	public FBSessionLoginType getLoginType () {
 		return objc_loginType(this, loginType);
 	}
 
