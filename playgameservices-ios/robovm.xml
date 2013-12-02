@@ -1,0 +1,34 @@
+<config>
+  <executableName>${app.executable}</executableName>
+  <mainClass>${app.mainclass}</mainClass>
+  <os>ios</os>
+  <arch>thumbv7</arch>
+  <target>ios</target>
+  <iosInfoPList>Info.plist.xml</iosInfoPList>
+  <!-- Add a reference to this library to your RoboVM project. -->
+  <libs>
+  	  <lib>libs/GooglePlus.a</lib>
+  	  <lib>libs/GoogleOpenSource.a</lib>
+  	  <lib>libs/PlayGameServices.a</lib>
+  </libs>
+  <resources>
+    <resource>
+      <directory>resources</directory>
+      <skipPngCrush>true</skipPngCrush>
+    </resource>
+  </resources>
+	<!-- Add these frameworks to your RoboVM project. -->
+	<frameworks>
+		<framework>AssetsLibrary</framework>
+		<framework>CoreData</framework>
+		<framework>CoreLocation</framework>
+		<framework>CoreMotion</framework>
+		<framework>CoreText</framework>
+		<framework>MediaPlayer</framework>
+		<framework>QuartzCore</framework>
+		<framework>Security</framework>
+		<framework>SystemConfiguration</framework>
+		<framework>UIKit</framework>
+		<framework>CoreGraphics</framework>
+	</frameworks>
+</config>

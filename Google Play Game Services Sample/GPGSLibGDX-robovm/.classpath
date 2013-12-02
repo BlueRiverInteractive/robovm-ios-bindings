@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.robovm.eclipse.ROBOVM_CONTAINER"/>
+	<classpathentry kind="con" path="org.robovm.eclipse.ROBOVM_COCOA_TOUCH_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GPGSLibGDX"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-robovm.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/playgameservices-ios"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
