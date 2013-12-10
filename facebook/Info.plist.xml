@@ -44,7 +44,7 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>FacebookAppID</key>
-		<string>393925637379728</string>
+		<string>YOUR_FB_APP_ID</string>
 		<key>FacebookDisplayName</key>
 		<string>TestApp</string>
 		<key>CFBundleURLTypes</key>
@@ -52,7 +52,7 @@
 			<dict>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>fb393925637379728</string>
+					<string>fbYOUR_FB_APP_ID</string>
 				</array>
 				<key>CFBundleURLName</key>
 				<string></string>

@@ -48,8 +48,8 @@ import org.robovm.cocoatouch.uikit.UIWindow;
  * }
  * </pre> */
 public class Sample extends UIApplicationDelegate.Adapter {
-	private static final String APP_ID = "393925637379728";
-	private static final String APP_NAMESPACE = "picwords";
+	private static final String APP_ID = "YOUR_FB_APP_ID";
+	private static final String APP_NAMESPACE = "namespace";
 
 	private FacebookManager facebook;
 	private LoadingOverlay loadingOverlay;
