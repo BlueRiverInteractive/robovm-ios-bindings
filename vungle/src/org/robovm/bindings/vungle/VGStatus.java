@@ -6,14 +6,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum VGStatus implements ValuedEnum {
 	Okay(0), NetworkError(1), DiskError(2);
 
-	private final int n;
+	private final long n;
 
-	private VGStatus (int n) {
+	private VGStatus (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

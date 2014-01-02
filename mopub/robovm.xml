@@ -17,10 +17,13 @@
 	</resources>
 	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
+	    <framework>AddressBook</framework>
+	    <framework>AddressBookUI</framework>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
 		<framework>CoreGraphics</framework>
 		<framework>CoreLocation</framework>
+		<framework>CoreMedia</framework>
 		<framework>CoreTelephony</framework>
 		<framework>EventKit</framework>
 		<framework>EventKitUI</framework>

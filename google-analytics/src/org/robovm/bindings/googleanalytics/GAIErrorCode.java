@@ -10,13 +10,14 @@ public enum GAIErrorCode implements ValuedEnum {
 	PlayAdsInterstitialTypeMemory(1), // This error code indicates that there was a database-related error.
 	PlayAdsInterstitialTypeLight(2); // This error code indicates that there was a network-related error.
 
-	private final int n;
+	private final long n;
 
-	private GAIErrorCode (int n) {
+	private GAIErrorCode (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

@@ -16,6 +16,7 @@ import org.robovm.cocoatouch.uikit.UIStatusBarAnimation;
 import org.robovm.cocoatouch.uikit.UIStatusBarStyle;
 import org.robovm.cocoatouch.uikit.UIUserInterfaceLayoutDirection;
 import org.robovm.cocoatouch.uikit.UIWindow;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
@@ -23,12 +24,12 @@ import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.block.VoidBlock;
+import org.robovm.rt.bro.Struct;
 import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.ByVal;
 import org.robovm.rt.bro.annotation.Callback;
 import org.robovm.rt.bro.annotation.Library;
 import org.robovm.rt.bro.ptr.BytePtr;
-import org.robovm.rt.bro.ptr.Ptr;
 
 /** <div class="javadoc">
  * 
@@ -50,15 +51,15 @@ extends /* <extends> */UIResponder /* </extends> */
 	private static final ObjCClass objCClass = ObjCClass.getByType(/* <name> */UIApplication /* </name> */.class);
 
 	@Bridge
-	private native static int UIApplicationMain (int argc, Ptr<BytePtr> argv, String principalClassName, String delegateClassName);
+	private native static int UIApplicationMain (int argc, BytePtr.Ptr argv, String principalClassName, String delegateClassName);
 
 	public static <P extends UIApplication, D extends NSObject & UIApplicationDelegate> void main (String[] args,
 		Class<P> principalClass, Class<D> delegateClass) {
 
 		int argc = args.length;
-		Ptr<BytePtr> argv = null;
+		BytePtr.Ptr argv = null;
 		if (argc > 0) {
-			argv = Ptr.newPtr(BytePtr.class, argc);
+			argv = Struct.allocate(BytePtr.Ptr.class, argc);
 			for (int i = 0; i < argc; i++) {
 				// TODO: Encoding?
 				BytePtr arg = BytePtr.toBytePtrAsciiZ(args[i]);
@@ -644,16 +645,20 @@ extends /* <extends> */UIResponder /* </extends> */
 		.register("beginBackgroundTaskWithExpirationHandler:");
 
 	@Bridge
-	private native static int objc_beginBackgroundTask (UIApplication __self__, Selector __cmd__, VoidBlock handler);
+	private native static int objc_beginBackgroundTask (UIApplication __self__, Selector __cmd__, ObjCBlock handler);
 
 	@Bridge
-	private native static int objc_beginBackgroundTaskSuper (ObjCSuper __super__, Selector __cmd__, VoidBlock handler);
+	private native static int objc_beginBackgroundTaskSuper (ObjCSuper __super__, Selector __cmd__, ObjCBlock handler);
 
 	/** @see <a
 	 *      href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIKit_Framework/../UIApplication_Class/Reference/Reference.html#//apple_ref/occ/instm/UIApplication/beginBackgroundTaskWithExpirationHandler:">-
 	 *      (UIBackgroundTaskIdentifier)beginBackgroundTaskWithExpirationHandler:(void (^)(void))handler</a>
 	 * @since Available in iOS 4.0 and later. */
 	public int beginBackgroundTask (VoidBlock handler) {
+		return beginBackgroundTask(VoidBlock.Marshaler.toObjCBlock(handler));
+	}
+
+	protected int beginBackgroundTask (ObjCBlock handler) {
 		if (customClass) {
 			return objc_beginBackgroundTaskSuper(getSuper(), beginBackgroundTaskWithExpirationHandler$, handler);
 		} else {
@@ -1077,17 +1082,21 @@ extends /* <extends> */UIResponder /* </extends> */
 
 	@Bridge
 	private native static boolean objc_setKeepAliveTimeout (UIApplication __self__, Selector __cmd__, double timeout,
-		VoidBlock keepAliveHandler);
+		ObjCBlock keepAliveHandler);
 
 	@Bridge
 	private native static boolean objc_setKeepAliveTimeoutSuper (ObjCSuper __super__, Selector __cmd__, double timeout,
-		VoidBlock keepAliveHandler);
+		ObjCBlock keepAliveHandler);
 
 	/** @see <a
 	 *      href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIKit_Framework/../UIApplication_Class/Reference/Reference.html#//apple_ref/occ/instm/UIApplication/setKeepAliveTimeout:handler:">-
 	 *      (BOOL)setKeepAliveTimeout:(NSTimeInterval)timeout handler:(void (^)(void))keepAliveHandler</a>
 	 * @since Available in iOS 4.0 and later. */
 	public boolean setKeepAliveTimeout (double timeout, VoidBlock keepAliveHandler) {
+		return setKeepAliveTimeout(timeout, VoidBlock.Marshaler.toObjCBlock(keepAliveHandler));
+	}
+
+	protected boolean setKeepAliveTimeout (double timeout, ObjCBlock keepAliveHandler) {
 		if (customClass) {
 			return objc_setKeepAliveTimeoutSuper(getSuper(), setKeepAliveTimeout$handler$, timeout, keepAliveHandler);
 		} else {

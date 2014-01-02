@@ -17,14 +17,14 @@ public enum FBSessionLoginType implements ValuedEnum {
 	/* ! A test user was used to create an open session */
 	TestUser(5);
 
-	private final int n;
+	private final long n;
 
-	private FBSessionLoginType (int n) {
+	private FBSessionLoginType (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 

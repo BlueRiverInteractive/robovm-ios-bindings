@@ -11,14 +11,14 @@ public enum FBShareDialogResult implements ValuedEnum {
 	/* ! Indicates that the dialog could not be shown (because not on ios6 or ios6 auth was not used). */
 	Error(2);
 
-	private final int n;
+	private final long n;
 
-	private FBShareDialogResult (int n) {
+	private FBShareDialogResult (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

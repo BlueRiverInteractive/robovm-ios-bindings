@@ -17,8 +17,10 @@ import org.robovm.cocoatouch.uikit.UIWindow;
 
 /** Basic usage of banners and interstitials. */
 public class Sample extends UIApplicationDelegate.Adapter {
-	private static final String AD_UNIT_ID = "YOUR_AD_UNIT_ID";
+	private static final String INTERSTITIAL_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
+	private static final String BANNER_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
 	private UIViewController rootViewController;
+	private MPAdViewController adViewController;
 
 	@Override
 	public void didFinishLaunching (UIApplication application) {
@@ -26,7 +28,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		rootViewController = new UIViewController();
 
 		// Create an interstitial.
-		MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController(AD_UNIT_ID);
+		MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController(INTERSTITIAL_AD_UNIT_ID);
 		// The delegate for an interstitial is optional.
 		MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegate.Adapter() {
 			@Override
@@ -45,7 +47,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 			public void didLoadAd (MPInterstitialAdController interstitial) {
 				// If the ad is ready, show it.
 				// It's best to call these methods manually and not in didLoadAd(). Use this only for testing purposes!
-				if (interstitial.isReady()) interstitial.show(rootViewController);
+				if (interstitial.isReady()) interstitial.show(adViewController);
 			}
 
 			@Override
@@ -59,13 +61,13 @@ public class Sample extends UIApplicationDelegate.Adapter {
 // interstitial.loadAd();
 
 		// Create a MoPub ad. In this case a banner, but you can make it any size you want.
-		MPAdView banner = new MPAdView(AD_UNIT_ID, MPConstants.MOPUB_BANNER_SIZE);
+		MPAdView banner = new MPAdView(BANNER_AD_UNIT_ID, MPConstants.MOPUB_BANNER_SIZE);
 
 		// Let's calculate our banner size. We need to do this because the resolution of a retina and normal device is different.
 		float bannerWidth = UIScreen.getMainScreen().getApplicationFrame().size().width();
 		float bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
 
-		// Let's set the frame (boundings) of our banner view. Remember on iOS view coordinates have their origin top-left.
+		// Let's set the frame (bounds) of our banner view. Remember on iOS view coordinates have their origin top-left.
 		// Position banner on the top.
 		// banner.setFrame(new CGRect(0, 0, bannerWidth, bannerHeight));
 		// Position banner on the bottom.
@@ -75,7 +77,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		banner.setBackgroundColor(new UIColor(1, 0, 0, 1)); // Remove this after testing.
 
 		// We use our custom ad view controller to notify for orientation changes.
-		final MPAdViewController adViewController = new MPAdViewController(banner);
+		adViewController = new MPAdViewController(banner);
 
 		// The delegate for the banner. It is required to override getViewController() to get ads.
 		MPAdViewDelegate bannerDelegate = new MPAdViewDelegate.Adapter() {
@@ -90,6 +92,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// Finally load a banner ad. This ad gets refreshed automatically, although you can refresh it at any time via refreshAd().
 		banner.loadAd();
 
+		// We add the ad view controller to our root view controller.
 		rootViewController.addChildViewController(adViewController);
 		rootViewController.getView().addSubview(adViewController.getView());
 
@@ -99,7 +102,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		window.makeKeyAndVisible();
 
 		// If you are already using a UIWindow with a root view controller, you can do the following (f.e. LibGDX):
-		// ((IOSApplication)Gdx.app).getUIViewController().getView().addSubview(interstitialViewController.getView());
+		// UIApplication.getSharedApplication().getKeyWindow().addSubview(adViewController.getView());
 	}
 
 	public static void main (String[] argv) {

@@ -65,19 +65,22 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// Create a Facebook configuration.
 		FacebookConfiguration fbConfiguration = new FacebookConfiguration.Builder().setAppId(APP_ID).setNamespace(APP_NAMESPACE)
 			.setPermissions(fbPermissions).setDefaultAudience(FBSessionDefaultAudience.Everyone)
-			.setLoginBehavior(FBSessionLoginBehavior.NoFallbackToWebView).build();
+			.setLoginBehavior(FBSessionLoginBehavior.UseSystemAccountIfPresent).build();
 		facebook.setConfiguration(fbConfiguration);
 
 		// Create our sample UI.
 		loadingOverlay = new LoadingOverlay(UIScreen.getMainScreen().getApplicationFrame(), "Loading...");
 
 		UIWindow window = new UIWindow(UIScreen.getMainScreen().getApplicationFrame());
-		window.makeKeyAndVisible();
+
 		final UIViewController viewController = new UIViewController();
 
 		final UIButton loginButton = new UIButton(new CGRect(10, 10, 200, 30));
 		loginButton.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
-		loginButton.setTitle("Login", UIControlState.Normal);
+		if (!facebook.isLogged())
+			loginButton.setTitle("Login", UIControlState.Normal);
+		else
+			loginButton.setTitle("Logout", UIControlState.Normal);
 		loginButton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
 			public void onTouchUpInside (UIControl control, UIEvent event) {
@@ -222,7 +225,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		});
 
 		UIView view = new UIView(UIScreen.getMainScreen().getApplicationFrame());
-		view.setBackgroundColor(UIColor.blackColor());
+		view.setBackgroundColor(UIColor.lightGrayColor());
 		view.addSubview(loginButton);
 		view.addSubview(publishButton);
 		view.addSubview(boton3);
@@ -234,6 +237,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		viewController.setView(view);
 
 		window.setRootViewController(viewController);
+		window.makeKeyAndVisible();
 	}
 
 	@Override
@@ -242,13 +246,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 	}
 
 	@Override
-	public boolean handleOpenURL (UIApplication application, NSURL url) {
-		return facebook.handleOpenUrl(url);
-	}
-
-	@Override
 	public boolean openURL (UIApplication application, NSURL url, String sourceApplication, NSObject annotation) {
-		return true;
+		return facebook.handleOpenUrl(url, sourceApplication);
 	}
 
 	public static void main (String[] argv) {

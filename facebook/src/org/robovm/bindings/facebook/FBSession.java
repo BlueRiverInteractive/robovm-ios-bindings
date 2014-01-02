@@ -8,6 +8,7 @@ import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.cocoatouch.foundation.NSURL;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -228,14 +229,13 @@ public class FBSession extends NSObject {
 	 * 
 	 * @param handler A block to call with the state changes. The default is nil.
 	 */
-	// - (void)openWithCompletionHandler:(FBSessionStateHandler)handler;
 	private static final Selector openWithCompletionHandler$ = Selector.register("openWithCompletionHandler:");
 
 	@Bridge
-	private native static void objc_openWithCompletionHandler$ (FBSession __self__, Selector __cmd__, FBSessionStateHandler handler);
+	private native static void objc_openWithCompletionHandler$ (FBSession __self__, Selector __cmd__, ObjCBlock handler);
 
 	public void open (FBSessionStateHandler stateHandler) {
-		objc_openWithCompletionHandler$(this, openWithCompletionHandler$, stateHandler);
+		objc_openWithCompletionHandler$(this, openWithCompletionHandler$, FBSessionStateHandler.Marshaler.toObjCBlock(stateHandler));
 	}
 
 	/*
@@ -259,16 +259,15 @@ public class FBSession extends NSObject {
 	 * 
 	 * @param handler A block to call with session state changes. The default is nil.
 	 */
-	// - (void)openWithBehavior:(FBSessionLoginBehavior)behavior
-	// completionHandler:(FBSessionStateHandler)handler;
 	private static final Selector openWithBehavior$completionHandler$ = Selector.register("openWithBehavior:completionHandler:");
 
 	@Bridge
 	private native static void objc_openWithBehavior$completionHandler$ (FBSession __self__, Selector __cmd__,
-		FBSessionLoginBehavior behavior, FBSessionStateHandler handler);
+		FBSessionLoginBehavior behavior, ObjCBlock handler);
 
 	public void open (FBSessionLoginBehavior behavior, FBSessionStateHandler stateHandler) {
-		objc_openWithBehavior$completionHandler$(this, openWithBehavior$completionHandler$, behavior, stateHandler);
+		objc_openWithBehavior$completionHandler$(this, openWithBehavior$completionHandler$, behavior,
+			FBSessionStateHandler.Marshaler.toObjCBlock(stateHandler));
 	}
 
 	/*
@@ -348,7 +347,7 @@ public class FBSession extends NSObject {
 
 	@Bridge
 	private native static void objc_requestNewReadPermissions$completionHandler$ (FBSession __self__, Selector __cmd__,
-		NSArray<NSString> readPermissions, FBSessionRequestPermissionResultHandler handler);
+		NSArray<NSString> readPermissions, ObjCBlock handler);
 
 	public void requestNewReadPermissions (List<String> readPermissions, FBSessionRequestPermissionResultHandler handler) {
 		List<NSString> permissions = new ArrayList<NSString>();
@@ -356,7 +355,7 @@ public class FBSession extends NSObject {
 			permissions.add(new NSString(readPermissions.get(i)));
 		}
 		objc_requestNewReadPermissions$completionHandler$(this, requestNewReadPermissions$completionHandler$,
-			new NSArray<NSString>(permissions), handler);
+			new NSArray<NSString>(permissions), FBSessionRequestPermissionResultHandler.Marshaler.toObjCBlock(handler));
 	}
 
 	/*
@@ -379,8 +378,7 @@ public class FBSession extends NSObject {
 
 	@Bridge
 	private native static void objc_requestNewPublishPermissions$defaultAudience$completionHandler$ (FBSession __self__,
-		Selector __cmd__, NSArray<NSString> publishPermissions, FBSessionDefaultAudience defaultAudience,
-		FBSessionRequestPermissionResultHandler handler);
+		Selector __cmd__, NSArray<NSString> publishPermissions, FBSessionDefaultAudience defaultAudience, ObjCBlock handler);
 
 	public void requestNewPublishPermissions (List<String> publishPermissions, FBSessionDefaultAudience defaultAudience,
 		FBSessionRequestPermissionResultHandler handler) {
@@ -391,7 +389,8 @@ public class FBSession extends NSObject {
 		NSArray<NSString> p = new NSArray<NSString>(permissions);
 
 		objc_requestNewPublishPermissions$defaultAudience$completionHandler$(this,
-			requestNewPublishPermissions$defaultAudience$completionHandler$, p, defaultAudience, handler);
+			requestNewPublishPermissions$defaultAudience$completionHandler$, p, defaultAudience,
+			FBSessionRequestPermissionResultHandler.Marshaler.toObjCBlock(handler));
 	}
 
 	/*
@@ -437,15 +436,13 @@ public class FBSession extends NSObject {
 	 * session (e.g., using the `open*`) but still want to assign a `FBSessionStateHandler` block. This can happen when the SDK
 	 * opens a session from an app link.
 	 */
-	// - (void)setStateChangeHandler:(FBSessionStateHandler)stateChangeHandler;
 	private static final Selector setStateChangeHandler$ = Selector.register("setStateChangeHandler:");
 
 	@Bridge
-	private native static void objc_setStateChangeHandler$ (FBSession __self__, Selector __cmd__,
-		FBSessionStateHandler stateChangeHandler);
+	private native static void objc_setStateChangeHandler$ (FBSession __self__, Selector __cmd__, ObjCBlock stateChangeHandler);
 
 	public void setStateChangeHandler (FBSessionStateHandler stateChangeHandler) {
-		objc_setStateChangeHandler$(this, setStateChangeHandler$, stateChangeHandler);
+		objc_setStateChangeHandler$(this, setStateChangeHandler$, FBSessionStateHandler.Marshaler.toObjCBlock(stateChangeHandler));
 	}
 
 	/*
@@ -504,7 +501,7 @@ public class FBSession extends NSObject {
 
 	@Bridge
 	private native static boolean objc_openActiveSessionWithReadPermissions$allowLoginUI$completionHandler$ (ObjCClass __self__,
-		Selector __cmd__, NSArray<NSString> readPermissions, boolean allowLoginUI, FBSessionStateHandler stateChangeHandler);
+		Selector __cmd__, NSArray<NSString> readPermissions, boolean allowLoginUI, ObjCBlock stateChangeHandler);
 
 	public static boolean openForRead (List<String> readPermissions, boolean allowLoginUI, FBSessionStateHandler stateChangeHandler) {
 		List<NSString> permissions = new ArrayList<NSString>();
@@ -514,7 +511,7 @@ public class FBSession extends NSObject {
 
 		return objc_openActiveSessionWithReadPermissions$allowLoginUI$completionHandler$(objCClass,
 			openActiveSessionWithReadPermissions$allowLoginUI$completionHandler$, new NSArray<NSString>(permissions), allowLoginUI,
-			stateChangeHandler);
+			FBSessionStateHandler.Marshaler.toObjCBlock(stateChangeHandler));
 	}
 
 	/*
@@ -555,7 +552,7 @@ public class FBSession extends NSObject {
 	@Bridge
 	private native static boolean objc_openActiveSessionWithPublishPermissions$defaultAudience$allowLoginUI$completionHandler$ (
 		ObjCClass __self__, Selector __cmd__, NSArray<NSString> publishPermissions, FBSessionDefaultAudience defaultAudience,
-		boolean allowLoginUI, FBSessionStateHandler stateChangeHandler);
+		boolean allowLoginUI, ObjCBlock stateChangeHandler);
 
 	public static boolean openForPublish (List<String> publishPermissions, FBSessionDefaultAudience defaultAudience,
 		boolean allowLoginUI, FBSessionStateHandler stateChangeHandler) {
@@ -566,7 +563,7 @@ public class FBSession extends NSObject {
 
 		return objc_openActiveSessionWithPublishPermissions$defaultAudience$allowLoginUI$completionHandler$(objCClass,
 			openActiveSessionWithPublishPermissions$defaultAudience$allowLoginUI$completionHandler$, new NSArray<NSString>(
-				permissions), defaultAudience, allowLoginUI, stateChangeHandler);
+				permissions), defaultAudience, allowLoginUI, FBSessionStateHandler.Marshaler.toObjCBlock(stateChangeHandler));
 	}
 
 	/*

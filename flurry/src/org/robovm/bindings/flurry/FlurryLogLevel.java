@@ -16,14 +16,14 @@ public enum FlurryLogLevel implements ValuedEnum {
 	/** Outputs all log events. */
 	All(3);
 
-	private final int n;
+	private final long n;
 
-	private FlurryLogLevel (int n) {
+	private FlurryLogLevel (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

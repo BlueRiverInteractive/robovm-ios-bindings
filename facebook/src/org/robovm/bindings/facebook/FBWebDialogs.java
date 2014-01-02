@@ -7,6 +7,7 @@ import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.cocoatouch.foundation.NSMutableDictionary;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -45,16 +46,12 @@ public class FBWebDialogs extends NSObject {
 	 * @param handler An optional handler that will be called when the dialog is dismissed. Note, that if the method returns NO,
 	 * the handler is not called. May be nil.
 	 */
-	// + (void)presentDialogModallyWithSession:(FBSession *)session
-	// dialog:(NSString *)dialog
-	// parameters:(NSDictionary *)parameters
-	// handler:(FBWebDialogHandler)handler;
 	private static final Selector presentDialogModallyWithSession$dialog$parameters$handler$ = Selector
 		.register("presentDialogModallyWithSession:dialog:parameters:handler:");
 
 	@Bridge
 	private native static void objc_presentDialogModallyWithSession$dialog$parameters$handler$ (ObjCClass __self__,
-		Selector __cmd__, FBSession session, String dialog, NSDictionary<NSString, NSString> parameters, FBWebDialogHandler handler);
+		Selector __cmd__, FBSession session, String dialog, NSDictionary<NSString, NSString> parameters, ObjCBlock handler);
 
 	public static void presentShareDialog (FBSession session, String dialog, Map<String, String> parameters,
 		FBWebDialogHandler handler) {
@@ -63,7 +60,8 @@ public class FBWebDialogs extends NSObject {
 			params.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
 		}
 		objc_presentDialogModallyWithSession$dialog$parameters$handler$(objCClass,
-			presentDialogModallyWithSession$dialog$parameters$handler$, session, dialog, params, handler);
+			presentDialogModallyWithSession$dialog$parameters$handler$, session, dialog, params,
+			FBWebDialogHandler.Marshaler.toObjCBlock(handler));
 	}
 
 	/*
@@ -106,18 +104,13 @@ public class FBWebDialogs extends NSObject {
 	 * 
 	 * @param handler An optional handler that will be called when the dialog is dismissed. May be nil.
 	 */
-	// + (void)presentRequestsDialogModallyWithSession:(FBSession *)session
-	// message:(NSString *)message
-	// title:(NSString *)title
-	// parameters:(NSDictionary *)parameters
-	// handler:(FBWebDialogHandler)handler;
 	private static final Selector presentRequestsDialogModallyWithSession$message$title$parameters$handler$ = Selector
 		.register("presentRequestsDialogModallyWithSession:message:title:parameters:handler:");
 
 	@Bridge
 	private native static void objc_presentRequestsDialogModallyWithSession$message$title$parameters$handler$ (ObjCClass __self__,
 		Selector __cmd__, FBSession session, String message, String title, NSDictionary<NSString, NSString> parameters,
-		FBWebDialogHandler handler);
+		ObjCBlock handler);
 
 	public static void presentRequestDialog (FBSession session, String message, String title, Map<String, String> parameters,
 		FBWebDialogHandler handler) {
@@ -126,7 +119,8 @@ public class FBWebDialogs extends NSObject {
 			params.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
 		}
 		objc_presentRequestsDialogModallyWithSession$message$title$parameters$handler$(objCClass,
-			presentRequestsDialogModallyWithSession$message$title$parameters$handler$, session, message, title, params, handler);
+			presentRequestsDialogModallyWithSession$message$title$parameters$handler$, session, message, title, params,
+			FBWebDialogHandler.Marshaler.toObjCBlock(handler));
 	}
 
 	/*

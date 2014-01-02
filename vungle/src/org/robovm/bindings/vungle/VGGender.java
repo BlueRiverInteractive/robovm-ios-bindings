@@ -6,14 +6,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum VGGender implements ValuedEnum {
 	Unknown(0), VGGenderMale(1), VGGenderFemale(2);
 
-	private final int n;
+	private final long n;
 
-	private VGGender (int n) {
+	private VGGender (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

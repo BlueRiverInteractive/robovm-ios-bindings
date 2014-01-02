@@ -6,14 +6,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum VGAdOrientation implements ValuedEnum {
 	Unknown(0), Portrait(1), Landscape(2);
 
-	private final int n;
+	private final long n;
 
-	private VGAdOrientation (int n) {
+	private VGAdOrientation (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

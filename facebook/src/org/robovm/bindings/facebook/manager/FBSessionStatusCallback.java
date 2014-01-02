@@ -2,6 +2,7 @@
 package org.robovm.bindings.facebook.manager;
 
 import org.robovm.bindings.facebook.FBSession;
+import org.robovm.bindings.facebook.FBSessionLoginBehavior;
 import org.robovm.bindings.facebook.FBSessionState;
 import org.robovm.bindings.facebook.FBSessionStateHandler;
 import org.robovm.bindings.facebook.manager.FacebookManager.ExtendPermissionsListener;
@@ -24,6 +25,13 @@ public class FBSessionStatusCallback implements FBSessionStateHandler {
 			if (error.toString().contains("Code=2")) {
 				System.out.println(TAG + "User canceled login dialog.");
 				if (session.getPermissions().size() == 0) {
+					if (FacebookManager.getInstance().getConfiguration().getSessionLoginBehavior() != FBSessionLoginBehavior.ForcingWebView
+						&& FacebookManager.getInstance().getConfiguration().getSessionLoginBehavior() != FBSessionLoginBehavior.FallbackToWebView
+						&& SLComposeViewController.isAvailable(SLComposeViewController.ServiceTypeFacebook)) {
+						FacebookManager.getInstance().getConfiguration()
+							.setSessionLoginBehavior(FBSessionLoginBehavior.FallbackToWebView);
+					}
+
 					if (loginListener != null) loginListener.onNotAcceptingPermissions();
 				}
 			} else if (loginListener != null) {
@@ -47,7 +55,7 @@ public class FBSessionStatusCallback implements FBSessionStateHandler {
 			break;
 		case Open:
 			if (extendPermissionsListener != null) {
-
+				// TODO is this ever happening? Don't think it should
 			} else {
 				System.out.println(FacebookManager.TAG + "Successfully logged in!");
 				if (loginListener != null) loginListener.onLogin();

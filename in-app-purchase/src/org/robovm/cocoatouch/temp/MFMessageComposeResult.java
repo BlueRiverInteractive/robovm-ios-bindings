@@ -6,14 +6,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum MFMessageComposeResult implements ValuedEnum {
 	Cancelled(0), Sent(1), Failed(2);
 
-	private final int n;
+	private final long n;
 
-	private MFMessageComposeResult (int n) {
+	private MFMessageComposeResult (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

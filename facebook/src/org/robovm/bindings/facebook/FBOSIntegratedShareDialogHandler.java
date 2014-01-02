@@ -5,8 +5,6 @@ import org.robovm.cocoatouch.foundation.NSError;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCBlock.Wrapper;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Marshaler;
-import org.robovm.rt.bro.annotation.Pointer;
 
 /*!
  @typedef
@@ -14,7 +12,6 @@ import org.robovm.rt.bro.annotation.Pointer;
  @abstract Defines a handler that will be called in response to the native share dialog
  being displayed.
  */
-@Marshaler(FBOSIntegratedShareDialogHandler.Marshaler.class)
 public interface FBOSIntegratedShareDialogHandler {
 	void invoke (FBShareDialogResult result, NSError error);
 
@@ -28,12 +25,8 @@ public interface FBOSIntegratedShareDialogHandler {
 	static class Marshaler {
 		private static final Wrapper WRAPPER = new Wrapper(Callbacks.class);
 
-		public static @Pointer
-		long toNative (Object o) {
-			return WRAPPER.toNative(o);
-		}
-
-		public static void updateObject (Object o, long handle) {
+		public static ObjCBlock toObjCBlock (FBOSIntegratedShareDialogHandler o) {
+			return WRAPPER.toObjCBlock(o);
 		}
 	}
 }

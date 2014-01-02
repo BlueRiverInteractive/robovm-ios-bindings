@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.robovm.bindings.facebook.FBAppCall;
 import org.robovm.bindings.facebook.FBRequest;
 import org.robovm.bindings.facebook.FBRequestConnection;
 import org.robovm.bindings.facebook.FBRequestHandler;
@@ -43,6 +46,45 @@ public class FacebookManager {
 	private FacebookConfiguration configuration = new FacebookConfiguration.Builder().build();
 	private FBSessionStatusCallback sessionStatusCallback;
 
+	private final LoginListener defaultLoginListener = new LoginListener() {
+		@Override
+		public void onFail (String reason) {
+		}
+
+		@Override
+		public void onException (NSError throwable) {
+		}
+
+		@Override
+		public void onRequest () {
+		}
+
+		@Override
+		public void onNotAcceptingPermissions () {
+		}
+
+		@Override
+		public void onLogin () {
+		}
+	};
+	private final LogoutListener defaultLogoutListener = new LogoutListener() {
+		@Override
+		public void onFail (String reason) {
+		}
+
+		@Override
+		public void onException (NSError throwable) {
+		}
+
+		@Override
+		public void onRequest () {
+		}
+
+		@Override
+		public void onLogout () {
+		}
+	};
+
 	private FacebookManager () {
 		sessionStatusCallback = new FBSessionStatusCallback();
 	}
@@ -60,6 +102,10 @@ public class FacebookManager {
 	 * @param configuration */
 	public void setConfiguration (FacebookConfiguration configuration) {
 		this.configuration = configuration;
+	}
+
+	public FacebookConfiguration getConfiguration () {
+		return configuration;
 	}
 
 	/** Login to Facebook.
@@ -87,7 +133,10 @@ public class FacebookManager {
 
 			System.out.println(TAG + "Registering session status callback...");
 			sessionStatusCallback = new FBSessionStatusCallback();
-			sessionStatusCallback.loginListener = loginListener;
+			if (loginListener != null)
+				sessionStatusCallback.loginListener = loginListener;
+			else
+				sessionStatusCallback.loginListener = defaultLoginListener;
 			session.setStateChangeHandler(sessionStatusCallback);
 
 			// If session is not opened, open it.
@@ -108,7 +157,11 @@ public class FacebookManager {
 		if (isLogged()) {
 			FBSession session = FBSession.getActiveSession();
 			if (session != null && session.getState() != FBSessionState.Closed) {
-				sessionStatusCallback.logoutListener = logoutListener;
+				if (logoutListener != null)
+					sessionStatusCallback.logoutListener = logoutListener;
+				else
+					sessionStatusCallback.logoutListener = defaultLogoutListener;
+
 				session.close(true);
 				session.setStateChangeHandler(null);
 
@@ -131,9 +184,7 @@ public class FacebookManager {
 	public boolean isLogged () {
 		FBSession session = FBSession.getActiveSession();
 		if (session == null) {
-			if (session == null) {
-				session = new FBSession.Builder().setApplicationId(configuration.getAppId()).build();
-			}
+			session = new FBSession.Builder().setApplicationId(configuration.getAppId()).build();
 			FBSession.setActiveSession(session);
 		}
 		if (session.isOpen()) {
@@ -184,7 +235,6 @@ public class FacebookManager {
 				};
 				extendReadPermissions();
 			} else {
-
 				FBRequest request = new FBRequest(FBSession.getActiveSession(), "me", null, HttpMethod.GET);
 				request.start(new FBRequestHandler() {
 					@Override
@@ -918,8 +968,15 @@ public class FacebookManager {
 		request.start(new FBRequestHandler() {
 			@Override
 			public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
-				NSDictionary graphObject = (NSDictionary)result;
+				NSDictionary<NSString, NSString> graphObject = (NSDictionary<NSString, NSString>)result;
 				if (graphObject != null) {
+					// convert NSString in the graph object to String
+					Map<String, String> graphObjectJava = new HashMap<String, String>();
+					Set<Entry<NSString, NSString>> set = graphObject.entrySet();
+					for (Entry<NSString, NSString> entry : set) {
+						graphObjectJava.put(entry.getKey().toString(), entry.getValue().toString());
+					}
+
 					JSONObject graphResponse = new JSONObject(graphObject);
 					String postId = null;
 					try {
@@ -927,7 +984,6 @@ public class FacebookManager {
 					} catch (JSONException e) {
 						System.out.println("JSON error" + e);
 					}
-
 					if (error != null) {
 						System.out.println("Failed to publish" + error.description());
 
@@ -1119,6 +1175,20 @@ public class FacebookManager {
 	private void openSession (boolean read) {
 		System.out.println(TAG + "Opening session...");
 
+		// Ensure that the status callback will not cause null pointer exceptions.
+		if (sessionStatusCallback == null) {
+			sessionStatusCallback = new FBSessionStatusCallback();
+			sessionStatusCallback.loginListener = defaultLoginListener;
+			sessionStatusCallback.logoutListener = defaultLogoutListener;
+		} else {
+			if (sessionStatusCallback.loginListener == null) {
+				sessionStatusCallback.loginListener = defaultLoginListener;
+			}
+			if (sessionStatusCallback.logoutListener == null) {
+				sessionStatusCallback.logoutListener = defaultLogoutListener;
+			}
+		}
+
 		if (read) {
 			FBSession.openForRead(configuration.getReadPermissions(), configuration.getSessionLoginBehavior().value() != 2,
 				sessionStatusCallback);
@@ -1134,9 +1204,9 @@ public class FacebookManager {
 		FBSession session = FBSession.getActiveSession();
 		if (session != null && session.getState().equals(FBSessionState.CreatedTokenLoaded)) {
 			List<String> permissions = session.getPermissions();
-			if (permissions.containsAll(configuration.getPublishPermissions())) {
+			if (permissions.containsAll(configuration.getPublishPermissions()) && configuration.getPublishPermissions().size() > 0) {
 				openSession(false);
-			} else if (permissions.containsAll(configuration.getReadPermissions())) {
+			} else if (permissions.containsAll(configuration.getReadPermissions()) && configuration.getReadPermissions().size() > 0) {
 				openSession(true);
 			}
 		}
@@ -1157,23 +1227,30 @@ public class FacebookManager {
 
 	/** Extend and ask user for PUBLISH permissions. */
 	public void extendPublishPermissions () {
+		extendPublishPermissions(new FBSessionRequestPermissionResultHandler() {
+			@Override
+			public void invoke (final FBSession session, final NSError error) {
+				System.out.println(TAG + "Extended publish permissions request finished!");
+			}
+		});
+	}
+
+	/** Extend and ask user for PUBLISH permissions. */
+	public void extendPublishPermissions (FBSessionRequestPermissionResultHandler handler) {
 		System.out.println(TAG + "Asking for extended publish permission...");
 
 		FBSession.getActiveSession().requestNewPublishPermissions(configuration.getPublishPermissions(),
-			configuration.getSessionDefaultAudience(), new FBSessionRequestPermissionResultHandler() {
-				@Override
-				public void invoke (final FBSession session, final NSError error) {
-					System.out.println(TAG + "Extended publish permissions request finished!");
-				}
-			});
+			configuration.getSessionDefaultAudience(), handler);
 	}
 
 	public void handleDidBecomeActive () {
 		FBSession.getActiveSession().handleDidBecomeActive();
 	}
 
-	public boolean handleOpenUrl (NSURL url) {
-		return FBSession.getActiveSession().handleOpenURL(url);
+	public boolean handleOpenUrl (NSURL url, String sourceApplication) {
+		FBAppCall.handleOpenURL(url, sourceApplication);
+// FBSession.getActiveSession().handleOpenURL(url); TODO
+		return true;
 	}
 
 	public interface ExtendPermissionsListener extends ActionListener {

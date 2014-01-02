@@ -29,14 +29,14 @@ public enum FBSessionState implements ValuedEnum {
 	 */
 	Closed(2 | (1 << 8));
 
-	private final int n;
+	private final long n;
 
-	private FBSessionState (int n) {
+	private FBSessionState (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

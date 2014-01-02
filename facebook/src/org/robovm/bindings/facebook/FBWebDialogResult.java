@@ -21,14 +21,14 @@ public enum FBWebDialogResult implements ValuedEnum {
 	 */
 	NotCompleted(1);
 
-	private final int n;
+	private final long n;
 
-	private FBWebDialogResult (int n) {
+	private FBWebDialogResult (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

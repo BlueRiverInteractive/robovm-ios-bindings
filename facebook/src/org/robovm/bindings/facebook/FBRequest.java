@@ -7,6 +7,7 @@ import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.cocoatouch.foundation.NSMutableDictionary;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -254,10 +255,10 @@ public class FBRequest extends NSObject {
 
 	@Bridge
 	private native static FBRequestConnection objc_startWithCompletionHandler$ (FBRequest __self__, Selector __cmd__,
-		FBRequestHandler handler);
+		ObjCBlock handler);
 
 	public FBRequestConnection start (FBRequestHandler handler) {
-		return objc_startWithCompletionHandler$(this, startWithCompletionHandler$, handler);
+		return objc_startWithCompletionHandler$(this, startWithCompletionHandler$, FBRequestHandler.Marshaler.toObjCBlock(handler));
 	}
 
 	/*

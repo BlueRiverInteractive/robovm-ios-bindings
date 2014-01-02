@@ -16,14 +16,14 @@ public enum AdColonyStatus implements ValuedEnum {
 	/** AdColony has not yet received the zone's configuration from the server. */
 	ADCOLONY_ZONE_STATUS_UNKNOWN(4);
 
-	private final int n;
+	private final long n;
 
-	private AdColonyStatus (int n) {
+	private AdColonyStatus (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

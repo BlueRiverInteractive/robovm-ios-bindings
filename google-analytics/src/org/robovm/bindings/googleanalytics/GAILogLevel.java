@@ -7,13 +7,14 @@ public enum GAILogLevel implements ValuedEnum {
 
 	kGAILogLevelNone(0), kGAILogLevelError(1), kGAILogLevelWarning(2), kGAILogLevelInfo(3), kGAILogLevelVerbose(4);
 
-	private final int n;
+	private final long n;
 
-	private GAILogLevel (int n) {
+	private GAILogLevel (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

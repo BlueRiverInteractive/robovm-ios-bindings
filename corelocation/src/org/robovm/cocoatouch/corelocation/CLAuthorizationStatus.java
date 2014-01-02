@@ -7,14 +7,14 @@ public enum CLAuthorizationStatus implements ValuedEnum {
 	kCLAuthorizationStatusNotDetermined(0), kCLAuthorizationStatusRestricted(1), kCLAuthorizationStatusDenied(2), kCLAuthorizationStatusAuthorized(
 		3);
 
-	private final int n;
+	private final long n;
 
-	private CLAuthorizationStatus (int n) {
+	private CLAuthorizationStatus (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 

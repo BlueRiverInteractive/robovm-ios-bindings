@@ -6,8 +6,6 @@ import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCBlock.Wrapper;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Marshaler;
-import org.robovm.rt.bro.annotation.Pointer;
 
 /*!
  @typedef FBRequestHandler
@@ -28,7 +26,6 @@ import org.robovm.rt.bro.annotation.Pointer;
 
  @param error           The `NSError` representing any error that occurred.
  */
-@Marshaler(FBRequestHandler.Marshaler.class)
 public interface FBRequestHandler {
 	/** Runs this block. */
 	void invoke (FBRequestConnection connection, NSObject result, NSError error);
@@ -43,12 +40,8 @@ public interface FBRequestHandler {
 	static class Marshaler {
 		private static final Wrapper WRAPPER = new Wrapper(Callbacks.class);
 
-		public static @Pointer
-		long toNative (Object o) {
-			return WRAPPER.toNative(o);
-		}
-
-		public static void updateObject (Object o, long handle) {
+		public static ObjCBlock toObjCBlock (FBRequestHandler o) {
+			return WRAPPER.toObjCBlock(o);
 		}
 	}
 }

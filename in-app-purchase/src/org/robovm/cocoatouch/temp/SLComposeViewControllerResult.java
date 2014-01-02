@@ -6,14 +6,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum SLComposeViewControllerResult implements ValuedEnum {
 	Cancelled(0), Done(1);
 
-	private final int n;
+	private final long n;
 
-	private SLComposeViewControllerResult (int n) {
+	private SLComposeViewControllerResult (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

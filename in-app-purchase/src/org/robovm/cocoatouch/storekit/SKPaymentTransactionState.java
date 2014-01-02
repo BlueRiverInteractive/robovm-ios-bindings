@@ -9,14 +9,14 @@ public enum SKPaymentTransactionState implements ValuedEnum {
 	Failed(2), // Transaction was cancelled or failed before being added to the server queue.
 	Restored(3); // Transaction was restored from user's purchase history. Client should complete the transaction.
 
-	private final int n;
+	private final long n;
 
-	private SKPaymentTransactionState (int n) {
+	private SKPaymentTransactionState (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }
