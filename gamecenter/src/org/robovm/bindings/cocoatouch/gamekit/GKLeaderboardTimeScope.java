@@ -6,13 +6,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum GKLeaderboardTimeScope implements ValuedEnum {
 	GKLeaderboardTimeScopeToday(0), GKLeaderboardTimeScopeWeek(1), GKLeaderboardTimeScopeAllTime(2);
 
-	private final int n;
+	private final long n;
 
-	private GKLeaderboardTimeScope (int n) {
+	private GKLeaderboardTimeScope (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

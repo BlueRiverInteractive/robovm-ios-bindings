@@ -6,14 +6,9 @@ import org.robovm.cocoatouch.foundation.NSError;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCBlock.Wrapper;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Marshaler;
-import org.robovm.rt.bro.annotation.Pointer;
 
-//typedef void (^GPGLeaderboardLoadScoresBlock)(NSArray *scores, NSError *error);
-@Marshaler(GPGLeaderboardLoadScoresBlock.Marshaler.class)
 public interface GPGLeaderboardLoadScoresBlock {
 
-	/** Runs this block. */
 	void invoke (NSArray<GPGScore> scores, NSError error);
 
 	static class Callbacks {
@@ -27,12 +22,8 @@ public interface GPGLeaderboardLoadScoresBlock {
 	static class Marshaler {
 		private static final Wrapper WRAPPER = new Wrapper(Callbacks.class);
 
-		public static @Pointer
-		long toNative (Object o) {
-			return WRAPPER.toNative(o);
-		}
-
-		public static void updateObject (Object o, long handle) {
+		public static ObjCBlock toObjCBlock (GPGLeaderboardLoadScoresBlock o) {
+			return WRAPPER.toObjCBlock(o);
 		}
 	}
 }

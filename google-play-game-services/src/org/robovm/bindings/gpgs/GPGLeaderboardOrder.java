@@ -8,13 +8,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum GPGLeaderboardOrder implements ValuedEnum {
 	GPGLeaderboardOrderUnknown(-1), GPGLeaderboardOrderLargerIsBetter(0), GPGLeaderboardOrderSmallerIsBetter(1);
 
-	private final int n;
+	private final long n;
 
-	private GPGLeaderboardOrder (int n) {
+	private GPGLeaderboardOrder (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

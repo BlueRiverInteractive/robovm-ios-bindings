@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.cocoatouch.gamekit;
 
 import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSErrorBlock;
@@ -5,6 +6,7 @@ import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
 import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSDate;
 import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
@@ -186,11 +188,10 @@ public class GKAchievement extends NSObject {
 		.register("reportAchievementWithCompletionHandler:");
 
 	@Bridge
-	private native static void objc_reportAchievement (GKAchievement __self__, Selector __cmd__, VoidNSErrorBlock completionHandler);
+	private native static void objc_reportAchievement (GKAchievement __self__, Selector __cmd__, ObjCBlock completionHandler);
 
 	@Bridge
-	private native static void objc_reportAchievementSuper (ObjCSuper __super__, Selector __cmd__,
-		VoidNSErrorBlock completionHandler);
+	private native static void objc_reportAchievementSuper (ObjCSuper __super__, Selector __cmd__, ObjCBlock completionHandler);
 
 	/** Report this achievement to the server. Percent complete is required. Points, completed state are set based on
 	 * percentComplete. isHidden is set to NO anytime this method is invoqued. Date is optional. Error will be nil on success.
@@ -200,9 +201,11 @@ public class GKAchievement extends NSObject {
 	@Deprecated
 	public void reportAchievement (VoidNSErrorBlock completionHandler) {
 		if (customClass) {
-			objc_reportAchievementSuper(getSuper(), reportAchievementWithCompletionHandler, completionHandler);
+			objc_reportAchievementSuper(getSuper(), reportAchievementWithCompletionHandler,
+				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 		} else {
-			objc_reportAchievement(this, reportAchievementWithCompletionHandler, completionHandler);
+			objc_reportAchievement(this, reportAchievementWithCompletionHandler,
+				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 		}
 	}
 
@@ -214,7 +217,7 @@ public class GKAchievement extends NSObject {
 	@SuppressWarnings("rawtypes")
 	@Bridge
 	private native static void objc_reportAchievements (ObjCClass __self__, Selector __cmd__, NSArray achievements,
-		VoidNSErrorBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	/** Report an array of achievements to the server. Percent complete is required. Points, completed state are set based on
 	 * percentComplete. isHidden is set to NO anytime this method is invoked. Date is optional. Error will be nil on success.
@@ -224,7 +227,8 @@ public class GKAchievement extends NSObject {
 	 * @param completionHandler */
 	@SuppressWarnings("rawtypes")
 	public static void reportAchievements (NSArray achievements, VoidNSErrorBlock completionHandler) {
-		objc_reportAchievements(objCClass, reportAchievements$withCompletionHandler, achievements, completionHandler);
+		objc_reportAchievements(objCClass, reportAchievements$withCompletionHandler, achievements,
+			VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// + (void)loadAchievementsWithCompletionHandler:(void(^)(NSArray *achievements, NSError *error))completionHandler;
@@ -232,13 +236,13 @@ public class GKAchievement extends NSObject {
 		.register("loadAchievementsWithCompletionHandler:");
 
 	@Bridge
-	private native static void objc_loadAchievements (ObjCClass __self__, Selector __cmd__,
-		VoidNSArrayNSErrorBlock completionHandler);
+	private native static void objc_loadAchievements (ObjCClass __self__, Selector __cmd__, ObjCBlock completionHandler);
 
 	/** Asynchronously load all achievements for the local player
 	 * @param completionHandler */
 	public static void loadAchievements (VoidNSArrayNSErrorBlock completionHandler) {
-		objc_loadAchievements(objCClass, loadAchievementsWithCompletionHandler, completionHandler);
+		objc_loadAchievements(objCClass, loadAchievementsWithCompletionHandler,
+			VoidNSArrayNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// + (void)resetAchievementsWithCompletionHandler:(void(^)(NSError *error))completionHandler;
@@ -246,13 +250,14 @@ public class GKAchievement extends NSObject {
 		.register("resetAchievementsWithCompletionHandler:");
 
 	@Bridge
-	private native static void objc_resetAchievements (ObjCClass __self__, Selector __cmd__, VoidNSErrorBlock completionHandler);
+	private native static void objc_resetAchievements (ObjCClass __self__, Selector __cmd__, ObjCBlock completionHandler);
 
 	/** Reset the achievements progress for the local player. All the entries for the local player are removed from the server.
 	 * Error will be nil on success. Possible reasons for error: 1. Local player not authenticated 2. Communications failure
 	 * @param completionHandler */
 	public static void resetAchievements (VoidNSErrorBlock completionHandler) {
-		objc_resetAchievements(objCClass, resetAchievementsWithCompletionHandler, completionHandler);
+		objc_resetAchievements(objCClass, resetAchievementsWithCompletionHandler,
+			VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 }

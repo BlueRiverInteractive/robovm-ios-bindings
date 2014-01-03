@@ -3,6 +3,7 @@ package org.robovm.bindings.gpgs;
 
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -88,7 +89,7 @@ public class GPGAchievement extends NSObject {
 
 	@Bridge
 	private native static void objc_unlockAchievementWithCompletionHandler (GPGAchievement __self__, Selector __cmd__,
-		GPGAchievementDidUnlockBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	/** Initiates a request to mark this achievement as unlocked. If showsCompletionNotification is YES and this achievement has not
 	 * previously been unlocked, then an achievement completion notification will be shown immediately. The completionHandler block
@@ -99,7 +100,8 @@ public class GPGAchievement extends NSObject {
 	 * @param completionHandler (optional) A block of the form: ^(BOOL newlyUnlocked, NSError *error). newlyUnlocked will be YES if
 	 *           the achievement was newly unlocked after this request was made. */
 	public void unlockAchievementWithCompletionHandler (GPGAchievementDidUnlockBlock completionHandler) {
-		objc_unlockAchievementWithCompletionHandler(this, unlockAchievementWithCompletionHandler$, completionHandler);
+		objc_unlockAchievementWithCompletionHandler(this, unlockAchievementWithCompletionHandler$,
+			GPGAchievementDidUnlockBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (void)revealAchievementWithCompletionHandler:(GPGAchievementDidRevealBlock)completionHandler;
@@ -108,14 +110,15 @@ public class GPGAchievement extends NSObject {
 
 	@Bridge
 	private native static void objc_revealAchievementWithCompletionHandler (GPGAchievement __self__, Selector __cmd__,
-		GPGAchievementDidRevealBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	/** Initiates a request to reveal this achievement. The completionHandler block will be called upon completion of the request.
 	 * If the request fails in any way then the error parameter will be non-nil. If the device is offline when an achievement is
 	 * revealed then the achievement's state will be synced with the Google Play Games server once the Internet connection returns.
 	 * @param completionHandler (optional) A block of the form: ^(GPGAchievementState state, NSError *error). */
 	public void revealAchievementWithCompletionHandler (GPGAchievementDidRevealBlock completionHandler) {
-		objc_revealAchievementWithCompletionHandler(this, revealAchievementWithCompletionHandler$, completionHandler);
+		objc_revealAchievementWithCompletionHandler(this, revealAchievementWithCompletionHandler$,
+			GPGAchievementDidRevealBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (void)incrementAchievementNumSteps:(NSInteger)steps completionHandler:(GPGAchievementDidIncrementBlock)completionHandler;
@@ -124,7 +127,7 @@ public class GPGAchievement extends NSObject {
 
 	@Bridge
 	private native static void objc_incrementAchievementNumSteps (GPGAchievement __self__, Selector __cmd__, int steps,
-		GPGAchievementDidIncrementBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	/** Initiates a request to increment this achievement. The completionHandler block will be called upon completion of the
 	 * request. If the request fails in any way then the error parameter will be non-nil. If the device is offline when an
@@ -133,6 +136,7 @@ public class GPGAchievement extends NSObject {
 	 * @param steps The number of steps by which to increment this partial achievement.
 	 * @param completionHandler (optional) A block of the form: ^(BOOL newlyUnlocked, int currentSteps, NSError *error). */
 	public void incrementAchievementNumSteps (int steps, GPGAchievementDidIncrementBlock completionHandler) {
-		objc_incrementAchievementNumSteps(this, incrementAchievementNumSteps$, steps, completionHandler);
+		objc_incrementAchievementNumSteps(this, incrementAchievementNumSteps$, steps,
+			GPGAchievementDidIncrementBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 }

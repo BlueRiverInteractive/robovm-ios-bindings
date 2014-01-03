@@ -3,6 +3,7 @@ package org.robovm.bindings.gpgs;
 
 import org.robovm.bindings.gpp.GPPSignIn;
 import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -74,10 +75,10 @@ public class GPGManager extends NSObject {
 
 	@Bridge
 	private native static void objc_signIn (GPGManager __self__, Selector __cmd__, GPPSignIn signIn,
-		GPGReAuthenticationBlock reauthenticationBlock);
+		ObjCBlock reauthenticationBlock);
 
 	public void signIn (GPPSignIn signIn, GPGReAuthenticationBlock reauthenticationBlock) {
-		objc_signIn(this, signIn$, signIn, reauthenticationBlock);
+		objc_signIn(this, signIn$, signIn, GPGReAuthenticationBlock.Marshaler.toObjCBlock(reauthenticationBlock));
 	}
 
 	// @property(nonatomic, readwrite, assign) NSUInteger validOrientationFlags;
@@ -182,11 +183,10 @@ public class GPGManager extends NSObject {
 	private static final Selector refreshRevisionStatus$ = Selector.register("refreshRevisionStatus:");
 
 	@Bridge
-	private native static void objc_refreshRevisionStatus (GPGManager __self__, Selector __cmd__,
-		GPGRevisionCheckBlock revisionCheckHandler);
+	private native static void objc_refreshRevisionStatus (GPGManager __self__, Selector __cmd__, ObjCBlock revisionCheckHandler);
 
 	public void refreshRevisionStatus (GPGRevisionCheckBlock revisionCheckHandler) {
-		objc_refreshRevisionStatus(this, refreshRevisionStatus$, revisionCheckHandler);
+		objc_refreshRevisionStatus(this, refreshRevisionStatus$, GPGRevisionCheckBlock.Marshaler.toObjCBlock(revisionCheckHandler));
 	}
 
 	// - (GPGRevisionStatus)revisionStatus;

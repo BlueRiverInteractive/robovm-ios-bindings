@@ -9,13 +9,14 @@ public enum GPGLeaderboardTimeScope implements ValuedEnum {
 	GPGLeaderboardTimeScopeUnknown(-1), GPGLeaderboardTimeScopeToday(1), GPGLeaderboardTimeScopeThisWeek(2), GPGLeaderboardTimeScopeAllTime(
 		3);
 
-	private final int n;
+	private final long n;
 
-	private GPGLeaderboardTimeScope (int n) {
+	private GPGLeaderboardTimeScope (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

@@ -4,6 +4,7 @@ package org.robovm.bindings.gpgs;
 import org.robovm.cocoatouch.foundation.NSError;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -36,10 +37,11 @@ public class GPGKeyedModel extends NSObject {
 
 	@Bridge
 	private native static void objc_loadDataForKey2 (GPGKeyedModel __self__, Selector __cmd__, NSString key,
-		GPGModelDidLoadBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	public void loadDataForKey (String key, GPGModelDidLoadBlock completionHandler) {
-		objc_loadDataForKey2(this, loadDataForKey$completionHandler$, new NSString(key), completionHandler);
+		objc_loadDataForKey2(this, loadDataForKey$completionHandler$, new NSString(key),
+			GPGModelDidLoadBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (void)reloadDataForKey:(NSString *)key;
@@ -57,10 +59,11 @@ public class GPGKeyedModel extends NSObject {
 
 	@Bridge
 	private native static void objc_reloadDataForKey2 (GPGKeyedModel __self__, Selector __cmd__, NSString key,
-		GPGModelDidLoadBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	public void reloadDataForKey (String key, GPGModelDidLoadBlock completionHandler) {
-		objc_reloadDataForKey2(this, reloadDataForKey$completionHandler$, new NSString(key), completionHandler);
+		objc_reloadDataForKey2(this, reloadDataForKey$completionHandler$, new NSString(key),
+			GPGModelDidLoadBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (BOOL)isLoadingDataForKey:(NSString *)key;

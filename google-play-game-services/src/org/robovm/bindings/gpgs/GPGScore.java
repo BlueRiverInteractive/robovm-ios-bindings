@@ -5,6 +5,7 @@ import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.cocoatouch.foundation.NSURL;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -75,10 +76,11 @@ public class GPGScore extends NSObject {
 
 	@Bridge
 	private native static boolean objc_submitScoreWithCompletionHandler (GPGScore __self__, Selector __cmd__,
-		GPGScoreReportScoreBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	public boolean submitScoreWithCompletionHandler (GPGScoreReportScoreBlock completionHandler) {
-		return objc_submitScoreWithCompletionHandler(this, submitScoreWithCompletionHandler$, completionHandler);
+		return objc_submitScoreWithCompletionHandler(this, submitScoreWithCompletionHandler$,
+			GPGScoreReportScoreBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// + (void)submitScores:(NSArray *)scores withCompletionHandler:(GPGScoreBatchReportBlock)completionHandler
@@ -87,11 +89,11 @@ public class GPGScore extends NSObject {
 
 	@Bridge
 	private native static boolean objc_submitScores (ObjCClass __self__, Selector __cmd__, NSArray scores,
-		GPGScoreBatchReportBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	@Deprecated
 	public static void submitScores (NSArray scores, GPGScoreBatchReportBlock completionHandler) {
-		objc_submitScores(objCClass, submitScores$, scores, completionHandler);
+		objc_submitScores(objCClass, submitScores$, scores, GPGScoreBatchReportBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// + (void)batchSubmitScores:(NSArray *)scores withCompletionHandler:(GPGScoreReportScoreBlock)completionHandler;
@@ -99,10 +101,11 @@ public class GPGScore extends NSObject {
 
 	@Bridge
 	private native static boolean objc_batchSubmitScores (ObjCClass __self__, Selector __cmd__, NSArray scores,
-		GPGScoreReportScoreBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	public static void batchSubmitScores (NSArray scores, GPGScoreReportScoreBlock completionHandler) {
-		objc_batchSubmitScores(objCClass, batchSubmitScores$, scores, completionHandler);
+		objc_batchSubmitScores(objCClass, batchSubmitScores$, scores,
+			GPGScoreReportScoreBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// @property (nonatomic, readonly, copy) NSString *formattedRank;

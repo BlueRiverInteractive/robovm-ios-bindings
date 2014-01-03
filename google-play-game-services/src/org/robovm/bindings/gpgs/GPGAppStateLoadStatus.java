@@ -3,18 +3,17 @@ package org.robovm.bindings.gpgs;
 
 import org.robovm.rt.bro.ValuedEnum;
 
-//TODO: test this
 public enum GPGAppStateLoadStatus implements ValuedEnum {
 	GPGAppStateLoadStatusUnknownError(-1), GPGAppStateLoadStatusSuccess(0), GPGAppStateLoadStatusNotFound(1);
 
-	private final int n;
+	private final long n;
 
-	private GPGAppStateLoadStatus (int n) {
+	private GPGAppStateLoadStatus (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }

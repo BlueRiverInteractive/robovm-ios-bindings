@@ -9,14 +9,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum GPGAchievementState implements ValuedEnum {
 	GPGAchievementStateUnknown(-1), GPGAchievementStateHidden(0), GPGAchievementStateRevealed(1), GPGAchievementStateUnlocked(2);
 
-	private final int n;
+	private final long n;
 
-	private GPGAchievementState (int n) {
+	private GPGAchievementState (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 

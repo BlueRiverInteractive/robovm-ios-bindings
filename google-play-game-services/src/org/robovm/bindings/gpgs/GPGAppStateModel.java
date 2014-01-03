@@ -4,6 +4,7 @@ package org.robovm.bindings.gpgs;
 import org.robovm.bindings.other.NSData;
 import org.robovm.cocoatouch.foundation.NSNumber;
 import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -47,11 +48,13 @@ public class GPGAppStateModel extends NSObject {
 
 	@Bridge
 	private native static void objc_listStatesWithCompletionHandler (GPGAppStateModel __self__, Selector __cmd__,
-		GPGAppStateListHandler completionHandler, GPGAppStateConflictHandler conflictHandler);
+		ObjCBlock completionHandler, ObjCBlock conflictHandler);
 
 	public void listStatesWithCompletionHandler (GPGAppStateListHandler completionHandler,
 		GPGAppStateConflictHandler conflictHandler) {
-		objc_listStatesWithCompletionHandler(this, listStatesWithCompletionHandler$, completionHandler, conflictHandler);
+		objc_listStatesWithCompletionHandler(this, listStatesWithCompletionHandler$,
+			GPGAppStateListHandler.Marshaler.toObjCBlock(completionHandler),
+			GPGAppStateConflictHandler.Marshaler.toObjCBlock(conflictHandler));
 	}
 
 	// - (void)listStateKeysWithCompletionHandler:(GPGAppStateListKeysHandler)completionHandler;
@@ -59,10 +62,11 @@ public class GPGAppStateModel extends NSObject {
 
 	@Bridge
 	private native static void objc_listStateKeysWithCompletionHandler (GPGAppStateModel __self__, Selector __cmd__,
-		GPGAppStateListKeysHandler completionHandler);
+		ObjCBlock completionHandler);
 
 	public void listStateKeysWithCompletionHandler (GPGAppStateListKeysHandler completionHandler) {
-		objc_listStateKeysWithCompletionHandler(this, listStateKeysWithCompletionHandler$, completionHandler);
+		objc_listStateKeysWithCompletionHandler(this, listStateKeysWithCompletionHandler$,
+			GPGAppStateListKeysHandler.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (void)loadForKey:(NSNumber *)key completionHandler:(GPGAppStateLoadResultHandler)completionHandler
@@ -71,10 +75,12 @@ public class GPGAppStateModel extends NSObject {
 
 	@Bridge
 	private native static void objc_loadForKey (GPGAppStateModel __self__, Selector __cmd__, NSNumber key,
-		GPGAppStateLoadResultHandler completionHandler, GPGAppStateConflictHandler conflictHandler);
+		ObjCBlock completionHandler, ObjCBlock conflictHandler);
 
 	public void loadForKey (int key, GPGAppStateLoadResultHandler completionHandler, GPGAppStateConflictHandler conflictHandler) {
-		objc_loadForKey(this, loadForKey$, NSNumber.valueOf(key), completionHandler, conflictHandler);
+		objc_loadForKey(this, loadForKey$, NSNumber.valueOf(key),
+			GPGAppStateLoadResultHandler.Marshaler.toObjCBlock(completionHandler),
+			GPGAppStateConflictHandler.Marshaler.toObjCBlock(conflictHandler));
 	}
 
 	// - (void)updateForKey:(NSNumber *)key completionHandler:(GPGAppStateWriteResultHandler)completionHandler
@@ -83,7 +89,7 @@ public class GPGAppStateModel extends NSObject {
 
 	@Bridge
 	private native static void objc_updateForKey (GPGAppStateModel __self__, Selector __cmd__, NSNumber key,
-		GPGAppStateWriteResultHandler completionHandler, GPGAppStateConflictHandler conflictHandler);
+		ObjCBlock completionHandler, ObjCBlock conflictHandler);
 
 	/** Writes the local AppState to the cloud. Call this after making local modifications to an AppState through the |setStateData|
 	 * method. |conflictHandler| is called if the current modifications were performed on stale data (modifying before downloading
@@ -94,7 +100,9 @@ public class GPGAppStateModel extends NSObject {
 	 * @param conflictHandler The block to call if there is a conflict. ^(NSNumber *key, NSData *localState, NSData *remoteState)
 	 *           Return your resolved data from this callback to apply it. */
 	public void updateForKey (int key, GPGAppStateWriteResultHandler completionHandler, GPGAppStateConflictHandler conflictHandler) {
-		objc_updateForKey(this, updateForKey$, NSNumber.valueOf(key), completionHandler, conflictHandler);
+		objc_updateForKey(this, updateForKey$, NSNumber.valueOf(key),
+			GPGAppStateWriteResultHandler.Marshaler.toObjCBlock(completionHandler),
+			GPGAppStateConflictHandler.Marshaler.toObjCBlock(conflictHandler));
 	}
 
 	// - (void)clearForKey:(NSNumber *)key completionHandler:(GPGAppStateWriteResultHandler)completionHandler
@@ -103,10 +111,12 @@ public class GPGAppStateModel extends NSObject {
 
 	@Bridge
 	private native static void objc_clearForKey (GPGAppStateModel __self__, Selector __cmd__, NSNumber key,
-		GPGAppStateWriteResultHandler completionHandler, GPGAppStateConflictHandler conflictHandler);
+		ObjCBlock completionHandler, ObjCBlock conflictHandler);
 
 	public void clearForKey (int key, GPGAppStateWriteResultHandler completionHandler, GPGAppStateConflictHandler conflictHandler) {
-		objc_clearForKey(this, clearForKey$, NSNumber.valueOf(key), completionHandler, conflictHandler);
+		objc_clearForKey(this, clearForKey$, NSNumber.valueOf(key),
+			GPGAppStateWriteResultHandler.Marshaler.toObjCBlock(completionHandler),
+			GPGAppStateConflictHandler.Marshaler.toObjCBlock(conflictHandler));
 	}
 
 	// - (void)deleteForKey:(NSNumber *)key completionHandler:(GPGAppStateWriteResultHandler)completionHandler;
@@ -114,9 +124,10 @@ public class GPGAppStateModel extends NSObject {
 
 	@Bridge
 	private native static void objc_deleteForKey (GPGAppStateModel __self__, Selector __cmd__, NSNumber key,
-		GPGAppStateWriteResultHandler completionHandler);
+		ObjCBlock completionHandler);
 
 	public void deleteForKey (int key, GPGAppStateWriteResultHandler completionHandler) {
-		objc_deleteForKey(this, deleteForKey$, NSNumber.valueOf(key), completionHandler);
+		objc_deleteForKey(this, deleteForKey$, NSNumber.valueOf(key),
+			GPGAppStateWriteResultHandler.Marshaler.toObjCBlock(completionHandler));
 	}
 }

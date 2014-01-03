@@ -7,13 +7,14 @@ public enum GKGameCenterViewControllerState implements ValuedEnum {
 	GKGameCenterViewControllerStateDefault(0), GKGameCenterViewControllerStateLeaderboards(1), GKGameCenterViewControllerStateAchievements(
 		2), GKGameCenterViewControllerStateChallenges(3);
 
-	private final int n;
+	private final long n;
 
-	private GKGameCenterViewControllerState (int n) {
+	private GKGameCenterViewControllerState (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

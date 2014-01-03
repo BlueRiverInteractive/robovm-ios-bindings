@@ -8,13 +8,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum GPGRevisionStatus implements ValuedEnum {
 	GPGRevisionStatusUnknown(-1), GPGRevisionStatusOK(0), GPGRevisionStatusDeprecated(1), GPGRevisionStatusInvalid(2);
 
-	private final int n;
+	private final long n;
 
-	private GPGRevisionStatus (int n) {
+	private GPGRevisionStatus (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

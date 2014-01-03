@@ -8,13 +8,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum GPGToastPlacement implements ValuedEnum {
 	GPGToastPlacementTop(0), GPGToastPlacementBottom(1), GPGToastPlacementCenter(2);
 
-	private final int n;
+	private final long n;
 
-	private GPGToastPlacement (int n) {
+	private GPGToastPlacement (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 

@@ -5,6 +5,7 @@ import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
 import org.robovm.bindings.cocoatouch.blocks.VoidUIViewControllerNSErrorBlock;
 import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
@@ -87,11 +88,11 @@ public class GKLocalPlayer extends NSObject {
 
 	@Bridge
 	private native static void objc_setAuthenticateHandler (GKLocalPlayer __self__, Selector __cmd__,
-		VoidUIViewControllerNSErrorBlock authenticateHandlerBlock);
+		ObjCBlock authenticateHandlerBlock);
 
 	@Bridge
 	private native static void objc_setAuthenticateHandlerSuper (ObjCSuper __super__, Selector __cmd__,
-		VoidUIViewControllerNSErrorBlock authenticateHandlerBlock);
+		ObjCBlock authenticateHandlerBlock);
 
 	/** The authenticate handler will be called whenever the authentication process finishes or needs to show UI. The handler may be
 	 * called multiple times. Authentication will happen automatically when the handler is first set and whenever the app returns
@@ -102,9 +103,11 @@ public class GKLocalPlayer extends NSObject {
 	 * @param authenticateHandlerBlock */
 	public void setAuthenticateHandler (VoidUIViewControllerNSErrorBlock authenticateHandlerBlock) {
 		if (customClass) {
-			objc_setAuthenticateHandlerSuper(getSuper(), setAuthenticateHandler, authenticateHandlerBlock);
+			objc_setAuthenticateHandlerSuper(getSuper(), setAuthenticateHandler,
+				VoidUIViewControllerNSErrorBlock.Marshaler.toObjCBlock(authenticateHandlerBlock));
 		} else {
-			objc_setAuthenticateHandler(this, setAuthenticateHandler, authenticateHandlerBlock);
+			objc_setAuthenticateHandler(this, setAuthenticateHandler,
+				VoidUIViewControllerNSErrorBlock.Marshaler.toObjCBlock(authenticateHandlerBlock));
 		}
 	}
 
@@ -137,11 +140,11 @@ public class GKLocalPlayer extends NSObject {
 
 	@Bridge
 	private native static void objc_authenticateWithCompletionHandler (GKLocalPlayer __self__, Selector __cmd__,
-		VoidNSErrorBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	@Bridge
 	private native static void objc_authenticateWithCompletionHandlerSuper (ObjCSuper __super__, Selector __cmd__,
-		VoidNSErrorBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	/** Deprecated, set the authenticateHandler instead. Authentication happens automatically when the handler is set and when the
 	 * app returns to foreground.
@@ -149,9 +152,11 @@ public class GKLocalPlayer extends NSObject {
 	@Deprecated
 	public void authenticateWithCompletionHandler (VoidNSErrorBlock completionHandler) {
 		if (customClass) {
-			objc_authenticateWithCompletionHandlerSuper(getSuper(), authenticateWithCompletionHandler, completionHandler);
+			objc_authenticateWithCompletionHandlerSuper(getSuper(), authenticateWithCompletionHandler,
+				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 		} else {
-			objc_authenticateWithCompletionHandler(this, authenticateWithCompletionHandler, completionHandler);
+			objc_authenticateWithCompletionHandler(this, authenticateWithCompletionHandler,
+				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 		}
 	}
 

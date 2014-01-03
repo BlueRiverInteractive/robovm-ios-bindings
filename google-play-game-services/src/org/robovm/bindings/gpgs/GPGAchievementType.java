@@ -9,14 +9,14 @@ import org.robovm.rt.bro.ValuedEnum;
 public enum GPGAchievementType implements ValuedEnum {
 	GPGAchievementTypeUnknown(-1), GPGAchievementTypeStandard(0), GPGAchievementTypeIncremental(1);
 
-	private final int n;
+	private final long n;
 
-	private GPGAchievementType (int n) {
+	private GPGAchievementType (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 

@@ -6,6 +6,7 @@ import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSDate;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.uikit.UIDevice;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
@@ -355,15 +356,15 @@ public class GKScore extends NSObject {
 
 	@SuppressWarnings("rawtypes")
 	@Bridge
-	private native static void objc_reportScores (ObjCClass __self__, Selector __cmd__, NSArray scores,
-		VoidNSErrorBlock completionHandler);
+	private native static void objc_reportScores (ObjCClass __self__, Selector __cmd__, NSArray scores, ObjCBlock completionHandler);
 
 	/** Report this score to the server. The value must be set, and date may be changed. Possible reasons for error: 1. Value not
 	 * set 2. Local player not authenticated 3. Communications problem
 	 * @return */
 	@SuppressWarnings("rawtypes")
 	public static void reportScores (NSArray scores, VoidNSErrorBlock completionHandler) {
-		objc_reportScores(objCClass, reportScores$withCompletionHandler, scores, completionHandler);
+		objc_reportScores(objCClass, reportScores$withCompletionHandler, scores,
+			VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (void)reportScoreWithCompletionHandler:(void(^)(NSError *error))completionHandler
@@ -371,10 +372,10 @@ public class GKScore extends NSObject {
 	private static final Selector reportScoreWithCompletionHandler = Selector.register("reportScoreWithCompletionHandler:");
 
 	@Bridge
-	private native static void objc_reportScore (GKScore __self__, Selector __cmd__, VoidNSErrorBlock completionHandler);
+	private native static void objc_reportScore (GKScore __self__, Selector __cmd__, ObjCBlock completionHandler);
 
 	@Bridge
-	private native static void objc_reportScoreSuper (ObjCSuper __super__, Selector __cmd__, VoidNSErrorBlock completionHandler);
+	private native static void objc_reportScoreSuper (ObjCSuper __super__, Selector __cmd__, ObjCBlock completionHandler);
 
 	/** Setter - Convenience property to make the leaderboard associated with this GKScore, the default leaderboard for this player.
 	 * Default value is false. If true, reporting that score will make the category this score belongs to, the default leaderboard
@@ -383,9 +384,10 @@ public class GKScore extends NSObject {
 	@Deprecated
 	public void reportScore (VoidNSErrorBlock completionHandler) {
 		if (customClass) {
-			objc_reportScoreSuper(getSuper(), reportScoreWithCompletionHandler, completionHandler);
+			objc_reportScoreSuper(getSuper(), reportScoreWithCompletionHandler,
+				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 		} else {
-			objc_reportScore(this, reportScoreWithCompletionHandler, completionHandler);
+			objc_reportScore(this, reportScoreWithCompletionHandler, VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
 		}
 	}
 

@@ -11,13 +11,14 @@ public enum GKError implements ValuedEnum {
 		20), GKErrorTurnBasedTooManySessions(21), GKErrorTurnBasedInvalidParticipant(22), GKErrorTurnBasedInvalidTurn(23), GKErrorTurnBasedInvalidState(
 		24);
 
-	private final int n;
+	private final long n;
 
-	private GKError (int n) {
+	private GKError (long n) {
 		this.n = n;
 	}
 
-	public int value () {
+	@Override
+	public long value () {
 		return n;
 	}
 }

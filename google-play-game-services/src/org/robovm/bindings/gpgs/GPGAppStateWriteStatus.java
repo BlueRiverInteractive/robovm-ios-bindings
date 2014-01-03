@@ -7,14 +7,14 @@ public enum GPGAppStateWriteStatus implements ValuedEnum {
 	GPGAppStateWriteStatusUnknownError(-1), GPGAppStateWriteStatusSuccess(0), GPGAppStateWriteStatusBadKeyDataOrVersion(1), GPGAppStateWriteStatusKeysQuotaExceeded(
 		2), GPGAppStateWriteStatusNotFound(3), GPGAppStateWriteStatusConflict(4), GPGAppStateWriteStatusSizeExceeded(5);
 
-	private final int n;
+	private final long n;
 
-	private GPGAppStateWriteStatus (int n) {
+	private GPGAppStateWriteStatus (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value () {
+	public long value () {
 		return n;
 	}
 }
