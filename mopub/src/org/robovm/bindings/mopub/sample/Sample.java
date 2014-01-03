@@ -26,9 +26,11 @@ public class Sample extends UIApplicationDelegate.Adapter {
 	public void didFinishLaunching (UIApplication application) {
 		// We need a view controller to see ads.
 		rootViewController = new UIViewController();
+		// If you are already using a UIWindow with a root view controller, get the root view controller (f.e. LibGDX):
+		// rootViewController = UIApplication.getSharedApplication().getKeyWindow().getRootViewController();
 
 		// Create an interstitial.
-		MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController(INTERSTITIAL_AD_UNIT_ID);
+		final MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController(INTERSTITIAL_AD_UNIT_ID);
 		// The delegate for an interstitial is optional.
 		MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegate.Adapter() {
 			@Override
@@ -47,7 +49,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 			public void didLoadAd (MPInterstitialAdController interstitial) {
 				// If the ad is ready, show it.
 				// It's best to call these methods manually and not in didLoadAd(). Use this only for testing purposes!
-				if (interstitial.isReady()) interstitial.show(adViewController);
+				if (interstitial.isReady()) interstitial.show(rootViewController);
 			}
 
 			@Override
@@ -57,21 +59,19 @@ public class Sample extends UIApplicationDelegate.Adapter {
 			}
 		};
 		interstitial.setDelegate(delegate);
-		// Load an interstitial ad.
-// interstitial.loadAd();
 
 		// Create a MoPub ad. In this case a banner, but you can make it any size you want.
-		MPAdView banner = new MPAdView(BANNER_AD_UNIT_ID, MPConstants.MOPUB_BANNER_SIZE);
+		final MPAdView banner = new MPAdView(BANNER_AD_UNIT_ID, MPConstants.MOPUB_BANNER_SIZE);
 
 		// Let's calculate our banner size. We need to do this because the resolution of a retina and normal device is different.
-		float bannerWidth = UIScreen.getMainScreen().getApplicationFrame().size().width();
+		float bannerWidth = UIScreen.getMainScreen().getBounds().size().width();
 		float bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
 
 		// Let's set the frame (bounds) of our banner view. Remember on iOS view coordinates have their origin top-left.
 		// Position banner on the top.
 		// banner.setFrame(new CGRect(0, 0, bannerWidth, bannerHeight));
 		// Position banner on the bottom.
-		banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getApplicationFrame().size().height() - bannerHeight, bannerWidth,
+		banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getBounds().size().height() - bannerHeight, bannerWidth,
 			bannerHeight));
 		// Let's color the background for testing, so we can see if it is positioned correctly, even if no ad is loaded yet.
 		banner.setBackgroundColor(new UIColor(1, 0, 0, 1)); // Remove this after testing.
@@ -89,8 +89,6 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		banner.setDelegate(bannerDelegate);
 		// Add banner to our view controller.
 		adViewController.getView().addSubview(banner);
-		// Finally load a banner ad. This ad gets refreshed automatically, although you can refresh it at any time via refreshAd().
-		banner.loadAd();
 
 		// We add the ad view controller to our root view controller.
 		rootViewController.addChildViewController(adViewController);
@@ -99,10 +97,13 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		// Create a standard UIWindow at screen size, add the view controller and show it.
 		UIWindow window = new UIWindow(UIScreen.getMainScreen().getBounds());
 		window.setRootViewController(rootViewController);
+		window.addSubview(rootViewController.getView());
 		window.makeKeyAndVisible();
 
-		// If you are already using a UIWindow with a root view controller, you can do the following (f.e. LibGDX):
-		// UIApplication.getSharedApplication().getKeyWindow().addSubview(adViewController.getView());
+		// Load an interstitial ad.
+		interstitial.loadAd();
+		// Load a banner ad. This ad gets refreshed automatically, although you can refresh it at any time via refreshAd().
+		banner.loadAd();
 	}
 
 	public static void main (String[] argv) {
