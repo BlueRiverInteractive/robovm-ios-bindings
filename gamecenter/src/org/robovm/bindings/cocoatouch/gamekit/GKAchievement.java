@@ -1,4 +1,3 @@
-
 package org.robovm.bindings.cocoatouch.gamekit;
 
 import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSErrorBlock;
@@ -98,9 +97,9 @@ public class GKAchievement extends NSObject {
 	 * @return */
 	public double getPercentComplete () {
 		if (customClass) {
-			return objc_getPercentCompleteSuper(getSuper(), identifier);
+			return objc_getPercentCompleteSuper(getSuper(), percentComplete);
 		} else {
-			return objc_getPercentComplete(this, identifier);
+			return objc_getPercentComplete(this, percentComplete);
 		}
 	}
 
