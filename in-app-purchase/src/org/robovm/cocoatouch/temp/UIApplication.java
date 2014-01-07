@@ -1376,7 +1376,7 @@ extends /* <extends> */UIResponder /* </extends> */
 
 		@Callback
 		@BindSelector("beginBackgroundTaskWithExpirationHandler:")
-		public static int beginBackgroundTask (UIApplication __self__, Selector __cmd__, VoidBlock handler) {
+		public static int beginBackgroundTask (UIApplication __self__, Selector __cmd__, ObjCBlock handler) {
 			return __self__.beginBackgroundTask(handler);
 		}
 
@@ -1505,7 +1505,7 @@ extends /* <extends> */UIResponder /* </extends> */
 		@Callback
 		@BindSelector("setKeepAliveTimeout:handler:")
 		public static boolean setKeepAliveTimeout (UIApplication __self__, Selector __cmd__, double timeout,
-			VoidBlock keepAliveHandler) {
+			ObjCBlock keepAliveHandler) {
 			return __self__.setKeepAliveTimeout(timeout, keepAliveHandler);
 		}
 
