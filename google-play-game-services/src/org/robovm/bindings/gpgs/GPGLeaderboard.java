@@ -4,6 +4,7 @@ package org.robovm.bindings.gpgs;
 import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -114,10 +115,11 @@ public class GPGLeaderboard extends NSObject {
 
 	@Bridge
 	private native static void objc_loadScoresWithCompletionHandler (GPGLeaderboard __self__, Selector __cmd__,
-		GPGLeaderboardLoadScoresBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	public void loadScoresWithCompletionHandler (GPGLeaderboardLoadScoresBlock completionHandler) {
-		objc_loadScoresWithCompletionHandler(this, loadScoresWithCompletionHandler$, completionHandler);
+		objc_loadScoresWithCompletionHandler(this, loadScoresWithCompletionHandler$,
+			GPGLeaderboardLoadScoresBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (void)loadNextPageOfScoresWithCompletionHandler:(GPGLeaderboardLoadScoresBlock)completionHandler;
@@ -126,10 +128,11 @@ public class GPGLeaderboard extends NSObject {
 
 	@Bridge
 	private native static void objc_loadNextPageOfScoresWithCompletionHandler (GPGLeaderboard __self__, Selector __cmd__,
-		GPGLeaderboardLoadScoresBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	public void loadNextPageOfScoresWithCompletionHandler (GPGLeaderboardLoadScoresBlock completionHandler) {
-		objc_loadNextPageOfScoresWithCompletionHandler(this, loadNextPageOfScoresWithCompletionHandler$, completionHandler);
+		objc_loadNextPageOfScoresWithCompletionHandler(this, loadNextPageOfScoresWithCompletionHandler$,
+			GPGLeaderboardLoadScoresBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (void)loadPreviousPageOfScoresWithCompletionHandler:(GPGLeaderboardLoadScoresBlock)completionHandler;
@@ -138,10 +141,11 @@ public class GPGLeaderboard extends NSObject {
 
 	@Bridge
 	private native static void objc_loadPreviousPageOfScoresWithCompletionHandler (GPGLeaderboard __self__, Selector __cmd__,
-		GPGLeaderboardLoadScoresBlock completionHandler);
+		ObjCBlock completionHandler);
 
 	public void loadPreviousPageOfScoresWithCompletionHandler (GPGLeaderboardLoadScoresBlock completionHandler) {
-		objc_loadPreviousPageOfScoresWithCompletionHandler(this, loadPreviousPageOfScoresWithCompletionHandler$, completionHandler);
+		objc_loadPreviousPageOfScoresWithCompletionHandler(this, loadPreviousPageOfScoresWithCompletionHandler$,
+			GPGLeaderboardLoadScoresBlock.Marshaler.toObjCBlock(completionHandler));
 	}
 
 	// - (BOOL)isLoading;
