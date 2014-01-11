@@ -5,6 +5,7 @@ import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.uikit.UIViewController;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
@@ -129,13 +130,13 @@ public class FBDialogs extends NSObject {
 	@Bridge
 	private native static boolean objc_presentOSIntegratedShareDialogModallyFrom$session$initialText$images$urls$handler$ (
 		ObjCClass __self__, Selector __cmd__, UIViewController viewController, FBSession session, String initialText,
-		NSArray images, NSArray urls, FBOSIntegratedShareDialogHandler handler);
+		NSArray images, NSArray urls, ObjCBlock handler);
 
 	public static boolean presentModalShareDialog (UIViewController viewController, FBSession session, String initialText,
 		NSArray images, NSArray urls, FBOSIntegratedShareDialogHandler handler) {
 		return objc_presentOSIntegratedShareDialogModallyFrom$session$initialText$images$urls$handler$(objCClass,
 			presentOSIntegratedShareDialogModallyFrom$session$initialText$images$urls$handler$, viewController, session,
-			initialText, images, urls, handler);
+			initialText, images, urls, FBOSIntegratedShareDialogHandler.Marshaler.toObjCBlock(handler));
 	}
 
 	/*
@@ -223,12 +224,12 @@ public class FBDialogs extends NSObject {
 
 	@Bridge
 	private native static FBAppCall objc_presentShareDialogWithParams$clientState$handler$ (ObjCClass __self__, Selector __cmd__,
-		FBShareDialogParams params, NSDictionary clientState, FBDialogAppCallCompletionHandler handler);
+		FBShareDialogParams params, NSDictionary clientState, ObjCBlock handler);
 
 	public static FBAppCall presentShareDialog (FBShareDialogParams params, NSDictionary clientState,
 		FBDialogAppCallCompletionHandler handler) {
 		return objc_presentShareDialogWithParams$clientState$handler$(objCClass, presentShareDialogWithParams$clientState$handler$,
-			params, clientState, handler);
+			params, clientState, FBDialogAppCallCompletionHandler.Marshaler.toObjCBlock(handler));
 	}
 
 	/*

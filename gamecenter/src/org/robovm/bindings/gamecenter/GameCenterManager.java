@@ -33,8 +33,8 @@ public class GameCenterManager {
 	private static final int IOS_6 = 6;
 	private static final int IOS_7 = 7;
 
-	private UIWindow keyWindow;
-	private GameCenterListener listener;
+	private final UIWindow keyWindow;
+	private final GameCenterListener listener;
 	private UIViewController gdxViewController;
 	private UIView gdxView;
 
@@ -63,66 +63,6 @@ public class GameCenterManager {
 					}
 					// If the viewController is null and the player is not authenticated the login has failed
 					else {
-						listener.playerLoginFailed();
-					}
-				}
-			});
-		} else { // If iOS version is 5 or less we use the deprecated method
-			GKLocalPlayer.getLocalPlayer().authenticateWithCompletionHandler(new VoidNSErrorBlock() {
-				@Override
-				public void invoke (NSError error) {
-					if (GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
-						listener.playerLoginCompleted();
-					} else {
-						listener.playerLoginFailed();
-					}
-				}
-			});
-		}
-	}
-
-	/** Do the login logic. If the user has never loged, a dialog will be shown. This method is for use in LibGDX. It uses a fix in
-	 * order to show the login dialog */
-	public void loginGDX () {
-		// If iOS version is 6 or more we use the new method
-		if (getIosVersion() >= IOS_6) {
-			GKLocalPlayer.getLocalPlayer().setAuthenticateHandler(new VoidUIViewControllerNSErrorBlock() {
-				@Override
-				public void invoke (UIViewController viewController, NSError error) {
-					// If the device does not have an authenticated player, show the login dialog
-					if (viewController != null) {
-						// Fix for LibGDX. We change the LibGDX ViewController for a new one, and change the View from one to other.
-						UIViewController newViewCont = new UIViewController();
-						gdxViewController = keyWindow.getRootViewController();
-						gdxView = gdxViewController.getView();
-						gdxViewController.setView(null);
-						newViewCont.setView(gdxView);
-						keyWindow.setRootViewController(newViewCont);
-
-						newViewCont.presentViewController(viewController, true, null);
-					}
-					// If the viewController is null and the player is authenticated, the login is completed
-					else if (GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
-						// Restore the ViewController to the GDX one
-						if (gdxView != null && gdxViewController != null) {
-							keyWindow.getRootViewController().setView(null);
-
-							gdxViewController.setView(gdxView);
-							keyWindow.setRootViewController(gdxViewController);
-						}
-
-						listener.playerLoginCompleted();
-					}
-					// If the viewController is null and the player is not authenticated the login has failed
-					else {
-						// Restore the ViewController to the GDX one
-						if (gdxView != null && gdxViewController != null) {
-							keyWindow.getRootViewController().setView(null);
-
-							gdxViewController.setView(gdxView);
-							keyWindow.setRootViewController(gdxViewController);
-						}
-
 						listener.playerLoginFailed();
 					}
 				}
@@ -317,7 +257,7 @@ public class GameCenterManager {
 							GKLeaderboard leaderboard = new GKLeaderboard();
 							leaderboard.setCategory(((NSString)category).toString());
 
-							leaderboards.add((GKLeaderboard)leaderboard);
+							leaderboards.add(leaderboard);
 						}
 						listener.leaderboardsLoadCompleted(leaderboards);
 					}
