@@ -104,13 +104,6 @@ public class FBWebDialogs extends NSObject {
 	 * 
 	 * @param handler An optional handler that will be called when the dialog is dismissed. May be nil.
 	 */
-	private static final Selector presentRequestsDialogModallyWithSession$message$title$parameters$handler$ = Selector
-		.register("presentRequestsDialogModallyWithSession:message:title:parameters:handler:");
-
-	@Bridge
-	private native static void objc_presentRequestsDialogModallyWithSession$message$title$parameters$handler$ (ObjCClass __self__,
-		Selector __cmd__, FBSession session, String message, String title, NSDictionary<NSString, NSString> parameters,
-		ObjCBlock handler);
 
 	public static void presentRequestDialog (FBSession session, String message, String title, Map<String, String> parameters,
 		FBWebDialogHandler handler) {
@@ -122,6 +115,14 @@ public class FBWebDialogs extends NSObject {
 			presentRequestsDialogModallyWithSession$message$title$parameters$handler$, session, message, title, params,
 			FBWebDialogHandler.Marshaler.toObjCBlock(handler));
 	}
+
+	private static final Selector presentRequestsDialogModallyWithSession$message$title$parameters$handler$ = Selector
+		.register("presentRequestsDialogModallyWithSession:message:title:parameters:handler:");
+
+	@Bridge
+	private native static void objc_presentRequestsDialogModallyWithSession$message$title$parameters$handler$ (ObjCClass __self__,
+		Selector __cmd__, FBSession session, String message, String title, NSDictionary<NSString, NSString> parameters,
+		ObjCBlock handler);
 
 	/*
 	 * !
@@ -149,20 +150,27 @@ public class FBWebDialogs extends NSObject {
 	// handler:(FBWebDialogHandler)handler
 	// friendCache:(FBFrictionlessRecipientCache *)friendCache;
 
-	/*
-	 * !
-	 * 
-	 * @abstract Presents a Facebook feed dialog.
+	/** Presents a Facebook feed dialog.
 	 * 
 	 * @param session Represents the session to use for the dialog. May be nil, which uses the active session if present.
-	 * 
 	 * @param parameters A dictionary of additional parameters to be passed to the dialog. May be nil
-	 * 
-	 * @param handler An optional handler that will be called when the dialog is dismissed. May be nil.
-	 */
-	// + (void)presentFeedDialogModallyWithSession:(FBSession *)session
-	// parameters:(NSDictionary *)parameters
-	// handler:(FBWebDialogHandler)handler;
+	 * @param handler An optional handler that will be called when the dialog is dismissed. May be nil. */
+	public static void presentFeedDialog (FBSession session, Map<String, String> parameters, FBWebDialogHandler handler) {
+		NSMutableDictionary<NSString, NSString> params = new NSMutableDictionary<NSString, NSString>();
+		if (parameters != null) for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			params.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
+		}
+		objc_presentFeedDialogModallyWithSession$parameters$handler$(objCClass,
+			presentFeedDialogModallyWithSession$parameters$handler$, session, params,
+			FBWebDialogHandler.Marshaler.toObjCBlock(handler));
+	}
+
+	private static final Selector presentFeedDialogModallyWithSession$parameters$handler$ = Selector
+		.register("presentFeedDialogModallyWithSession:parameters:handler:");
+
+	@Bridge
+	private native static void objc_presentFeedDialogModallyWithSession$parameters$handler$ (ObjCClass __self__, Selector __cmd__,
+		FBSession session, NSDictionary<NSString, NSString> parameters, ObjCBlock handler);
 
 	//
 	// /*!

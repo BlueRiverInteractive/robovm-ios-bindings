@@ -6,7 +6,6 @@ import org.robovm.cocoatouch.foundation.NSError;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCBlock.Wrapper;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Marshaler;
 
 /*!
  @typedef FBDialogAppCallCompletionHandler
@@ -27,7 +26,6 @@ import org.robovm.rt.bro.annotation.Marshaler;
  present purely for convenience, and is the exact same value as call.error.
 
  */
-@Marshaler(FBDialogAppCallCompletionHandler.Marshaler.class)
 public interface FBDialogAppCallCompletionHandler {
 
 	/** Runs this block. */

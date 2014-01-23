@@ -81,14 +81,6 @@ public class FBRequest extends NSObject {
 	// - (id)initWithSession:(FBSession*)session
 	// graphPath:(NSString *)graphPath;
 
-	private static final Selector initWithSession$graphPath$parameters$HTTPMethod$ = Selector
-		.register("initWithSession:graphPath:parameters:HTTPMethod:");
-
-	@Bridge
-	private native static @Pointer
-	long objc_initWithSession$graphPath$parameters$HTTPMethod$ (FBRequest __self__, Selector __cmd__, FBSession session,
-		String graphPath, NSDictionary<NSString, NSString> parameters, String httpMethod);
-
 	/** Initializes an `FBRequest` object for a Graph API request call.
 	 * 
 	 * Note that this only sets properties on the `FBRequest` object.
@@ -113,6 +105,14 @@ public class FBRequest extends NSObject {
 		initObject(objc_initWithSession$graphPath$parameters$HTTPMethod$(this, initWithSession$graphPath$parameters$HTTPMethod$,
 			session, graphPath, params, httpMethod));
 	}
+
+	private static final Selector initWithSession$graphPath$parameters$HTTPMethod$ = Selector
+		.register("initWithSession:graphPath:parameters:HTTPMethod:");
+
+	@Bridge
+	private native static @Pointer
+	long objc_initWithSession$graphPath$parameters$HTTPMethod$ (FBRequest __self__, Selector __cmd__, FBSession session,
+		String graphPath, NSDictionary<NSString, NSString> parameters, String httpMethod);
 
 	/*
 	 * !
