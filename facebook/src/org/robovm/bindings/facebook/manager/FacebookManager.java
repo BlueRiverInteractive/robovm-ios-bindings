@@ -977,7 +977,7 @@ public class FacebookManager {
 						graphObjectJava.put(entry.getKey().toString(), entry.getValue().toString());
 					}
 
-					JSONObject graphResponse = new JSONObject(graphObject);
+					JSONObject graphResponse = new JSONObject(graphObjectJava);
 					String postId = null;
 					try {
 						postId = graphResponse.getString("id");
