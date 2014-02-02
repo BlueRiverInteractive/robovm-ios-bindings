@@ -27,7 +27,7 @@ public class OKScore extends NSObject {
 	private static final Selector submitScoreWithCompletionHandler$ = Selector.register("submitScoreWithCompletionHandler:");
 
 	@Bridge
-	private native static long objc_submitScoreWithCompletionHandler$ (OKScore __self__, Selector __cmd__,
+	private native static void objc_submitScoreWithCompletionHandler$ (OKScore __self__, Selector __cmd__,
 		ObjCBlock completionHandler);
 
 	public long getScoreValue () {
@@ -64,7 +64,7 @@ public class OKScore extends NSObject {
 	private static final Selector setUser$ = Selector.register("setUser:");
 
 	@Bridge
-	private native static OKUser objc_setUser$ (OKScore __self__, Selector __cmd__, OKUser user);
+	private native static void objc_setUser$ (OKScore __self__, Selector __cmd__, OKUser user);
 
 	public int getRank () {
 		return objc_scoreRank(this, scoreRank);
@@ -82,5 +82,14 @@ public class OKScore extends NSObject {
 	private static final Selector setOKLeaderboardID$ = Selector.register("setOKLeaderboardID:");
 
 	@Bridge
-	private native static OKUser objc_setOKLeaderboardID (OKScore __self__, Selector __cmd__, int leaderboardID);
+	private native static void objc_setOKLeaderboardID (OKScore __self__, Selector __cmd__, int leaderboardID);
+
+	public void setChallengeEnabled (boolean enabled) {
+		objc_setChallengeEnabled$(this, setChallengeEnabled$, enabled);
+	}
+
+	private static final Selector setChallengeEnabled$ = Selector.register("setChallengeEnabled:");
+
+	@Bridge
+	private native static void objc_setChallengeEnabled$ (OKScore __self__, Selector __cmd__, boolean enabled);
 }
