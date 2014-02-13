@@ -17,7 +17,7 @@ import org.robovm.cocoatouch.uikit.UIWindow;
 
 /** Basic usage of banners and interstitials. */
 public class Sample extends UIApplicationDelegate.Adapter {
-	private static final String INTERSTITIAL_AD_UNIT_ID = "80abbe6aa484431cbf5d2cb01e915c6a";
+	private static final String INTERSTITIAL_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
 	private static final String BANNER_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
 	private UIViewController rootViewController;
 	private MPAdViewController adViewController;
