@@ -1,0 +1,33 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<!-- Add a reference to this library to your RoboVM project. -->
+	<libs>
+		<lib>libs/libGreystripeSDK.a</lib>
+	</libs>
+	<!-- Add these frameworks to your RoboVM project. -->
+	<frameworks>
+		<framework>AddressBook</framework>
+		<framework>AddressBookUI</framework>
+		<framework>CoreGraphics</framework>
+		<framework>CoreLocation</framework>
+		<framework>EventKit</framework>
+		<framework>EventKitUI</framework>
+		<framework>MessageUI</framework>
+		<framework>MobileCoreServices</framework>
+		<framework>QuartzCore</framework>
+		<framework>SystemConfiguration</framework>
+		<framework>UIKit</framework>
+	</frameworks>
+	<weakFrameworks>
+		<framework>AdSupport</framework>
+		<framework>PassKit</framework>
+		<framework>Social</framework>
+		<framework>StoreKit</framework>
+		<framework>Twitter</framework>
+	</weakFrameworks>
+</config>
