@@ -1,4 +1,4 @@
-robovm-ios-bindings
+RoboVM iOS Bindings
 ===================
 
 A collection of third party bindings for RoboVM iOS.
