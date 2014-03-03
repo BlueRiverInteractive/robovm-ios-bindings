@@ -7,7 +7,7 @@
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<!-- Add a reference to this library to your RoboVM project. -->
 	<libs>
-		<lib>libs/libmopub.a</lib>
+		<lib force="false">libs/libmopub.a</lib>
 	</libs>
 	<resources>
 	    <resource>
