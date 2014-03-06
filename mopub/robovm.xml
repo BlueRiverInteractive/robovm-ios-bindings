@@ -5,20 +5,18 @@
 	<arch>thumbv7</arch>
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
-	<!-- Add a reference to this library to your RoboVM project. -->
 	<libs>
-		<lib force="false">libs/libmopub.a</lib>
+		<lib>libs/libmopub.a</lib>
 	</libs>
 	<resources>
-	    <resource>
+		<resource>
 			<directory>resources</directory>
 			<skipPngCrush>true</skipPngCrush>
 		</resource>
 	</resources>
-	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
-	    <framework>AddressBook</framework>
-	    <framework>AddressBookUI</framework>
+		<framework>AddressBook</framework>
+		<framework>AddressBookUI</framework>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
 		<framework>CoreGraphics</framework>
@@ -37,7 +35,7 @@
 		<framework>UIKit</framework>
 	</frameworks>
 	<weakFrameworks>
-	    <framework>AdSupport</framework>
+		<framework>AdSupport</framework>
 		<framework>PassKit</framework>
 		<framework>Social</framework>
 		<framework>StoreKit</framework>
