@@ -1,8 +1,12 @@
 
-package org.robovm.bindings.adcolony;
+package org.robovm.bindings.adcolony.sample;
 
 import java.util.ArrayList;
 
+import org.robovm.bindings.adcolony.AdColony;
+import org.robovm.bindings.adcolony.AdColonyAdDelegate;
+import org.robovm.bindings.adcolony.AdColonyDelegate;
+import org.robovm.bindings.adcolony.AdColonyStatus;
 import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.foundation.NSString;

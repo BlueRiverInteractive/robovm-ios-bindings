@@ -8,22 +8,16 @@ import org.robovm.rt.bro.ValuedEnum;
  * @since 4.2.2 */
 public enum FlurryLogLevel implements ValuedEnum {
 	/** No log output. */
-	None(0),
+	None,
 	/** Outputs only critical log events. */
-	CriticalOnly(1),
+	CriticalOnly,
 	/** Outputs critical and main log events. */
-	Debug(2),
+	Debug,
 	/** Outputs all log events. */
-	All(3);
-
-	private final long n;
-
-	private FlurryLogLevel (long n) {
-		this.n = n;
-	}
+	All;
 
 	@Override
 	public long value () {
-		return n;
+		return ordinal();
 	}
 }

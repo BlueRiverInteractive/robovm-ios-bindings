@@ -1,6 +1,11 @@
 
-package org.robovm.bindings.vungle;
+package org.robovm.bindings.vungle.sample;
 
+import org.robovm.bindings.vungle.VGPlayData;
+import org.robovm.bindings.vungle.VGStatusData;
+import org.robovm.bindings.vungle.VGVunglePub;
+import org.robovm.bindings.vungle.VGVunglePubDelegate;
+import org.robovm.bindings.vungle.VGVunglePubDelegate.Adapter;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.uikit.UIApplication;
 import org.robovm.cocoatouch.uikit.UIApplicationDelegate;

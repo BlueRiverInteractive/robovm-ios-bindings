@@ -1,6 +1,7 @@
 
-package org.robovm.bindings.crashlytics;
+package org.robovm.bindings.crashlytics.sample;
 
+import org.robovm.bindings.crashlytics.Crashlytics;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.uikit.UIApplication;
 import org.robovm.cocoatouch.uikit.UIApplicationDelegate;

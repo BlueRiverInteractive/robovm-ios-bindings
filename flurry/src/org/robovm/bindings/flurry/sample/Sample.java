@@ -1,8 +1,9 @@
 
-package org.robovm.bindings.flurry;
+package org.robovm.bindings.flurry.sample;
 
 import java.util.HashMap;
 
+import org.robovm.bindings.flurry.Flurry;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.cocoatouch.uikit.UIApplication;

@@ -1,5 +1,10 @@
-package org.robovm.bindings.greystripe;
+package org.robovm.bindings.greystripe.sample;
 
+import org.robovm.bindings.greystripe.GSAd;
+import org.robovm.bindings.greystripe.GSAdDelegate;
+import org.robovm.bindings.greystripe.GSAdError;
+import org.robovm.bindings.greystripe.GSFullscreenAd;
+import org.robovm.bindings.greystripe.GSAdDelegate.Adapter;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.cocoatouch.uikit.UIApplication;

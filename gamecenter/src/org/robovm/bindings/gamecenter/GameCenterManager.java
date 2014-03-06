@@ -24,7 +24,6 @@ import org.robovm.cocoatouch.foundation.NSError;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.cocoatouch.uikit.UIDevice;
-import org.robovm.cocoatouch.uikit.UIView;
 import org.robovm.cocoatouch.uikit.UIViewController;
 import org.robovm.cocoatouch.uikit.UIWindow;
 
@@ -35,8 +34,6 @@ public class GameCenterManager {
 
 	private final UIWindow keyWindow;
 	private final GameCenterListener listener;
-	private UIViewController gdxViewController;
-	private UIView gdxView;
 
 	/** Constructor.
 	 * @param keyWindow KeyWindow can't be accessed from the Delegates sometimes, so we need to save a reference

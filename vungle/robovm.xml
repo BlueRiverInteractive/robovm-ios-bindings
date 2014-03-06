@@ -11,11 +11,9 @@
 			<skipPngCrush>true</skipPngCrush>
 		</resource>
 	</resources>
-	<!-- Add a reference to this library to your RoboVM project. -->
 	<libs>
 		<lib>libs/libvunglepub.a</lib>
 	</libs>
-	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
