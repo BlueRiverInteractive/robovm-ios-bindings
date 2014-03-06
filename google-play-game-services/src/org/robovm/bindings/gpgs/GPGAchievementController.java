@@ -49,6 +49,7 @@ public class GPGAchievementController extends UINavigationController {
 		GPGAchievementControllerDelegate achievementDelegate);
 
 	public void setAchievementDelegate (GPGAchievementControllerDelegate achievementDelegate) {
+		addStrongRef(achievementDelegate);
 		objc_setAchievementDelegate(this, setAchievementDelegate$, achievementDelegate);
 	}
 }

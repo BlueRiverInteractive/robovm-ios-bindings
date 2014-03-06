@@ -68,6 +68,7 @@ public class GPGLeaderboardController extends UINavigationController {
 		GPGLeaderboardControllerDelegate leaderboardDelegate);
 
 	public void setLeaderboardDelegate (GPGLeaderboardControllerDelegate leaderboardDelegate) {
+		addStrongRef(leaderboardDelegate);
 		objc_setLeaderboardDelegate(this, setLeaderboardDelegate$, leaderboardDelegate);
 	}
 }

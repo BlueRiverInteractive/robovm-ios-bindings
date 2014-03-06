@@ -117,6 +117,7 @@ public class GPPSignIn extends NSObject {
 	private native static void objc_setDelegate (GPPSignIn __self__, Selector __cmd__, GPPSignInDelegate del);
 
 	public void setDelegate (GPPSignInDelegate del) {
+		addStrongRef(del);
 		objc_setDelegate(this, delegate$, del);
 	}
 
