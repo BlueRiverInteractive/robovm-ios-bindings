@@ -17,18 +17,10 @@ import org.robovm.cocoatouch.storekit.SKProductsRequest;
 import org.robovm.cocoatouch.storekit.SKProductsRequestDelegate;
 import org.robovm.cocoatouch.storekit.SKProductsResponse;
 import org.robovm.cocoatouch.storekit.SKRequest;
-import org.robovm.objc.ObjCClass;
 
 /** An easy to use in-app purchase system for iOS. */
-public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
+public class InAppPurchaseManager {
 	public static String TAG = "[InAppPurchaseManager] ";
-
-	static {
-		// FIXME Workaround for RoboVM bug.
-		ObjCClass.getByType(SKProduct.class);
-		ObjCClass.getByType(SKPayment.class);
-		ObjCClass.getByType(SKPaymentTransaction.class);
-	}
 
 	private final InAppPurchaseListener listener;
 	private SKProductsRequest productsRequest;
@@ -85,7 +77,7 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 		System.out.println(TAG + "Requesting product data...");
 
 		productsRequest = new SKProductsRequest(new NSSet(products));
-		productsRequest.setDelegate(this);
+		productsRequest.setDelegate(new RequestDelegate());
 		productsRequest.start();
 		requestingProducts = true;
 	}
@@ -117,7 +109,7 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 		purchasingProduct = true;
 	}
 
-	/** Returns {@code true} if a product is already being purchase, else {@code false}. **/
+	/** Returns {@code true} if a product is already being purchased, else {@code false}. **/
 	public boolean isPurchasingProduct () {
 		return purchasingProduct;
 	}
@@ -127,25 +119,27 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 		return requestingProducts;
 	}
 
-	@Override
-	public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
-		System.out.println(TAG + "Products successfully received!");
-		requestingProducts = false;
+	private class RequestDelegate extends SKProductsRequestDelegate.Adapter {
+		@Override
+		public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
+			System.out.println(TAG + "Products successfully received!");
+			requestingProducts = false;
 
-		NSArray<SKProduct> products = response.getProducts();
+			NSArray<SKProduct> products = response.getProducts();
 
-		listener.productsReceived(products.toArray(new SKProduct[products.size()]));
+			listener.productsReceived(products.toArray(new SKProduct[products.size()]));
+		}
+
+		@Override
+		public void requestFailed (SKRequest request, NSError error) {
+			System.out.println(TAG + "Products request failed! Error: " + (error != null ? error.toString() : "unknown"));
+			requestingProducts = false;
+
+			listener.productsRequestFailed(request, error);
+		}
 	}
 
-	@Override
-	public void requestFailed (SKRequest request, NSError error) {
-		System.out.println(TAG + "Products request failed! Error: " + (error != null ? error.toString() : "unknown"));
-		requestingProducts = false;
-
-		listener.productsRequestFailed(request, error);
-	}
-
-	void transactionCompleted (SKPaymentTransaction transaction) {
+	protected void transactionCompleted (SKPaymentTransaction transaction) {
 		System.out.println(TAG + "Completed transaction '" + transaction.getTransactionIdentifier() + "' successfully!");
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
 		purchasingProduct = false;
@@ -153,7 +147,7 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 		listener.transactionCompleted(transaction);
 	}
 
-	void transactionRestored (SKPaymentTransaction transaction) {
+	protected void transactionRestored (SKPaymentTransaction transaction) {
 		System.out.println(TAG + "Restored transaction '" + transaction.getTransactionIdentifier() + "' successfully!");
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
 		purchasingProduct = false;
@@ -161,7 +155,7 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 		listener.transcationRestored(transaction);
 	}
 
-	void transactionFailed (SKPaymentTransaction transaction) {
+	protected void transactionFailed (SKPaymentTransaction transaction) {
 		System.out.println(TAG + "Transaction '" + transaction.getTransactionIdentifier() + "' failed! Error: "
 			+ (transaction.getError() != null ? transaction.getError().toString() : "unknown"));
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);

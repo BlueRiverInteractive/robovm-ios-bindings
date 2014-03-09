@@ -9,10 +9,12 @@
 		<lib>libs/libflurry.a</lib>
 	</libs>
 	<frameworks>
-		<framework>AdSupport</framework>
 		<framework>CoreGraphics</framework>
 		<framework>Security</framework>
 		<framework>SystemConfiguration</framework>
 		<framework>UIKit</framework>
 	</frameworks>
+	<weakFrameworks>
+	    <framework>AdSupport</framework>
+	</weakFrameworks>
 </config>
