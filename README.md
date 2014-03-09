@@ -20,25 +20,93 @@ A collection of third party bindings for RoboVM iOS.
 ## How do I create a binding?
 
 When you want to create a binding, you should have a basic knowledge of the syntax of Objective-C. Also it wouldn’t hurt if you know how to use Xcode and how static libraries work.
-This tutorial will guide you in creating a fully working binding of the Facebook iOS SDK.
+This tutorial will guide you in creating a fully working binding of the Google Mobile Ads iOS SDK.
 
 ### Analyzing the framework or SDK
 
-To be done…
+First of all, let’s get the AdMob iOS SDK from here: https://developers.google.com/mobile-ads-sdk/download#downloadios.
+Unpack the zip file and check it’s contents. You will see lots of .h files and one .a file.
+The .h files are header files, which expose all accessible interfaces, methods and properties. We will use these files to create our bindings.
+The .a file is comparable to an archive file. It contains multiple versions of the static library for the Ads SDK.
+There is also an additional add-ons folder with more header and library files that we can create bindings for.
+Also check the readme file, which gives you a clue on the required iOS version and where you can find more info on using the library.
 
 ### Creating a binding project
 
-To be done…
+Now that you have the necessary files and information, you can start creating the binding project.
+In Eclipse create a new RoboVM iOS project called „admob-ios“. You can now specify the main class, app name and app id for the project. We will create a sample class to test the binding, so let’s specify `org.robovm.bindings.admob.sample.Sample` under main class.
 
-### A new Java class for each Objective-C class
+Please always adopt the RoboVM bindings namespace for consistency:
 
-To be done…
+> org.robovm.bindings.*bindingname*
+
+The app name becomes `Admob Sample` and the app id just `admob`.
+Leave the other settings as they are and finish the setup.
+
+Open up the newly created project and add the missing packages and the Sample class.
+
+```Java
+package org.robovm.bindings.admob.sample;
+
+import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
+import org.robovm.cocoatouch.uikit.UIApplication;
+import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
+
+public class Sample extends UIApplicationDelegate.Adapter {
+	@Override
+	public void didFinishLaunching (UIApplication application) {
+	}
+
+	public static void main (String[] argv) {
+		NSAutoreleasePool pool = new NSAutoreleasePool();
+		UIApplication.main(argv, null, Sample.class);
+		pool.drain();
+	}
+}
+```
+
+Now we are ready to create the bindings!
+
+### Binding classes
+
+First of all we will create a Java class for every Objective-C interface. Typically this is one class per header file. 
+To be sure, open up each header (.h) file and check if it contains a line starting with `@interface`. The name after `@interface` will become the class name, the name after the colon will become the extended class and the name(s) between the angle brackets (if any) will become implemented classes.
+The syntax would look like this:
+
+> @interface **ClassName** : **ExtendedClassName**<*ImplementedClassName*>
+
+In our case this will be:
+
+- class GADAdMobExtras extends NSObject implements GADAdNetworkExtras
+- class GADBannerView extends UIView
+- class GADInterstitial extends NSObject
+- class GADRequest extends NSObject implements NSCopying
+- class GADRequestError extends NSError
+
+Create those classes inside the `org.robovm.bindings.admob` package.
+Also add the `@NativeClass()` annotation to each of this classes. This marks the classes as native Objective-C classes.
+
+Example GADBannerView:
+```Java
+@NativeClass()
+public class GADBannerView extends UIView {
+
+}
+```
 
 ### Binding methods
 
 To be done…
 
 ### Binding properties
+
+To be done…
+
+### Binding enums
+
+To be done…
+
+### Binding constants and global values
 
 To be done…
 
