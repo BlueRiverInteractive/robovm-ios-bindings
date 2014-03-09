@@ -11,9 +11,9 @@ A collection of third party bindings for RoboVM iOS.
 
 3. Add that project to the build path of your main RoboVM project.
 
-4. Open the robovm.xml file of the binding and your main RoboVM project.
+4. Open the `robovm.xml` file of the binding and your main RoboVM project.
 
-5. Copy the <libs>, <frameworks>, <weakFrameworks> and <resources> section to your project’s robovm.xml file and update the paths to correctly point to the linked files.
+5. Copy the `<libs>`, `<frameworks>`, `<weakFrameworks>` and `<resources>` section to your project’s `robovm.xml` file and update the paths to correctly point to the linked files.
 
 6. To find out how to use the binding take a look at its Sample class for basic usage.
 
@@ -22,31 +22,43 @@ A collection of third party bindings for RoboVM iOS.
 When you want to create a binding, you should have a basic knowledge of the syntax of Objective-C. Also it wouldn’t hurt if you know how to use Xcode and how static libraries work.
 This tutorial will guide you in creating a fully working binding of the Facebook iOS SDK.
 
-# Analyzing the framework or SDK
+### Analyzing the framework or SDK
 
-XX
+To be done…
 
-# Creating a binding project
+### Creating a binding project
 
+To be done…
 
-# A new Java class for each Objective-C class
+### A new Java class for each Objective-C class
 
+To be done…
 
-# Binding methods
+### Binding methods
 
+To be done…
 
-# Binding properties
+### Binding properties
 
+To be done…
 
-# Binding blocks
+### Binding blocks
 
+To be done…
 
-# Binding delegates
+### Binding delegates
 
+To be done…
 
+### Finishing the binding
 
+To be done…
 
+### Creating a static library in Xcode
 
+To be done…
+
+### Pull requests
 
 When you submit a binding as a pull request be sure to use the following namespace:
 > org.robovm.bindings.*bindingname*
