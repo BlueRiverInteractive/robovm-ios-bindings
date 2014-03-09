@@ -15,7 +15,7 @@ A collection of third party bindings for RoboVM iOS.
 
 5. Copy the `<libs>`, `<frameworks>`, `<weakFrameworks>` and `<resources>` section to your project’s `robovm.xml` file and update the paths to correctly point to the linked files.
 
-6. To find out how to use the binding take a look at its Sample class for basic usage.
+6. To find out how to use the binding take a look at its Sample class for basic usage and take a look at the original documentation of the framework or SDK.
 
 ## How do I create a binding?
 
@@ -123,7 +123,7 @@ Some things to keep in mind:
 
 The selector name can be multiple parts long. In the following example the selector is marked bold:
 
-> - (void)**setLocationWithLatitude:**(CGFloat)latitude **longitude:**(CGFloat)longitude **accuracy:**(CGFloat)accuracyInMeters;
+>  - (void)**setLocationWithLatitude:**(CGFloat)latitude **longitude:**(CGFloat)longitude **accuracy:**(CGFloat)accuracyInMeters;
 
 Use Java Bean naming conventions for consistency. Shorten long method names. The example above in Java would be:
 
@@ -140,15 +140,15 @@ Constructors can be identified because of their `init` in the selector and/or of
 - (id)initWithAdSize:(GADAdSize)size;
 ```
 
-We can bind this constructor like any other method but need to use the return type `long`.
+You can bind this constructor like any other method but need to use the return type `long`.
 
 ```Java
 @Method(selector = "initWithAdSize:")
 private native long init(GADAdSize size);
 ```
 
-We make that method private because we don’t want anyone to manually init the object.  
-Next we need to create the Java constructor with the same parameters and call that init method inside the inherited initObject(long) method.
+Make that method private because we don’t want anyone to manually init the object.  
+Next you need to create the Java constructor with the same parameters and call that init method inside the inherited initObject(long) method.
 
 ```Java
 public GADBannerView(GADAdSize size) {
@@ -161,7 +161,49 @@ Note the super constructor call. This is necessary because otherwise Java would 
 
 ### Binding properties
 
-To be done…
+Let’s bind the following property:
+
+```objc
+@property(nonatomic, copy) NSString *adUnitID;
+```
+
+The selector of this property is `adUnitID` and its type is `NSString`.  
+We can create a getter and a setter method via the `@Property`annotation:
+
+```Java
+@Property(selector = "adUnitID")
+public native String getAdUnitID ();
+
+@Property(selector = "setAdUnitID:")
+public native void setAdUnitID (String id);
+```
+
+Note that we add `set` and `:` to the selector of the setter.  
+We can also directly return String instead of NSString. RoboVM automatically converts it for us.
+
+There are a few things we need to keep an eye on:
+
+```objc
+@property(nonatomic, readonly) BOOL hasAutoRefreshed;
+```
+
+We can only create a getter for this, as it has the readonly modifier.
+
+```objc
+@property(nonatomic, assign) NSObject<GADBannerViewDelegate> *delegate
+```
+
+When binding delegate properties we need to retain a strong reference of them, otherwise we will get memory issues and app crashes:
+
+```Java
+@Property(selector = "delegate", strongRef = true)
+public native GADBannerViewDelegate getDelegate();
+	
+@Property(selector = "setDelegate:", strongRef = true)
+public native void setDelegate(GADBannerViewDelegate delegate);
+```
+
+**HINT**: You can leave out the selector parameter, if you name the property methods with getProperty/isProperty and setProperty. The example above would still work, if we hadn’t specified the selector parameter.
 
 ### Binding enums
 
