@@ -98,19 +98,19 @@ public class GADBannerView extends UIView {
 
 Let’s dive deeper into the header file of GADBannerView. Open the file in Eclipse.
 The information we need here starts after the line with `@interface`.  
-For simplicity let’s copy the whole section until the end of the file into our corresponding java class. We can now bind part after part and delete the objective-c after done.
+For simplicity let’s copy the whole section until the end of the file into our corresponding Java class. We can now bind part after part and delete the Objective-C code after done.
 
 You can remove the `#pragma mark`. These are just for structuring the header file.
 Important for us are those lines that start with a `-` or a `+`.
 
-> `-` = instance methods
+> `-` = instance methods  
 > `+` = static methods
 
 For example, let’s bind this method:
 ```objc
 - (void)loadRequest:(GADRequest *)request;
 ```
-This method is an instance method (`-`), it’s selector/name is `loadRequest:`, it has one parameter `GADRequest request` and the return type is void.
+This method is an instance method (`-`), it’s selector/name is `loadRequest:`, it has one parameter `GADRequest request` and the return type is `void`.
 
 In RoboVM we can bind this method like so:
 ```Java
@@ -118,37 +118,36 @@ In RoboVM we can bind this method like so:
 public native void loadRequest(GADRequest request);
 ```
 
-You have now successfully bound your first method!  
+Congratulations! You have now successfully bound your first method.  
 Some things to keep in mind:
 
 The selector name can be multiple parts long. In the following example the selector is marked bold:
-```objc
-- (void)**setLocationWithLatitude:**(CGFloat)latitude **longitude:**(CGFloat)longitude **accuracy:**(CGFloat)accuracyInMeters;
-```
-> setLocationWithLatitude:longitude:accuracy:
 
-Use Java bean naming conventions for consistency. Shorten long method names. The example above in Java would be:
+> - (void)**setLocationWithLatitude:**(CGFloat)latitude **longitude:**(CGFloat)longitude **accuracy:**(CGFloat)accuracyInMeters;
+
+Use Java Bean naming conventions for consistency. Shorten long method names. The example above in Java would be:
 
 ```Java
+@Method(selector = "setLocationWithLatitude:longitude:accuracy:");
 public native void setLocation(float latitude, float longitude, float accuracyInMeters);
 ```
 
 ### Binding constructors
 
-Constructors are like methods and they can be identified because of their `init` in the selector and/or of the `id` return type. For example:
+Constructors can be identified because of their `init` in the selector and/or of the `id` return type. For example:
 
 ```objc
 - (id)initWithAdSize:(GADAdSize)size;
 ```
 
-We can bind this method like any other method but need to use the return type `long`.
+We can bind this constructor like any other method but need to use the return type `long`.
 
 ```Java
 @Method(selector = "initWithAdSize:")
 private native long init(GADAdSize size);
 ```
 
-We make that method private because we don’t want anyone to manually init the object.
+We make that method private because we don’t want anyone to manually init the object.  
 Next we need to create the Java constructor with the same parameters and call that init method inside the inherited initObject(long) method.
 
 ```Java
