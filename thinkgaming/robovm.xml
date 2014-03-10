@@ -1,0 +1,26 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<libs>
+		<lib>libs/libthinkgaming.a</lib>
+	</libs>
+	<resources>
+		<resource>
+			<directory>resources</directory>
+			<skipPngCrush>true</skipPngCrush>
+		</resource>
+	</resources>
+	<frameworks>
+	    <framework>Security</framework>
+		<framework>SystemConfiguration</framework>
+		<framework>UIKit</framework>
+	</frameworks>
+	<weakFrameworks>
+		<framework>AdSupport</framework>
+		<framework>StoreKit</framework>
+	</weakFrameworks>
+</config>
