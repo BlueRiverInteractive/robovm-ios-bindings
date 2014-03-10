@@ -33,8 +33,8 @@ public class SLComposeViewController extends UIViewController {
 	}
 
 	public static final NSString ServiceTypeTwitter = new NSString("com.apple.social.twitter");
-	public static final NSString ServiceTypeFacebook = new NSString("SLServiceTypeFacebook");
-	public static final NSString ServiceTypeSinaWeibo = new NSString("SLServiceTypeSinaWeibo"); // TODO change
+	public static final NSString ServiceTypeFacebook = new NSString("com.apple.social.facebook");
+	public static final NSString ServiceTypeSinaWeibo = new NSString("com.apple.social.sinaweibo");
 
 	// + (SLComposeViewController *)composeViewControllerForServiceType:(NSString *)serviceType;
 	private static final Selector composeViewControllerForServiceType$ = Selector.register("composeViewControllerForServiceType:");

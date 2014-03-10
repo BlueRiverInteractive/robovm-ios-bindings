@@ -2,6 +2,7 @@
 package org.robovm.cocoatouch.storekit;
 
 import org.robovm.cocoatouch.foundation.NSSet;
+import org.robovm.objc.ObjCObject;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;
@@ -17,7 +18,6 @@ public class SKProductsRequest extends SKRequest {
 		ObjCRuntime.bind(/* <name> */SKProductsRequest /* </name> */.class);
 	}
 
-	// /DELEGATE
 	private static final Selector delegate = Selector.register("delegate");
 
 	@Bridge
@@ -43,6 +43,7 @@ public class SKProductsRequest extends SKRequest {
 	private native static void objc_setDelegateSuper (ObjCSuper __super__, Selector __cmd__, SKProductsRequestDelegate delegate);
 
 	public void setDelegate (SKProductsRequestDelegate delegate) {
+		addStrongRef((ObjCObject)delegate);
 		if (customClass) {
 			objc_setDelegateSuper(getSuper(), setDelegate$, delegate);
 		} else {

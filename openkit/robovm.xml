@@ -1,0 +1,25 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<resources>
+		<resource>
+			<directory>resources</directory>
+			<skipPngCrush>true</skipPngCrush>
+		</resource>
+	</resources>
+	<frameworks>
+	    <framework>MobileCoreServices</framework>
+	    <framework>QuartzCore</framework>
+	    <framework>Security</framework>
+	    <framework>SystemConfiguration</framework>
+	</frameworks>
+	<weakFrameworks>
+	    <framework>Accounts</framework>
+	    <framework>AdSupport</framework>
+	    <framework>Social</framework>
+	</weakFrameworks>
+</config>

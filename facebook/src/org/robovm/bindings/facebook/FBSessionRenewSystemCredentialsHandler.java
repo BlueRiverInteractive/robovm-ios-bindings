@@ -1,5 +1,5 @@
-package org.robovm.bindings.facebook;
 
+package org.robovm.bindings.facebook;
 
 //@Marshaler(FBSessionRenewSystemCredentialsHandler.Marshaler.class)
 public interface FBSessionRenewSystemCredentialsHandler {

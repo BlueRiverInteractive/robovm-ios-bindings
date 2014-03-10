@@ -65,8 +65,7 @@ public class MFMessageComposeViewController extends UINavigationController {
 	private static final Selector setBody = Selector.register("setBody:");
 
 	@Bridge
-	private native static MFMessageComposeViewControllerDelegate objc_setBody (MFMessageComposeViewController __self__,
-		Selector __cmd__, String body);
+	private native static void objc_setBody (MFMessageComposeViewController __self__, Selector __cmd__, String body);
 
 	public void setBody (String body) {
 		objc_setBody(this, setBody, body);

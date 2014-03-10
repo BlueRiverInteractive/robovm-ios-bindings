@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook.manager;
 
 import java.util.HashMap;
@@ -7,35 +8,35 @@ import org.robovm.bindings.facebook.manager.FBFeed.Builder.Parameters;
 public class FBFeed {
 	private final HashMap<String, String> data;
 
-	private FBFeed(Builder builder) {
+	private FBFeed (Builder builder) {
 		this.data = builder.data;
 	}
 
-	public HashMap<String, String> getData() {
+	public HashMap<String, String> getData () {
 		return data;
 	}
 
-	public String getMessage() {
+	public String getMessage () {
 		return data.get(Parameters.MESSAGE);
 	}
 
-	public String getLink() {
+	public String getLink () {
 		return data.get(Parameters.LINK);
 	}
 
-	public String getPicture() {
+	public String getPicture () {
 		return data.get(Parameters.PICTURE);
 	}
 
-	public String getName() {
+	public String getName () {
 		return data.get(Parameters.NAME);
 	}
 
-	public String getCaption() {
+	public String getCaption () {
 		return data.get(Parameters.CAPTION);
 	}
 
-	public String getDescription() {
+	public String getDescription () {
 		return data.get(Parameters.DESCRIPTION);
 	}
 
@@ -51,41 +52,41 @@ public class FBFeed {
 			public static final String DESCRIPTION = "description";
 		}
 
-		public Builder() {
+		public Builder () {
 			data = new HashMap<String, String>();
 		}
 
-		public Builder setName(String name) {
+		public Builder setName (String name) {
 			data.put(Parameters.NAME, name);
 			return this;
 		}
 
-		public Builder setMessage(String message) {
+		public Builder setMessage (String message) {
 			data.put(Parameters.MESSAGE, message);
 			return this;
 		}
 
-		public Builder setLink(String link) {
+		public Builder setLink (String link) {
 			data.put(Parameters.LINK, link);
 			return this;
 		}
 
-		public Builder setPicture(String picture) {
+		public Builder setPicture (String picture) {
 			data.put(Parameters.PICTURE, picture);
 			return this;
 		}
 
-		public Builder setCaption(String caption) {
+		public Builder setCaption (String caption) {
 			data.put(Parameters.CAPTION, caption);
 			return this;
 		}
 
-		public Builder setDescription(String description) {
+		public Builder setDescription (String description) {
 			data.put(Parameters.DESCRIPTION, description);
 			return this;
 		}
 
-		public FBFeed build() {
+		public FBFeed build () {
 			return new FBFeed(this);
 		}
 	}

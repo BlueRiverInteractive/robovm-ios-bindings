@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.objc.ObjCClass;
@@ -73,18 +74,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector id = Selector.register("id");
 
 	@Bridge
-	private native static String objc_id(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_id (FBGraphUser __self__, Selector __cmd__);
 
-	public String getId() {
+	public String getId () {
 		return objc_id(this, id);
 	}
 
 	private static final Selector setId$ = Selector.register("setId:");
 
 	@Bridge
-	private native static void objc_setId$(FBGraphUser __self__, Selector __cmd__, String id);
+	private native static void objc_setId$ (FBGraphUser __self__, Selector __cmd__, String id);
 
-	public void setId(String id) {
+	public void setId (String id) {
 		objc_setId$(this, setId$, id);
 	}
 
@@ -98,18 +99,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector name = Selector.register("name");
 
 	@Bridge
-	private native static String objc_name(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_name (FBGraphUser __self__, Selector __cmd__);
 
-	public String getName() {
+	public String getName () {
 		return objc_name(this, name);
 	}
 
 	private static final Selector setName$ = Selector.register("setName:");
 
 	@Bridge
-	private native static void objc_setName$(FBGraphUser __self__, Selector __cmd__, String name);
+	private native static void objc_setName$ (FBGraphUser __self__, Selector __cmd__, String name);
 
-	public void setName(String name) {
+	public void setName (String name) {
 		objc_setName$(this, setName$, name);
 	}
 
@@ -123,18 +124,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector first_name = Selector.register("first_name");
 
 	@Bridge
-	private native static String objc_first_name(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_first_name (FBGraphUser __self__, Selector __cmd__);
 
-	public String getFirstName() {
+	public String getFirstName () {
 		return objc_first_name(this, first_name);
 	}
 
 	private static final Selector setFirst_name$ = Selector.register("setFirst_name:");
 
 	@Bridge
-	private native static void objc_setFirst_name$(FBGraphUser __self__, Selector __cmd__, String name);
+	private native static void objc_setFirst_name$ (FBGraphUser __self__, Selector __cmd__, String name);
 
-	public void setFirstName(String name) {
+	public void setFirstName (String name) {
 		objc_setFirst_name$(this, setFirst_name$, name);
 	}
 
@@ -148,18 +149,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector middle_name = Selector.register("middle_name");
 
 	@Bridge
-	private native static String objc_middle_name(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_middle_name (FBGraphUser __self__, Selector __cmd__);
 
-	public String getMiddleName() {
+	public String getMiddleName () {
 		return objc_middle_name(this, middle_name);
 	}
 
 	private static final Selector setMiddle_name$ = Selector.register("setMiddle_name:");
 
 	@Bridge
-	private native static void objc_setMiddle_name$(FBGraphUser __self__, Selector __cmd__, String name);
+	private native static void objc_setMiddle_name$ (FBGraphUser __self__, Selector __cmd__, String name);
 
-	public void setMiddleName(String name) {
+	public void setMiddleName (String name) {
 		objc_setMiddle_name$(this, setMiddle_name$, name);
 	}
 
@@ -173,18 +174,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector last_name = Selector.register("last_name");
 
 	@Bridge
-	private native static String objc_last_name(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_last_name (FBGraphUser __self__, Selector __cmd__);
 
-	public String getLastName() {
+	public String getLastName () {
 		return objc_last_name(this, last_name);
 	}
 
 	private static final Selector setLast_name$ = Selector.register("setLast_name:");
 
 	@Bridge
-	private native static void objc_setLast_name$(FBGraphUser __self__, Selector __cmd__, String name);
+	private native static void objc_setLast_name$ (FBGraphUser __self__, Selector __cmd__, String name);
 
-	public void setLastName(String name) {
+	public void setLastName (String name) {
 		objc_setLast_name$(this, setLast_name$, name);
 	}
 
@@ -198,18 +199,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector link = Selector.register("link");
 
 	@Bridge
-	private native static String objc_link(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_link (FBGraphUser __self__, Selector __cmd__);
 
-	public String getLink() {
+	public String getLink () {
 		return objc_link(this, link);
 	}
 
 	private static final Selector setLink$ = Selector.register("setLink:");
 
 	@Bridge
-	private native static void objc_setLink$(FBGraphUser __self__, Selector __cmd__, String link);
+	private native static void objc_setLink$ (FBGraphUser __self__, Selector __cmd__, String link);
 
-	public void setLink(String link) {
+	public void setLink (String link) {
 		objc_setLink$(this, setLink$, link);
 	}
 
@@ -223,18 +224,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector username = Selector.register("username");
 
 	@Bridge
-	private native static String objc_username(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_username (FBGraphUser __self__, Selector __cmd__);
 
-	public String getUsername() {
+	public String getUsername () {
 		return objc_username(this, username);
 	}
 
 	private static final Selector setUsername$ = Selector.register("setUsername:");
 
 	@Bridge
-	private native static void objc_setUsername$(FBGraphUser __self__, Selector __cmd__, String username);
+	private native static void objc_setUsername$ (FBGraphUser __self__, Selector __cmd__, String username);
 
-	public void setUsername(String username) {
+	public void setUsername (String username) {
 		objc_setUsername$(this, setUsername$, username);
 	}
 
@@ -248,18 +249,18 @@ public class FBGraphUser extends FBGraphObject {
 	private static final Selector birthday = Selector.register("birthday");
 
 	@Bridge
-	private native static String objc_birthday(FBGraphUser __self__, Selector __cmd__);
+	private native static String objc_birthday (FBGraphUser __self__, Selector __cmd__);
 
-	public String getBirthday() {
+	public String getBirthday () {
 		return objc_birthday(this, birthday);
 	}
 
 	private static final Selector setBirthday$ = Selector.register("setBirthday:");
 
 	@Bridge
-	private native static void objc_setBirthday$(FBGraphUser __self__, Selector __cmd__, String birthday);
+	private native static void objc_setBirthday$ (FBGraphUser __self__, Selector __cmd__, String birthday);
 
-	public void setBirthday(String birthday) {
+	public void setBirthday (String birthday) {
 		objc_setBirthday$(this, setBirthday$, birthday);
 	}
 

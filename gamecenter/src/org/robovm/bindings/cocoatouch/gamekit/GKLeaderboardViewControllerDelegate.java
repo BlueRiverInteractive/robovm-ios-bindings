@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.cocoatouch.gamekit;
 
 import org.robovm.cocoatouch.foundation.NSObject;
@@ -7,25 +8,24 @@ import org.robovm.objc.annotation.BindSelector;
 import org.robovm.rt.bro.annotation.Callback;
 
 @Deprecated
-public interface GKLeaderboardViewControllerDelegate extends NSObjectProtocol{
-	
-	//- (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController;
-	/**
-	 * The leaderboard view has finished
-	 * @param viewController
-	 */
-	void leaderboardViewControllerDidFinish(GKLeaderboardViewController viewController);
-	
+public interface GKLeaderboardViewControllerDelegate extends NSObjectProtocol {
+
+	// - (void)leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController;
+	/** The leaderboard view has finished
+	 * @param viewController */
+	void leaderboardViewControllerDidFinish (GKLeaderboardViewController viewController);
+
 	public static class Adapter extends NSObject implements GKLeaderboardViewControllerDelegate {
 		@Override
-		public void leaderboardViewControllerDidFinish(GKLeaderboardViewController viewController){
+		public void leaderboardViewControllerDidFinish (GKLeaderboardViewController viewController) {
 		}
 	}
-	
-	static class Callbacks{
+
+	static class Callbacks {
 		@Callback
 		@BindSelector("leaderboardViewControllerDidFinish:")
-		public static void leaderboardViewControllerDidFinish(GKLeaderboardViewControllerDelegate __self__, Selector __cmd__, GKLeaderboardViewController viewController){
+		public static void leaderboardViewControllerDidFinish (GKLeaderboardViewControllerDelegate __self__, Selector __cmd__,
+			GKLeaderboardViewController viewController) {
 			__self__.leaderboardViewControllerDidFinish(viewController);
 		}
 	}

@@ -65,6 +65,10 @@ public class FacebookConfiguration {
 		return defaultAudience;
 	}
 
+	public void setSessionLoginBehavior (FBSessionLoginBehavior loginBehavior) {
+		this.loginBehavior = loginBehavior;
+	}
+
 	public static class Builder {
 		private String appId = null;
 		private String namespace = null;

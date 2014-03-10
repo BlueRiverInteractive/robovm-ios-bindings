@@ -2,24 +2,14 @@
 package org.robovm.bindings.vungle;
 
 import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.cocoatouch.uikit.UIViewController;
 import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCObject;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
 @NativeClass()
 public class VGVunglePub extends NSObject {
 	private static final ObjCClass objCClass = ObjCClass.getByType(VGVunglePub.class);
-
-	static {
-		ObjCRuntime.bind(VGVunglePub.class);
-	}
 
 	private VGVunglePub () {
 	}
@@ -28,203 +18,75 @@ public class VGVunglePub extends NSObject {
 		start(appID, VGUserData.defaultUserData());
 	}
 
-	public static void start (String appID, VGUserData userData) {
-		objc_start(objCClass, start, new NSString(appID), userData);
-	}
+	@Method(selector = "startWithPubAppID:userData:")
+	public native static void start (String appID, VGUserData userData);
 
-	private static final Selector start = Selector.register("startWithPubAppID:userData:");
+	@Method(selector = "stop")
+	public native static void stop ();
 
-	@Bridge
-	private native static void objc_start (ObjCClass __self__, Selector __cmd__, NSString appID, VGUserData userData);
+	@Method(selector = "getOpenUDID")
+	public native static String getOpenUDID ();
 
-	public static void stop () {
-		objc_stop(objCClass, stop);
-	}
-
-	private static final Selector stop = Selector.register("stop");
-
-	@Bridge
-	private native static void objc_stop (ObjCClass __self__, Selector __cmd__);
-
-	public static String getOpenUDID () {
-		return objc_getOpenUDID(objCClass, getOpenUDID).toString();
-	}
-
-	private static final Selector getOpenUDID = Selector.register("getOpenUDID");
-
-	@Bridge
-	private native static NSString objc_getOpenUDID (ObjCClass __self__, Selector __cmd__);
-
-	public static VGStatusData getCurrentStatusData () {
-		return objc_getCurrentStatusData(objCClass, getCurrentStatusData);
-	}
-
-	private static final Selector getCurrentStatusData = Selector.register("currentStatusData");
-
-	@Bridge
-	private native static VGStatusData objc_getCurrentStatusData (ObjCClass __self__, Selector __cmd__);
+	@Method(selector = "currentStatusData")
+	public native static VGStatusData getCurrentStatusData ();
 
 	/** Check if the library is running.
 	 * 
-	 * @return true if library is running */
-	public static boolean isRunning () {
-		return objc_isRunning(objCClass, isRunning);
-	}
+	 * @return true if library is running. */
+	@Method(selector = "running")
+	public native static boolean isRunning ();
 
-	private static final Selector isRunning = Selector.register("running");
+	@Method(selector = "showCacheFiles")
+	public native static void printCacheFilesInfo ();
 
-	@Bridge
-	private native static boolean objc_isRunning (ObjCClass __self__, Selector __cmd__);
+	@Method(selector = "showDeviceSettings")
+	public native static void printDeviceSettings ();
 
-	public static void printCacheFilesInfo () {
-		objc_showCacheFiles(objCClass, showCacheFiles);
-	}
+	@Method(selector = "versionString")
+	public native static String getVersion ();
 
-	private static final Selector showCacheFiles = Selector.register("showCacheFiles");
-
-	@Bridge
-	private native static void objc_showCacheFiles (ObjCClass __self__, Selector __cmd__);
-
-	public static void printDeviceSettings () {
-		objc_showDeviceSettings(objCClass, showDeviceSettings);
-	}
-
-	private static final Selector showDeviceSettings = Selector.register("showDeviceSettings");
-
-	@Bridge
-	private native static void objc_showDeviceSettings (ObjCClass __self__, Selector __cmd__);
-
-	public static String getVersion () {
-		return objc_getVersion(objCClass, getVersion).toString();
-	}
-
-	private static final Selector getVersion = Selector.register("versionString");
-
-	@Bridge
-	private native static NSString objc_getVersion (ObjCClass __self__, Selector __cmd__);
-
-	public static VGVunglePubDelegate getDelegate () {
-		return objc_getDelegate(objCClass, getDelegate);
-	}
-
-	private static final Selector getDelegate = Selector.register("delegate");
-
-	@Bridge
-	private native static VGVunglePubDelegate objc_getDelegate (ObjCClass __self__, Selector __cmd__);
+	@Method(selector = "delegate")
+	public native static VGVunglePubDelegate getDelegate ();
 
 	public static void setDelegate (VGVunglePubDelegate delegate) {
-		objCClass.addStrongRef((ObjCObject)delegate);
-		objc_setDelegate(objCClass, setDelegate, delegate);
+		objCClass.addStrongRef(delegate);
+		setDelegateImpl(delegate);
 	}
 
-	private static final Selector setDelegate = Selector.register("setDelegate:");
-
-	@Bridge
-	private native static void objc_setDelegate (ObjCClass __self__, Selector __cmd__, VGVunglePubDelegate delegate);
+	@Method(selector = "setDelegate:")
+	private native static void setDelegateImpl (VGVunglePubDelegate delegate);
 
 	/** @return true if an ad is available and this device is Internet-connected. */
-	public static boolean isAdAvailable () {
-		return objc_isAdAvailable(objCClass, isAdAvailable);
-	}
+	@Method(selector = "adIsAvailable")
+	public native static boolean isAdAvailable ();
 
-	private static final Selector isAdAvailable = Selector.register("adIsAvailable");
+	@Method(selector = "playModalAd:animated:showClose:")
+	public native static void playModalAd (UIViewController controller, boolean animated, boolean showClose);
 
-	@Bridge
-	private native static boolean objc_isAdAvailable (ObjCClass __self__, Selector __cmd__);
+	@Method(selector = "playIncentivizedAd:animated:showClose:userTag:")
+	public native static void playIncentivizedAd (UIViewController controller, boolean animated, boolean showClose, String userTag);
 
-	public static void playModalAd (UIViewController controller, boolean animated, boolean showClose) {
-		objc_playModalAd(objCClass, playModalAd, controller, animated, showClose);
-	}
+	@Method(selector = "alertBoxWithTitle:Body:leftButtonTitle:rightButtonTitle:")
+	public native static void setAlertBoxConfig (String title, String body, String leftButtonTitle, String rightButtonTitle);
 
-	private static final Selector playModalAd = Selector.register("playModalAd:animated:showClose:");
+	@Method(selector = "setCustomCountDownText:")
+	public native boolean setCountDownText (String text);
 
-	@Bridge
-	private native static void objc_playModalAd (ObjCClass __self__, Selector __cmd__, UIViewController controller,
-		boolean animated, boolean showClose);
+	@Method(selector = "muteIfMusicPlaying:")
+	public native static void setMuteIfMusicPlaying (boolean mute);
 
-	public static void playIncentivizedAd (UIViewController controller, boolean animated, boolean showClose, String userTag) {
-		objc_playIncentivizedAd(objCClass, playIncentivizedAd, controller, animated, showClose, new NSString(userTag));
-	}
+	@Method(selector = "setSoundEnabled:")
+	public native static void setSoundEnabled (boolean enabled);
 
-	private static final Selector playIncentivizedAd = Selector.register("playIncentivizedAd:animated:showClose:userTag:");
+	@Method(selector = "cacheSizeGet")
+	public native static int getCacheSize ();
 
-	@Bridge
-	private native static void objc_playIncentivizedAd (ObjCClass __self__, Selector __cmd__, UIViewController controller,
-		boolean animated, boolean showClose, NSString userTag);
+	@Method(selector = "cacheSizeSet:")
+	public native static void setCacheSize (int megabytes);
 
-	public static void setAlertBoxConfig (String title, String body, String leftButtonTitle, String rightButtonTitle) {
-		objc_setAlertBoxConfig(objCClass, setAlertBoxConfig, new NSString(title), new NSString(body),
-			new NSString(leftButtonTitle), new NSString(rightButtonTitle));
-	}
+	@Method(selector = "allowAutoRotate:")
+	public native static void setAutoRotateEnabled (boolean enabled);
 
-	private static final Selector setAlertBoxConfig = Selector
-		.register("alertBoxWithTitle:Body:leftButtonTitle:rightButtonTitle:");
-
-	@Bridge
-	private native static void objc_setAlertBoxConfig (ObjCClass __self__, Selector __cmd__, NSString title, NSString body,
-		NSString leftButtonTitle, NSString rightButtonTitle);
-
-	public boolean setCustomCountDownText (String text) {
-		return objc_setCustomCountDownText(objCClass, setCustomCountDownText, new NSString(text));
-	}
-
-	private static final Selector setCustomCountDownText = Selector.register("setCustomCountDownText:");
-
-	@Bridge
-	private native static boolean objc_setCustomCountDownText (ObjCClass __self__, Selector __cmd__, NSString text);
-
-	public static void setMuteIfMusicPlaying (boolean mute) {
-		objc_setMuteIfMusicPlaying(objCClass, setMuteIfMusicPlaying, mute);
-	}
-
-	private static final Selector setMuteIfMusicPlaying = Selector.register("muteIfMusicPlaying:");
-
-	@Bridge
-	private native static void objc_setMuteIfMusicPlaying (ObjCClass __self__, Selector __cmd__, boolean mute);
-
-	public static void setSoundEnabled (boolean enabled) {
-		objc_setSoundEnabled(objCClass, setSoundEnabled, enabled);
-	}
-
-	private static final Selector setSoundEnabled = Selector.register("setSoundEnabled:");
-
-	@Bridge
-	private native static void objc_setSoundEnabled (ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	public static int getCacheSize () {
-		return objc_getCacheSize(objCClass, getCacheSize);
-	}
-
-	private static final Selector getCacheSize = Selector.register("cacheSizeGet");
-
-	@Bridge
-	private native static int objc_getCacheSize (ObjCClass __self__, Selector __cmd__);
-
-	public static void setCacheSize (int megabytes) {
-		objc_setCacheSize(objCClass, setCacheSize, megabytes);
-	}
-
-	private static final Selector setCacheSize = Selector.register("cacheSizeSet:");
-
-	@Bridge
-	private native static void objc_setCacheSize (ObjCClass __self__, Selector __cmd__, int megabytes);
-
-	public static void setAutoRotateEnabled (boolean enabled) {
-		objc_setAutoRotateEnabled(objCClass, setAutoRotateEnabled, enabled);
-	}
-
-	private static final Selector setAutoRotateEnabled = Selector.register("allowAutoRotate:");
-
-	@Bridge
-	private native static void objc_setAutoRotateEnabled (ObjCClass __self__, Selector __cmd__, boolean enabled);
-
-	public static boolean isAdLoading () {
-		return objc_isAdLoading(objCClass, isAdLoading);
-	}
-
-	private static final Selector isAdLoading = Selector.register("loadingOfAdViewControllerInProgress");
-
-	@Bridge
-	private native static boolean objc_isAdLoading (ObjCClass __self__, Selector __cmd__);
-
+	@Method(selector = "loadingOfAdViewControllerInProgress")
+	public native static boolean isAdLoading ();
 }

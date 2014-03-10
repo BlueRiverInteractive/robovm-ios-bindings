@@ -17,23 +17,16 @@ import org.robovm.cocoatouch.storekit.SKProductsRequest;
 import org.robovm.cocoatouch.storekit.SKProductsRequestDelegate;
 import org.robovm.cocoatouch.storekit.SKProductsResponse;
 import org.robovm.cocoatouch.storekit.SKRequest;
-import org.robovm.objc.ObjCClass;
 
 /** An easy to use in-app purchase system for iOS. */
-public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
-	public static String TAG = "InAppPurchaseManager";
-
-	static {
-		// FIXME Workaround for RoboVM bug.
-		ObjCClass.getByType(SKProduct.class);
-		ObjCClass.getByType(SKPayment.class);
-		ObjCClass.getByType(SKPaymentTransaction.class);
-	}
+public class InAppPurchaseManager {
+	public static String TAG = "[InAppPurchaseManager] ";
 
 	private final InAppPurchaseListener listener;
 	private SKProductsRequest productsRequest;
 	private final CustomTransactionObserver paymentObserver;
 	private boolean requestingProducts;
+	private boolean purchasingProduct;
 
 	/** Create a new instance of the InAppPurchaseManager.
 	 * 
@@ -72,7 +65,7 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void requestProducts (List<String> productIds) {
 		if (requestingProducts) {
-			System.out.println(TAG + " Already requesting products!");
+			System.out.println(TAG + "Already requesting products!");
 			return;
 		}
 
@@ -81,10 +74,10 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 			products.add(new NSString(productIds.get(i)));
 		}
 
-		System.out.println(TAG + " Requesting product data");
+		System.out.println(TAG + "Requesting product data...");
 
 		productsRequest = new SKProductsRequest(new NSSet(products));
-		productsRequest.setDelegate(this);
+		productsRequest.setDelegate(new RequestDelegate());
 		productsRequest.start();
 		requestingProducts = true;
 	}
@@ -93,50 +86,81 @@ public class InAppPurchaseManager extends SKProductsRequestDelegate.Adapter {
 	 * 
 	 * @param product The product to buy. */
 	public void purchaseProduct (SKProduct product) {
-		System.out.println(TAG + " Purchasing product " + product.getLocalizedTitle());
+		if (purchasingProduct) {
+			System.out.println(TAG + "Already purchasing a product!");
+			return;
+		}
+
+		System.out.println(TAG + "Purchasing product '" + product.getLocalizedTitle() + "'...");
 		SKPayment payment = SKPayment.fromProductIdentifier(product.getProductIdentifier());
 		SKPaymentQueue.getDefaultQueue().addPayment(payment);
+		purchasingProduct = true;
 	}
 
 	/** Restore any transactions that occurred for this Apple ID. */
 	public void restoreTransactions () {
+		if (purchasingProduct) {
+			System.out.println(TAG + "Already purchasing a product!");
+			return;
+		}
+
+		System.out.println(TAG + "Restoring products...");
 		SKPaymentQueue.getDefaultQueue().restoreCompletedTransactions();
+		purchasingProduct = true;
 	}
 
-	@Override
-	public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
-		System.out.println(TAG + " Products successfully received!");
-		requestingProducts = false;
-
-		NSArray<SKProduct> products = response.getProducts();
-
-		listener.productsReceived(products.toArray(new SKProduct[products.size()]));
+	/** Returns {@code true} if a product is already being purchased, else {@code false}. **/
+	public boolean isPurchasingProduct () {
+		return purchasingProduct;
 	}
 
-	@Override
-	public void requestFailed (SKRequest request, NSError error) {
-		System.out.println(TAG + " Products request failed! Error : " + error.toString());
-		requestingProducts = false;
-
-		listener.productsRequestFailed(request, error);
+	/** Returns {@code true} if products are already being requested, else {@code false}. **/
+	public boolean isRequestingProducts () {
+		return requestingProducts;
 	}
 
-	void transactionCompleted (SKPaymentTransaction transaction) {
-		System.out.println(TAG + " Completed transaction '" + transaction.getTransactionIdentifier() + "' successfully!");
+	private class RequestDelegate extends SKProductsRequestDelegate.Adapter {
+		@Override
+		public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
+			System.out.println(TAG + "Products successfully received!");
+			requestingProducts = false;
+
+			NSArray<SKProduct> products = response.getProducts();
+
+			listener.productsReceived(products.toArray(new SKProduct[products.size()]));
+		}
+
+		@Override
+		public void requestFailed (SKRequest request, NSError error) {
+			System.out.println(TAG + "Products request failed! Error: " + (error != null ? error.toString() : "unknown"));
+			requestingProducts = false;
+
+			listener.productsRequestFailed(request, error);
+		}
+	}
+
+	protected void transactionCompleted (SKPaymentTransaction transaction) {
+		System.out.println(TAG + "Completed transaction '" + transaction.getTransactionIdentifier() + "' successfully!");
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
+		purchasingProduct = false;
+
 		listener.transactionCompleted(transaction);
 	}
 
-	void transactionRestored (SKPaymentTransaction transaction) {
-		System.out.println(TAG + " Restored transaction '" + transaction.getTransactionIdentifier() + "' successfully!");
+	protected void transactionRestored (SKPaymentTransaction transaction) {
+		System.out.println(TAG + "Restored transaction '" + transaction.getTransactionIdentifier() + "' successfully!");
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
+		purchasingProduct = false;
+
 		listener.transcationRestored(transaction);
 	}
 
-	void transactionFailed (SKPaymentTransaction transaction) {
-		System.out.println(TAG + " Transaction '" + transaction.getTransactionIdentifier() + "' failed! Error: "
-			+ transaction.getError().toString());
+	protected void transactionFailed (SKPaymentTransaction transaction) {
+		System.out.println(TAG + "Transaction '" + transaction.getTransactionIdentifier() + "' failed! Error: "
+			+ (transaction.getError() != null ? transaction.getError().toString() : "unknown"));
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
+		purchasingProduct = false;
+
 		listener.transactionFailed(transaction);
 	}
 }

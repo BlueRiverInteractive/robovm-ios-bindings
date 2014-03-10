@@ -1,9 +1,13 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
+import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
+import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.Library;
 
 /*!
@@ -99,27 +103,26 @@ public class FBRequestConnection extends NSObject {
 	// one the requests were originally started on.
 	// */
 	// @property (nonatomic, assign) FBRequestConnectionErrorBehavior errorBehavior;
-	//
-	// /*!
-	// @methodgroup Adding requests
-	// */
-	//
-	// /*!
-	// @method
-	//
-	// @abstract
-	// This method adds an <FBRequest> object to this connection.
-	//
-	// @discussion
-	// The completion handler is retained until the block is called upon the
-	// completion or cancellation of the connection.
-	//
-	// @param request A request to be included in the round-trip when start is called.
-	// @param handler A handler to call back when the round-trip completes or times out.
-	// The handler will be invoked on the main thread.
-	// */
-	// - (void)addRequest:(FBRequest*)request
-	// completionHandler:(FBRequestHandler)handler;
+
+	/** This method adds an FBRequest object to this connection.
+	 * 
+	 * The completion handler is retained until the block is called upon the completion or cancellation of the connection.
+	 * 
+	 * @param request A request to be included in the round-trip when start is called.
+	 * 
+	 * @param handler A handler to call back when the round-trip completes or times out. The handler will be invoked on the main
+	 *           thread. */
+	public void addRequest (FBRequest request, FBRequestHandler handler) {
+		objc_addRequest$completionHandler$(this, addRequest$completionHandler$, request,
+			FBRequestHandler.Marshaler.toObjCBlock(handler));
+	}
+
+	private static final Selector addRequest$completionHandler$ = Selector.register("addRequest:completionHandler:");
+
+	@Bridge
+	private native static void objc_addRequest$completionHandler$ (FBRequestConnection __self__, Selector __cmd__,
+		FBRequest request, ObjCBlock handler);
+
 	//
 	// /*!
 	// @method
@@ -173,30 +176,28 @@ public class FBRequestConnection extends NSObject {
 	// @methodgroup Instance methods
 	// */
 	//
-	// /*!
-	// @method
-	//
-	// @abstract
-	// This method starts a connection with the server and is capable of handling all of the
-	// requests that were added to the connection.
-	//
-	// @discussion
-	// Errors are reported via the handler callback, even in cases where no
-	// communication is attempted by the implementation of `FBRequestConnection`. In
-	// such cases multiple error conditions may apply, and if so the following
-	// priority (highest to lowest) is used:
-	//
-	// - `FBRequestConnectionInvalidRequestKey` -- this error is reported when an
-	// <FBRequest> cannot be encoded for transmission.
-	//
-	// - `FBRequestConnectionInvalidBatchKey` -- this error is reported when any
-	// request in the connection cannot be encoded for transmission with the batch.
-	// In this scenario all requests fail.
-	//
-	// This method cannot be called twice for an `FBRequestConnection` instance.
-	// */
-	// - (void)start;
-	//
+	/** This method starts a connection with the server and is capable of handling all of the requests that were added to the
+	 * connection.
+	 * 
+	 * Errors are reported via the handler callback, even in cases where no communication is attempted by the implementation of
+	 * `FBRequestConnection`. In such cases multiple error conditions may apply, and if so the following priority (highest to
+	 * lowest) is used:
+	 * 
+	 * - `FBRequestConnectionInvalidRequestKey` -- this error is reported when an FBRequest cannot be encoded for transmission.
+	 * 
+	 * - `FBRequestConnectionInvalidBatchKey` -- this error is reported when any request in the connection cannot be encoded for
+	 * transmission with the batch. In this scenario all requests fail.
+	 * 
+	 * This method cannot be called twice for an `FBRequestConnection` instance. */
+	public void start () {
+		objc_start(this, start);
+	}
+
+	private static final Selector start = Selector.register("start");
+
+	@Bridge
+	private native static void objc_start (FBRequestConnection __self__, Selector __cmd__);
+
 	// /*!
 	// @method
 	//
@@ -333,18 +334,22 @@ public class FBRequestConnection extends NSObject {
 	// This method will throw an exception if <[FBSettings defaultAppID]> is `nil`. The appID won't be nil when the pList
 	// includes the appID, or if it's explicitly set.
 	//
-	// The JSON in the request's response will include an "custom_audience_third_party_id" key/value pair, with the value being the ID retrieved.
+	// The JSON in the request's response will include an "custom_audience_third_party_id" key/value pair, with the value being the
+// ID retrieved.
 	// This ID is an encrypted encoding of the Facebook user's ID and the invoking Facebook app ID.
 	// Multiple calls with the same user will return different IDs, thus these IDs cannot be used to correlate behavior
 	// across devices or applications, and are only meaningful when sent back to Facebook for creating Custom Audiences.
 	//
-	// The ID retrieved represents the Facebook user identified in the following way: if the specified session (or activeSession if the specified
-	// session is `nil`) is open, the ID will represent the user associated with the activeSession; otherwise the ID will represent the user logged
+	// The ID retrieved represents the Facebook user identified in the following way: if the specified session (or activeSession if
+// the specified
+	// session is `nil`) is open, the ID will represent the user associated with the activeSession; otherwise the ID will represent
+// the user logged
 	// into the
 	// native Facebook app on the device. If there is no native Facebook app, no one is logged into it, or the user has opted out
 	// at the iOS level from ad tracking, then a `nil` ID will be returned.
 	//
-	// This method returns `nil` if either the user has opted-out (via iOS) from Ad Tracking, the app itself has limited event usage
+	// This method returns `nil` if either the user has opted-out (via iOS) from Ad Tracking, the app itself has limited event
+// usage
 	// via the `[FBAppEvents setLimitEventUsage]` flag, or a specific Facebook user cannot be identified.
 	//
 	// @param handler The handler block to call when the request completes with a success, error, or cancel action.
@@ -352,22 +357,17 @@ public class FBRequestConnection extends NSObject {
 	// + (FBRequestConnection*)startForCustomAudienceThirdPartyID:(FBSession *)session
 	// completionHandler:(FBRequestHandler)handler;
 	//
-	// /*!
-	// @method
-	//
-	// @abstract
-	// Simple method to make a graph API request, creates an <FBRequest> object for HTTP GET,
-	// then uses an <FBRequestConnection> object to start the connection with Facebook. The
-	// request uses the active session represented by `[FBSession activeSession]`.
-	//
-	// See <connectionWithSession:graphPath:parameters:HTTPMethod:completionHandler:>
-	//
-	// @param graphPath The Graph API endpoint to use for the request, for example "me".
-	// @param handler The handler block to call when the request completes with a success, error, or cancel action.
-	// */
+	/** Simple method to make a graph API request, creates an <FBRequest> object for HTTP GET, then uses an <FBRequestConnection>
+	 * object to start the connection with Facebook. The request uses the active session represented by `[FBSession
+	 * activeSession]`.
+	 * 
+	 * See <connectionWithSession:graphPath:parameters:HTTPMethod:completionHandler:>
+	 * @param graphPath The Graph API endpoint to use for the request, for example "me".
+	 * @param handler The handler block to call when the request completes with a success, error, or cancel action. */
+
 	// + (FBRequestConnection*)startWithGraphPath:(NSString*)graphPath
 	// completionHandler:(FBRequestHandler)handler;
-	//
+
 	// /*!
 	// @method
 	//
@@ -376,7 +376,8 @@ public class FBRequestConnection extends NSObject {
 	// HTTP DELETE, then uses an <FBRequestConnection> object to start the connection with Facebook.
 	// The request uses the active session represented by `[FBSession activeSession]`.
 	//
-	// @param object The object to delete, may be an NSString or NSNumber representing an fbid or an NSDictionary with an id property
+	// @param object The object to delete, may be an NSString or NSNumber representing an fbid or an NSDictionary with an id
+// property
 	// @param handler The handler block to call when the request completes with a success, error, or cancel action.
 	// */
 	// + (FBRequestConnection*)startForDeleteObject:(id)object
@@ -412,7 +413,8 @@ public class FBRequestConnection extends NSObject {
 	//
 	// @param graphPath The Graph API endpoint to use for the request, for example "me".
 	//
-	// @param parameters The parameters for the request. A value of nil sends only the automatically handled parameters, for example, the access
+	// @param parameters The parameters for the request. A value of nil sends only the automatically handled parameters, for
+// example, the access
 	// token. The default is nil.
 	//
 	// @param HTTPMethod The HTTP method to use for the request. A nil value implies a GET.

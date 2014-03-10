@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.facebook;
 
 import org.robovm.rt.bro.ValuedEnum;
@@ -12,14 +13,14 @@ public enum FBSessionDefaultAudience implements ValuedEnum {
 	/* ! Indicates that all Facebook users are able to see posts made by the application */
 	Everyone(30);
 
-	private final int n;
+	private final long n;
 
-	private FBSessionDefaultAudience(int n) {
+	private FBSessionDefaultAudience (long n) {
 		this.n = n;
 	}
 
 	@Override
-	public int value() {
+	public long value () {
 		return n;
 	}
 }
