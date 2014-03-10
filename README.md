@@ -65,12 +65,16 @@ public class Sample extends UIApplicationDelegate.Adapter {
 }
 ```
 
+Copy the library archive file (*.a) into the libs folder of your binding project.
+
+
+
 Now we are ready to create the bindings!
 
 ### Binding classes
 
 First of all we will create a Java class for every Objective-C interface. Typically this is one class per header file.  
-To be sure, open up each header (.h) file and check if it contains a line starting with `@interface`. The name after `@interface` will become the class name, the name after the colon will become the extended class and the name(s) between the angle brackets (if any) will become implemented interfaces.  
+To be sure, open up each header (.h) file and check if it contains a line starting with `@interface`. The name after `@interface` will become the class name, the name after `:` will become the extended class and the name(s) between the angle brackets `<>` (if any) will become implemented interfaces.  
 The syntax would look like this:
 
 > @interface **ClassName** : **ExtendedClassName**<*ImplementedInterfaceName*>
