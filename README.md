@@ -127,12 +127,12 @@ Some things to keep in mind:
 
 The selector name can be multiple parts long. In the following example the selector is marked bold:
 
->  - (void)**setLocationWithLatitude:**(CGFloat)latitude **longitude:**(CGFloat)longitude **accuracy:**(CGFloat)accuracyInMeters;
+>  `-` (void)**setLocationWithLatitude:**(CGFloat)latitude **longitude:**(CGFloat)longitude **accuracy:**(CGFloat)accuracyInMeters;
 
 Use Java Bean naming conventions for consistency. Shorten long method names. The example above in Java would be:
 
 ```Java
-@Method(selector = "setLocationWithLatitude:longitude:accuracy:");
+@Method(selector = "setLocationWithLatitude:longitude:accuracy:")
 public native void setLocation(float latitude, float longitude, float accuracyInMeters);
 ```
 
