@@ -6,6 +6,7 @@ import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
+import org.robovm.rt.bro.annotation.Pointer;
 
 @NativeClass()
 public class ThinkGamingEvent extends NSObject {
@@ -15,7 +16,8 @@ public class ThinkGamingEvent extends NSObject {
 	}
 
 	@Method(selector = "initWithEventName:")
-	private native long init (String eventName);
+	private native @Pointer
+	long init (String eventName);
 
 	@Property()
 	public native String getEventName ();

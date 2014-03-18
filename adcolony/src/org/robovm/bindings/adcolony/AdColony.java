@@ -4,20 +4,14 @@ package org.robovm.bindings.adcolony;
 import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
 @NativeClass()
 public class AdColony extends NSObject {
 	private static final ObjCClass objCClass = ObjCClass.getByType(AdColony.class);
-
-	static {
-		ObjCRuntime.bind(AdColony.class);
-	}
 
 	private AdColony () {
 	}
@@ -27,9 +21,8 @@ public class AdColony extends NSObject {
 	private static final Selector configureWithAppID$zoneIDs$delegate$logging = Selector
 		.register("configureWithAppID:zoneIDs:delegate:logging:");
 
-	@SuppressWarnings("rawtypes")
 	@Bridge
-	private native static void objc_configure (ObjCClass __self__, Selector __cmd__, String appID, NSArray zoneIDs,
+	private native static void objc_configure (ObjCClass __self__, Selector __cmd__, String appID, NSArray<?> zoneIDs,
 		AdColonyDelegate del, boolean log);
 
 	/** Configures AdColony specifically for your app; required for usage of the rest of the API. This method returns immediately;
@@ -43,9 +36,8 @@ public class AdColony extends NSObject {
 	 *           provide limited reporting and install tracking functionality.
 	 * @param del The delegate to receive V4VC and ad availability events. Can be `nil` for apps that do not need these events.
 	 * @param log A boolean controlling AdColony verbose logging. */
-	@SuppressWarnings("rawtypes")
-	public static void configure (String appID, NSArray zoneIDs, AdColonyDelegate del, boolean log) {
-		objc_configure(objCClass, configureWithAppID$zoneIDs$delegate$logging, appID, zoneIDs, del, log);
+	public static void configure (String appID, NSArray<?> zoneIDs, AdColonyDelegate delegate, boolean log) {
+		objc_configure(objCClass, configureWithAppID$zoneIDs$delegate$logging, appID, zoneIDs, delegate, log);
 	}
 
 	// + ( void ) playVideoAdForZone:( String * )zoneID withDelegate:( id<AdColonyAdDelegate> )del;
@@ -58,7 +50,7 @@ public class AdColony extends NSObject {
 	 * as a result of this method call. If you need more detailed information about when the ad completes or whether an ad played,
 	 * pass in a delegate.
 	 * @param zoneID The zone from which the ad should play.
-	 * @param del The delegate to receive ad events. Can be `nil` for apps that do not need these events. */
+	 * @param del The delegate to receive ad events. Can be {@code null} for apps that do not need these events. */
 	public static void playVideoAd (String zoneID, AdColonyAdDelegate del) {
 		objc_playVideoAd(objCClass, playVideoAdForZone$withDelegate, zoneID, del);
 	}
@@ -84,16 +76,9 @@ public class AdColony extends NSObject {
 			showPostPopup);
 	}
 
-	// + ( ADCOLONY_ZONE_STATUS ) zoneStatusForZone:( String * )zoneID;
-	private static final Selector zoneStatusForZone = Selector.register("zoneStatusForZone:");
-
-	@Bridge
-	private native static AdColonyStatus objc_getZoneStatus (ObjCClass __self__, Selector __cmd__, String zoneID);
-
 	/** Returns the zone status for the specified zone.
 	 * @param zoneID The zone in question
 	 * @return An ADCOLONY_ZONE_STATUS enum value indicating the zone status */
-	public static AdColonyStatus getZoneStatus (String zoneID) {
-		return objc_getZoneStatus(objCClass, zoneStatusForZone, zoneID);
-	}
+	@Method(selector = "zoneStatusForZone:")
+	public static native AdColonyStatus getZoneStatus (String zoneID);
 }

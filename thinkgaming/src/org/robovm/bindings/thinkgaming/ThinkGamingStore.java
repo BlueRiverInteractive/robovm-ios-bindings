@@ -6,6 +6,7 @@ import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
+import org.robovm.rt.bro.annotation.Pointer;
 
 @NativeClass()
 public class ThinkGamingStore extends NSObject {
@@ -15,7 +16,8 @@ public class ThinkGamingStore extends NSObject {
 	}
 
 	@Method(selector = "initWithResponse:")
-	private native long init (NSDictionary<?, ?> response);
+	private native @Pointer
+	long init (NSDictionary<?, ?> response);
 
 	@Property()
 	private native String getDisplayName ();

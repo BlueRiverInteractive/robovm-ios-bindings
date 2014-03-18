@@ -4,20 +4,13 @@ package org.robovm.bindings.openkit;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
 @NativeClass()
 public class OKScore extends NSObject {
 	private static final ObjCClass objCClass = ObjCClass.getByType(OKScore.class);
-
-	static {
-		ObjCRuntime.bind(OKScore.class);
-	}
 
 	public void submitScore (OKScoreRequestResponseHandler completionHandler) {
 		objc_submitScoreWithCompletionHandler$(this, submitScoreWithCompletionHandler$,
