@@ -144,11 +144,11 @@ Constructors can be identified because of their `init` in the selector and/or of
 - (id)initWithAdSize:(GADAdSize)size;
 ```
 
-You can bind this constructor like any other method but need to use the return type `long`.
+You can bind this constructor like any other method but need to use the return type `long` and the annotation `@Pointer`.
 
 ```Java
 @Method(selector = "initWithAdSize:")
-private native long init(GADAdSize size);
+private native @Pointer long init(GADAdSize size);
 ```
 
 Make that method private because we don’t want anyone to manually init the object.  
@@ -172,7 +172,7 @@ Let’s bind the following property:
 ```
 
 The selector of this property is `adUnitID` and its type is `NSString`.  
-We can create a getter and a setter method via the `@Property`annotation:
+We can create a getter and a setter method via the `@Property` annotation:
 
 ```Java
 @Property(selector = "adUnitID")
@@ -211,7 +211,66 @@ public native void setDelegate(GADBannerViewDelegate delegate);
 
 ### Binding enums
 
-To be done…
+In Objective-C there are typically two ways to define enums.  
+In GADRequest.h we find this:
+
+```objc
+typedef NS_ENUM(NSInteger, GADGender) {
+  kGADGenderUnknown,  ///< Unknown gender.
+  kGADGenderMale,     ///< Male gender.
+  kGADGenderFemale    ///< Female gender.
+};
+```
+
+This is actually the same as:
+```objc
+typedef enum {
+  kGADGenderUnknown,  ///< Unknown gender.
+  kGADGenderMale,     ///< Male gender.
+  kGADGenderFemale    ///< Female gender.
+} GADGender;
+```
+
+We can bind this as a Java valued enum:
+
+```Java
+public enum GADGender implements ValuedEnum {
+  Unknown(0),
+  Male(1),
+  Female(2);
+
+  private final long n;
+  
+  private GADGender (long n) {
+    this.n = n;
+  }
+
+  @Override
+  public long value () {
+    return n;
+  }
+}
+```
+
+The names of the enum constants is unimportant but the order and value is not. It can happen that some enum constants have the same value as other constants in Objective-C, thus they need to have the same value in Java.  
+For example:
+
+```objc
+kGADExampleEmpty = 0,
+kGADExampleFalse,
+kGADExampleTrue,
+kGADExampleError = kGADExampleFalse,
+kGADExampleNetworkError = 1 | (1 << 9)
+```
+In Java:
+
+```Java
+Empty(0),
+False(1),
+True(2),
+Error(1),
+NetworkError(1 | (1 << 9))
+```
 
 ### Binding constants and global values
 
