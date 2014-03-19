@@ -88,11 +88,11 @@ In our case this will be:
 - class GADRequestError extends NSError
 
 Create those classes inside the `org.robovm.bindings.admob` package.
-Add the `@NativeClass()` annotation to each of this classes. This marks the classes as native Objective-C classes.
+Add the `@NativeClass` annotation to each of this classes. This marks the classes as native Objective-C classes.
 
 Example GADBannerView:
 ```Java
-@NativeClass()
+@NativeClass
 public class GADBannerView extends UIView {
 
 }
@@ -197,10 +197,10 @@ We can only create a getter for this, as it has the readonly modifier.
 @property(nonatomic, assign) NSObject<GADBannerViewDelegate> *delegate
 ```
 
-When binding delegate properties we need to retain a strong reference of them, otherwise we will get memory issues and app crashes:
+When binding delegate properties or other weak/assign properties, we need to retain a strong reference of them, otherwise we will get memory issues and app crashes:
 
 ```Java
-@Property(selector = "delegate", strongRef = true)
+@Property(selector = "delegate")
 public native GADBannerViewDelegate getDelegate();
 	
 @Property(selector = "setDelegate:", strongRef = true)
