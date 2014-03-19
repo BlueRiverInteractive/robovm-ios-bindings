@@ -6,7 +6,7 @@ import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 
 /** Internal statistics. */
-@NativeClass()
+@NativeClass
 public class VGStatusData extends NSObject {
 	private VGStatusData () {
 	}
@@ -17,9 +17,9 @@ public class VGStatusData extends NSObject {
 	@Property(selector = "videoAdsUnviewed")
 	public native int getUnviewedVideoAds ();
 
-	@Property()
+	@Property
 	public native String getDescription ();
 
-	@Property()
+	@Property
 	public native VGStatus getStatus ();
 }

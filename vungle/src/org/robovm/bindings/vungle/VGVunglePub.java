@@ -7,10 +7,8 @@ import org.robovm.objc.ObjCClass;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
-@NativeClass()
+@NativeClass
 public class VGVunglePub extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(VGVunglePub.class);
-
 	private VGVunglePub () {
 	}
 
@@ -49,7 +47,12 @@ public class VGVunglePub extends NSObject {
 	public native static VGVunglePubDelegate getDelegate ();
 
 	public static void setDelegate (VGVunglePubDelegate delegate) {
-		objCClass.addStrongRef(delegate);
+		ObjCClass clazz = ObjCClass.getByType(VGVunglePub.class);
+		if (delegate != null) {
+			clazz.addStrongRef(delegate);
+		} else {
+			clazz.removeStrongRef(delegate);
+		}
 		setDelegateImpl(delegate);
 	}
 

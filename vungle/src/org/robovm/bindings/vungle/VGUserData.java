@@ -8,36 +8,35 @@ import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 
 /** User and preferences data. Supplied to VGVunglePub class at startup. */
-@NativeClass()
+@NativeClass
 public class VGUserData extends NSObject {
-
 	@Method(selector = "defaultUserData")
 	public static native VGUserData defaultUserData ();
 
-	@Property()
+	@Property
 	public native int getAge ();
 
-	@Property()
+	@Property
 	public native void setAge (int age);
 
-	@Property()
+	@Property
 	public native VGGender getGender ();
 
-	@Property()
+	@Property
 	public native void setGender (VGGender gender);
 
-	@Property()
+	@Property
 	public native VGAdOrientation getAdOrientation ();
 
-	@Property()
+	@Property
 	public native void setAdOrientation (VGAdOrientation orientation);
 
-	@Property()
+	@Property
 	public native boolean isLocationEnabled ();
 
-	@Property()
+	@Property
 	public native void setLocationEnabled (boolean enabled);
 
-	@Property()
+	@Property
 	public native NSDictionary<?, ?> getJSONData ();
 }
