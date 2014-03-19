@@ -3,60 +3,35 @@ package org.robovm.bindings.facebook;
 
 import java.util.Map;
 
+import org.robovm.bindings.facebook.session.FBSession;
 import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.cocoatouch.foundation.NSMutableDictionary;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.objc.ObjCBlock;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 import org.robovm.rt.bro.annotation.Pointer;
 
-/*!
- @class FBRequest
-
- @abstract
- The `FBRequest` object is used to setup and manage requests to Facebook Graph
- and REST APIs. This class provides helper methods that simplify the connection
- and response handling.
-
- @discussion
- An <FBSession> object is required for all authenticated uses of `FBRequest`.
- Requests that do not require an unauthenticated user are also supported and
- do not require an <FBSession> object to be passed in.
-
- An instance of `FBRequest` represents the arguments and setup for a connection
- to Facebook. After creating an `FBRequest` object it can be used to setup a
- connection to Facebook through the <FBRequestConnection> object. The
- <FBRequestConnection> object is created to manage a single connection. To
- cancel a connection use the instance method in the <FBRequestConnection> class.
-
- An `FBRequest` object may be reused to issue multiple connections to Facebook.
- However each <FBRequestConnection> instance will manage one connection.
-
- Class and instance methods prefixed with **start* ** can be used to perform the
- request setup and initiate the connection in a single call.
-
- */
-@Library(Library.INTERNAL)
-@NativeClass()
+/** The FBRequest object is used to setup and manage requests to Facebook Graph and REST APIs. This class provides helper methods
+ * that simplify the connection and response handling.
+ * 
+ * An {@link FBSession} object is required for all authenticated uses of FBRequest. Requests that do not require an
+ * unauthenticated user are also supported and do not require an {@link FBSession} object to be passed in.
+ * 
+ * An instance of FBRequest represents the arguments and setup for a connection to Facebook. After creating an FBRequest object it
+ * can be used to setup a connection to Facebook through the {@link FBRequestConnection} object. The {@link FBRequestConnection}
+ * object is created to manage a single connection. To cancel a connection use the instance method in the
+ * {@link FBRequestConnection} class.
+ * 
+ * An FBRequest object may be reused to issue multiple connections to Facebook. However each {@link FBRequestConnection} instance
+ * will manage one connection.
+ * 
+ * Class and instance methods prefixed with **start* ** can be used to perform the request setup and initiate the connection in a
+ * single call. */
+@NativeClass
 public class FBRequest extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBRequest.class);
-
-	static {
-		ObjCRuntime.bind(FBRequest.class);
-	}
-
-	protected FBRequest (SkipInit skipInit) {
-		super(skipInit);
-	}
-
-	public FBRequest () {
-	}
 
 	/*
 	 * !

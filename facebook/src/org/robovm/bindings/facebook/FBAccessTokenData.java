@@ -1,35 +1,20 @@
 
 package org.robovm.bindings.facebook;
 
+import org.robovm.bindings.facebook.session.FBSessionLoginType;
 import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSMutableDictionary;
 import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-/*!
- @class FBAccessTokenData
-
- @abstract Represents an access token used for the Facebook login flow
- and includes associated metadata such as expiration date and permissions.
- You should use factory methods (createToken...) to construct instances
- and should be treated as immutable.
-
- @discussion For more information, see
- https://developers.facebook.com/docs/concepts/login/access-tokens-and-types/.
- */
-@Library(Library.INTERNAL)
-@NativeClass()
+/** Represents an access token used for the Facebook login flow and includes associated metadata such as expiration date and
+ * permissions. You should use factory methods (createToken...) to construct instances and should be treated as immutable.
+ * 
+ * For more information, see https://developers.facebook.com/docs/concepts/login/access-tokens-and-types/. */
+@NativeClass
 public class FBAccessTokenData extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBAccessTokenData.class);
-
-	static {
-		ObjCRuntime.bind(FBAccessTokenData.class);
-	}
 
 	/*
 	 * !

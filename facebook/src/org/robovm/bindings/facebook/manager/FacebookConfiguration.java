@@ -4,8 +4,8 @@ package org.robovm.bindings.facebook.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.robovm.bindings.facebook.FBSessionDefaultAudience;
-import org.robovm.bindings.facebook.FBSessionLoginBehavior;
+import org.robovm.bindings.facebook.session.FBSessionDefaultAudience;
+import org.robovm.bindings.facebook.session.FBSessionLoginBehavior;
 
 /** <p>
  * This class provides all the necessary settings for Facebook to work correctly. Use the Builder to create a new configuration.

@@ -3,34 +3,16 @@ package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.ObjCBlock;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-/*!
- @class FBRequestConnection
-
- @abstract
- The `FBRequestConnection` represents a single connection to Facebook to service a request.
-
- @discussion
- The request settings are encapsulated in a reusable <FBRequest> object. The
- `FBRequestConnection` object encapsulates the concerns of a single communication
- e.g. starting a connection, canceling a connection, or batching requests.
-
- */
-@Library(Library.INTERNAL)
+/** The FBRequestConnection represents a single connection to Facebook to service a request.
+ * 
+ * The request settings are encapsulated in a reusable {@link FBRequest} object. The FBRequestConnection object encapsulates the
+ * concerns of a single communication e.g. starting a connection, canceling a connection, or batching requests. */
 @NativeClass()
 public class FBRequestConnection extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBRequestConnection.class);
-
-	static {
-		ObjCRuntime.bind(FBRequestConnection.class);
-	}
-
 	// /*!
 	// @method
 	//

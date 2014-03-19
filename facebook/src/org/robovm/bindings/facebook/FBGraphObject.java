@@ -2,135 +2,104 @@
 package org.robovm.bindings.facebook;
 
 import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-/*!
- @protocol
-
- @abstract
- The `FBGraphObject` protocol is the base protocol which enables typed access to graph objects and
- open graph objects. Inherit from this protocol or a sub-protocol in order to introduce custom types
- for typed access to Facebook objects.
-
- @discussion
- The `FBGraphObject` protocol is the core type used by the Facebook SDK for iOS to
- represent objects in the Facebook Social Graph and the Facebook Open Graph (OG).
- The `FBGraphObject` class implements useful default functionality, but is rarely
- used directly by applications. The `FBGraphObject` protocol, in contrast is the
- base protocol for all graph object access via the SDK.
-
- Goals of the FBGraphObject types:
- <ul>
- <li> Lightweight/maintainable/robust </li>
- <li> Extensible and resilient to change, both by Facebook and third party (OG) </li>
- <li> Simple and natural extension to Objective-C </li>
- </ul>
-
- The FBGraphObject at its core is a duck typed (if it walks/swims/quacks...
- its a duck) model which supports an optional static facade. Duck-typing achieves
- the flexibility necessary for Social Graph and OG uses, and the static facade
- increases discoverability, maintainability, robustness and simplicity.
- The following excerpt from the PlacePickerSample shows a simple use of the
- a facade protocol `FBGraphPlace` by an application:
-
- <pre>
- &dash; (void)placePickerViewControllerSelectionDidChange:(FBPlacePickerViewController *)placePicker
- {
- id&#060;FBGraphPlace&#062; place = placePicker.selection;
-
- // we'll use logging to show the simple typed property access to place and location info
- NSLog(@"place=%@, city=%@, state=%@, lat long=%@ %@",
- place.name,
- place.location.city,
- place.location.state,
- place.location.latitude,
- place.location.longitude);
- }
- </pre>
-
- Note that in this example, access to common place information is available through typed property
- syntax. But if at some point places in the Social Graph supported additional fields "foo" and "bar", not
- reflected in the `FBGraphPlace` protocol, the application could still access the values like so:
-
- <pre>
- NSString *foo = [place objectForKey:@"foo"]; // perhaps located at the ... in the preceding example
- NSNumber *bar = [place objectForKey:@"bar"]; // extensibility applies to Social and Open graph uses
- </pre>
-
- In addition to untyped access, applications and future revisions of the SDK may add facade protocols by
- declaring a protocol inheriting the `FBGraphObject` protocol, like so:
-
- <pre>
- &#064;protocol MyGraphThing&#060;FBGraphObject&#062;
- &#064;property (copy, nonatomic) NSString *id;
- &#064;property (copy, nonatomic) NSString *name;
- &#064;end
- </pre>
-
- Important: facade implementations are inferred by graph objects returned by the methods of the SDK. This
- means that no explicit implementation is required by application or SDK code. Any `FBGraphObject` instance
- may be cast to any `FBGraphObject` facade protocol, and accessed via properties. If a field is not present
- for a given facade property, the property will return nil.
-
- The following layer diagram depicts some of the concepts discussed thus far:
-
- <pre>
- *-------------* *------------* *-------------**--------------------------*
- Facade --> | FBGraphUser | |FBGraphPlace| | MyGraphThing|| MyGraphPersonExtentension| ...
- *-------------* *------------* *-------------**--------------------------*
- *------------------------------------* *--------------------------------------*
- Transparent impl --> |     FBGraphObject (instances)      | |      CustomClass&#060;FBGraphObject&#062;      |
- *------------------------------------* *--------------------------------------*
- *-------------------**------------------------* *-----------------------------*
- Apparent impl --> |NSMutableDictionary||FBGraphObject (protocol)| |FBGraphObject (class methods)|
- *-------------------**------------------------* *-----------------------------*
- </pre>
-
- The *Facade* layer is meant for typed access to graph objects. The *Transparent impl* layer (more
- specifically, the instance capabilities of `FBGraphObject`) are used by the SDK and app logic
- internally, but are not part of the public interface between application and SDK. The *Apparent impl*
- layer represents the lower-level "duck-typed" use of graph objects.
-
- Implementation note: the SDK returns `NSMutableDictionary` derived instances with types declared like
- one of the following:
-
- <pre>
- NSMutableDictionary&#060;FBGraphObject&#062; *obj;     // no facade specified (still castable by app)
- NSMutableDictionary&#060;FBGraphPlace&#062; *person;   // facade specified when possible
- </pre>
-
- However, when passing a graph object to the SDK, `NSMutableDictionary` is not assumed; only the
- FBGraphObject protocol is assumed, like so:
-
- <pre>
- id&#060;FBGraphObject&#062; anyGraphObj;
- </pre>
-
- As such, the methods declared on the `FBGraphObject` protocol represent the methods used by the SDK to
- consume graph objects. While the `FBGraphObject` class implements the full `NSMutableDictionary` and KVC
- interfaces, these are not consumed directly by the SDK, and are optional for custom implementations.
- */
-@Library(Library.INTERNAL)
-@NativeClass()
+/** The FBGraphObject protocol is the base protocol which enables typed access to graph objects and open graph objects. Inherit
+ * from this protocol or a sub-protocol in order to introduce custom types for typed access to Facebook objects.
+ * 
+ * The `FBGraphObject` protocol is the core type used by the Facebook SDK for iOS to represent objects in the Facebook Social
+ * Graph and the Facebook Open Graph (OG). The `FBGraphObject` class implements useful default functionality, but is rarely used
+ * directly by applications. The `FBGraphObject` protocol, in contrast is the base protocol for all graph object access via the
+ * SDK.
+ * 
+ * Goals of the FBGraphObject types:
+ * <ul>
+ * <li>Lightweight/maintainable/robust</li>
+ * <li>Extensible and resilient to change, both by Facebook and third party (OG)</li>
+ * <li>Simple and natural extension to Objective-C</li>
+ * </ul>
+ * 
+ * The FBGraphObject at its core is a duck typed (if it walks/swims/quacks... its a duck) model which supports an optional static
+ * facade. Duck-typing achieves the flexibility necessary for Social Graph and OG uses, and the static facade increases
+ * discoverability, maintainability, robustness and simplicity. The following excerpt from the PlacePickerSample shows a simple
+ * use of the a facade protocol `FBGraphPlace` by an application:
+ * 
+ * <pre>
+ *  &dash; (void)placePickerViewControllerSelectionDidChange:(FBPlacePickerViewController *)placePicker
+ *  {
+ *  id&#060;FBGraphPlace&#062; place = placePicker.selection;
+ * 
+ *  // we'll use logging to show the simple typed property access to place and location info
+ *  NSLog(@"place=%@, city=%@, state=%@, lat long=%@ %@",
+ *  place.name,
+ *  place.location.city,
+ *  place.location.state,
+ *  place.location.latitude,
+ *  place.location.longitude);
+ *  }
+ * </pre>
+ * 
+ * Note that in this example, access to common place information is available through typed property syntax. But if at some point
+ * places in the Social Graph supported additional fields "foo" and "bar", not reflected in the `FBGraphPlace` protocol, the
+ * application could still access the values like so:
+ * 
+ * <pre>
+ *  NSString *foo = [place objectForKey:@"foo"]; // perhaps located at the ... in the preceding example
+ *  NSNumber *bar = [place objectForKey:@"bar"]; // extensibility applies to Social and Open graph uses
+ * </pre>
+ * 
+ * In addition to untyped access, applications and future revisions of the SDK may add facade protocols by declaring a protocol
+ * inheriting the `FBGraphObject` protocol, like so:
+ * 
+ * <pre>
+ *  &#064;protocol MyGraphThing&#060;FBGraphObject&#062;
+ *  &#064;property (copy, nonatomic) NSString *id;
+ *  &#064;property (copy, nonatomic) NSString *name;
+ *  &#064;end
+ * </pre>
+ * 
+ * Important: facade implementations are inferred by graph objects returned by the methods of the SDK. This means that no explicit
+ * implementation is required by application or SDK code. Any `FBGraphObject` instance may be cast to any `FBGraphObject` facade
+ * protocol, and accessed via properties. If a field is not present for a given facade property, the property will return nil.
+ * 
+ * The following layer diagram depicts some of the concepts discussed thus far:
+ * 
+ * <pre>
+ * -------------* *------------* *-------------**--------------------------*
+ *  Facade --> | FBGraphUser | |FBGraphPlace| | MyGraphThing|| MyGraphPersonExtentension| ...
+ * -------------* *------------* *-------------**--------------------------*
+ * ------------------------------------* *--------------------------------------*
+ *  Transparent impl --> |     FBGraphObject (instances)      | |      CustomClass&#060;FBGraphObject&#062;      |
+ * ------------------------------------* *--------------------------------------*
+ * -------------------**------------------------* *-----------------------------*
+ *  Apparent impl --> |NSMutableDictionary||FBGraphObject (protocol)| |FBGraphObject (class methods)|
+ * -------------------**------------------------* *-----------------------------*
+ * </pre>
+ * 
+ * The *Facade* layer is meant for typed access to graph objects. The *Transparent impl* layer (more specifically, the instance
+ * capabilities of `FBGraphObject`) are used by the SDK and app logic internally, but are not part of the public interface between
+ * application and SDK. The *Apparent impl* layer represents the lower-level "duck-typed" use of graph objects.
+ * 
+ * Implementation note: the SDK returns `NSMutableDictionary` derived instances with types declared like one of the following:
+ * 
+ * <pre>
+ *  NSMutableDictionary&#060;FBGraphObject&#062; *obj;     // no facade specified (still castable by app)
+ *  NSMutableDictionary&#060;FBGraphPlace&#062; *person;   // facade specified when possible
+ * </pre>
+ * 
+ * However, when passing a graph object to the SDK, `NSMutableDictionary` is not assumed; only the FBGraphObject protocol is
+ * assumed, like so:
+ * 
+ * <pre>
+ * id&lt;FBGraphObject&gt; anyGraphObj;
+ * </pre>
+ * 
+ * As such, the methods declared on the `FBGraphObject` protocol represent the methods used by the SDK to consume graph objects.
+ * While the `FBGraphObject` class implements the full `NSMutableDictionary` and KVC interfaces, these are not consumed directly
+ * by the SDK, and are optional for custom implementations. */
+@NativeClass
 public class FBGraphObject extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBGraphObject.class);
-
-	static {
-		ObjCRuntime.bind(FBGraphObject.class);
-	}
-
-	// public FBGraphObject() {
-	// }
-	//
-	// protected FBGraphObject(SkipInit skipInit) {
-	// super(skipInit);
-	// }
 
 	// /*!
 	// @method
@@ -138,29 +107,17 @@ public class FBGraphObject extends NSObject {
 	// Returns the number of properties on this `FBGraphObject`.
 	// */
 	// - (NSUInteger)count;
-	/*
-	 * !
-	 * 
-	 * @method
-	 * 
-	 * @abstract Returns a property on this `FBGraphObject`.
-	 * 
-	 * @param aKey name of the property to return
-	 */
-	// - (id)objectForKey:(id)aKey;
-	private static final Selector objectForKey$ = Selector.register("objectForKey:");
 
-	@Bridge
-	private native static NSObject objc_objectForKey$ (FBGraphObject __self__, Selector __cmd__, NSObject aKey);
-
-	public NSObject getProperty (String key) {
-		return objc_objectForKey$(this, objectForKey$, new NSString(key));
-	}
+	/** Returns a property on this {@link #FBGraphObject}.
+	 * 
+	 * @param key name of the property to return */
+	@Method(selector = "objectForKey:")
+	public native NSObject getProperty (String key);
 
 	// /*!
 	// @method
 	// @abstract
-	// Returns an enumerator of the property naems on this `FBGraphObject`.
+	// Returns an enumerator of the property names on this `FBGraphObject`.
 	// */
 	// - (NSEnumerator *)keyEnumerator;
 	// /*!

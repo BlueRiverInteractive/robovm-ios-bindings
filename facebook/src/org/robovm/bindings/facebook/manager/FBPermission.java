@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook.manager;
 
-import org.robovm.bindings.facebook.FBSessionAuthorizationType;
+import org.robovm.bindings.facebook.session.FBSessionAuthorizationType;
 
 public enum FBPermission {
 	BASIC_INFO("basic_info", Type.READ),

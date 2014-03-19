@@ -1,32 +1,42 @@
 
 package org.robovm.bindings.facebook;
 
+import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.Selector;
+import org.robovm.cocoatouch.foundation.NSURL;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
+import org.robovm.objc.annotation.Property;
 
-@Library(Library.INTERNAL)
-@NativeClass()
+/** This class contains information that represents an App Link from Facebook. */
+@NativeClass
 public class FBAppLinkData extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBAppLinkData.class);
+	/** @return the target. */
+	@Property()
+	public native NSURL getTargetURL ();
 
-	static {
-		ObjCRuntime.bind(FBAppLinkData.class);
-	}
+	/** @return list of the types of actions for this target. */
+	@Property()
+	public native NSArray<?> getActionTypes ();
 
-	/** Full set of query parameters for this app link. */
-	public NSDictionary<NSString, NSString> getOriginalQueryParameters () {
-		return objc_originalQueryParameters(this, originalQueryParameters);
-	}
+	/** @return list of the ids of the actions for this target. */
+	@Property()
+	public native NSArray<NSString> getActionIDs ();
 
-	private static final Selector originalQueryParameters = Selector.register("originalQueryParameters");
+	/** @return reference breadcrumb provided during creation of story. */
+	@Property(selector = "ref")
+	public native NSArray<?> getReferenceBreadcrumb ();
 
-	@Bridge
-	private native static NSDictionary<NSString, NSString> objc_originalQueryParameters (FBAppLinkData __self__, Selector __cmd__);
+	/** @return full set of query parameters for this app link. */
+	@Property()
+	public native NSDictionary<NSString, NSString> getOriginalQueryParameters ();
+
+	/** @return original url from which applinkData was extracted. */
+	@Property()
+	public native NSURL getOriginalURL ();
+
+	/** @return addtional arguments supplied with the App Link data. */
+	@Property(selector = "arguments")
+	public native NSDictionary<NSString, NSString> getAdditionalArguments ();
 }

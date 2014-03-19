@@ -1,42 +1,17 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
+import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-/*!
- @protocol
-
- @abstract
- The `FBGraphUser` protocol enables typed access to a user object
- as represented in the Graph API.
-
-
- @discussion
- The `FBGraphUser` protocol represents the most commonly used properties of a
- Facebook user object. It may be used to access an `NSDictionary` object that has
- been wrapped with an <FBGraphObject> facade.
- */
-@Library(Library.INTERNAL)
+/** The FBGraphUser protocol enables typed access to a user object as represented in the Graph API.
+ * 
+ * The FBGraphUser protocol represents the most commonly used properties of a Facebook user object. It may be used to access an
+ * {@link NSDictionary} object that has been wrapped with an {@link FBGraphObject} facade. */
 @NativeClass()
 public class FBGraphUser extends FBGraphObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBGraphUser.class);
-
-	static {
-		ObjCRuntime.bind(FBGraphUser.class);
-	}
-
-	// protected FBGraphUser(SkipInit skipInit) {
-	// super(skipInit);
-	// }
-	//
-	// public FBGraphUser() {
-	// }
-	//
 	// public FBGraphUser(NSDictionary<?, ?> data) {
 	// Object id = data.get(new NSString("id"));
 	// if (id != null)

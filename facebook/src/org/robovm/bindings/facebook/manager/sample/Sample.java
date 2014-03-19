@@ -1,12 +1,12 @@
 
 package org.robovm.bindings.facebook.manager.sample;
 
-import org.robovm.bindings.facebook.FBSessionDefaultAudience;
-import org.robovm.bindings.facebook.FBSessionLoginBehavior;
 import org.robovm.bindings.facebook.manager.FBFeed;
 import org.robovm.bindings.facebook.manager.FBPermission;
 import org.robovm.bindings.facebook.manager.FacebookConfiguration;
 import org.robovm.bindings.facebook.manager.FacebookManager;
+import org.robovm.bindings.facebook.session.FBSessionDefaultAudience;
+import org.robovm.bindings.facebook.session.FBSessionLoginBehavior;
 import org.robovm.cocoatouch.coregraphics.CGRect;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.foundation.NSError;
