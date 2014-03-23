@@ -2,25 +2,15 @@
 package org.robovm.bindings.mopub;
 
 import org.robovm.cocoatouch.coregraphics.CGSize;
-import org.robovm.cocoatouch.foundation.NSString;
 import org.robovm.cocoatouch.uikit.UIView;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCObject;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
+import org.robovm.objc.annotation.Property;
+import org.robovm.rt.bro.annotation.Pointer;
 
 /** The MPAdView class provides a view that can display banner advertisements. */
-@Library(Library.INTERNAL)
-@NativeClass()
+@NativeClass
 public class MPAdView extends UIView {
-	private static final ObjCClass objCClass = ObjCClass.getByType(MPAdView.class);
-
-	static {
-		ObjCRuntime.bind(MPAdView.class);
-	}
 
 	/** Initializes an MPAdView with the given ad unit ID and banner size.
 	 * 
@@ -28,51 +18,24 @@ public class MPAdView extends UIView {
 	 * @param size The desired ad size. A list of standard ad sizes is available in MPConstants.h.
 	 * @return A newly initialized ad view corresponding to the given ad unit ID and size. */
 	public MPAdView (String adUnitId, CGSize size) {
-		objc_init(this, init, new NSString(adUnitId), size);
+		super((SkipInit)null);
+		initObject(init(adUnitId, size));
 	}
 
-	private static final Selector init = Selector.register("initWithAdUnitId:size:");
-
-	@Bridge
-	private native static MPAdView objc_init (UIView __self__, Selector __cmd__, NSString adUnitId, CGSize size);
+	@Method(selector = "initWithAdUnitId:size:")
+	private native @Pointer
+	long init (String adUnitId, CGSize size);
 
 	/** Requests a new ad from the MoPub ad server.
 	 * 
-	 * If the ad view is already loading an ad, this call will be ignored. You may use `forceRefreshAd` if you would like cancel
-	 * any existing ad requests and force a new ad to load. */
-	public void loadAd () {
-		objc_loadAd(this, loadAd);
-	}
-
-	private static final Selector loadAd = Selector.register("loadAd");
-
-	@Bridge
-	private native static void objc_loadAd (MPAdView __self__, Selector __cmd__);
-
-	/** Requests a new ad from the MoPub ad server.
-	 * 
-	 * If the ad view is already loading an ad, this call will be ignored. You may use `forceRefreshAd` if you would like cancel
-	 * any existing ad requests and force a new ad to load.
-	 * 
-	 * **Warning**: This method has been deprecated. Use `loadAd` instead. */
-	public void refreshAd () {
-		objc_refreshAd(this, refreshAd);
-	}
-
-	private static final Selector refreshAd = Selector.register("refreshAd");
-
-	@Bridge
-	private native static void objc_refreshAd (MPAdView __self__, Selector __cmd__);
+	 * If the ad view is already loading an ad, this call will be ignored. You may use {@link #forceRefreshAd()} if you would like
+	 * cancel any existing ad requests and force a new ad to load. */
+	@Method(selector = "loadAd")
+	public native void loadAd ();
 
 	/** Cancels any existing ad requests and requests a new ad from the MoPub ad server. */
-	public void forceRefreshAd () {
-		objc_forceRefreshAd(this, forceRefreshAd);
-	}
-
-	private static final Selector forceRefreshAd = Selector.register("forceRefreshAd");
-
-	@Bridge
-	private native static void objc_forceRefreshAd (MPAdView __self__, Selector __cmd__);
+	@Method(selector = "forceRefreshAd")
+	public native void forceRefreshAd ();
 
 	/** Informs the ad view that the device orientation has changed.
 	 * 
@@ -80,17 +43,11 @@ public class MPAdView extends UIView {
 	 * application's orientation changes if you want mediated ads to acknowledge their new orientation.
 	 * 
 	 * If your application layout needs to change based on the size of the mediated ad, you may want to check the value of
-	 * `adContentViewSize` after calling this method, in case the orientation change causes the mediated ad to resize.
+	 * {@link #getAdContentViewSize()} after calling this method, in case the orientation change causes the mediated ad to resize.
 	 * 
 	 * @param newOrientation The new interface orientation (after orientation changes have occurred). */
-	public void rotateToOrientation (MPNativeAdOrientation orientation) {
-		objc_rotateToOrientation(this, rotateToOrientation, orientation);
-	}
-
-	private static final Selector rotateToOrientation = Selector.register("rotateToOrientation:");
-
-	@Bridge
-	private native static void objc_rotateToOrientation (MPAdView __self__, Selector __cmd__, MPNativeAdOrientation orientation);
+	@Method(selector = "rotateToOrientation:")
+	public native void rotateToOrientation (MPNativeAdOrientation orientation);
 
 	/** Forces third-party native ad networks to only use ads sized for the specified orientation.
 	 * 
@@ -110,14 +67,8 @@ public class MPAdView extends UIView {
 	 * 
 	 * @see #unlockAdsOrientation
 	 * @see #getAllowedAdsOrientation */
-	public void lockAdsToOrientation (MPNativeAdOrientation orientation) {
-		objc_lockAdsToOrientation(this, lockAdsToOrientation, orientation);
-	}
-
-	private static final Selector lockAdsToOrientation = Selector.register("lockNativeAdsToOrientation:");
-
-	@Bridge
-	private native static void objc_lockAdsToOrientation (MPAdView __self__, Selector __cmd__, MPNativeAdOrientation orientation);
+	@Method(selector = "lockNativeAdsToOrientation:")
+	public native void lockAdsToOrientation (MPNativeAdOrientation orientation);
 
 	/** Allows third-party native ad networks to use ads sized for any orientation.
 	 * 
@@ -125,31 +76,20 @@ public class MPAdView extends UIView {
 	 * 
 	 * @see lockAdsToOrientation
 	 * @see getAllowedAdsOrientation */
-	public void unlockAdsOrientation () {
-		objc_unlockAdsOrientation(this, unlockAdsOrientation);
-	}
-
-	private static final Selector unlockAdsOrientation = Selector.register("unlockNativeAdsOrientation");
-
-	@Bridge
-	private native static void objc_unlockAdsOrientation (MPAdView __self__, Selector __cmd__);
+	@Method(selector = "unlockNativeAdsOrientation")
+	public native void unlockAdsOrientation ();
 
 	/** Causes the ad view to periodically load new advertisements in accordance with user-defined refresh settings on the MoPub
 	 * website.
 	 * 
 	 * Calling this method is only necessary if you have previously stopped the ad view's refresh behavior using
-	 * `stopAutomaticallyRefreshingContents`. By default, an ad view is allowed to automatically load new advertisements if a
-	 * refresh interval has been configured on the MoPub website. This method has no effect if a refresh interval has not been set.
+	 * {@link #stopAutomaticallyRefreshingContents()}. By default, an ad view is allowed to automatically load new advertisements
+	 * if a refresh interval has been configured on the MoPub website. This method has no effect if a refresh interval has not been
+	 * set.
 	 * 
 	 * @see #stopAutomaticallyRefreshingContents */
-	public void startAutomaticallyRefreshingContents () {
-		objc_startAutomaticallyRefreshingContents(this, startAutomaticallyRefreshingContents);
-	}
-
-	private static final Selector startAutomaticallyRefreshingContents = Selector.register("startAutomaticallyRefreshingContents");
-
-	@Bridge
-	private native static void objc_startAutomaticallyRefreshingContents (MPAdView __self__, Selector __cmd__);
+	@Method(selector = "startAutomaticallyRefreshingContents")
+	public native void startAutomaticallyRefreshingContents ();
 
 	/** Stops the ad view from periodically loading new advertisements.
 	 * 
@@ -161,14 +101,8 @@ public class MPAdView extends UIView {
 	 * behavior when the ad view becomes visible.
 	 * 
 	 * @see #startAutomaticallyRefreshingContents */
-	public void stopAutomaticallyRefreshingContents () {
-		objc_stopAutomaticallyRefreshingContents(this, stopAutomaticallyRefreshingContents);
-	}
-
-	private static final Selector stopAutomaticallyRefreshingContents = Selector.register("stopAutomaticallyRefreshingContents");
-
-	@Bridge
-	private native static void objc_stopAutomaticallyRefreshingContents (MPAdView __self__, Selector __cmd__);
+	@Method(selector = "stopAutomaticallyRefreshingContents")
+	public native void stopAutomaticallyRefreshingContents ();
 
 	/** Returns the banner orientations that third-party ad networks are allowed to use.
 	 * 
@@ -176,14 +110,8 @@ public class MPAdView extends UIView {
 	 * 
 	 * @see #lockAdsToOrientation
 	 * @see #unlockAdsOrientation */
-	public MPNativeAdOrientation getAllowedAdsOrientation () {
-		return objc_getAllowedAdsOrientation(this, getAllowedOrientation);
-	}
-
-	private static final Selector getAllowedOrientation = Selector.register("allowedNativeAdsOrientation");
-
-	@Bridge
-	private native static MPNativeAdOrientation objc_getAllowedAdsOrientation (MPAdView __self__, Selector __cmd__);
+	@Method(selector = "allowedNativeAdsOrientation")
+	public native MPNativeAdOrientation getAllowedAdsOrientation ();
 
 	/** Returns the size of the current ad being displayed in the ad view.
 	 * 
@@ -192,51 +120,26 @@ public class MPAdView extends UIView {
 	 * size or positioning of the ad view to avoid clipping or border issues.
 	 * 
 	 * @returns The size of the underlying mediated ad. */
-	public CGSize getAdContentViewSize () {
-		return objc_getAdContentViewSize(this, getAdContentViewSize);
-	}
-
-	private static final Selector getAdContentViewSize = Selector.register("adContentViewSize");
-
-	@Bridge
-	private native static CGSize objc_getAdContentViewSize (MPAdView __self__, Selector __cmd__);
+	@Method(selector = "adContentViewSize")
+	public native CGSize getAdContentViewSize ();
 
 	/** Get the delegate
 	 * 
 	 * @return the delegate of this ad view. */
-	public MPAdViewDelegate getDelegate () {
-		return objc_getDelegate(this, getDelegate);
-	}
-
-	private static final Selector getDelegate = Selector.register("delegate");
-
-	@Bridge
-	private native static MPAdViewDelegate objc_getDelegate (MPAdView __self__, Selector __cmd__);
+	@Property
+	public native MPAdViewDelegate getDelegate ();
 
 	/** Sets the {@link MPAdViewDelegate} of the ad view.
 	 * 
 	 * @warning **Important**: Before releasing an instance of MPAdView, you must set its delegate property to {@code null}. */
-	public void setDelegate (MPAdViewDelegate delegate) {
-		addStrongRef((ObjCObject)delegate);
-		objc_setDelegate(this, setDelegate, delegate);
-	}
-
-	private static final Selector setDelegate = Selector.register("setDelegate:");
-
-	@Bridge
-	private native static void objc_setDelegate (MPAdView __self__, Selector __cmd__, MPAdViewDelegate delegate);
+	@Property(strongRef = true)
+	public native void setDelegate (MPAdViewDelegate delegate);
 
 	/** Get the ad unit ID for this ad view.
 	 * 
 	 * @return the ad unit ID for this view. */
-	public String getAdUnitId () {
-		return objc_getAdUnitId(this, getAdUnitId).toString();
-	}
-
-	private static final Selector getAdUnitId = Selector.register("adUnitId");
-
-	@Bridge
-	private native static NSString objc_getAdUnitId (MPAdView __self__, Selector __cmd__);
+	@Property
+	public native String getAdUnitId ();
 
 	/** Sets the MoPub ad unit ID for this ad view.
 	 * 
@@ -244,26 +147,14 @@ public class MPAdView extends UIView {
 	 * advertising. If no ad unit ID is set, the ad view will use a default ID that only receives test ads.
 	 * 
 	 * @param id */
-	public void setAdUnitId (String id) {
-		objc_setAdUnitId(this, setAdUnitId, new NSString(id));
-	}
-
-	private static final Selector setAdUnitId = Selector.register("setAdUnitId:");
-
-	@Bridge
-	private native static void objc_setAdUnitId (MPAdView __self__, Selector __cmd__, NSString adUnitId);
+	@Property
+	public native void setAdUnitId (String id);
 
 	/** Get the keywords.
 	 * 
 	 * @return keywords */
-	public String getKeywords () {
-		return objc_getKeywords(this, getKeywords).toString();
-	}
-
-	private static final Selector getKeywords = Selector.register("keywords");
-
-	@Bridge
-	private native static NSString objc_getKeywords (MPAdView __self__, Selector __cmd__);
+	@Property
+	public native String getKeywords ();
 
 	/** Set the keywords that should be passed to the MoPub ad server to receive more relevant advertising.
 	 * 
@@ -273,35 +164,20 @@ public class MPAdView extends UIView {
 	 * On the MoPub website, keyword targeting options can be found under the "Advanced Targeting" section when managing campaigns.
 	 * 
 	 * @param keywords */
-	public void setKeywords (String keywords) {
-		objc_setKeywords(this, setKeywords, new NSString(keywords));
-	}
+	@Property
+	public native void setKeywords (String keywords);
 
-	@Bridge
-	private native static void objc_setKeywords (MPAdView __self__, Selector __cmd__, NSString keywords);
-
-	private static final Selector setKeywords = Selector.register("setKeywords:");
-
-	private static final Selector getLocation = Selector.register("location");
-	private static final Selector setLocation = Selector.register("setLocation:");
-
-	// @Bridge
-	// private native static CLLocation objc_getLocation(MPAdView __self__, Selector __cmd__);
-	// TODO when RoboVM understands the CoreLocation framework
-	// @Bridge
-	// private native static void objc_setLocation(MPAdView __self__, Selector __cmd__, CLLocation location);
+// @Property
+// public native CLLocation getLocation();
+// TODO when RoboVM has the CLLocation framework bound
+// @Property
+// public native void setLocation(CLLocation location);
 
 	/** Get the testing state.
 	 * 
 	 * @return {@code true} if the ad view is receiving test ads, else {@code false}. */
-	public boolean isTesting () {
-		return objc_isTesting(this, isTesting);
-	}
-
-	private static final Selector isTesting = Selector.register("testing");
-
-	@Bridge
-	private native static boolean objc_isTesting (MPAdView __self__, Selector __cmd__);
+	@Property
+	public native boolean isTesting ();
 
 	/** Set whether the ad view should request ads in test mode or not.
 	 * 
@@ -309,12 +185,6 @@ public class MPAdView extends UIView {
 	 * 
 	 * @warning **Important**: If you set testing to {@code true}, make sure to reset it to {@code false} before submitting your
 	 *          application to the App Store. */
-	public void setTesting (boolean testing) {
-		objc_setTesting(this, setTesting, testing);
-	}
-
-	private static final Selector setTesting = Selector.register("setTesting:");
-
-	@Bridge
-	private native static void objc_setTesting (MPAdView __self__, Selector __cmd__, boolean testing);
+	@Property
+	public native void setTesting (boolean testing);
 }

@@ -8,7 +8,6 @@ import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.objc.annotation.NotImplemented;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Library;
 
 /** The delegate of an {@link MPAdView} object must adopt the MPAdViewDelegate protocol. It must implement
  * {@link #getViewController()} to provide a root view controller from which the ad view should present modal content.
@@ -17,7 +16,6 @@ import org.robovm.rt.bro.annotation.Library;
  * events.
  * 
  * Don't implement this interface, instead extend the provided {@link Adapter} class. */
-@Library(Library.INTERNAL)
 public interface MPAdViewDelegate extends NSObjectProtocol {
 
 	/** Asks the delegate for a view controller to use for presenting modal content, such as the in-app browser that can appear when

@@ -6,7 +6,6 @@ import org.robovm.cocoatouch.foundation.NSObjectProtocol;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Library;
 
 /** The delegate of an {@link MPInterstitialAdController} object must adopt the MPInterstitialAdControllerDelegate protocol.
  * 
@@ -14,7 +13,6 @@ import org.robovm.rt.bro.annotation.Library;
  * when an ad has been presented or dismissed from the screen, and when an ad has expired.
  * 
  * Don't implement this interface, instead extend the provided {@link Adapter} class. */
-@Library(Library.INTERNAL)
 public interface MPInterstitialAdControllerDelegate extends NSObjectProtocol {
 
 	/** Sent when an interstitial ad object successfully loads an ad.
