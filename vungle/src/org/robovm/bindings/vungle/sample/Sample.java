@@ -5,7 +5,6 @@ import org.robovm.bindings.vungle.VGPlayData;
 import org.robovm.bindings.vungle.VGStatusData;
 import org.robovm.bindings.vungle.VGVunglePub;
 import org.robovm.bindings.vungle.VGVunglePubDelegate;
-import org.robovm.bindings.vungle.VGVunglePubDelegate.Adapter;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.uikit.UIApplication;
 import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
@@ -38,6 +37,18 @@ public class Sample extends UIApplicationDelegate.Adapter {
 				if (VGVunglePub.isAdAvailable()) {
 					VGVunglePub.playIncentivizedAd(viewController, true, false, "");
 				}
+			}
+
+			@Override
+			public void viewWillAppear (UIViewController viewController) {
+			}
+
+			@Override
+			public void viewDidDisappear (UIViewController viewController) {
+			}
+
+			@Override
+			public void appStoreViewDidDisappear () {
 			}
 		});
 

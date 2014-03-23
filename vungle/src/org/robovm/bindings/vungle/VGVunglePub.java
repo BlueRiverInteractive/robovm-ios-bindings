@@ -48,10 +48,12 @@ public class VGVunglePub extends NSObject {
 
 	public static void setDelegate (VGVunglePubDelegate delegate) {
 		ObjCClass clazz = ObjCClass.getByType(VGVunglePub.class);
+		VGVunglePubDelegate before = getDelegate();
+		if (before != null) {
+			clazz.removeStrongRef(before);
+		}
 		if (delegate != null) {
 			clazz.addStrongRef(delegate);
-		} else {
-			clazz.removeStrongRef(delegate);
 		}
 		setDelegateImpl(delegate);
 	}
