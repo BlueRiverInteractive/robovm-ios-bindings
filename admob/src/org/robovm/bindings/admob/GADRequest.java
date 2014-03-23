@@ -104,10 +104,10 @@ public class GADRequest extends NSObject {
 	/** A keyword is a word or phrase describing the current activity of the user such as "Sports Scores". Each keyword is an
 	 * NSString in the NSArray. To clear the keywords set this to null.
 	 * @param keywords */
-	@Property()
+	@Property
 	public native void setKeywords (NSArray<?> keywords);
 
-	@Property()
+	@Property
 	public native NSArray<?> getKeywords ();
 
 	/** Convenience method for adding keywords one at a time such as @"Sports Scores" and then @"Football".

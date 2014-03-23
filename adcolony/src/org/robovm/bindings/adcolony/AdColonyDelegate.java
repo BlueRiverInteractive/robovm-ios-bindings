@@ -6,9 +6,7 @@ import org.robovm.cocoatouch.foundation.NSObjectProtocol;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
 public interface AdColonyDelegate extends NSObjectProtocol {
 	// - ( void ) onAdColonyAdAvailabilityChange:(BOOL)available inZone:(String*) zoneID;
 	/** Provides your app with real-time updates about ad availability changes. This method is called when a zone's ad availability

@@ -6,15 +6,15 @@ import org.robovm.rt.bro.ValuedEnum;
 /** Enum for zone status */
 public enum AdColonyStatus implements ValuedEnum {
 	/** AdColony has not been configured with that zone ID. */
-	ADCOLONY_ZONE_STATUS_NO_ZONE,
+	NoZone,
 	/** The zone has been turned off on the www.adcolony.com control panel. */
-	ADCOLONY_ZONE_STATUS_OFF,
+	Off,
 	/** The zone is preparing ads for display. */
-	ADCOLONY_ZONE_STATUS_LOADING,
+	Loading,
 	/** The zone has completed preparing ads for display. */
-	ADCOLONY_ZONE_STATUS_ACTIVE,
+	Active,
 	/** AdColony has not yet received the zone's configuration from the server. */
-	ADCOLONY_ZONE_STATUS_UNKNOWN;
+	Unknown;
 
 	@Override
 	public long value () {

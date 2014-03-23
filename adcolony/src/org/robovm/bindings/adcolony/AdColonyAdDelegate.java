@@ -6,9 +6,7 @@ import org.robovm.cocoatouch.foundation.NSObjectProtocol;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
 public interface AdColonyAdDelegate extends NSObjectProtocol {
 	// - ( void ) onAdColonyAdStartedInZone:( String * )zoneID;
 	/** Notifies your app that an ad will actually play in response to the app's request to play an ad. This method is called when

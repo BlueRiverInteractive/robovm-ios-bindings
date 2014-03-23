@@ -47,7 +47,7 @@ public class Sample extends UIApplicationDelegate.Adapter implements AdColonyDel
 	@Override
 	public void onAdColonyAdAvailabilityChange (boolean available, String zoneID) {
 		// If Zone is Active show the video
-		if (AdColony.getZoneStatus(zoneID) == AdColonyStatus.ADCOLONY_ZONE_STATUS_ACTIVE) AdColony.playVideoAd(ZONE_ID, this);
+		if (AdColony.getZoneStatus(zoneID) == AdColonyStatus.Active) AdColony.playVideoAd(ZONE_ID, this);
 	}
 
 	@Override
