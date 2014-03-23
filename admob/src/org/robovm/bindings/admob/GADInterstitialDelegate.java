@@ -1,3 +1,4 @@
+
 package org.robovm.bindings.admob;
 
 import org.robovm.cocoatouch.foundation.NSObject;
@@ -5,109 +6,94 @@ import org.robovm.cocoatouch.foundation.NSObjectProtocol;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.rt.bro.annotation.Callback;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
+/** Delegate for receiving state change messages from a GADInterstitial such as interstitial ad requests succeeding/failing. */
 public interface GADInterstitialDelegate extends NSObjectProtocol {
+	/** Sent when an interstitial ad request succeeded. Show it at the next transition point in your application such as when
+	 * transitioning between view controllers. */
+	void didReceiveAd (GADInterstitial ad);
 
-	// - (void)interstitialDidReceiveAd:(GADInterstitial *)ad;
-	/**
-	 * Sent when an interstitial ad request succeeded. Show it at the next transition point in your application such as when transitioning between view controllers.
-	 */
-	void interstitialDidReceiveAd(GADInterstitial ad);
+	/** Sent when an interstitial ad request completed without an interstitial to show. This is common since interstitials are shown
+	 * sparingly to users. */
+	void didFailToReceiveAd (GADInterstitial ad, GADErrorCode error);
 
-	// - (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error;
-	/**
-	 * Sent when an interstitial ad request completed without an interstitial to show. This is common since interstitials are shown sparingly to users.
-	 */
-	void interstitialDidFailToReceiveAdWithError(GADInterstitial ad, GADRequestError error);
+	/** Sent just before presenting an interstitial. After this method finishes the interstitial will animate onto the screen. Use
+	 * this opportunity to stop animations and save the state of your application in case the user leaves while the interstitial is
+	 * on screen (e.g. to visit the App Store from a link on the interstitial). */
+	void willPresentScreen (GADInterstitial ad);
 
-	// - (void)interstitialWillPresentScreen:(GADInterstitial *)ad;
-	/**
-	 * Sent just before presenting an interstitial. After this method finishes the interstitial will animate onto the screen. Use this opportunity to stop animations and save the state of your
-	 * application in case the user leaves while the interstitial is on screen (e.g. to visit the App Store from a link on the interstitial).
-	 */
-	void interstitialWillPresentScreen(GADInterstitial ad);
+	/** Sent before the interstitial is to be animated off the screen. */
+	void willDismissScreen (GADInterstitial ad);
 
-	// - (void)interstitialWillDismissScreen:(GADInterstitial *)ad;
-	/**
-	 * Sent before the interstitial is to be animated off the screen.
-	 */
-	void interstitialWillDismissScreen(GADInterstitial ad);
+	/** Sent just after dismissing an interstitial and it has animated off the screen. */
+	void didDismissScreen (GADInterstitial ad);
 
-	// - (void)interstitialDidDismissScreen:(GADInterstitial *)ad;
-	/**
-	 * Sent just after dismissing an interstitial and it has animated off the screen.
-	 */
-	void interstitialDidDismissScreen(GADInterstitial ad);
-
-	// - (void)interstitialWillLeaveApplication:(GADInterstitial *)ad;
-	/**
-	 * Sent just before the application will background or terminate because the user clicked on an ad that will launch another application (such as the App Store). The normal UIApplicationDelegate
-	 * methods, like applicationDidEnterBackground:, will be called immediately before this.
-	 */
-	void interstitialWillLeaveApplication(GADInterstitial ad);
+	/** Sent just before the application will background or terminate because the user clicked on an ad that will launch another
+	 * application (such as the App Store). The normal UIApplicationDelegate methods, like applicationDidEnterBackground:, will be
+	 * called immediately before this. */
+	void willLeaveApplication (GADInterstitial ad);
 
 	public static class Adapter extends NSObject implements GADInterstitialDelegate {
 		@Override
-		public void interstitialDidReceiveAd(GADInterstitial ad){
+		public void didReceiveAd (GADInterstitial ad) {
 		}
 
 		@Override
-		public void interstitialDidFailToReceiveAdWithError(GADInterstitial ad, GADRequestError error){
+		public void didFailToReceiveAd (GADInterstitial ad, GADErrorCode error) {
 		}
 
 		@Override
-		public void interstitialWillPresentScreen(GADInterstitial ad){
+		public void willPresentScreen (GADInterstitial ad) {
 		}
 
 		@Override
-		public void interstitialWillDismissScreen(GADInterstitial ad){
+		public void willDismissScreen (GADInterstitial ad) {
 		}
 
 		@Override
-		public void interstitialDidDismissScreen(GADInterstitial ad){
+		public void didDismissScreen (GADInterstitial ad) {
 		}
 
 		@Override
-		public void interstitialWillLeaveApplication(GADInterstitial ad){
+		public void willLeaveApplication (GADInterstitial ad) {
 		}
 	}
 
 	static class Callbacks {
 		@Callback
 		@BindSelector("interstitialDidReceiveAd:")
-		public static void interstitialDidReceiveAd(GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad){
-			__self__.interstitialDidReceiveAd(ad);
+		public static void didReceiveAd (GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad) {
+			__self__.didReceiveAd(ad);
 		}
 
 		@BindSelector("interstitial:didFailToReceiveAdWithError:")
-		public static void interstitialDidFailToReceiveAdWithError(GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad, GADRequestError error){
-			__self__.interstitialDidFailToReceiveAdWithError(ad, error);
+		public static void didFailToReceiveAdWithError (GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad,
+			GADErrorCode error) {
+			__self__.didFailToReceiveAd(ad, error);
 		}
-		
+
 		@Callback
 		@BindSelector("interstitialWillPresentScreen:")
-		public static void interstitialWillPresentScreen(GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad){
-			__self__.interstitialWillPresentScreen(ad);
+		public static void willPresentScreen (GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad) {
+			__self__.willPresentScreen(ad);
 		}
-		
+
 		@Callback
 		@BindSelector("interstitialWillDismissScreen:")
-		public static void interstitialWillDismissScreen(GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad){
-			__self__.interstitialWillDismissScreen(ad);
+		public static void willDismissScreen (GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad) {
+			__self__.willDismissScreen(ad);
 		}
-		
+
 		@Callback
 		@BindSelector("interstitialDidDismissScreen:")
-		public static void interstitialDidDismissScreen(GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad){
-			__self__.interstitialDidDismissScreen(ad);
+		public static void didDismissScreen (GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad) {
+			__self__.didDismissScreen(ad);
 		}
-		
+
 		@Callback
 		@BindSelector("interstitialWillLeaveApplication:")
-		public static void interstitialWillLeaveApplication(GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad){
-			__self__.interstitialWillLeaveApplication(ad);
+		public static void willLeaveApplication (GADInterstitialDelegate __self__, Selector __cmd__, GADInterstitial ad) {
+			__self__.willLeaveApplication(ad);
 		}
 	}
 

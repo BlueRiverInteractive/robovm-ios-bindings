@@ -1,4 +1,4 @@
-package org.robovm.bindings.admob;
+package org.robovm.bindings.admob.mediation;
 
 import org.robovm.cocoatouch.foundation.NSError;
 import org.robovm.cocoatouch.foundation.NSObject;

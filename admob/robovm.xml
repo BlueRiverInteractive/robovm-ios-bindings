@@ -9,16 +9,19 @@
 		<lib>libs/libGoogleAdMobAds.a</lib>
 		<lib>libs/libAdapterIAd.a</lib>
 	</libs>
+	<exportedSymbols>
+		<symbol>*GAD*</symbol>
+	</exportedSymbols>
 	<frameworks>
-	    <framework>AudioToolbox</framework>
-	    <framework>AVFoundation</framework>
+		<framework>AudioToolbox</framework>
+		<framework>AVFoundation</framework>
 		<framework>CoreGraphics</framework>
 		<framework>CoreTelephony</framework>
 		<framework>MessageUI</framework>
 		<framework>SystemConfiguration</framework>
 	</frameworks>
 	<weakFrameworks>
-	    <framework>AdSupport</framework>
+		<framework>AdSupport</framework>
 		<framework>StoreKit</framework>
 	</weakFrameworks>
 </config>
