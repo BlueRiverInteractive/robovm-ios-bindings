@@ -8,7 +8,7 @@ import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 import org.robovm.rt.bro.annotation.Pointer;
 
-@NativeClass()
+@NativeClass
 public class ThinkGamingEvent extends NSObject {
 	public ThinkGamingEvent (String eventName) {
 		super((SkipInit)null);
@@ -19,10 +19,10 @@ public class ThinkGamingEvent extends NSObject {
 	private native @Pointer
 	long init (String eventName);
 
-	@Property()
+	@Property
 	public native String getEventName ();
 
-	@Property()
+	@Property
 	public native void setEventName (String name);
 
 	@Method(selector = "endTimedEvent")

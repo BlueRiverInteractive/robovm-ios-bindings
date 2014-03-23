@@ -8,7 +8,7 @@ import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 import org.robovm.rt.bro.annotation.Pointer;
 
-@NativeClass()
+@NativeClass
 public class ThinkGamingStore extends NSObject {
 	public ThinkGamingStore (NSDictionary<?, ?> response) {
 		super((SkipInit)null);
@@ -19,15 +19,15 @@ public class ThinkGamingStore extends NSObject {
 	private native @Pointer
 	long init (NSDictionary<?, ?> response);
 
-	@Property()
+	@Property
 	private native String getDisplayName ();
 
-	@Property()
+	@Property
 	private native void setDisplayName (String name);
 
-	@Property()
+	@Property
 	private native String getStoreIdentifier ();
 
-	@Property()
+	@Property
 	private native void setStoreIdentifier (String identifier);
 }

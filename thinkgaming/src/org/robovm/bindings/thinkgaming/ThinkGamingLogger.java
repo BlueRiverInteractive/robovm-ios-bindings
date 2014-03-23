@@ -3,16 +3,11 @@ package org.robovm.bindings.thinkgaming;
 
 import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.objc.ObjCClass;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
-@NativeClass()
+@NativeClass
 public class ThinkGamingLogger extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(ThinkGamingLogger.class);
-
 	@Method(selector = "currentApiKey")
 	public static native String getCurrentApiKey ();
 

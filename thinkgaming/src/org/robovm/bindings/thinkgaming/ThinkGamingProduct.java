@@ -9,9 +9,8 @@ import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 import org.robovm.rt.bro.annotation.Pointer;
 
-@NativeClass()
+@NativeClass
 public class ThinkGamingProduct extends NSObject {
-
 	public ThinkGamingProduct (NSDictionary<?, ?> response) {
 		super((SkipInit)null);
 		initObject(init(response));
@@ -21,28 +20,28 @@ public class ThinkGamingProduct extends NSObject {
 	private native @Pointer
 	long init (NSDictionary<?, ?> response);
 
-	@Property()
+	@Property
 	public native String getProductIdentifier ();
 
-	@Property()
+	@Property
 	public native void setProductIdentifier (String identifier);
 
-	@Property()
+	@Property
 	public native String getDisplayName ();
 
-	@Property()
+	@Property
 	public native void setDisplayName (String name);
 
-	@Property()
+	@Property
 	public native String getDisplayDescription ();
 
-	@Property()
+	@Property
 	public native void setDisplayDescription (String description);
 
-	@Property()
+	@Property
 	public native double getThinkGamingPrice ();
 
-	@Property()
+	@Property
 	public native void setThinkGamingPrice (double price);
 
 	@Method(selector = "price")
@@ -54,45 +53,45 @@ public class ThinkGamingProduct extends NSObject {
 	@Method(selector = "formattedPrice")
 	public native String getFormattedPrice ();
 
-	@Property()
+	@Property
 	public native String getOfferText ();
 
-	@Property()
+	@Property
 	public native void setOfferText (String text);
 
-	@Property()
+	@Property
 	public native double getBuyPercentage ();
 
-	@Property()
+	@Property
 	public native void setBuyPercentage (double percentage);
 
-	@Property()
+	@Property
 	public native String getITunesProductIdentifier ();
 
-	@Property()
+	@Property
 	public native void setITunesProductIdentifier (String identifier);
 
-// @Property() TODO
+// @Property TODO
 // public native SKProduct getITunesProduct ();
 
-// @Property()
+// @Property
 // public native void setITunesProduct (SKProduct product);
 
-	@Property()
+	@Property
 	public native int getPriceId ();
 
-	@Property()
+	@Property
 	public native void setPriceId (int id);
 
-	@Property()
+	@Property
 	public native int getMessageId ();
 
-	@Property()
+	@Property
 	public native void setMessageId (int id);
 
-	@Property()
+	@Property
 	public native String getItunesReference ();
 
-	@Property()
+	@Property
 	public native void setItunesReference (String reference);
 }

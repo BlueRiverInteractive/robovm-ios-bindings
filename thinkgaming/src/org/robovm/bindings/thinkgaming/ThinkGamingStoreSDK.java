@@ -7,10 +7,9 @@ import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 
-@NativeClass()
+@NativeClass
 public class ThinkGamingStoreSDK extends NSObject /* implements SKProductsRequestDelegate, SKPaymentTransactionObserver */{
-
-	@Property(/* strongRef = true */)
+	@Property(strongRef = true)
 	public native ThinkGamingStoreDelegate getDelegate ();
 
 	@Method(selector = "getListOfStoresThenCall:")

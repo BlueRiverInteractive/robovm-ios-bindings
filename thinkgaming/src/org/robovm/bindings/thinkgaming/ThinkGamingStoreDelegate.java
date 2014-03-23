@@ -1,11 +1,9 @@
 
 package org.robovm.bindings.thinkgaming;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.objc.annotation.NativeClass;
+import org.robovm.apple.foundation.NSObjectProtocol;
 
-@NativeClass()
-public class ThinkGamingStoreDelegate extends NSObject {
+public interface ThinkGamingStoreDelegate extends NSObjectProtocol {
 // @protocol ThinkGamingStoreDelegate <NSObject> TODO
 // @optional
 //
