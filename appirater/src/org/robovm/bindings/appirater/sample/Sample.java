@@ -3,7 +3,6 @@ package org.robovm.bindings.appirater.sample;
 
 import org.robovm.bindings.appirater.Appirater;
 import org.robovm.bindings.appirater.AppiraterDelegate;
-import org.robovm.bindings.appirater.AppiraterDelegate.Adapter;
 import org.robovm.cocoatouch.coregraphics.CGRect;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
 import org.robovm.cocoatouch.foundation.NSDictionary;
@@ -76,13 +75,13 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		return true;
 	}
 
+	private void showRateDialog () {
+		Appirater.showPrompt();
+	}
+
 	public static void main (String[] argv) {
 		NSAutoreleasePool pool = new NSAutoreleasePool();
 		UIApplication.main(argv, null, Sample.class);
 		pool.drain();
-	}
-
-	private void showRateDialog () {
-		Appirater.showPrompt();
 	}
 }

@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.inapppurchase;
 
-import org.robovm.cocoatouch.foundation.NSArray;
+import org.robovm.apple.foundation.NSArray;
 import org.robovm.cocoatouch.storekit.SKPaymentQueue;
 import org.robovm.cocoatouch.storekit.SKPaymentTransaction;
 import org.robovm.cocoatouch.storekit.SKPaymentTransactionObserver;

@@ -8,7 +8,7 @@ import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
 
-@NativeClass()
+@NativeClass
 public class Appirater extends NSObject {
 	private static final ObjCClass objCClass = ObjCClass.getByType(Appirater.class);
 
