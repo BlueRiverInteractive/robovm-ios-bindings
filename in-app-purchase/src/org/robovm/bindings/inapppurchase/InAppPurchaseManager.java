@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSSet;
-import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSSet;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.cocoatouch.storekit.SKPayment;
 import org.robovm.cocoatouch.storekit.SKPaymentQueue;
 import org.robovm.cocoatouch.storekit.SKPaymentTransaction;

@@ -1,8 +1,8 @@
 
 package org.robovm.cocoatouch.storekit;
 
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;

@@ -1,9 +1,8 @@
 
 package org.robovm.cocoatouch.storekit;
 
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;
@@ -50,12 +49,12 @@ public class SKPaymentTransaction extends NSObject {
 	private static final Selector transactionIdentifier = Selector.register("transactionIdentifier");
 
 	@Bridge
-	private native static NSString objc_getTransactionIdentifier (SKPaymentTransaction __self__, Selector __cmd__);
+	private native static String objc_getTransactionIdentifier (SKPaymentTransaction __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSString objc_getTransactionIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
+	private native static String objc_getTransactionIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSString getTransactionIdentifier () {
+	public String getTransactionIdentifier () {
 		return (customClass) ? objc_getTransactionIdentifierSuper(getSuper(), transactionIdentifier)
 			: objc_getTransactionIdentifier(this, transactionIdentifier);
 	}

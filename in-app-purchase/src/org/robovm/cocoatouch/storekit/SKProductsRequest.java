@@ -1,7 +1,7 @@
 
 package org.robovm.cocoatouch.storekit;
 
-import org.robovm.cocoatouch.foundation.NSSet;
+import org.robovm.apple.foundation.NSSet;
 import org.robovm.objc.ObjCObject;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;

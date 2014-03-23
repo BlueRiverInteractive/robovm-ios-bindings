@@ -4,8 +4,8 @@ package org.robovm.bindings.inapppurchase;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.robovm.apple.foundation.NSError;
 import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.foundation.NSError;
 import org.robovm.cocoatouch.storekit.SKPaymentTransaction;
 import org.robovm.cocoatouch.storekit.SKProduct;
 import org.robovm.cocoatouch.storekit.SKRequest;

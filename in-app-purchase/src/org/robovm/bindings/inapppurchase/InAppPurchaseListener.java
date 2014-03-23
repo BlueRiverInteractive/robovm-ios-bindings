@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.inapppurchase;
 
-import org.robovm.cocoatouch.foundation.NSError;
+import org.robovm.apple.foundation.NSError;
 import org.robovm.cocoatouch.storekit.SKPaymentTransaction;
 import org.robovm.cocoatouch.storekit.SKProduct;
 import org.robovm.cocoatouch.storekit.SKRequest;

@@ -1,8 +1,7 @@
 
 package org.robovm.cocoatouch.storekit;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
@@ -26,9 +25,9 @@ public class SKPayment extends NSObject {
 	private static final Selector paymentWithProductIdentifier$ = Selector.register("paymentWithProductIdentifier:");
 
 	@Bridge
-	private native static SKPayment objc_paymentWithProductIdentifier (ObjCClass __self__, Selector __cmd__, NSString identifier);
+	private native static SKPayment objc_paymentWithProductIdentifier (ObjCClass __self__, Selector __cmd__, String identifier);
 
-	public static SKPayment fromProductIdentifier (NSString identifier) {
+	public static SKPayment fromProductIdentifier (String identifier) {
 		return objc_paymentWithProductIdentifier(objCClass, paymentWithProductIdentifier$, identifier);
 	}
 
@@ -53,13 +52,12 @@ public class SKPayment extends NSObject {
 	private static final Selector setApplicationUsername$ = Selector.register("setApplicationUsername:");
 
 	@Bridge
-	private native static void objc_setApplicationUsername (SKPayment __self__, Selector __cmd__, NSString applicationUsername);
+	private native static void objc_setApplicationUsername (SKPayment __self__, Selector __cmd__, String applicationUsername);
 
 	@Bridge
-	private native static void objc_setApplicationUsernameSuper (ObjCSuper __super__, Selector __cmd__,
-		NSString applicationUsername);
+	private native static void objc_setApplicationUsernameSuper (ObjCSuper __super__, Selector __cmd__, String applicationUsername);
 
-	public void setQuantity (NSString applicationUsername) {
+	public void setQuantity (String applicationUsername) {
 		if (customClass) {
 			objc_setApplicationUsernameSuper(getSuper(), setApplicationUsername$, applicationUsername);
 		} else {
@@ -71,12 +69,12 @@ public class SKPayment extends NSObject {
 	private static final Selector productIdentifier = Selector.register("productIdentifier");
 
 	@Bridge
-	private native static NSString objc_getProductIdentifier (SKPayment __self__, Selector __cmd__);
+	private native static String objc_getProductIdentifier (SKPayment __self__, Selector __cmd__);
 
 	@Bridge
-	private native static NSString objc_getProductIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
+	private native static String objc_getProductIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
 
-	public NSString getProductIdentifier () {
+	public String getProductIdentifier () {
 		return (customClass) ? objc_getProductIdentifierSuper(getSuper(), productIdentifier) : objc_getProductIdentifier(this,
 			productIdentifier);
 	}
