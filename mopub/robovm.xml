@@ -36,7 +36,6 @@
 	</frameworks>
 	<weakFrameworks>
 		<framework>AdSupport</framework>
-		<framework>PassKit</framework>
 		<framework>Social</framework>
 		<framework>StoreKit</framework>
 		<framework>Twitter</framework>
