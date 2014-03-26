@@ -6,12 +6,8 @@
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<libs>
-		<lib>libs/libGoogleAdMobAds.a</lib>
-		<lib>libs/libAdapterIAd.a</lib>
+		<lib>libs/libadmob.a</lib>
 	</libs>
-	<exportedSymbols>
-		<symbol>*GAD*</symbol>
-	</exportedSymbols>
 	<frameworks>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>

@@ -9,7 +9,6 @@ public class Sample extends UIApplicationDelegate.Adapter {
 
 	@Override
 	public void didFinishLaunching (org.robovm.cocoatouch.uikit.UIApplication application) {
-
 	}
 
 	public static void main (String[] argv) {
