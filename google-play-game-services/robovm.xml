@@ -6,9 +6,7 @@
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<libs>
-		<lib>libs/libgoogleopensource.a</lib>
-		<lib>libs/libgoogleplus.a</lib>
-		<lib>libs/libplaygameservices.a</lib>
+	    <lib>c++</lib>
 	</libs>
 	<resources>
 		<resource>
@@ -16,7 +14,13 @@
 			<skipPngCrush>true</skipPngCrush>
 		</resource>
 	</resources>
+	<frameworkPaths>
+	    <path>libs</path>
+	</frameworkPaths>
 	<frameworks>
+	    <framework>GoogleOpenSource</framework>
+	    <framework>GooglePlayGames</framework>
+	    <framework>GooglePlus</framework>
 		<framework>AssetsLibrary</framework>
 		<framework>CoreData</framework>
 		<framework>CoreGraphics</framework>
