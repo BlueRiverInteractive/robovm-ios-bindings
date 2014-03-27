@@ -23,7 +23,7 @@ public class GADBannerView extends UIView {
 	/** Initializes a GADBannerView and sets it to the specified size, and specifies its placement at the top left of its superview.
 	 * If size is invalid, an instance of GADBannerView is not created and nil is returned instead.
 	 * @param size */
-	public GADBannerView (GADAdSizeManager size) {
+	public GADBannerView (GADAdSize size) {
 		super((SkipInit)null);
 		initObject(init(size));
 	}
@@ -32,18 +32,18 @@ public class GADBannerView extends UIView {
 	 * |size| is invalid, an instance of GADBannerView is not created and nil is returned instead.
 	 * @param size
 	 * @param origin */
-	public GADBannerView (GADAdSizeManager size, CGPoint origin) {
+	public GADBannerView (GADAdSize size, CGPoint origin) {
 		super((SkipInit)null);
 		initObject(init(size, origin));
 	}
 
 	@Method(selector = "initWithAdSize:")
 	private native @Pointer
-	long init (GADAdSizeManager size);
+	long init (GADAdSize size);
 
 	@Method(selector = "initWithAdSize:origin:")
 	private native @Pointer
-	long init (GADAdSizeManager size, CGPoint origin);
+	long init (GADAdSize size, CGPoint origin);
 
 	@Property
 	public native String getAdUnitID ();
@@ -66,7 +66,7 @@ public class GADBannerView extends UIView {
 	public native void setRootViewController (UIViewController viewController);
 
 	@Property
-	public native GADAdSizeManager getAdSize ();
+	public native GADAdSize getAdSize ();
 
 	/** Required to set this banner view to a proper size. Never create your own GADAdSize directly. Use one of the predefined
 	 * standard ad sizes (such as kGADAdSizeBanner), or create one using the GADAdSizeFromCGSize method. If not using mediation,
@@ -74,7 +74,7 @@ public class GADBannerView extends UIView {
 	 * using mediation, then a new request may not be sent.
 	 * @param adSize */
 	@Property(strongRef = true)
-	public native void setAdSize (GADAdSizeManager adSize);
+	public native void setAdSize (GADAdSize adSize);
 
 	@Property
 	public native GADBannerViewDelegate getDelegate ();
