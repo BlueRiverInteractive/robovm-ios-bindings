@@ -71,11 +71,11 @@ public class ThinkGamingProduct extends NSObject {
 	@Property
 	public native void setITunesProductIdentifier (String identifier);
 
-// @Property TODO
-// public native SKProduct getITunesProduct ();
+	@Property
+	public native SKProduct getITunesProduct ();
 
-// @Property
-// public native void setITunesProduct (SKProduct product);
+	@Property
+	public native void setITunesProduct (SKProduct product);
 
 	@Property
 	public native int getPriceId ();

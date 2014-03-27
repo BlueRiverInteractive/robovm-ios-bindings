@@ -1,5 +1,5 @@
 
-package org.robovm.cocoatouch.storekit;
+package org.robovm.bindings.thinkgaming;
 
 import org.robovm.apple.foundation.NSLocale;
 import org.robovm.apple.foundation.NSNumber;
