@@ -3,6 +3,7 @@ package org.robovm.bindings.facebook;
 
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.NativeClass;
+import org.robovm.objc.annotation.Property;
 
 @NativeClass
 public class FBSettings extends NSObject {
@@ -174,16 +175,12 @@ public class FBSettings extends NSObject {
 // @param urlSchemeSuffix The default url scheme suffix to be used by the SDK.
 // */
 // + (void)setDefaultUrlSchemeSuffix:(NSString*)urlSchemeSuffix;
-//
-// /*!
-// @method
-//
-// @abstract Get the default url scheme suffix used for sessions. If not
-// explicitly set, the default will be read from the application's plist value for 'FacebookUrlSchemeSuffix'.
-// */
-// + (NSString*)defaultUrlSchemeSuffix;
-//
-// /*!
+
+	/** Get the default url scheme suffix used for sessions. If not explicitly set, the default will be read from the application's
+	 * plist value for 'FacebookUrlSchemeSuffix'. */
+	@Property(selector = "defaultUrlSchemeSuffix")
+	public static native String getDefaultUrlSchemeSuffix ();
+	// /*!
 // @method
 //
 // @abstract Set the bundle name from the SDK will try and load overrides of images and text

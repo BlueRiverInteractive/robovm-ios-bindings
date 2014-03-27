@@ -191,7 +191,7 @@ public class FacebookManager {
 
 		// Check if we can reload the session when it will be nessecary.
 		if (session.getState().equals(FBSessionState.CreatedTokenLoaded)) {
-			List<String> permissions = session.getPermissions();
+			List<String> permissions = session.getPermissionList();
 			if (permissions.containsAll(configuration.getReadPermissions())) {
 				reopenSession();
 				return true;
@@ -1201,7 +1201,7 @@ public class FacebookManager {
 
 		FBSession session = FBSession.getActiveSession();
 		if (session != null && session.getState().equals(FBSessionState.CreatedTokenLoaded)) {
-			List<String> permissions = session.getPermissions();
+			List<String> permissions = session.getPermissionList();
 			if (permissions.containsAll(configuration.getPublishPermissions()) && configuration.getPublishPermissions().size() > 0) {
 				openSession(false);
 			} else if (permissions.containsAll(configuration.getReadPermissions()) && configuration.getReadPermissions().size() > 0) {

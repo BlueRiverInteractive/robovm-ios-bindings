@@ -2,6 +2,7 @@
 package org.robovm.bindings.facebook.session;
 
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
 /** The FBSessionTokenCachingStrategy class is responsible for persisting and retrieving cached data related to an
@@ -97,13 +98,10 @@ public class FBSessionTokenCachingStrategy extends NSObject {
 	// Helper function called by the SDK as well as apps, in order to fetch the default strategy instance.
 	// */
 	// + (FBSessionTokenCachingStrategy*)defaultInstance;
-	//
-	// /*!
-	// @abstract
-	// Helper function to return a FBSessionTokenCachingStrategy instance that does not perform any caching.
-	// */
-	// + (FBSessionTokenCachingStrategy*)nullCacheInstance;
-	//
+
+	/** Helper function to return a FBSessionTokenCachingStrategy instance that does not perform any caching. */
+	@Method(selector = "nullCacheInstance")
+	public static native FBSessionTokenCachingStrategy createNullCacheInstance ();
 	// /*!
 	// @abstract
 	// Helper function called by the SDK as well as application code, used to determine whether a given dictionary
