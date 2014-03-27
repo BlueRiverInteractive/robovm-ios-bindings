@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook.session;
 
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.NativeClass;
 
 /** The FBSessionTokenCachingStrategy class is responsible for persisting and retrieving cached data related to an

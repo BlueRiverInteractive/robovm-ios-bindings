@@ -1,7 +1,10 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSMutableDictionary;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSURL;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
@@ -78,7 +81,7 @@ import org.robovm.objc.annotation.NativeClass;
  * </pre>
  * 
  * The *Facade* layer is meant for typed access to graph objects. The *Transparent impl* layer (more specifically, the instance
- * capabilities of `FBGraphObject`) are used by the SDK and app logic internally, but are not part of the public interface between
+ * capabilities of FBGraphObject) are used by the SDK and app logic internally, but are not part of the public interface between
  * application and SDK. The *Apparent impl* layer represents the lower-level "duck-typed" use of graph objects.
  * 
  * Implementation note: the SDK returns `NSMutableDictionary` derived instances with types declared like one of the following:
@@ -99,7 +102,7 @@ import org.robovm.objc.annotation.NativeClass;
  * While the `FBGraphObject` class implements the full `NSMutableDictionary` and KVC interfaces, these are not consumed directly
  * by the SDK, and are optional for custom implementations. */
 @NativeClass
-public class FBGraphObject extends NSObject {
+public class FBGraphObject extends NSMutableDictionary<NSObject, NSObject> {
 
 	// /*!
 	// @method
@@ -171,57 +174,34 @@ public class FBGraphObject extends NSObject {
 	// */
 	// + (NSMutableDictionary<FBGraphObject>*)graphObject;
 	//
-	// /*!
-	// @method
-	// @abstract
-	// Used to wrap an existing dictionary with a `FBGraphObject` facade
-	//
-	// @discussion
-	// Normally you will not need to call this method, as the Facebook SDK already "FBGraphObject-ifys" json objects
-	// fetch via `FBRequest` and `FBRequestConnection`. However, you may have other reasons to create json objects in your
-	// application, which you would like to treat as a graph object. The pattern for doing this is that you pass the root
-	// node of the json to this method, to retrieve a wrapper. From this point, if you traverse the graph, any other objects
-	// deeper in the hierarchy will be wrapped as `FBGraphObject`'s in a lazy fashion.
-	//
-	// This method is designed to avoid unnecessary memory allocations, and object copying. Due to this, the method does
-	// not copy the source object if it can be avoided, but rather wraps and uses it as is. The returned object derives
-	// callers shoudl use the returned object after calls to this method, rather than continue to call methods on the original
-	// object.
-	//
-	// @param jsonDictionary the dictionary representing the underlying object to wrap
-	// */
-	// + (NSMutableDictionary<FBGraphObject>*)graphObjectWrappingDictionary:(NSDictionary*)jsonDictionary;
-	//
-	// /*!
-	// @method
-	// @abstract
-	// Used to create a graph object that's provisioned for POST, usually for use in posting a new Open Graph Action.
-	// */
-	// + (NSMutableDictionary<FBOpenGraphAction>*)openGraphActionForPost;
-	//
-	// /*!
-	// @method
-	// @abstract
-	// Used to create a graph object that's provisioned for POST, usually for use in posting a new Open Graph object.
-	// */
-	// + (NSMutableDictionary<FBOpenGraphObject>*)openGraphObjectForPost;
-	//
-	// /*!
-	// @method
-	// @abstract
-	// Used to create a graph object that's provisioned for POST, usually for use in posting a new Open Graph object.
-	//
-	// @param type the object type name, in the form namespace:typename
-	// @param title a title for the object
-	// @param image the image property for the object
-	// @param url the url property for the object
-	// @param description the description for the object
-	// */
-	// + (NSMutableDictionary<FBOpenGraphObject>*)openGraphObjectForPostWithType:(NSString *)type
-	// title:(NSString *)title
-	// image:(id)image
-	// url:(id)url
-	// description:(NSString *)description;
+	/** Used to wrap an existing dictionary with a FBGraphObject facade.
+	 * 
+	 * Normally you will not need to call this method, as the Facebook SDK already "FBGraphObject-ifys" json objects fetch via
+	 * `FBRequest` and `FBRequestConnection`. However, you may have other reasons to create json objects in your application, which
+	 * you would like to treat as a graph object. The pattern for doing this is that you pass the root node of the json to this
+	 * method, to retrieve a wrapper. From this point, if you traverse the graph, any other objects deeper in the hierarchy will be
+	 * wrapped as `FBGraphObject`'s in a lazy fashion.
+	 * 
+	 * This method is designed to avoid unnecessary memory allocations, and object copying. Due to this, the method does not copy
+	 * the source object if it can be avoided, but rather wraps and uses it as is. The returned object derives callers shoudl use
+	 * the returned object after calls to this method, rather than continue to call methods on the original object.
+	 * @param jsonDictionary the dictionary representing the underlying object to wrap. */
+	@Method(selector = "graphObjectWrappingDictionary:")
+	public static native FBGraphObject createGraphObject (NSDictionary<?, ?> jsonDictionary);
+
+	/** Used to create a graph object that's provisioned for POST, usually for use in posting a new Open Graph Action. */
+	@Method(selector = "openGraphActionForPost")
+	public static native FBOpenGraphAction createGraphAction ();
+
+	/** Used to create a graph object that's provisioned for POST, usually for use in posting a new Open Graph object.
+	 * @param type the object type name, in the form namespace:typename
+	 * @param title a title for the object
+	 * @param image the image property for the object
+	 * @param url the url property for the object
+	 * @param description the description for the object */
+	@Method(selector = "openGraphObjectForPostWithType:title:image:url:description:")
+	public static native FBOpenGraphObject createGraphObject (String type, String title, NSObject image, NSURL url,
+		String description);
 	//
 	// /*!
 	// @method

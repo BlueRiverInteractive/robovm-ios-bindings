@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.foundation.NSObjectProtocol;
+import org.robovm.apple.foundation.NSObjectProtocol;
 
 /** The FBViewControllerDelegate protocol defines the methods called when the Cancel or Done buttons are pressed in a
  * {@link FBViewController}. */

@@ -3,12 +3,12 @@ package org.robovm.bindings.facebook.error;
 
 import org.robovm.rt.bro.ValuedEnum;
 
-/*** Indicates the Facebook SDK classification for the error. */
+/** Indicates the Facebook SDK classification for the error. */
 public enum FBErrorCategory implements ValuedEnum {
-	/*** Indicates that the error category is invalid and likely represents an error that is unrelated to Facebook or the Facebook
+	/** Indicates that the error category is invalid and likely represents an error that is unrelated to Facebook or the Facebook
 	 * SDK. */
 	Invalid(0),
-	/*** Indicates that the error may be authentication related but the application should retry the operation. This case may involve
+	/** Indicates that the error may be authentication related but the application should retry the operation. This case may involve
 	 * user action that must be taken, and so the application should also test the fberrorShouldNotifyUser property and if YES
 	 * display fberrorUserMessage to the user before retrying. */
 	Retry(1),

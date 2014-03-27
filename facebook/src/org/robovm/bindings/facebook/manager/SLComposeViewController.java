@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.facebook.manager;
 
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.uikit.UIViewController;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;

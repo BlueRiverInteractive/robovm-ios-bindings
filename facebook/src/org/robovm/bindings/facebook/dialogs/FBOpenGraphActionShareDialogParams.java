@@ -1,7 +1,10 @@
 
 package org.robovm.bindings.facebook.dialogs;
 
+import org.robovm.objc.annotation.NativeClass;
+
 /** This object is used to encapsulate state for parameters to an Open Graph share dialog that opens in the Facebook app. */
+@NativeClass
 public class FBOpenGraphActionShareDialogParams extends FBDialogsParams {
 
 // extern NSString *const FBPostObject;

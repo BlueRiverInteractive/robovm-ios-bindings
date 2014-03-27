@@ -1,14 +1,14 @@
 
 package org.robovm.bindings.facebook.dialogs;
 
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSURL;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSURL;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
 
 /** This object is used to encapsulate state for parameters to a share dialog that opens in the Facebook app. */
-@NativeClass()
+@NativeClass
 public class FBShareDialogParams extends FBDialogsParams {
 
 	/*

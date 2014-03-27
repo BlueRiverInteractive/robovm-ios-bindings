@@ -1,7 +1,8 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.uikit.UIView;
+import org.robovm.apple.uikit.UIView;
+import org.robovm.objc.annotation.NativeClass;
 
 /** An instance of FBProfilePictureView is used to display a profile picture.
  * 
@@ -9,6 +10,7 @@ import org.robovm.cocoatouch.uikit.UIView;
  * bounds, preserving the aspect ratio. The smallest possible image is downloaded to ensure that scaling up never happens.
  * Resizing the view may result in a different size of the image being loaded. Canonical image sizes are documented in the
  * "Pictures" section of https://developers.facebook.com/docs/reference/api. */
+@NativeClass
 public class FBProfilePictureView extends UIView {
 
 //

@@ -1,6 +1,7 @@
 
 package org.robovm.bindings.facebook.manager;
 
+import org.robovm.apple.foundation.NSError;
 import org.robovm.bindings.facebook.manager.FacebookManager.ExtendPermissionsListener;
 import org.robovm.bindings.facebook.manager.FacebookManager.LoginListener;
 import org.robovm.bindings.facebook.manager.FacebookManager.LogoutListener;
@@ -8,7 +9,6 @@ import org.robovm.bindings.facebook.session.FBSession;
 import org.robovm.bindings.facebook.session.FBSessionLoginBehavior;
 import org.robovm.bindings.facebook.session.FBSessionState;
 import org.robovm.bindings.facebook.session.FBSessionStateHandler;
-import org.robovm.cocoatouch.foundation.NSError;
 
 /** This class is used to handle common Facebook events. */
 public class FBSessionStatusCallback implements FBSessionStateHandler {

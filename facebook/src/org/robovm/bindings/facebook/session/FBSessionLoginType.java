@@ -26,5 +26,4 @@ public enum FBSessionLoginType implements ValuedEnum {
 	public long value () {
 		return ordinal();
 	}
-
 }

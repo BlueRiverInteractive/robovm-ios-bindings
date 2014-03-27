@@ -1,13 +1,9 @@
 
 package org.robovm.bindings.facebook;
 
+import org.robovm.apple.foundation.NSError;
+
+/** @see {@link FBAppCall#openDeferredAppLink(FBAppLinkFallbackHandler)} */
 public interface FBAppLinkFallbackHandler {
-	/*
-	 * !
-	 * 
-	 * @typedef FBAppLinkFallbackHandler
-	 * 
-	 * @abstract See `+openDeferredAppLink`.
-	 */
-// typedef void (^FBAppLinkFallbackHandler)(NSError *error);
+	void invoke (NSError error);
 }

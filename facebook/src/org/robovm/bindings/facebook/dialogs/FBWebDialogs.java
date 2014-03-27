@@ -3,55 +3,40 @@ package org.robovm.bindings.facebook.dialogs;
 
 import java.util.Map;
 
+import org.robovm.apple.foundation.NSMutableDictionary;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.bindings.facebook.session.FBSession;
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSMutableDictionary;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
-import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
 
 /** Provides methods to display web based dialogs to the user. */
 @NativeClass
 public class FBWebDialogs extends NSObject {
 	private static final ObjCClass objCClass = ObjCClass.getByType(FBWebDialogs.class);
 
-	/*
-	 * !
+	/** Presents a Facebook web dialog (https://developers.facebook.com/docs/reference/dialogs/ ) such as feed or apprequest.
 	 * 
-	 * @abstract Presents a Facebook web dialog (https://developers.facebook.com/docs/reference/dialogs/ ) such as feed or
-	 * apprequest.
-	 * 
-	 * @param session Represents the session to use for the dialog. May be nil, which uses the active session if present, or
-	 * returns NO, if not.
-	 * 
-	 * @param dialog Represents the dialog or method name, such as @"feed"
-	 * 
-	 * @param parameters A dictionary of parameters to be passed to the dialog
-	 * 
-	 * @param handler An optional handler that will be called when the dialog is dismissed. Note, that if the method returns NO,
-	 * the handler is not called. May be nil.
-	 */
-	private static final Selector presentDialogModallyWithSession$dialog$parameters$handler$ = Selector
-		.register("presentDialogModallyWithSession:dialog:parameters:handler:");
-
-	@Bridge
-	private native static void objc_presentDialogModallyWithSession$dialog$parameters$handler$ (ObjCClass __self__,
-		Selector __cmd__, FBSession session, String dialog, NSDictionary<NSString, NSString> parameters, ObjCBlock handler);
-
+	 * @param session Represents the session to use for the dialog. May be {@code null}, which uses the active session if present,
+	 *           or returns {@code false}, if not.
+	 * @param dialog Represents the dialog or method name, such as "feed".
+	 * @param parameters A dictionary of parameters to be passed to the dialog.
+	 * @param handler An optional handler that will be called when the dialog is dismissed. Note, that if the method returns
+	 *           {@code false}, the handler is not called. May be nil. */
 	public static void presentShareDialog (FBSession session, String dialog, Map<String, String> parameters,
 		FBWebDialogHandler handler) {
 		NSMutableDictionary<NSString, NSString> params = new NSMutableDictionary<NSString, NSString>();
 		if (parameters != null) for (Map.Entry<String, String> entry : parameters.entrySet()) {
 			params.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
 		}
-		objc_presentDialogModallyWithSession$dialog$parameters$handler$(objCClass,
-			presentDialogModallyWithSession$dialog$parameters$handler$, session, dialog, params,
-			FBWebDialogHandler.Marshaler.toObjCBlock(handler));
+		presentShareDialog(session, dialog, params, handler);
 	}
+
+	@Method(selector = "presentDialogModallyWithSession:dialog:parameters:handler:")
+	public static native void presentShareDialog (FBSession session, String dialog,
+		NSMutableDictionary<NSString, NSString> parameters, @Block FBWebDialogHandler handler);
 
 	/*
 	 * !
@@ -78,40 +63,25 @@ public class FBWebDialogs extends NSObject {
 	// handler:(FBWebDialogHandler)handler
 	// delegate:(id<FBWebDialogsDelegate>)delegate;
 
-	/*
-	 * !
+	/** Presents a Facebook apprequest dialog.
 	 * 
-	 * @abstract Presents a Facebook apprequest dialog.
-	 * 
-	 * @param session Represents the session to use for the dialog. May be nil, which uses the active session if present.
-	 * 
+	 * @param session Represents the session to use for the dialog. May be {@code null}, which uses the active session if present.
 	 * @param message The required message for the dialog.
-	 * 
 	 * @param title An optional title for the dialog.
-	 * 
-	 * @param parameters A dictionary of additional parameters to be passed to the dialog. May be nil
-	 * 
-	 * @param handler An optional handler that will be called when the dialog is dismissed. May be nil.
-	 */
-
+	 * @param parameters A dictionary of additional parameters to be passed to the dialog. May be {@code null}.
+	 * @param handler An optional handler that will be called when the dialog is dismissed. May be {@code null}. */
 	public static void presentRequestDialog (FBSession session, String message, String title, Map<String, String> parameters,
 		FBWebDialogHandler handler) {
 		NSMutableDictionary<NSString, NSString> params = new NSMutableDictionary<NSString, NSString>();
 		if (parameters != null) for (Map.Entry<String, String> entry : parameters.entrySet()) {
 			params.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
 		}
-		objc_presentRequestsDialogModallyWithSession$message$title$parameters$handler$(objCClass,
-			presentRequestsDialogModallyWithSession$message$title$parameters$handler$, session, message, title, params,
-			FBWebDialogHandler.Marshaler.toObjCBlock(handler));
+		presentRequestDialog(session, message, title, params, handler);
 	}
 
-	private static final Selector presentRequestsDialogModallyWithSession$message$title$parameters$handler$ = Selector
-		.register("presentRequestsDialogModallyWithSession:message:title:parameters:handler:");
-
-	@Bridge
-	private native static void objc_presentRequestsDialogModallyWithSession$message$title$parameters$handler$ (ObjCClass __self__,
-		Selector __cmd__, FBSession session, String message, String title, NSDictionary<NSString, NSString> parameters,
-		ObjCBlock handler);
+	@Method(selector = "presentRequestsDialogModallyWithSession:message:title:parameters:handler:")
+	public static native void presentRequestDialog (FBSession session, String message, String title,
+		NSMutableDictionary<NSString, NSString> parameters, @Block FBWebDialogHandler handler);
 
 	/*
 	 * !
@@ -149,17 +119,12 @@ public class FBWebDialogs extends NSObject {
 		if (parameters != null) for (Map.Entry<String, String> entry : parameters.entrySet()) {
 			params.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
 		}
-		objc_presentFeedDialogModallyWithSession$parameters$handler$(objCClass,
-			presentFeedDialogModallyWithSession$parameters$handler$, session, params,
-			FBWebDialogHandler.Marshaler.toObjCBlock(handler));
+		presentFeedDialog(session, params, handler);
 	}
 
-	private static final Selector presentFeedDialogModallyWithSession$parameters$handler$ = Selector
-		.register("presentFeedDialogModallyWithSession:parameters:handler:");
-
-	@Bridge
-	private native static void objc_presentFeedDialogModallyWithSession$parameters$handler$ (ObjCClass __self__, Selector __cmd__,
-		FBSession session, NSDictionary<NSString, NSString> parameters, ObjCBlock handler);
+	@Method(selector = "presentFeedDialogModallyWithSession:parameters:handler:")
+	public static native void presentFeedDialog (FBSession session, NSMutableDictionary<NSString, NSString> parameters,
+		@Block FBWebDialogHandler handler);
 
 	//
 	// /*!

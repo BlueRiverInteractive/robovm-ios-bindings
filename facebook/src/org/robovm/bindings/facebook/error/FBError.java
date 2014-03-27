@@ -1,26 +1,24 @@
 
 package org.robovm.bindings.facebook.error;
 
-import org.robovm.cocoatouch.foundation.NSError;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSExtensions;
 import org.robovm.objc.annotation.NativeClass;
+import org.robovm.objc.annotation.Property;
 
 /** Adds additional properties to {@link NSError} to provide more information for Facebook related errors. */
 @NativeClass
-public class FBError extends NSError {
+public class FBError extends NSExtensions {
 
-// /*!
-// @abstract
-// Categorizes the error, if it is Facebook related, to simplify application mitigation behavior
-//
-// @discussion
-// In general, in response to an error connecting to Facebook, an application should, retry the
-// operation, request permissions, reconnect the application, or prompt the user to take an action.
-// The error category can be used to understand the class of error received from Facebook. For more infomation on this
-// see https://developers.facebook.com/docs/reference/api/errors/
-// */
-// @property (readonly) FBErrorCategory fberrorCategory;
-//
-// /*!
+	/** Categorizes the error, if it is Facebook related, to simplify application mitigation behavior
+	 * 
+	 * In general, in response to an error connecting to Facebook, an application should, retry the operation, request permissions,
+	 * reconnect the application, or prompt the user to take an action. The error category can be used to understand the class of
+	 * error received from Facebook. For more infomation on this see https://developers.facebook.com/docs/reference/api/errors/ */
+	@Property(selector = "fberrorCategory")
+	public static native FBErrorCategory getCategory (NSError error);
+
+	// /*!
 // @abstract
 // If YES indicates that a user action is required in order to successfully continue with the facebook operation
 //

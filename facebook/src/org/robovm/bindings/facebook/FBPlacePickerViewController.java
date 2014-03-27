@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.uikit.UITableView;
+import org.robovm.apple.uikit.UITableView;
 import org.robovm.objc.annotation.NativeClass;
 
 /** The FBPlacePickerViewController class creates a controller object that manages the user interface for displaying and selecting

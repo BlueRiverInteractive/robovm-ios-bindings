@@ -1,17 +1,16 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.objc.ObjCBlock;
-import org.robovm.objc.Selector;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
 
 /** The FBRequestConnection represents a single connection to Facebook to service a request.
  * 
  * The request settings are encapsulated in a reusable {@link FBRequest} object. The FBRequestConnection object encapsulates the
  * concerns of a single communication e.g. starting a connection, canceling a connection, or batching requests. */
-@NativeClass()
+@NativeClass
 public class FBRequestConnection extends NSObject {
 	// /*!
 	// @method
@@ -94,16 +93,8 @@ public class FBRequestConnection extends NSObject {
 	 * 
 	 * @param handler A handler to call back when the round-trip completes or times out. The handler will be invoked on the main
 	 *           thread. */
-	public void addRequest (FBRequest request, FBRequestHandler handler) {
-		objc_addRequest$completionHandler$(this, addRequest$completionHandler$, request,
-			FBRequestHandler.Marshaler.toObjCBlock(handler));
-	}
-
-	private static final Selector addRequest$completionHandler$ = Selector.register("addRequest:completionHandler:");
-
-	@Bridge
-	private native static void objc_addRequest$completionHandler$ (FBRequestConnection __self__, Selector __cmd__,
-		FBRequest request, ObjCBlock handler);
+	@Method(selector = "addRequest:completionHandler:")
+	public native void addRequest (FBRequest request, @Block FBRequestHandler handler);
 
 	//
 	// /*!
@@ -171,14 +162,8 @@ public class FBRequestConnection extends NSObject {
 	 * transmission with the batch. In this scenario all requests fail.
 	 * 
 	 * This method cannot be called twice for an `FBRequestConnection` instance. */
-	public void start () {
-		objc_start(this, start);
-	}
-
-	private static final Selector start = Selector.register("start");
-
-	@Bridge
-	private native static void objc_start (FBRequestConnection __self__, Selector __cmd__);
+	@Method(selector = "start")
+	public native void start ();
 
 	// /*!
 	// @method

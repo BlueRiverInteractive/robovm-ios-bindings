@@ -1,29 +1,29 @@
 
 package org.robovm.bindings.facebook.manager.sample;
 
+import org.robovm.apple.coregraphics.CGRect;
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSURL;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.apple.uikit.UIButton;
+import org.robovm.apple.uikit.UIColor;
+import org.robovm.apple.uikit.UIControl;
+import org.robovm.apple.uikit.UIControl.OnTouchUpInsideListener;
+import org.robovm.apple.uikit.UIControlState;
+import org.robovm.apple.uikit.UIEvent;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UIView;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.facebook.manager.FBFeed;
 import org.robovm.bindings.facebook.manager.FBPermission;
 import org.robovm.bindings.facebook.manager.FacebookConfiguration;
 import org.robovm.bindings.facebook.manager.FacebookManager;
 import org.robovm.bindings.facebook.session.FBSessionDefaultAudience;
 import org.robovm.bindings.facebook.session.FBSessionLoginBehavior;
-import org.robovm.cocoatouch.coregraphics.CGRect;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSURL;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
-import org.robovm.cocoatouch.uikit.UIButton;
-import org.robovm.cocoatouch.uikit.UIColor;
-import org.robovm.cocoatouch.uikit.UIControl;
-import org.robovm.cocoatouch.uikit.UIControl.OnTouchUpInsideListener;
-import org.robovm.cocoatouch.uikit.UIControlState;
-import org.robovm.cocoatouch.uikit.UIEvent;
-import org.robovm.cocoatouch.uikit.UIScreen;
-import org.robovm.cocoatouch.uikit.UIView;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIWindow;
 
 /** Sample usage of the Facebook Manager.
  * <p>
@@ -47,7 +47,7 @@ import org.robovm.cocoatouch.uikit.UIWindow;
  * </array>
  * }
  * </pre> */
-public class Sample extends UIApplicationDelegate.Adapter {
+public class Sample extends UIApplicationDelegateAdapter {
 	private static final String APP_ID = "YOUR_FB_APP_ID";
 	private static final String APP_NAMESPACE = "namespace";
 

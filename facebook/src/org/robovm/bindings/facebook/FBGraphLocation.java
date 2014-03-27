@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.objc.annotation.NativeClass;
 
 /** The FBGraphLocation class enables typed access to the `location` property of a Facebook place object.

@@ -1,12 +1,11 @@
 
 package org.robovm.bindings.facebook.error;
 
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.NativeClass;
 
 /** A utility class with methods to provide more information for Facebook related errors if you do not want to use the
  * NSError(FBError) category. */
-
 @NativeClass
 public class FBErrorUtility extends NSObject {
 	/*

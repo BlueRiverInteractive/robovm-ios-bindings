@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.uikit.UIViewController;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.annotation.NativeClass;
 
 /** The FBViewController class is a base class encapsulating functionality common to several other view controller classes.

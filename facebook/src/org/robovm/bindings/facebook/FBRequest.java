@@ -3,15 +3,14 @@ package org.robovm.bindings.facebook;
 
 import java.util.Map;
 
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSMutableDictionary;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.bindings.facebook.session.FBSession;
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSMutableDictionary;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.objc.ObjCBlock;
-import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.Pointer;
 
 /** The FBRequest object is used to setup and manage requests to Facebook Graph and REST APIs. This class provides helper methods
@@ -56,12 +55,12 @@ public class FBRequest extends NSObject {
 	// - (id)initWithSession:(FBSession*)session
 	// graphPath:(NSString *)graphPath;
 
-	/** Initializes an `FBRequest` object for a Graph API request call.
+	/** Initializes an FBRequest object for a Graph API request call.
 	 * 
 	 * Note that this only sets properties on the `FBRequest` object.
 	 * 
-	 * To send the request, initialize an <FBRequestConnection> object, add this request, and send <[FBRequestConnection start]>.
-	 * See other methods on this class for shortcuts to simplify this process.
+	 * To send the request, initialize an {@link FBRequestConnection} object, add this request, and send <[FBRequestConnection
+	 * start]>. See other methods on this class for shortcuts to simplify this process.
 	 * 
 	 * @param session The session object representing the identity of the Facebook user making the request. A nil value indicates a
 	 *           request that requires no token; to use the active session pass `[FBSession activeSession]`.
@@ -73,21 +72,17 @@ public class FBRequest extends NSObject {
 	 * 
 	 * @param HTTPMethod The HTTP method to use for the request. The default is value of nil implies a GET. */
 	public FBRequest (FBSession session, String graphPath, Map<String, String> parameters, String httpMethod) {
+		super((SkipInit)null);
 		NSMutableDictionary<NSString, NSString> params = new NSMutableDictionary<NSString, NSString>();
 		if (parameters != null) for (Map.Entry<String, String> entry : parameters.entrySet()) {
 			params.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
 		}
-		initObject(objc_initWithSession$graphPath$parameters$HTTPMethod$(this, initWithSession$graphPath$parameters$HTTPMethod$,
-			session, graphPath, params, httpMethod));
+		initObject(init(session, graphPath, params, httpMethod));
 	}
 
-	private static final Selector initWithSession$graphPath$parameters$HTTPMethod$ = Selector
-		.register("initWithSession:graphPath:parameters:HTTPMethod:");
-
-	@Bridge
-	private native static @Pointer
-	long objc_initWithSession$graphPath$parameters$HTTPMethod$ (FBRequest __self__, Selector __cmd__, FBSession session,
-		String graphPath, NSDictionary<NSString, NSString> parameters, String httpMethod);
+	@Method(selector = "initWithSession:graphPath:parameters:HTTPMethod:")
+	private native @Pointer
+	long init (FBSession session, String graphPath, NSDictionary<NSString, NSString> parameters, String httpMethod);
 
 	/*
 	 * !
@@ -207,34 +202,16 @@ public class FBRequest extends NSObject {
 	 */
 	// @property (nonatomic, retain) id<FBGraphObject> graphObject;
 
-	/*
-	 * !
+	/** Starts a connection to the Facebook API.
 	 * 
-	 * @methodgroup Instance methods
-	 */
-
-	/*
-	 * !
-	 * 
-	 * @method
-	 * 
-	 * @abstract Starts a connection to the Facebook API.
-	 * 
-	 * @discussion This is used to start an API call to Facebook and call the block when the request completes with a success,
-	 * error, or cancel.
+	 * This is used to start an API call to Facebook and call the block when the request completes with a success, error, or
+	 * cancel.
 	 * 
 	 * @param handler The handler block to call when the request completes with a success, error, or cancel action. The handler
-	 * will be invoked on the main thread.
-	 */
-	private static final Selector startWithCompletionHandler$ = Selector.register("startWithCompletionHandler:");
-
-	@Bridge
-	private native static FBRequestConnection objc_startWithCompletionHandler$ (FBRequest __self__, Selector __cmd__,
-		ObjCBlock handler);
-
-	public FBRequestConnection start (FBRequestHandler handler) {
-		return objc_startWithCompletionHandler$(this, startWithCompletionHandler$, FBRequestHandler.Marshaler.toObjCBlock(handler));
-	}
+	 *           will be invoked on the main thread.
+	 * @return */
+	@Method(selector = "startWithCompletionHandler:")
+	public native FBRequestConnection start (@Block FBRequestHandler handler);
 
 	/*
 	 * !

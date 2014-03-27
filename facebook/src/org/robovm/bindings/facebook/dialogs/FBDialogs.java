@@ -1,17 +1,15 @@
 
 package org.robovm.bindings.facebook.dialogs;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.bindings.facebook.FBAppCall;
 import org.robovm.bindings.facebook.session.FBSession;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.objc.ObjCBlock;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
 
 /** Provides methods to display native (i.e., non-Web-based) dialogs to the user.
  * 
@@ -19,7 +17,6 @@ import org.robovm.rt.bro.annotation.Bridge;
  * defaultUrlSchemeSuffix]`. */
 @NativeClass
 public class FBDialogs extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBDialogs.class);
 
 	/*
 	 * !
@@ -79,24 +76,21 @@ public class FBDialogs extends NSObject {
 	// urls:(NSArray*)urls
 	// handler:(FBOSIntegratedShareDialogHandler)handler;
 
-	/*
-	 * !
-	 * 
-	 * @abstract Presents a dialog that allows the user to share a status update that may include text, images, or URLs. This
-	 * dialog is only available on iOS 6.0 and above. An <FBSession> may be specified, or nil may be passed to indicate that the
-	 * current active session should be used. If a session is specified (whether explicitly or by virtue of being the active
-	 * session), it must be open and the login method used to authenticate the user must be native iOS 6.0 authentication. If no
-	 * session is specified (and there is no active session), then whether the call succeeds or not will depend on whether Facebook
-	 * integration has been configured.
+	/** Presents a dialog that allows the user to share a status update that may include text, images, or URLs. This dialog is only
+	 * available on iOS 6.0 and above. An <FBSession> may be specified, or nil may be passed to indicate that the current active
+	 * session should be used. If a session is specified (whether explicitly or by virtue of being the active session), it must be
+	 * open and the login method used to authenticate the user must be native iOS 6.0 authentication. If no session is specified
+	 * (and there is no active session), then whether the call succeeds or not will depend on whether Facebook integration has been
+	 * configured.
 	 * 
 	 * @param viewController The view controller which will present the dialog.
 	 * 
 	 * @param session The <FBSession> to use to determine whether or not the user has been authenticated with iOS native
-	 * authentication. If nil, then [FBSession activeSession] will be checked. See discussion above for the implications of nil or
-	 * non-nil session.
+	 *           authentication. If nil, then [FBSession activeSession] will be checked. See discussion above for the implications
+	 *           of nil or non-nil session.
 	 * 
 	 * @param initialText The text which will initially be populated in the dialog. The user will have the opportunity to edit this
-	 * text before posting it. May be nil.
+	 *           text before posting it. May be nil.
 	 * 
 	 * @param images An array of UIImages that will be attached to the status update. May be nil.
 	 * 
@@ -104,86 +98,39 @@ public class FBDialogs extends NSObject {
 	 * 
 	 * @param handler A handler that will be called when the dialog is dismissed, or if an error occurs. May be nil.
 	 * 
-	 * @return YES if the dialog was presented, NO if not (in the case of a NO result, the handler will still be called, with an
-	 * error indicating the reason the dialog was not displayed)
-	 */
-	// + (BOOL)presentOSIntegratedShareDialogModallyFrom:(UIViewController*)viewController
-	// session:(FBSession*)session
-	// initialText:(NSString*)initialText
-	// images:(NSArray*)images
-	// urls:(NSArray*)urls
-	// handler:(FBOSIntegratedShareDialogHandler)handler;
+	 * @return {@code true} if the dialog was presented, {@code false} if not (in the case of a {@code false} result, the handler
+	 *         will still be called, with an error indicating the reason the dialog was not displayed) */
+	@Method(selector = "presentOSIntegratedShareDialogModallyFrom:session:initialText:images:urls:handler:")
+	public static native boolean presentModalShareDialog (UIViewController viewController, FBSession session, String initialText,
+		NSArray<?> images, NSArray<?> urls, @Block FBOSIntegratedShareDialogHandler handler);
 
-	private static final Selector presentOSIntegratedShareDialogModallyFrom$session$initialText$images$urls$handler$ = Selector
-		.register("presentOSIntegratedShareDialogModallyFrom:session:initialText:images:urls:handler:");
-
-	@Bridge
-	private native static boolean objc_presentOSIntegratedShareDialogModallyFrom$session$initialText$images$urls$handler$ (
-		ObjCClass __self__, Selector __cmd__, UIViewController viewController, FBSession session, String initialText,
-		NSArray images, NSArray urls, ObjCBlock handler);
-
-	public static boolean presentModalShareDialog (UIViewController viewController, FBSession session, String initialText,
-		NSArray images, NSArray urls, FBOSIntegratedShareDialogHandler handler) {
-		return objc_presentOSIntegratedShareDialogModallyFrom$session$initialText$images$urls$handler$(objCClass,
-			presentOSIntegratedShareDialogModallyFrom$session$initialText$images$urls$handler$, viewController, session,
-			initialText, images, urls, FBOSIntegratedShareDialogHandler.Marshaler.toObjCBlock(handler));
-	}
-
-	/*
-	 * !
-	 * 
-	 * @abstract Determines whether a call to presentShareDialogModallyFrom: will successfully present a dialog. This is useful for
+	/** Determines whether a call to presentShareDialogModallyFrom: will successfully present a dialog. This is useful for
 	 * applications that need to modify the available UI controls depending on whether the dialog is available on the current
 	 * platform and for the current user.
 	 * 
 	 * @param session The <FBSession> to use to determine whether or not the user has been authenticated with iOS native
-	 * authentication. If nil, then [FBSession activeSession] will be checked. See discussion above for the implications of nil or
-	 * non-nil session.
+	 *           authentication. If nil, then [FBSession activeSession] will be checked. See discussion above for the implications
+	 *           of nil or non-nil session.
 	 * 
-	 * @return YES if the dialog would be presented for the session, and NO if not
-	 */
-	// + (BOOL)canPresentOSIntegratedShareDialogWithSession:(FBSession*)session;
-	private static final Selector canPresentOSIntegratedShareDialogWithSession$ = Selector
-		.register("canPresentOSIntegratedShareDialogWithSession:");
+	 * @return {@code true} if the dialog would be presented for the session, and {@code false} if not. */
+	@Method(selector = "canPresentOSIntegratedShareDialogWithSession:")
+	public static native boolean canPresentModalShareDialog (FBSession session);
 
-	@Bridge
-	private native static boolean objc_canPresentOSIntegratedShareDialogWithSession$ (ObjCClass __self__, Selector __cmd__,
-		FBSession session);
-
-	public static boolean canPresentModalShareDialog (FBSession session) {
-		return objc_canPresentOSIntegratedShareDialogWithSession$(objCClass, canPresentOSIntegratedShareDialogWithSession$, session);
-	}
-
-	/*
-	 * !
-	 * 
-	 * @abstract Determines whether a call to presentFBShareDialogWithTarget: will successfully present a dialog in the Facebook
-	 * application. This is useful for applications that need to modify the available UI controls depending on whether the dialog
-	 * is available on the current platform.
+	/** Determines whether a call to presentFBShareDialogWithTarget: will successfully present a dialog in the Facebook application.
+	 * This is useful for applications that need to modify the available UI controls depending on whether the dialog is available
+	 * on the current platform.
 	 * 
 	 * @param params The parameters for the FB share dialog.
 	 * 
-	 * @return YES if the dialog would be presented, and NO if not
+	 * @return YES if the dialog would be presented, and NO if not.
 	 * 
-	 * @discussion A return value of YES here indicates that the corresponding presentFBShareDialogWithParams method will return a
-	 * non-nil FBAppCall for the same params. And vice versa.
-	 */
-	// + (BOOL)canPresentShareDialogWithParams:(FBShareDialogParams *)params;
-	private static final Selector canPresentShareDialogWithParams$ = Selector.register("canPresentShareDialogWithParams:");
+	 *         A return value of YES here indicates that the corresponding presentFBShareDialogWithParams method will return a
+	 *         non-nil FBAppCall for the same params. And vice versa. */
+	@Method(selector = "canPresentShareDialogWithParams:")
+	public static native boolean canPresentShareDialog (FBShareDialogParams params);
 
-	@Bridge
-	private native static boolean objc_canPresentShareDialogWithParams$ (ObjCClass __self__, Selector __cmd__,
-		FBShareDialogParams params);
-
-	public static boolean canPresentShareDialog (FBShareDialogParams params) {
-		return objc_canPresentShareDialogWithParams$(objCClass, canPresentShareDialogWithParams$, params);
-	}
-
-	/*
-	 * !
-	 * 
-	 * @abstract Presents a dialog in the Facebook application that allows the user to share a status update that may include text,
-	 * images, or URLs. No session is required, and the app does not need to be authorized to call this.
+	/** Presents a dialog in the Facebook application that allows the user to share a status update that may include text, images,
+	 * or URLs. No session is required, and the app does not need to be authorized to call this.
 	 * 
 	 * Note that this will perform an app switch to the Facebook app, and will cause the current app to be suspended. When the
 	 * share is complete, the Facebook app will redirect to a url of the form "fb{APP_ID}://" that the application must handle. The
@@ -195,32 +142,19 @@ public class FBDialogs extends NSObject {
 	 * @param params The parameters for the FB share dialog.
 	 * 
 	 * @param clientState An NSDictionary that's passed through when the completion handler is called. This is useful for the app
-	 * to maintain state about the share request that was made so as to have appropriate action when the handler is called. May be
-	 * nil.
+	 *           to maintain state about the share request that was made so as to have appropriate action when the handler is
+	 *           called. May be nil.
 	 * 
 	 * @param handler A completion handler that may be called when the status update is complete. May be nil. If non-nil, the
-	 * handler will always be called asynchronously.
+	 *           handler will always be called asynchronously.
 	 * 
 	 * @return An FBAppCall object that will also be passed into the provided FBAppCallCompletionHandler.
 	 * 
-	 * @discussion A non-nil FBAppCall object is only returned if the corresponding canPresetFBShareDialogWithParams method is also
-	 * returning YES for the same params.
-	 */
-	// + (FBAppCall *)presentShareDialogWithParams:(FBShareDialogParams *)params
-	// clientState:(NSDictionary *)clientState
-	// handler:(FBDialogAppCallCompletionHandler)handler;
-	private static final Selector presentShareDialogWithParams$clientState$handler$ = Selector
-		.register("presentShareDialogWithParams:clientState:handler:");
-
-	@Bridge
-	private native static FBAppCall objc_presentShareDialogWithParams$clientState$handler$ (ObjCClass __self__, Selector __cmd__,
-		FBShareDialogParams params, NSDictionary clientState, ObjCBlock handler);
-
-	public static FBAppCall presentShareDialog (FBShareDialogParams params, NSDictionary clientState,
-		FBDialogAppCallCompletionHandler handler) {
-		return objc_presentShareDialogWithParams$clientState$handler$(objCClass, presentShareDialogWithParams$clientState$handler$,
-			params, clientState, FBDialogAppCallCompletionHandler.Marshaler.toObjCBlock(handler));
-	}
+	 *         A non-nil FBAppCall object is only returned if the corresponding canPresetFBShareDialogWithParams method is also
+	 *         returning YES for the same params. */
+	@Method(selector = "presentShareDialogWithParams:clientState:handler:")
+	public static native FBAppCall presentShareDialog (FBShareDialogParams params, NSDictionary<?, ?> clientState,
+		@Block FBDialogAppCallCompletionHandler handler);
 
 	/*
 	 * !

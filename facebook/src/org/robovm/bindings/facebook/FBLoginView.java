@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.uikit.UIView;
+import org.robovm.apple.uikit.UIView;
 import org.robovm.objc.annotation.NativeClass;
 
 /** FBLoginView is a custom UIView that renders a button to login or logout based on the state of `FBSession.activeSession`
@@ -13,15 +13,6 @@ import org.robovm.objc.annotation.NativeClass;
 @NativeClass
 public class FBLoginView extends UIView {
 
-// /*!
-// @abstract
-// The permissions to login with. Defaults to nil, meaning basic permissions.
-//
-// @discussion Methods and properties that specify permissions without a read or publish
-// qualification are deprecated; use of a read-qualified or publish-qualified alternative is preferred.
-// */
-// @property (readwrite, copy) NSArray *permissions __attribute__((deprecated));
-//
 // /*!
 // @abstract
 // The read permissions to request if the user logs in via this view. The basic_info permission must be explicitly requested at

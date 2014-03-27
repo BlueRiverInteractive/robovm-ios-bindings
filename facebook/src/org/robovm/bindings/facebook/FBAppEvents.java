@@ -1,7 +1,8 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
 /** Client-side event logging for specialized application analytics available through Facebook App Insights and for use with
@@ -405,16 +406,10 @@ public class FBAppEvents extends NSObject {
 // @param flushBehavior The desired `FBAppEventsFlushBehavior` to be used.
 // */
 // + (void)setFlushBehavior:(FBAppEventsFlushBehavior)flushBehavior;
-//
-//
-// /*!
-//
-// @method
-//
-// @abstract
-// Explicitly kick off flushing of events to Facebook. This is an asynchronous method, but it does initiate an immediate
-// kick off. Server failures will be reported through the NotificationCenter with notification ID
-// `FBAppEventsLoggingResultNotification`.
-// */
-// + (void)flush;
+
+	/** Explicitly kick off flushing of events to Facebook. This is an asynchronous method, but it does initiate an immediate kick
+	 * off. Server failures will be reported through the NotificationCenter with notification ID
+	 * "FBAppEventsLoggingResultNotification". */
+	@Method(selector = "flush")
+	public static native void flush ();
 }

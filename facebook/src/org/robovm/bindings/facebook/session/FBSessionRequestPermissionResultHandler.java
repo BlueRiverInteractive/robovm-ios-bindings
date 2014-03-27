@@ -1,10 +1,7 @@
 
 package org.robovm.bindings.facebook.session;
 
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.objc.ObjCBlock;
-import org.robovm.objc.ObjCBlock.Wrapper;
-import org.robovm.rt.bro.annotation.Callback;
+import org.robovm.apple.foundation.NSError;
 
 /** Block type used to define blocks called by <[FBSession requestNewReadPermissions:completionHandler:]> and <[FBSession
  * requestNewPublishPermissions:defaultAudience:completionHandler:]>.
@@ -16,19 +13,4 @@ import org.robovm.rt.bro.annotation.Callback;
  * closer to the operation that requires it (e.g., when the user performs some action). */
 public interface FBSessionRequestPermissionResultHandler {
 	void invoke (FBSession session, NSError error);
-
-	static class Callbacks {
-		@Callback
-		static void run (ObjCBlock block, FBSession session, NSError error) {
-			((FBSessionRequestPermissionResultHandler)block.object()).invoke(session, error);
-		}
-	}
-
-	static class Marshaler {
-		private static final Wrapper WRAPPER = new Wrapper(Callbacks.class);
-
-		public static ObjCBlock toObjCBlock (FBSessionRequestPermissionResultHandler o) {
-			return WRAPPER.toObjCBlock(o);
-		}
-	}
 }

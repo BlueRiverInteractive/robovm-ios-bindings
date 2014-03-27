@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.objc.annotation.NativeClass;
 
 /** The FBGraphPlace class enables typed access to a place object as represented in the Graph API.

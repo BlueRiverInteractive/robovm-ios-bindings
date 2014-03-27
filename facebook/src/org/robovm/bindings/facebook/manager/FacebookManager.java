@@ -10,6 +10,13 @@ import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSMutableDictionary;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.foundation.NSURL;
 import org.robovm.bindings.facebook.FBAppCall;
 import org.robovm.bindings.facebook.FBRequest;
 import org.robovm.bindings.facebook.FBRequestConnection;
@@ -21,15 +28,8 @@ import org.robovm.bindings.facebook.dialogs.FBWebDialogs;
 import org.robovm.bindings.facebook.session.FBSession;
 import org.robovm.bindings.facebook.session.FBSessionRequestPermissionResultHandler;
 import org.robovm.bindings.facebook.session.FBSessionState;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSMutableDictionary;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.foundation.NSURL;
 
-/** This singleton class provides the most common Facebook use cases. */
+/** This singleton class handles the most common Facebook use cases. */
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class FacebookManager {
 	// TODO FBError instead of NSError?
@@ -37,8 +37,6 @@ public class FacebookManager {
 // like this)
 	// TODO Make LoginBehavior.FallbackToWebView and LoginBehavior.ForcingWebView work. ATM nothing happens when the WebView login
 // is used, I think.
-	// TODO Implement the missing Facebook classes and methods.
-	// TODO make proper JavaDocs for all classes including the binding classes.
 
 	static final String TAG = "[FacebookManager] ";
 	private static FacebookManager instance = null;

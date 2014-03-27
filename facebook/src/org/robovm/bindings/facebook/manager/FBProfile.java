@@ -3,8 +3,8 @@ package org.robovm.bindings.facebook.manager;
 
 import java.security.Permissions;
 
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSString;
 
 public class FBProfile {
 	private static final NSString ID = new NSString("id");
@@ -21,9 +21,9 @@ public class FBProfile {
 	private static final NSString BIO = new NSString("bio");
 	private static final NSString EMAIL = new NSString("email");
 
-	private final NSDictionary mGraphUser;
+	private final NSDictionary<?, ?> mGraphUser;
 
-	private FBProfile (NSDictionary graphUser) {
+	private FBProfile (NSDictionary<?, ?> graphUser) {
 		this.mGraphUser = graphUser;
 	}
 
@@ -31,14 +31,14 @@ public class FBProfile {
 	 * 
 	 * @param graphUser The {@link GraphUser} instance
 	 * @return */
-	public static FBProfile create (NSDictionary graphUser) {
+	public static FBProfile create (NSDictionary<?, ?> graphUser) {
 		return new FBProfile(graphUser);
 	}
 
 	/** Return the graph user
 	 * 
 	 * @return */
-	public NSDictionary getGraphUser () {
+	public NSDictionary<?, ?> getGraphUser () {
 		return mGraphUser;
 	}
 

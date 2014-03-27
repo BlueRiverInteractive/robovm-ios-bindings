@@ -4,12 +4,12 @@ package org.robovm.bindings.facebook.session;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.foundation.NSURL;
 import org.robovm.bindings.facebook.FBAccessTokenData;
 import org.robovm.bindings.facebook.FBRequest;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.foundation.NSURL;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
@@ -318,7 +318,7 @@ public class FBSession extends NSObject {
 	@Bridge
 	private native static void objc_close (FBSession __self__, Selector __cmd__);
 
-	public void close () {
+	public void closeSession () {
 		objc_close(this, close);
 	}
 

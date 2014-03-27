@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.facebook;
 
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.bindings.facebook.session.FBSession;
-import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
