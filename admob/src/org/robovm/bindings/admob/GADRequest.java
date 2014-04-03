@@ -1,9 +1,9 @@
 
 package org.robovm.bindings.admob;
 
+import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;

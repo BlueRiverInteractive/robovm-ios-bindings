@@ -1,10 +1,10 @@
 
 package org.robovm.bindings.admob.mediation;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSObjectProtocol;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.uikit.UIViewController;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSObjectProtocol;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.rt.bro.annotation.Callback;
@@ -88,8 +88,7 @@ public interface GADCustomEventInterstitial extends NSObjectProtocol {
 
 		@Callback
 		@BindSelector("presentFromRootViewController:")
-		public static void present (GADCustomEventInterstitial __self__, Selector __cmd__,
-			UIViewController rootViewController) {
+		public static void present (GADCustomEventInterstitial __self__, Selector __cmd__, UIViewController rootViewController) {
 			__self__.present(rootViewController);
 		}
 

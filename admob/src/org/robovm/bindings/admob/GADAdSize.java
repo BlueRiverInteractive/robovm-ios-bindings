@@ -4,6 +4,7 @@ package org.robovm.bindings.admob;
 import org.robovm.apple.coregraphics.CGSize;
 import org.robovm.rt.bro.Struct;
 import org.robovm.rt.bro.annotation.ByVal;
+import org.robovm.rt.bro.annotation.MachineSizedUInt;
 import org.robovm.rt.bro.annotation.StructMember;
 
 public class GADAdSize extends Struct<GADAdSize> {
@@ -18,10 +19,11 @@ public class GADAdSize extends Struct<GADAdSize> {
 	public native GADAdSize size (@ByVal CGSize size);
 
 	@StructMember(1)
-	public native int flags ();
+	public native @MachineSizedUInt
+	long flags ();
 
 	@StructMember(1)
-	public native GADAdSize flags (int flags);
+	public native GADAdSize flags (@MachineSizedUInt long flags);
 
 	public boolean isValid () {
 		return GADAdSizeManager.isValid(this);

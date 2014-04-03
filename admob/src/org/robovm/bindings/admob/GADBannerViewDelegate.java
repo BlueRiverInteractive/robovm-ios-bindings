@@ -2,7 +2,7 @@
 package org.robovm.bindings.admob;
 
 import org.robovm.apple.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSObjectProtocol;
+import org.robovm.apple.foundation.NSObjectProtocol;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;
 import org.robovm.rt.bro.annotation.Callback;

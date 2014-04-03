@@ -1,10 +1,10 @@
 
 package org.robovm.bindings.admob;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.uikit.UIImage;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIWindow;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.uikit.UIImage;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;

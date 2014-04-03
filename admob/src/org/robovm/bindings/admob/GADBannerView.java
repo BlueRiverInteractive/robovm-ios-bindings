@@ -2,21 +2,35 @@
 package org.robovm.bindings.admob;
 
 import org.robovm.apple.coregraphics.CGPoint;
+import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIView;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
+import org.robovm.rt.bro.annotation.ByVal;
 import org.robovm.rt.bro.annotation.Pointer;
 
 /** The view that displays banner ads. A minimum implementation to get an ad from within a UIViewController class is:
  * 
- * // Create and setup the ad view, specifying the size and origin at {0, 0}. GADBannerView *adView = [[GADBannerView alloc]
- * initWithAdSize:kGADAdSizeBanner]; adView.rootViewController = self; adView.adUnitID = @"ID created when registering my app";
+ * Create and setup the ad view, specifying the size and origin at {0, 0}.
  * 
- * // Place the ad view onto the screen. [self.view addSubview:adView]; [adView release];
+ * <pre>
+ * GADBannerView adView = new GADBannerView(GADAdSizeManager.banner());
+ * adView.setRootViewController(this);
+ * adView.setAdUnitID(&quot;ID created when registering my app&quot;);
+ * </pre>
  * 
- * // Request an ad without any additional targeting information. [adView loadRequest:nil]; */
+ * Place the ad view onto the screen.
+ * 
+ * <pre>
+ * this.addSubview(adView);
+ * </pre>
+ * 
+ * Request an ad without any additional targeting information.
+ * 
+ * <pre>
+ * adView.loadRequest(null);
+ * </pre> */
 @NativeClass
 public class GADBannerView extends UIView {
 
@@ -39,11 +53,11 @@ public class GADBannerView extends UIView {
 
 	@Method(selector = "initWithAdSize:")
 	private native @Pointer
-	long init (GADAdSize size);
+	long init (@ByVal GADAdSize size);
 
 	@Method(selector = "initWithAdSize:origin:")
 	private native @Pointer
-	long init (GADAdSize size, CGPoint origin);
+	long init (@ByVal GADAdSize size, @ByVal CGPoint origin);
 
 	@Property
 	public native String getAdUnitID ();
@@ -66,7 +80,8 @@ public class GADBannerView extends UIView {
 	public native void setRootViewController (UIViewController viewController);
 
 	@Property
-	public native GADAdSize getAdSize ();
+	public native @ByVal
+	GADAdSize getAdSize ();
 
 	/** Required to set this banner view to a proper size. Never create your own GADAdSize directly. Use one of the predefined
 	 * standard ad sizes (such as kGADAdSizeBanner), or create one using the GADAdSizeFromCGSize method. If not using mediation,
@@ -74,7 +89,7 @@ public class GADBannerView extends UIView {
 	 * using mediation, then a new request may not be sent.
 	 * @param adSize */
 	@Property(strongRef = true)
-	public native void setAdSize (GADAdSize adSize);
+	public native void setAdSize (@ByVal GADAdSize adSize);
 
 	@Property
 	public native GADBannerViewDelegate getDelegate ();
