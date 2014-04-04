@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.openkit;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSURL;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSURL;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 

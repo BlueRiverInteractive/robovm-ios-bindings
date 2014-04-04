@@ -1,7 +1,8 @@
 
 package org.robovm.bindings.openkit;
 
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Pointer;
@@ -21,5 +22,5 @@ public class OKLoginView extends NSObject {
 	public native void setSuccessDialogText (String title, String description);
 
 	@Method(selector = "showWithCompletionHandler:")
-	public native void show (/* @Block */OKLoginViewCompletionHandler handler);
+	public native void show (@Block OKLoginViewCompletionHandler handler);
 }
