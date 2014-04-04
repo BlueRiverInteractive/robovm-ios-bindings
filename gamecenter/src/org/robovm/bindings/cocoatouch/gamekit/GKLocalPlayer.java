@@ -5,11 +5,12 @@ import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
 import org.robovm.bindings.cocoatouch.blocks.VoidUIViewControllerNSErrorBlock;
 import org.robovm.cocoatouch.foundation.NSArray;
 import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.Library;
@@ -82,18 +83,6 @@ public class GKLocalPlayer extends NSObject {
 		}
 	}
 
-	// @property(nonatomic, copy) void(^authenticateHandler)(UIViewController *viewController, NSError *error)
-// __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_6_0);
-	private static final Selector setAuthenticateHandler = Selector.register("setAuthenticateHandler:");
-
-	@Bridge
-	private native static void objc_setAuthenticateHandler (GKLocalPlayer __self__, Selector __cmd__,
-		ObjCBlock authenticateHandlerBlock);
-
-	@Bridge
-	private native static void objc_setAuthenticateHandlerSuper (ObjCSuper __super__, Selector __cmd__,
-		ObjCBlock authenticateHandlerBlock);
-
 	/** The authenticate handler will be called whenever the authentication process finishes or needs to show UI. The handler may be
 	 * called multiple times. Authentication will happen automatically when the handler is first set and whenever the app returns
 	 * to the foreground. If the authentication process needs to display UI the viewController property will be non-nil. Your
@@ -101,15 +90,8 @@ public class GKLocalPlayer extends NSObject {
 	 * controller will be dismissed automatically. Possible reasons for error: 1. Communications problem 2. User credentials
 	 * invalid 3. User cancelled
 	 * @param authenticateHandlerBlock */
-	public void setAuthenticateHandler (VoidUIViewControllerNSErrorBlock authenticateHandlerBlock) {
-		if (customClass) {
-			objc_setAuthenticateHandlerSuper(getSuper(), setAuthenticateHandler,
-				VoidUIViewControllerNSErrorBlock.Marshaler.toObjCBlock(authenticateHandlerBlock));
-		} else {
-			objc_setAuthenticateHandler(this, setAuthenticateHandler,
-				VoidUIViewControllerNSErrorBlock.Marshaler.toObjCBlock(authenticateHandlerBlock));
-		}
-	}
+	@Method(selector = "setAuthenticateHandler:")
+	public native void setAuthenticateHandler (@Block VoidUIViewControllerNSErrorBlock authenticateHandlerBlock);
 
 	// @property(nonatomic, readonly, retain) NSArray *friends;
 	private static final Selector friends = Selector.register("friends");
@@ -134,30 +116,11 @@ public class GKLocalPlayer extends NSObject {
 		}
 	}
 
-	// - (void)authenticateWithCompletionHandler:(void(^)(NSError *error))completionHandler
-// __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_8, __MAC_10_8, __IPHONE_4_1, __IPHONE_6_0);
-	private static final Selector authenticateWithCompletionHandler = Selector.register("authenticateWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_authenticateWithCompletionHandler (GKLocalPlayer __self__, Selector __cmd__,
-		ObjCBlock completionHandler);
-
-	@Bridge
-	private native static void objc_authenticateWithCompletionHandlerSuper (ObjCSuper __super__, Selector __cmd__,
-		ObjCBlock completionHandler);
-
 	/** Deprecated, set the authenticateHandler instead. Authentication happens automatically when the handler is set and when the
 	 * app returns to foreground.
 	 * @param completionHandler */
 	@Deprecated
-	public void authenticateWithCompletionHandler (VoidNSErrorBlock completionHandler) {
-		if (customClass) {
-			objc_authenticateWithCompletionHandlerSuper(getSuper(), authenticateWithCompletionHandler,
-				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		} else {
-			objc_authenticateWithCompletionHandler(this, authenticateWithCompletionHandler,
-				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		}
-	}
+	@Method(selector = "authenticateWithCompletionHandler:")
+	public native void authenticateWithCompletionHandler (@Block VoidNSErrorBlock completionHandler);
 
 }

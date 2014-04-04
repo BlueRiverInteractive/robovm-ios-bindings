@@ -3,6 +3,13 @@ package org.robovm.bindings.gamecenter;
 
 import java.util.ArrayList;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.uikit.UIDevice;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSArrayNSErrorBlock;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSErrorBlock;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
@@ -19,13 +26,6 @@ import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboardViewController;
 import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboardViewControllerDelegate;
 import org.robovm.bindings.cocoatouch.gamekit.GKLocalPlayer;
 import org.robovm.bindings.cocoatouch.gamekit.GKScore;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.uikit.UIDevice;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIWindow;
 
 @SuppressWarnings("deprecation")
 public class GameCenterManager {

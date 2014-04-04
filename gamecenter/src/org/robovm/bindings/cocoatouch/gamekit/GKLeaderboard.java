@@ -1,17 +1,18 @@
 
 package org.robovm.bindings.cocoatouch.gamekit;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSRange;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSArrayNSErrorBlock;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSErrorBlock;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSRange;
-import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.Library;
@@ -379,78 +380,29 @@ public class GKLeaderboard extends NSObject {
 		}
 	}
 
-	// - (void)loadScoresWithCompletionHandler:(void(^)(NSArray *scores, NSError *error))completionHandler;
-	private static final Selector loadScoresWithCompletionHandler = Selector.register("loadScoresWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_loadScoresWithCompletionHandler (GKLeaderboard __self__, Selector __cmd__,
-		ObjCBlock completionHandler);
-
-	@Bridge
-	private native static void objc_loadScoresWithCompletionHandlerSuper (ObjCSuper __super__, Selector __cmd__,
-		ObjCBlock completionHandler);
-
 	/** Load the scores for this leader board asynchronously. Error will be nil on success. Possible reasons for error: 1.
 	 * Communications problem 2. Unauthenticated player
 	 * @return */
-	public void loadScores (VoidNSArrayNSErrorBlock completionHandler) {
-		if (customClass) {
-			objc_loadScoresWithCompletionHandlerSuper(getSuper(), loadScoresWithCompletionHandler,
-				VoidNSArrayNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		} else {
-			objc_loadScoresWithCompletionHandler(this, loadScoresWithCompletionHandler,
-				VoidNSArrayNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		}
-	}
-
-	// + (void)loadCategoriesWithCompletionHandler:(void(^)(NSArray *categories, NSArray *titles, NSError *error))completionHandler
-// __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_8, __MAC_NA, __IPHONE_4_1, __IPHONE_6_0);
-	private static final Selector loadCategoriesWithCompletionHandler = Selector.register("loadCategoriesWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_loadCategories (ObjCClass __self__, Selector __cmd__, ObjCBlock completionHandler);
+	@Method(selector = "loadScoresWithCompletionHandler:")
+	public native void loadScores (@Block VoidNSArrayNSErrorBlock completionHandler);
 
 	/** Loads parallel arrays that maps categories to their title strings Possible reasons for error: 1. Communications problem 2.
 	 * Unauthenticated player 3. Leaderboard not present
 	 * @param completionHandler */
 	@Deprecated
-	public static void loadCategories (VoidNSArrayNSArrayNSErrorBlock completionHandler) {
-		objc_loadCategories(objCClass, loadCategoriesWithCompletionHandler,
-			VoidNSArrayNSArrayNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-	}
-
-	// + (void)loadLeaderboardsWithCompletionHandler:(void(^)(NSArray *leaderboards, NSError *error))completionHandler
-// __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_6_0);
-	private static final Selector loadLeaderboardsWithCompletionHandler = Selector
-		.register("loadLeaderboardsWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_loadLeaderboards (ObjCClass __self__, Selector __cmd__, ObjCBlock completionHandler);
+	@Method(selector = "loadCategoriesWithCompletionHandler:")
+	public static native void loadCategories (@Block VoidNSArrayNSArrayNSErrorBlock completionHandler);
 
 	/** @param completionHandler */
-	public static void loadLeaderboards (VoidNSArrayNSErrorBlock completionHandler) {
-		objc_loadLeaderboards(objCClass, loadLeaderboardsWithCompletionHandler,
-			VoidNSArrayNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-	}
-
-	// + (void)setDefaultLeaderboard:(NSString *)leaderboardIdentifier withCompletionHandler:(void(^)(NSError
-// *error))completionHandler
-// __OSX_AVAILABLE_BUT_DEPRECATED_MSG(__MAC_10_8,__MAC_NA,__IPHONE_5_0,__IPHONE_7_0,"Use setDefaultLeaderboardIdentifier:completionHandler: on GKLocalPlayer instead");
-	private static final Selector setDefaultLeaderboard$withCompletionHandler = Selector
-		.register("setDefaultLeaderboard:withCompletionHandler:");
-
-	@Bridge
-	private native static void objc_setDefaultLeaderboard (ObjCClass __self__, Selector __cmd__, String leaderboardIdentifier,
-		ObjCBlock completionHandler);
+	@Method(selector = "loadLeaderboardsWithCompletionHandler:")
+	public static native void loadLeaderboards (@Block VoidNSArrayNSErrorBlock completionHandler);
 
 	/** Set the default leaderboard for the local player per game Possible reasons for error:d 1. Communications problem 2.
 	 * Unauthenticated player 3. Leaderboard not present Deprecated: Use setDefaultLeaderboardIdentifier:completionHandler: on
 	 * GKLocalPlayer instead
 	 * @param completionHandler */
 	@Deprecated
-	public static void setDefaultLeaderboard (String leaderboardIdentifier, VoidNSErrorBlock completionHandler) {
-		objc_setDefaultLeaderboard(objCClass, setDefaultLeaderboard$withCompletionHandler, leaderboardIdentifier,
-			VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-	}
+	@Method(selector = "setDefaultLeaderboard:withCompletionHandler:")
+	public static native void setDefaultLeaderboard (String leaderboardIdentifier, @Block VoidNSErrorBlock completionHandler);
 
 }

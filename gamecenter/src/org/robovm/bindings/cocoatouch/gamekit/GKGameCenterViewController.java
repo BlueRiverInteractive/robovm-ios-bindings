@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.cocoatouch.gamekit;
 
-import org.robovm.cocoatouch.uikit.UINavigationController;
+import org.robovm.apple.uikit.UINavigationController;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCObject;
 import org.robovm.objc.ObjCRuntime;

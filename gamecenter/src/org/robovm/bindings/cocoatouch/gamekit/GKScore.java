@@ -1,16 +1,17 @@
 
 package org.robovm.bindings.cocoatouch.gamekit;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSDate;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.uikit.UIDevice;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSDate;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.uikit.UIDevice;
-import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.Library;
@@ -350,45 +351,18 @@ public class GKScore extends NSObject {
 		}
 	}
 
-	// + (void)reportScores:(NSArray *)scores withCompletionHandler:(void(^)(NSError *error))completionHandler
-// __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_6_0);
-	private static final Selector reportScores$withCompletionHandler = Selector.register("reportScores:withCompletionHandler:");
-
-	@SuppressWarnings("rawtypes")
-	@Bridge
-	private native static void objc_reportScores (ObjCClass __self__, Selector __cmd__, NSArray scores, ObjCBlock completionHandler);
-
 	/** Report this score to the server. The value must be set, and date may be changed. Possible reasons for error: 1. Value not
 	 * set 2. Local player not authenticated 3. Communications problem
 	 * @return */
-	@SuppressWarnings("rawtypes")
-	public static void reportScores (NSArray scores, VoidNSErrorBlock completionHandler) {
-		objc_reportScores(objCClass, reportScores$withCompletionHandler, scores,
-			VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-	}
-
-	// - (void)reportScoreWithCompletionHandler:(void(^)(NSError *error))completionHandler
-// __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_8,__MAC_NA,__IPHONE_4_1,__IPHONE_7_0);
-	private static final Selector reportScoreWithCompletionHandler = Selector.register("reportScoreWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_reportScore (GKScore __self__, Selector __cmd__, ObjCBlock completionHandler);
-
-	@Bridge
-	private native static void objc_reportScoreSuper (ObjCSuper __super__, Selector __cmd__, ObjCBlock completionHandler);
+	@Method(selector = "reportScores:withCompletionHandler:")
+	public static native void reportScores (NSArray<?> scores, @Block VoidNSErrorBlock completionHandler);
 
 	/** Setter - Convenience property to make the leaderboard associated with this GKScore, the default leaderboard for this player.
 	 * Default value is false. If true, reporting that score will make the category this score belongs to, the default leaderboard
 	 * for this user
 	 * @return */
 	@Deprecated
-	public void reportScore (VoidNSErrorBlock completionHandler) {
-		if (customClass) {
-			objc_reportScoreSuper(getSuper(), reportScoreWithCompletionHandler,
-				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		} else {
-			objc_reportScore(this, reportScoreWithCompletionHandler, VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		}
-	}
+	@Method(selector = "reportScoreWithCompletionHandler:")
+	public native void reportScore (@Block VoidNSErrorBlock completionHandler);
 
 }

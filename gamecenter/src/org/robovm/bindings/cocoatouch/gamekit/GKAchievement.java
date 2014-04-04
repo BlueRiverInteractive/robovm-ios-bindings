@@ -1,16 +1,16 @@
 
 package org.robovm.bindings.cocoatouch.gamekit;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSDate;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSErrorBlock;
 import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSDate;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.ObjCSuper;
 import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.Library;
@@ -19,10 +19,6 @@ import org.robovm.rt.bro.annotation.Library;
 @NativeClass
 public class GKAchievement extends NSObject {
 	private static final ObjCClass objCClass = ObjCClass.getByType(GKAchievement.class);
-
-	static {
-		ObjCRuntime.bind(GKAchievement.class);
-	}
 
 	// - (id)initWithIdentifier:(NSString *)identifier;
 	private static final Selector initWithIdentifier = Selector.register("initWithIdentifier:");
@@ -182,42 +178,14 @@ public class GKAchievement extends NSObject {
 		}
 	}
 
-	// - (void)reportAchievementWithCompletionHandler:(void(^)(NSError *error))completionHandler
-// __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_10_8,__MAC_NA,__IPHONE_4_1,__IPHONE_7_0);
-	private static final Selector reportAchievementWithCompletionHandler = Selector
-		.register("reportAchievementWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_reportAchievement (GKAchievement __self__, Selector __cmd__, ObjCBlock completionHandler);
-
-	@Bridge
-	private native static void objc_reportAchievementSuper (ObjCSuper __super__, Selector __cmd__, ObjCBlock completionHandler);
-
 	/** Report this achievement to the server. Percent complete is required. Points, completed state are set based on
 	 * percentComplete. isHidden is set to NO anytime this method is invoqued. Date is optional. Error will be nil on success.
 	 * Possible reasons for error: 1. Local player not authenticated 2. Communications failure 3. Reported Achievement does not
 	 * exist
 	 * @param completionHandler */
 	@Deprecated
-	public void reportAchievement (VoidNSErrorBlock completionHandler) {
-		if (customClass) {
-			objc_reportAchievementSuper(getSuper(), reportAchievementWithCompletionHandler,
-				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		} else {
-			objc_reportAchievement(this, reportAchievementWithCompletionHandler,
-				VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-		}
-	}
-
-	// + (void)reportAchievements:(NSArray *)achievements withCompletionHandler:(void(^)(NSError *error))completionHandler
-// __OSX_AVAILABLE_STARTING(__MAC_10_8,__IPHONE_6_0);
-	private static final Selector reportAchievements$withCompletionHandler = Selector
-		.register("reportAchievements:withCompletionHandler:");
-
-	@SuppressWarnings("rawtypes")
-	@Bridge
-	private native static void objc_reportAchievements (ObjCClass __self__, Selector __cmd__, NSArray achievements,
-		ObjCBlock completionHandler);
+	@Method(selector = "reportAchievementWithCompletionHandler:")
+	public native void reportAchievement (@Block VoidNSErrorBlock completionHandler);
 
 	/** Report an array of achievements to the server. Percent complete is required. Points, completed state are set based on
 	 * percentComplete. isHidden is set to NO anytime this method is invoked. Date is optional. Error will be nil on success.
@@ -225,39 +193,18 @@ public class GKAchievement extends NSObject {
 	 * exist
 	 * @param achievements
 	 * @param completionHandler */
-	@SuppressWarnings("rawtypes")
-	public static void reportAchievements (NSArray achievements, VoidNSErrorBlock completionHandler) {
-		objc_reportAchievements(objCClass, reportAchievements$withCompletionHandler, achievements,
-			VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-	}
-
-	// + (void)loadAchievementsWithCompletionHandler:(void(^)(NSArray *achievements, NSError *error))completionHandler;
-	private static final Selector loadAchievementsWithCompletionHandler = Selector
-		.register("loadAchievementsWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_loadAchievements (ObjCClass __self__, Selector __cmd__, ObjCBlock completionHandler);
+	@Method(selector = "reportAchievements:withCompletionHandler:")
+	public static native void reportAchievements (NSArray<?> achievements, @Block VoidNSErrorBlock completionHandler);
 
 	/** Asynchronously load all achievements for the local player
 	 * @param completionHandler */
-	public static void loadAchievements (VoidNSArrayNSErrorBlock completionHandler) {
-		objc_loadAchievements(objCClass, loadAchievementsWithCompletionHandler,
-			VoidNSArrayNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-	}
-
-	// + (void)resetAchievementsWithCompletionHandler:(void(^)(NSError *error))completionHandler;
-	private static final Selector resetAchievementsWithCompletionHandler = Selector
-		.register("resetAchievementsWithCompletionHandler:");
-
-	@Bridge
-	private native static void objc_resetAchievements (ObjCClass __self__, Selector __cmd__, ObjCBlock completionHandler);
+	@Method(selector = "loadAchievementsWithCompletionHandler:")
+	public static native void loadAchievements (@Block VoidNSArrayNSErrorBlock completionHandler);
 
 	/** Reset the achievements progress for the local player. All the entries for the local player are removed from the server.
 	 * Error will be nil on success. Possible reasons for error: 1. Local player not authenticated 2. Communications failure
 	 * @param completionHandler */
-	public static void resetAchievements (VoidNSErrorBlock completionHandler) {
-		objc_resetAchievements(objCClass, resetAchievementsWithCompletionHandler,
-			VoidNSErrorBlock.Marshaler.toObjCBlock(completionHandler));
-	}
+	@Method(selector = "resetAchievementsWithCompletionHandler:")
+	public static native void resetAchievements (@Block VoidNSErrorBlock completionHandler);
 
 }
