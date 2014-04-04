@@ -1,19 +1,21 @@
 
-package org.robovm.bindings.inapppurchase;
+package org.robovm.bindings.inapppurchase.sample;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.storekit.SKPaymentTransaction;
-import org.robovm.cocoatouch.storekit.SKProduct;
-import org.robovm.cocoatouch.storekit.SKRequest;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
+import org.robovm.apple.storekit.SKPaymentTransaction;
+import org.robovm.apple.storekit.SKProduct;
+import org.robovm.apple.storekit.SKRequest;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.bindings.inapppurchase.InAppPurchaseListener;
+import org.robovm.bindings.inapppurchase.InAppPurchaseManager;
 
 /** Sample usage of the InAppPurchaseManager class. */
-public class Sample extends UIApplicationDelegate.Adapter {
+public class Sample extends UIApplicationDelegateAdapter {
 	private InAppPurchaseManager iapManager;
 	private Map<String, SKProduct> appStoreProducts;
 
@@ -77,8 +79,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }

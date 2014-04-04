@@ -1,5 +1,5 @@
 
-package org.robovm.cocoatouch.storekit;
+package org.robovm.apple.storekit;
 
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.ObjCRuntime;

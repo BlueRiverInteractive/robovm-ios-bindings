@@ -9,14 +9,14 @@ import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSSet;
 import org.robovm.apple.foundation.NSString;
-import org.robovm.cocoatouch.storekit.SKPayment;
-import org.robovm.cocoatouch.storekit.SKPaymentQueue;
-import org.robovm.cocoatouch.storekit.SKPaymentTransaction;
-import org.robovm.cocoatouch.storekit.SKProduct;
-import org.robovm.cocoatouch.storekit.SKProductsRequest;
-import org.robovm.cocoatouch.storekit.SKProductsRequestDelegate;
-import org.robovm.cocoatouch.storekit.SKProductsResponse;
-import org.robovm.cocoatouch.storekit.SKRequest;
+import org.robovm.apple.storekit.SKPayment;
+import org.robovm.apple.storekit.SKPaymentQueue;
+import org.robovm.apple.storekit.SKPaymentTransaction;
+import org.robovm.apple.storekit.SKProduct;
+import org.robovm.apple.storekit.SKProductsRequest;
+import org.robovm.apple.storekit.SKProductsRequestDelegate;
+import org.robovm.apple.storekit.SKProductsResponse;
+import org.robovm.apple.storekit.SKRequest;
 
 /** An easy to use in-app purchase system for iOS. */
 public class InAppPurchaseManager {

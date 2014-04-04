@@ -1,5 +1,5 @@
 
-package org.robovm.cocoatouch.storekit;
+package org.robovm.apple.storekit;
 
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.BindSelector;

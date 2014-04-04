@@ -2,9 +2,9 @@
 package org.robovm.bindings.inapppurchase;
 
 import org.robovm.apple.foundation.NSError;
-import org.robovm.cocoatouch.storekit.SKPaymentTransaction;
-import org.robovm.cocoatouch.storekit.SKProduct;
-import org.robovm.cocoatouch.storekit.SKRequest;
+import org.robovm.apple.storekit.SKPaymentTransaction;
+import org.robovm.apple.storekit.SKProduct;
+import org.robovm.apple.storekit.SKRequest;
 
 /** Listener for common in-app purchase events. */
 public interface InAppPurchaseListener {
