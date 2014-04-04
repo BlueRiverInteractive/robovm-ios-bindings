@@ -1,28 +1,28 @@
 
 package org.robovm.bindings.playservices;
 
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSURL;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UIView;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.gpgs.GPGToastPlacement;
 import org.robovm.bindings.gpp.GPPURLHandler;
 import org.robovm.bindings.playservices.PlayServicesManager.LoginCallback;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSURL;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
-import org.robovm.cocoatouch.uikit.UIScreen;
-import org.robovm.cocoatouch.uikit.UIView;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIWindow;
 
-public class Sample extends UIApplicationDelegate.Adapter {
+public class Sample extends UIApplicationDelegateAdapter {
 
 	private PlayServicesManager gpgManager;
 	private UIWindow window;
 	private UIViewController viewController;
 	private UIView view;
 
-	private LoginCallback loginCallback = new LoginCallback() {
+	private final LoginCallback loginCallback = new LoginCallback() {
 		@Override
 		public void success () {
 			// load savegame from the cloud, load achievement list etc...
@@ -85,8 +85,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }

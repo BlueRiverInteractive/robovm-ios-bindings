@@ -3,6 +3,13 @@ package org.robovm.bindings.playservices;
 
 import java.util.ArrayList;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSData;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.foundation.NSURL;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.bindings.gpgs.GPGAchievement;
 import org.robovm.bindings.gpgs.GPGAchievementController;
 import org.robovm.bindings.gpgs.GPGAchievementControllerDelegate;
@@ -36,13 +43,6 @@ import org.robovm.bindings.gpp.GPPShare;
 import org.robovm.bindings.gpp.GPPSignIn;
 import org.robovm.bindings.gpp.GPPSignInDelegate;
 import org.robovm.bindings.gt.GTMOAuth2Authentication;
-import org.robovm.bindings.other.NSData;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.foundation.NSURL;
-import org.robovm.cocoatouch.uikit.UIViewController;
 import org.robovm.objc.ObjCClass;
 
 /** Manager that handles the most common usage of Google Play Game Services.
@@ -74,7 +74,7 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	// options
 	private boolean fetchName = false;
 	private boolean fetchEmail = false;
-	private boolean fetchId = true;
+	private final boolean fetchId = true;
 
 	// used to fix a RoboVM bug with NSArray
 	static {
@@ -95,7 +95,7 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 		public void invoke (ArrayList<GPGScore> scores);
 	};
 
-	private GPGLeaderboardLoadScoresBlock loadScoresBlock = new GPGLeaderboardLoadScoresBlock() {
+	private final GPGLeaderboardLoadScoresBlock loadScoresBlock = new GPGLeaderboardLoadScoresBlock() {
 		@Override
 		public void invoke (NSArray<GPGScore> scores, NSError error) {
 			if (error != null) {

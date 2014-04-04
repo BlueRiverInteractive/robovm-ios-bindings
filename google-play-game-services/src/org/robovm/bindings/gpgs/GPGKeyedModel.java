@@ -1,9 +1,9 @@
 
 package org.robovm.bindings.gpgs;
 
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;

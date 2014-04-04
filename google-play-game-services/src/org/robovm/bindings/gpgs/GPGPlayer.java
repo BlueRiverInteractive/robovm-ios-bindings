@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.gpgs;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSURL;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSURL;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;

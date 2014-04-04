@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.gpgs;
 
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.bindings.gpp.GPPSignIn;
-import org.robovm.cocoatouch.foundation.NSObject;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;

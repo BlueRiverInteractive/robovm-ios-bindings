@@ -1,16 +1,14 @@
 
 package org.robovm.bindings.gpgs;
 
-import org.robovm.cocoatouch.uikit.UINavigationController;
+import org.robovm.apple.uikit.UINavigationController;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
-@NativeClass()
+@NativeClass
 public class GPGAchievementController extends UINavigationController {
 	private static final ObjCClass objCClass = ObjCClass.getByType(GPGAchievementController.class);
 

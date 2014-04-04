@@ -1,14 +1,13 @@
 
 package org.robovm.bindings.gpgs;
 
-import org.robovm.bindings.other.NSData;
-import org.robovm.cocoatouch.foundation.NSNumber;
+import org.robovm.apple.foundation.NSData;
+import org.robovm.apple.foundation.NSNumber;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCBlock.Wrapper;
 import org.robovm.rt.bro.annotation.Callback;
 
 public interface GPGAppStateConflictHandler {
-
 	NSData invoke (NSNumber key, NSData localState, NSData remoteState);
 
 	static class Callbacks {

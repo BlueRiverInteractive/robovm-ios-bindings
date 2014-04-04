@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.gpgs;
 
-import org.robovm.cocoatouch.foundation.NSError;
+import org.robovm.apple.foundation.NSError;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCBlock.Wrapper;
 import org.robovm.rt.bro.annotation.Callback;

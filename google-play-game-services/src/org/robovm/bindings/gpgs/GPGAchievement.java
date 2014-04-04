@@ -1,21 +1,19 @@
 
 package org.robovm.bindings.gpgs;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.objc.ObjCBlock;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
 /** An object that represents the completion of a task or goal. Achievement objects must be created with an achievement ID. Once an
  * achievement object is created, you may interact with it using the provided set of actions.
  * @author Michael Hadash */
-@Library(Library.INTERNAL)
-@NativeClass()
+@NativeClass
 public class GPGAchievement extends NSObject {
 	private static final ObjCClass objCClass = ObjCClass.getByType(GPGAchievement.class);
 

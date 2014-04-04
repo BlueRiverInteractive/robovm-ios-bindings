@@ -5,6 +5,28 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.robovm.apple.coregraphics.CGRect;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSData;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSNumber;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.foundation.NSURL;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.apple.uikit.UIButton;
+import org.robovm.apple.uikit.UIColor;
+import org.robovm.apple.uikit.UIControl;
+import org.robovm.apple.uikit.UIControl.OnTouchUpInsideListener;
+import org.robovm.apple.uikit.UIControlState;
+import org.robovm.apple.uikit.UIEvent;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UITextView;
+import org.robovm.apple.uikit.UIView;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.gpgs.GPGAchievement;
 import org.robovm.bindings.gpgs.GPGAchievementController;
 import org.robovm.bindings.gpgs.GPGAchievementControllerDelegate;
@@ -37,32 +59,10 @@ import org.robovm.bindings.gpp.GPPSignIn;
 import org.robovm.bindings.gpp.GPPSignInDelegate;
 import org.robovm.bindings.gpp.GPPURLHandler;
 import org.robovm.bindings.gt.GTMOAuth2Authentication;
-import org.robovm.bindings.other.NSData;
-import org.robovm.cocoatouch.coregraphics.CGRect;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.foundation.NSError;
-import org.robovm.cocoatouch.foundation.NSNumber;
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.foundation.NSURL;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
-import org.robovm.cocoatouch.uikit.UIButton;
-import org.robovm.cocoatouch.uikit.UIColor;
-import org.robovm.cocoatouch.uikit.UIControl;
-import org.robovm.cocoatouch.uikit.UIControl.OnTouchUpInsideListener;
-import org.robovm.cocoatouch.uikit.UIControlState;
-import org.robovm.cocoatouch.uikit.UIEvent;
-import org.robovm.cocoatouch.uikit.UIScreen;
-import org.robovm.cocoatouch.uikit.UITextView;
-import org.robovm.cocoatouch.uikit.UIView;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIWindow;
 
 /** Sample implementation of Google Play Game Services.
  * @author Michael Hadash */
-public class Sample extends UIApplicationDelegate.Adapter implements GPPSignInDelegate, GPGAchievementControllerDelegate,
+public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDelegate, GPGAchievementControllerDelegate,
 	GPGLeaderboardControllerDelegate, GPGLeaderboardsControllerDelegate {
 
 	// identifiers
@@ -105,8 +105,8 @@ public class Sample extends UIApplicationDelegate.Adapter implements GPPSignInDe
 
 		// create text view
 		tv = new UITextView(new CGRect(10, 10, 200, 30));
-		tv.setBackgroundColor(UIColor.whiteColor());
-		tv.setTextColor(UIColor.blackColor());
+		tv.setBackgroundColor(UIColor.colorWhite());
+		tv.setTextColor(UIColor.colorBlack());
 		tv.setText("not authenticated.");
 
 		final Sample cThis = this;
@@ -595,7 +595,7 @@ public class Sample extends UIApplicationDelegate.Adapter implements GPPSignInDe
 		// add the data that you wish to save
 		ByteBuffer b = ByteBuffer.allocate(5);
 		b.put(new byte[] {1, 2, 3, 4, 5});
-		NSData newAvatarData = NSData.createFromByteBuffer(b);// add data that you wist to upload.
+		NSData newAvatarData = new NSData(b);// add data that you wist to upload.
 		// (NOTE: NSData is not implemented by robovm, so you can't actually add data until it is implemented.)
 		model.setStateData(newAvatarData, playerAvatarKey);
 
@@ -667,7 +667,7 @@ public class Sample extends UIApplicationDelegate.Adapter implements GPPSignInDe
 				case GPGAppStateLoadStatusSuccess:
 					System.out.println("cloud load succeeded");
 					NSData savegame = model.stateDataForKey(playerAvatarKey);
-					ByteBuffer savegameBB = savegame.getBytes();
+					ByteBuffer savegameBB = savegame.asByteBuffer();
 					System.out.print("Received savegame: ");
 					for (int i = 0; i < savegameBB.capacity(); i++) {
 						System.out.print(savegameBB.get(i) + ((i == savegameBB.capacity() - 1) ? "" : ", "));
@@ -692,9 +692,9 @@ public class Sample extends UIApplicationDelegate.Adapter implements GPPSignInDe
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 
 	// copy-paste this to your app delegate.

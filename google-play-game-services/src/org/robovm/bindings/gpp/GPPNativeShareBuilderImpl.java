@@ -1,10 +1,10 @@
 
 package org.robovm.bindings.gpp;
 
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSData;
-import org.robovm.cocoatouch.foundation.NSURL;
-import org.robovm.cocoatouch.uikit.UIImage;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSData;
+import org.robovm.apple.foundation.NSURL;
+import org.robovm.apple.uikit.UIImage;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.rt.bro.annotation.Bridge;
