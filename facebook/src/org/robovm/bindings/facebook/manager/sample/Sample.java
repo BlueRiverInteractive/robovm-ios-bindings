@@ -225,7 +225,7 @@ public class Sample extends UIApplicationDelegateAdapter {
 // });
 
 		UIView view = new UIView(UIScreen.getMainScreen().getApplicationFrame());
-		view.setBackgroundColor(UIColor.lightGrayColor());
+		view.setBackgroundColor(UIColor.colorLightGray());
 		view.addSubview(loginButton);
 		view.addSubview(publishButton);
 // view.addSubview(boton3);

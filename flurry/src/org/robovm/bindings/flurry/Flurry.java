@@ -1,10 +1,10 @@
 
 package org.robovm.bindings.flurry;
 
+import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSException;
 import org.robovm.apple.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSDictionary;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 

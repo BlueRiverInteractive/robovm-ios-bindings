@@ -15,7 +15,7 @@ public class LoadingOverlay extends UIView {
 	private final UILabel loadingLabel;
 
 	public LoadingOverlay (CGRect frame, String caption) {
-		setBackgroundColor(UIColor.blackColor());
+		setBackgroundColor(UIColor.colorBlack());
 		setAlpha(0.75f);
 		setUserInteractionEnabled(true);
 		setExclusiveTouch(true);
@@ -35,21 +35,21 @@ public class LoadingOverlay extends UIView {
 			- activitySpinner.getFrame().size().height() - 20, activitySpinner.getFrame().size().width(), activitySpinner.getFrame()
 			.size().height()));
 
-		addSubview$(activitySpinner);
+		addSubview(activitySpinner);
 		activitySpinner.startAnimating();
 
 		loadingLabel = new UILabel();
 		loadingLabel.setFrame(new CGRect(centerX - (labelWidth / 2), centerY + 20, labelWidth, labelHeight));
-		loadingLabel.setBackgroundColor(UIColor.clearColor());
-		loadingLabel.setTextColor(UIColor.whiteColor());
+		loadingLabel.setBackgroundColor(UIColor.colorClear());
+		loadingLabel.setTextColor(UIColor.colorWhite());
 		loadingLabel.setText(caption);
 		loadingLabel.setTextAlignment(NSTextAlignment.Center);
-		addSubview$(loadingLabel);
+		addSubview(loadingLabel);
 	}
 
 	public void show (UIViewController viewController) {
 		setAlpha(0.75f);
-		viewController.getView().addSubview$(this);
+		viewController.getView().addSubview(this);
 	}
 
 	public void hide () {

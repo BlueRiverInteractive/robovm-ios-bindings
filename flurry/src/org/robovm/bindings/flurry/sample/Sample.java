@@ -3,17 +3,18 @@ package org.robovm.bindings.flurry.sample;
 
 import java.util.HashMap;
 
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
 import org.robovm.bindings.flurry.Flurry;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
 
 /** Basic usage of the Flurry Analytics SDK. */
-public class Sample extends UIApplicationDelegate.Adapter {
-	@SuppressWarnings({"unchecked", "rawtypes"})
+public class Sample extends UIApplicationDelegateAdapter {
+
 	@Override
-	public boolean didFinishLaunching (UIApplication application, NSDictionary launchOptions) {
+	public boolean didFinishLaunching (UIApplication application, NSDictionary<NSString, ?> launchOptions) {
 		// First start the Flurry session.
 		Flurry.startSession("YOUR_API_KEY", launchOptions);
 
@@ -26,8 +27,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }
