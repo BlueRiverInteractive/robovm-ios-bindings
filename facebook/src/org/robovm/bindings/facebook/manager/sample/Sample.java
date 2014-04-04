@@ -178,62 +178,62 @@ public class Sample extends UIApplicationDelegateAdapter {
 				});
 			}
 		});
-		UIButton boton3 = new UIButton(new CGRect(10, 110, 200, 30));
-		boton3.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
-		boton3.setTitle("Load Achievements", UIControlState.Normal);
-		boton3.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-			}
-		});
-		UIButton boton4 = new UIButton(new CGRect(10, 160, 200, 30));
-		boton4.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
-		boton4.setTitle("Reset Achievements", UIControlState.Normal);
-		boton4.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-			}
-		});
-		UIButton boton5 = new UIButton(new CGRect(220, 10, 200, 30));
-		boton5.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
-		boton5.setTitle("Report Score", UIControlState.Normal);
-		boton5.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-			}
-		});
-		UIButton boton6 = new UIButton(new CGRect(220, 60, 200, 30));
-		boton6.setTitle("Load Leaderboards", UIControlState.Normal);
-		boton6.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-			}
-		});
-		UIButton boton7 = new UIButton(new CGRect(220, 110, 200, 30));
-		boton7.setTitle("Show Achievements", UIControlState.Normal);
-		boton7.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-			}
-		});
-		UIButton boton8 = new UIButton(new CGRect(220, 160, 200, 30));
-		boton8.setTitle("Show Leaderboards", UIControlState.Normal);
-		boton8.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-			}
-		});
+// UIButton boton3 = new UIButton(new CGRect(10, 110, 200, 30));
+// boton3.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
+// boton3.setTitle("Load Achievements", UIControlState.Normal);
+// boton3.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+// @Override
+// public void onTouchUpInside (UIControl control, UIEvent event) {
+// }
+// });
+// UIButton boton4 = new UIButton(new CGRect(10, 160, 200, 30));
+// boton4.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
+// boton4.setTitle("Reset Achievements", UIControlState.Normal);
+// boton4.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+// @Override
+// public void onTouchUpInside (UIControl control, UIEvent event) {
+// }
+// });
+// UIButton boton5 = new UIButton(new CGRect(220, 10, 200, 30));
+// boton5.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
+// boton5.setTitle("Report Score", UIControlState.Normal);
+// boton5.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+// @Override
+// public void onTouchUpInside (UIControl control, UIEvent event) {
+// }
+// });
+// UIButton boton6 = new UIButton(new CGRect(220, 60, 200, 30));
+// boton6.setTitle("Load Leaderboards", UIControlState.Normal);
+// boton6.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+// @Override
+// public void onTouchUpInside (UIControl control, UIEvent event) {
+// }
+// });
+// UIButton boton7 = new UIButton(new CGRect(220, 110, 200, 30));
+// boton7.setTitle("Show Achievements", UIControlState.Normal);
+// boton7.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+// @Override
+// public void onTouchUpInside (UIControl control, UIEvent event) {
+// }
+// });
+// UIButton boton8 = new UIButton(new CGRect(220, 160, 200, 30));
+// boton8.setTitle("Show Leaderboards", UIControlState.Normal);
+// boton8.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+// @Override
+// public void onTouchUpInside (UIControl control, UIEvent event) {
+// }
+// });
 
 		UIView view = new UIView(UIScreen.getMainScreen().getApplicationFrame());
 		view.setBackgroundColor(UIColor.lightGrayColor());
 		view.addSubview(loginButton);
 		view.addSubview(publishButton);
-		view.addSubview(boton3);
-		view.addSubview(boton4);
-		view.addSubview(boton5);
-		view.addSubview(boton6);
-		view.addSubview(boton7);
-		view.addSubview(boton8);
+// view.addSubview(boton3);
+// view.addSubview(boton4);
+// view.addSubview(boton5);
+// view.addSubview(boton6);
+// view.addSubview(boton7);
+// view.addSubview(boton8);
 		viewController.setView(view);
 
 		window.setRootViewController(viewController);
@@ -251,8 +251,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }

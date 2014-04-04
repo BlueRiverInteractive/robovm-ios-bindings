@@ -124,7 +124,7 @@ public class FBSession extends NSObject {
 		FBSessionTokenCachingStrategy tokenCacheStrategy);
 
 	/** @return Indicates whether the session is open and ready for use. */
-	@Property(selector = "isOpen")
+	@Property
 	public native boolean isOpen ();
 
 	/** @return Detailed session state. */
@@ -446,42 +446,44 @@ public class FBSession extends NSObject {
 	/** Builder class used to create a Session. */
 	public static final class Builder {
 		private String applicationId;
-		private FBSessionTokenCachingStrategy tokenCachingStrategy;
+		private NSArray<NSString> permissions;
 		private FBSessionDefaultAudience defaultAudience = FBSessionDefaultAudience.Friends;
+		private String urlSchemePrefix = "";
+		private FBSessionTokenCachingStrategy tokenCachingStrategy;
 
 		public Builder () {
 		}
 
-		/** Sets the application id for the Session.
-		 * 
-		 * @param applicationId the application id
-		 * @return the Builder instance */
-		public Builder setApplicationId (final String applicationId) {
+		public Builder setApplicationId (String applicationId) {
 			this.applicationId = applicationId;
 			return this;
 		}
 
-		/** Sets the TokenCachingStrategy for the Session.
-		 * 
-		 * @param tokenCachingStrategy the token cache to use
-		 * @return the Builder instance */
-		public Builder setTokenCachingStrategy (final FBSessionTokenCachingStrategy tokenCachingStrategy) {
-			this.tokenCachingStrategy = tokenCachingStrategy;
+		public Builder setPermissions (String... permissions) {
+			this.permissions = new NSArray<NSString>();
+			for (String permission : permissions) {
+				this.permissions.add(new NSString(permission));
+			}
 			return this;
 		}
 
-		public Builder setDefaultAudience (final FBSessionDefaultAudience defaultAudience) {
+		public Builder setDefaultAudience (FBSessionDefaultAudience defaultAudience) {
 			this.defaultAudience = defaultAudience;
 			return this;
 		}
 
-		// TODO permissions, urlschemeprefix
+		public Builder setURLSchemePrefix (String urlSchemePrefix) {
+			this.urlSchemePrefix = urlSchemePrefix;
+			return this;
+		}
 
-		/** Build the Session.
-		 * 
-		 * @return a new Session */
+		public Builder setTokenCachingStrategy (FBSessionTokenCachingStrategy tokenCachingStrategy) {
+			this.tokenCachingStrategy = tokenCachingStrategy;
+			return this;
+		}
+
 		public FBSession build () {
-			return new FBSession(applicationId, null, defaultAudience, "", tokenCachingStrategy);
+			return new FBSession(applicationId, permissions, defaultAudience, urlSchemePrefix, tokenCachingStrategy);
 		}
 	}
 }
