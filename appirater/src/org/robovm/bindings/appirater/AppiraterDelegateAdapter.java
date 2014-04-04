@@ -1,7 +1,6 @@
 
 package org.robovm.bindings.appirater;
 
-
 public class AppiraterDelegateAdapter implements AppiraterDelegate {
 	@Override
 	public void didDisplayAlert (Appirater appirater) {

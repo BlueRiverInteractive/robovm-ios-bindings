@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.appirater;
 
-import org.robovm.cocoatouch.foundation.NSObjectProtocol;
+import org.robovm.apple.foundation.NSObjectProtocol;
 import org.robovm.objc.annotation.Method;
 
 public interface AppiraterDelegate extends NSObjectProtocol {
