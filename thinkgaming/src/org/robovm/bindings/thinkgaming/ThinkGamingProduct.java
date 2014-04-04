@@ -1,9 +1,9 @@
 
 package org.robovm.bindings.thinkgaming;
 
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSLocale;
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSLocale;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;

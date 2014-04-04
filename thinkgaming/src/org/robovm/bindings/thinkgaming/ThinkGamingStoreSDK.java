@@ -1,8 +1,9 @@
 
 package org.robovm.bindings.thinkgaming;
 
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
@@ -10,7 +11,7 @@ import org.robovm.objc.annotation.Property;
 
 @NativeClass
 public class ThinkGamingStoreSDK extends NSObject implements SKProductsRequestDelegate, SKPaymentTransactionObserver {
-	@Property(strongRef = true)
+	@Property
 	public native ThinkGamingStoreDelegate getDelegate ();
 
 	@Method(selector = "getListOfStoresThenCall:")
@@ -32,10 +33,18 @@ public class ThinkGamingStoreSDK extends NSObject implements SKProductsRequestDe
 	public native NSArray<?> getListOfPurchasedProductIdentifiers ();
 
 	@Override
-	public void updatedTransactions (SKPaymentQueue queue, org.robovm.apple.foundation.NSArray<SKPaymentTransaction> transactions) {
+	public void updatedTransactions (SKPaymentQueue queue, NSArray<SKPaymentTransaction> transactions) {
 	}
 
 	@Override
 	public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
+	}
+
+	@Override
+	public void requestFailed (SKRequest request, NSError error) {
+	}
+
+	@Override
+	public void requestFinished (SKRequest request) {
 	}
 }
