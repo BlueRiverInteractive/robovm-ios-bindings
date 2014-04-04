@@ -1,28 +1,29 @@
 
 package org.robovm.bindings.appirater.sample;
 
+import org.robovm.apple.coregraphics.CGRect;
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.apple.uikit.UIButton;
+import org.robovm.apple.uikit.UIColor;
+import org.robovm.apple.uikit.UIControl;
+import org.robovm.apple.uikit.UIControl.OnTouchUpInsideListener;
+import org.robovm.apple.uikit.UIControlState;
+import org.robovm.apple.uikit.UIEvent;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.appirater.Appirater;
-import org.robovm.bindings.appirater.AppiraterDelegate;
-import org.robovm.cocoatouch.coregraphics.CGRect;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
-import org.robovm.cocoatouch.uikit.UIButton;
-import org.robovm.cocoatouch.uikit.UIColor;
-import org.robovm.cocoatouch.uikit.UIControl;
-import org.robovm.cocoatouch.uikit.UIControl.OnTouchUpInsideListener;
-import org.robovm.cocoatouch.uikit.UIControlState;
-import org.robovm.cocoatouch.uikit.UIEvent;
-import org.robovm.cocoatouch.uikit.UIScreen;
-import org.robovm.cocoatouch.uikit.UIWindow;
+import org.robovm.bindings.appirater.AppiraterDelegateAdapter;
 
 /** Sample usage of the Appirater SDK. http://github.com/arashpayan/appirater */
-public class Sample extends UIApplicationDelegate.Adapter {
+public class Sample extends UIApplicationDelegateAdapter {
 	private UIWindow window;
 
 	@Override
-	public boolean didFinishLaunching (UIApplication application, NSDictionary launchOptions) {
+	public boolean didFinishLaunching (UIApplication application, NSDictionary<NSString, ?> launchOptions) {
 		window = new UIWindow(UIScreen.getMainScreen().getBounds());
 		window.makeKeyAndVisible();
 
@@ -41,34 +42,10 @@ public class Sample extends UIApplicationDelegate.Adapter {
 		Appirater.setAppId("YOUR_APP_ID");
 		Appirater.setDaysUntilPrompt(-1);
 		Appirater.setUsesUntilPrompt(-1);
-		Appirater.setDelegate(new AppiraterDelegate.Adapter() {
-
+		Appirater.setDelegate(new AppiraterDelegateAdapter() {
 			@Override
-			public void appiraterWillPresentModalView (Appirater appirater, boolean animated) {
-			}
-
-			@Override
-			public void appiraterDidOptToRemindLater (Appirater appirater) {
-			}
-
-			@Override
-			public void appiraterDidOptToRate (Appirater appirater) {
-				/*
-				 * Attention!!! You can access ONLY to static variables from here, or you get NullPointerException
-				 */
+			public void didOptToRate (Appirater appirater) {
 				System.out.println("Hurray!!!");
-			}
-
-			@Override
-			public void appiraterDidDisplayAlert (Appirater appirater) {
-			}
-
-			@Override
-			public void appiraterDidDismissModalView (Appirater appirater, boolean animated) {
-			}
-
-			@Override
-			public void appiraterDidDeclineToRate (Appirater appirater) {
 			}
 		});
 
@@ -80,8 +57,8 @@ public class Sample extends UIApplicationDelegate.Adapter {
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }
