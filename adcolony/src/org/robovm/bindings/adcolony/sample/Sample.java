@@ -3,26 +3,24 @@ package org.robovm.bindings.adcolony.sample;
 
 import java.util.ArrayList;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.adcolony.AdColony;
-import org.robovm.bindings.adcolony.AdColonyAdDelegate;
-import org.robovm.bindings.adcolony.AdColonyDelegate;
-import org.robovm.bindings.adcolony.AdColonyStatus;
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.foundation.NSString;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
-import org.robovm.cocoatouch.uikit.UIScreen;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIWindow;
+import org.robovm.bindings.adcolony.AdColonyDelegateAdapter;
 
 /** Sample usage of the AdColony SDK. */
-public class Sample extends UIApplicationDelegate.Adapter implements AdColonyDelegate, AdColonyAdDelegate {
+public class Sample extends UIApplicationDelegateAdapter {
 	private static final String APP_ID = "YOUR_APP_ID";
 	private static final String ZONE_ID = "YOUR_ZONE_ID";
-	UIViewController viewController;
+	private UIViewController viewController;
+	private UIWindow window;
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void didFinishLaunching (UIApplication application) {
 		viewController = new UIViewController();
@@ -30,38 +28,19 @@ public class Sample extends UIApplicationDelegate.Adapter implements AdColonyDel
 		// Setup AdColony
 		ArrayList<NSString> aZones = new ArrayList<NSString>();
 		aZones.add(new NSString(ZONE_ID));
-		NSArray zones = new NSArray(aZones);
-		AdColony.configure(APP_ID, zones, this, true);
+		NSArray<NSString> zones = new NSArray<NSString>(aZones);
+		AdColony.configure(APP_ID, zones, new AdColonyDelegateAdapter() {
 
-		UIWindow window = new UIWindow(UIScreen.getMainScreen().getBounds());
+		}, true);
+
+		window = new UIWindow(UIScreen.getMainScreen().getBounds());
 		window.setRootViewController(viewController);
 		window.makeKeyAndVisible();
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
-	}
-
-	@Override
-	public void onAdColonyAdAvailabilityChange (boolean available, String zoneID) {
-		// If Zone is Active show the video
-		if (AdColony.getZoneStatus(zoneID) == AdColonyStatus.Active) AdColony.playVideoAd(ZONE_ID, this);
-	}
-
-	@Override
-	public void onAdColonyV4VCReward (boolean success, String currencyName, int amount, String zoneID) {
-
-	}
-
-	@Override
-	public void onAdColonyAdStartedInZone (String zoneID) {
-
-	}
-
-	@Override
-	public void onAdColonyAdAttemptFinished (boolean shown, String zoneID) {
-
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }

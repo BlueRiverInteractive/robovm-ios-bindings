@@ -1,8 +1,9 @@
 
 package org.robovm.bindings.adcolony;
 
-import org.robovm.cocoatouch.foundation.NSArray;
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
@@ -24,7 +25,7 @@ public class AdColony extends NSObject {
 	 *           events.
 	 * @param log A boolean controlling AdColony verbose logging. */
 	@Method(selector = "configureWithAppID:zoneIDs:delegate:logging:")
-	public static native void configure (String appID, NSArray<?> zoneIDs, AdColonyDelegate delegate, boolean log);
+	public static native void configure (String appID, NSArray<NSString> zoneIDs, AdColonyDelegate delegate, boolean log);
 
 	/** Plays an AdColony ad. This method returns immediately, before the ad completes. If ads are not available, an ad may not play
 	 * as a result of this method call. If you need more detailed information about when the ad completes or whether an ad played,
