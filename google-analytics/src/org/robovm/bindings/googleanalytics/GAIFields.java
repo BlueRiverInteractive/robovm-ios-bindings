@@ -1,23 +1,12 @@
 
 package org.robovm.bindings.googleanalytics;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.Selector;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
 
-@Library(Library.INTERNAL)
-@NativeClass()
+@NativeClass
 public class GAIFields extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(GAIFields.class);
-
-	static {
-		ObjCRuntime.bind(GAIFields.class);
-	}
-
 	public static final String kGAIUseSecure = "useSecure";
 
 	public static final String kGAIHitType = "&t";
@@ -90,50 +79,27 @@ public class GAIFields extends NSObject {
 	public static final String kGAIException = "exception";
 	public static final String kGAITiming = "timing";
 
-	// + (NSString *)contentGroupForIndex:(NSUInteger)index;
-	private static final Selector contentGroupForIndex$ = Selector.register("contentGroupForIndex:");
-
-	@Bridge
-	private native static String objc_contentGroupForIndex (ObjCClass __self__, Selector __cmd__, int index);
-
 	/** Generates the correct parameter name for a content group with an index.
 	 * 
 	 * @param index the index of the content group.
 	 * 
-	 * @return an NSString representing the content group parameter for the index. */
-	public static String contentGroupForIndex (int index) {
-		return objc_contentGroupForIndex(objCClass, contentGroupForIndex$, index);
-	}
-
-	// + (NSString *)customDimensionForIndex:(NSUInteger)index;
-	private static final Selector customDimensionForIndex$ = Selector.register("customDimensionForIndex:");
-
-	@Bridge
-	private native static String objc_customDimensionForIndex (ObjCClass __self__, Selector __cmd__, int index);
+	 * @return an String representing the content group parameter for the index. */
+	@Method(selector = "contentGroupForIndex:")
+	public static native String getContentGroup (int index);
 
 	/** Generates the correct parameter name for a custon dimension with an index.
 	 * 
 	 * @param index the index of the custom dimension.
 	 * 
-	 * @return an NSString representing the custom dimension parameter for the index. */
-	public static String customDimensionForIndex (int index) {
-		return objc_customDimensionForIndex(objCClass, contentGroupForIndex$, index);
-	}
+	 * @return an String representing the custom dimension parameter for the index. */
+	@Method(selector = "customDimensionForIndex:")
+	public static native String getCustomDimension (int index);
 
-	// + (NSString *)customMetricForIndex:(NSUInteger)index;
-	private static final Selector customMetricForIndex$ = Selector.register("customMetricForIndex:");
-
-	@Bridge
-	private native static String objc_customMetricForIndex (ObjCClass __self__, Selector __cmd__, int index);
-
-	/*
-	 * ! Generates the correct parameter name for a custom metric with an index.
+	/** Generates the correct parameter name for a custom metric with an index.
 	 * 
 	 * @param index the index of the custom metric.
 	 * 
-	 * @return an NSString representing the custom metric parameter for the index.
-	 */
-	public static String customMetricForIndex (int index) {
-		return objc_customMetricForIndex(objCClass, customMetricForIndex$, index);
-	}
+	 * @return an String representing the custom metric parameter for the index. */
+	@Method(selector = "customMetricForIndex:")
+	public static native String customMetricForIndex (int index);
 }

@@ -1,33 +1,33 @@
 
 package org.robovm.bindings.googleanalytics;
 
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 
 /** Google Analytics iOS top-level class. Provides facilities to create trackers and set behaviorial flags. */
-@NativeClass()
+@NativeClass
 public class GAI extends NSObject {
 
 	/** For convenience, this class exposes a default tracker instance. This is initialized to {@code null} and will be set to the
 	 * first tracker that is instantiated in {@link #getTracker(String)}. It may be overridden as desired.
 	 * 
 	 * The GAITrackedViewController class will, by default, use this tracker instance. */
-	@Property()
-	public native GAITrackerImpl getDefaultTracker ();
+	@Property
+	public native GAIDefaultTracker getDefaultTracker ();
 
-	@Property()
-	public native void setDefaultTracker (GAITrackerImpl tracker);
+	@Property
+	public native void setDefaultTracker (GAIDefaultTracker tracker);
 
 	/** The GAIDefaultLogger to use. */
-	@Property()
+	@Property
 	public native GAIDefaultLogger getLogger ();
 
-	@Property()
+	@Property
 	public native void setLogger (GAIDefaultLogger logger);
 
-	@Property()
+	@Property
 	public native double getDispatchInterval ();
 
 	/** If this value is positive, tracking information will be automatically dispatched every dispatchInterval seconds. Otherwise,
@@ -35,10 +35,10 @@ public class GAI extends NSObject {
 	 * 
 	 * By default, this is set to {@code 120}, which indicates tracking information should be dispatched automatically every 120
 	 * seconds. */
-	@Property()
+	@Property
 	public native void setDispatchInterval (double interval);
 
-	@Property()
+	@Property
 	public native boolean isOptOut ();
 
 	/** When this is true, no tracking information will be gathered; tracking calls will effectively become no-ops. When set to
@@ -48,7 +48,7 @@ public class GAI extends NSObject {
 	 * 
 	 * This is set to {@code false} the first time the Google Analytics SDK is used on a device, and is persisted thereafter. */
 
-	@Property()
+	@Property
 	public native void setOptOut (boolean optOut);
 
 	/** When set to true, the SDK will record the currently registered uncaught exception handler, and then register an uncaught
@@ -59,14 +59,14 @@ public class GAI extends NSObject {
 	@Property(selector = "trackUncaughtExceptions")
 	public native boolean isTrackingUncaughtExceptions ();
 
-	@Property()
+	@Property
 	public native void setTrackUncaughtExceptions (boolean track);
 
 	/** When this is {@code true}, no tracking information will be sent. Defaults to '{@code false}. */
-	@Property()
+	@Property
 	public native boolean isDryRun ();
 
-	@Property()
+	@Property
 	public native void setDryRun (boolean dryRun);
 
 	/** Get the shared instance of the Google Analytics for iOS class. */
@@ -89,7 +89,7 @@ public class GAI extends NSObject {
 	 * 
 	 *         If an error occurs or the name is not valid, this method will return {@code null}. */
 	@Method(selector = "trackerWithName:trackingId:")
-	public native GAITrackerImpl getTracker (String name, String trackingId);
+	public native GAIDefaultTracker getTracker (String name, String trackingId);
 
 	/** Creates or retrieves a GAITracker implementation with name equal to the specified tracking ID. If the tracker for the
 	 * respective name does not already exist, it is created, has it's tracking ID set to |trackingId|, and is returned; otherwise,
@@ -106,7 +106,7 @@ public class GAI extends NSObject {
 	 * 
 	 *         If an error occurs or the trackingId is not valid, this method will return {@code null}. */
 	@Method(selector = "trackerWithTrackingId:")
-	public native GAITrackerImpl getTracker (String trackingId);
+	public native GAIDefaultTracker getTracker (String trackingId);
 
 	/** Remove a tracker from the trackers dictionary. If it is the default tracker, clears the default tracker as well.
 	 * 
