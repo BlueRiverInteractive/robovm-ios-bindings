@@ -2,7 +2,7 @@
 package org.robovm.bindings.mopub;
 
 import org.robovm.apple.foundation.NSMutableArray;
-import org.robovm.cocoatouch.uikit.UIViewController;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;

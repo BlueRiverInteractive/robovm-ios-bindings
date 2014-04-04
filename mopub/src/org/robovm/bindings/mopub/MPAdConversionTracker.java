@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.mopub;
 
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 

@@ -1,13 +1,13 @@
 
 package org.robovm.bindings.mopub.sample;
 
+import org.robovm.apple.coregraphics.CGRect;
+import org.robovm.apple.uikit.UIInterfaceOrientation;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.bindings.mopub.MPAdView;
 import org.robovm.bindings.mopub.MPConstants;
 import org.robovm.bindings.mopub.MPNativeAdOrientation;
-import org.robovm.cocoatouch.coregraphics.CGRect;
-import org.robovm.cocoatouch.uikit.UIInterfaceOrientation;
-import org.robovm.cocoatouch.uikit.UIScreen;
-import org.robovm.cocoatouch.uikit.UIViewController;
 
 public class MPAdViewController extends UIViewController {
 	private final MPAdView ad;
@@ -35,7 +35,7 @@ public class MPAdViewController extends UIViewController {
 	public void didRotate (UIInterfaceOrientation fromInterfaceOrientation) {
 		super.didRotate(fromInterfaceOrientation);
 
-		float offset = UIScreen.getMainScreen().getApplicationFrame().size().height();
+		double offset = UIScreen.getMainScreen().getApplicationFrame().size().height();
 
 		switch (fromInterfaceOrientation) {
 		case LandscapeLeft:
@@ -48,8 +48,8 @@ public class MPAdViewController extends UIViewController {
 		}
 
 		// Position ad at the bottom.
-		float bannerWidth = UIScreen.getMainScreen().getApplicationFrame().size().width();
-		float bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
+		double bannerWidth = UIScreen.getMainScreen().getApplicationFrame().size().width();
+		double bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
 		ad.setFrame(new CGRect(0, offset - bannerHeight, bannerWidth, bannerHeight));
 	}
 }

@@ -1,13 +1,9 @@
 
 package org.robovm.bindings.mopub;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSObjectProtocol;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.BindSelector;
-import org.robovm.objc.annotation.NotImplemented;
-import org.robovm.rt.bro.annotation.Callback;
+import org.robovm.apple.foundation.NSObjectProtocol;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.objc.annotation.Method;
 
 /** The delegate of an {@link MPAdView} object must adopt the MPAdViewDelegate protocol. It must implement
  * {@link #getViewController()} to provide a root view controller from which the ad view should present modal content.
@@ -22,6 +18,7 @@ public interface MPAdViewDelegate extends NSObjectProtocol {
 	 * an ad is tapped.
 	 * 
 	 * @return A view controller that should be used for presenting modal content. */
+	@Method(selector = "viewControllerForPresentingModalView")
 	UIViewController getViewController ();
 
 	/** Sent when an ad view successfully loads an ad.
@@ -29,6 +26,7 @@ public interface MPAdViewDelegate extends NSObjectProtocol {
 	 * Your implementation of this method should insert the ad view into the view hierarchy, if you have not already done so.
 	 * 
 	 * @param view The ad view sending the message. */
+	@Method(selector = "adViewDidLoadAd:")
 	void didLoadAd (MPAdView view);
 
 	/** Sent when an ad view fails to load an ad.
@@ -36,6 +34,7 @@ public interface MPAdViewDelegate extends NSObjectProtocol {
 	 * To avoid displaying blank ads, you should hide the ad view in response to this message.
 	 * 
 	 * @param view The ad view sending the message. */
+	@Method(selector = "adViewDidFailToLoadAd:")
 	void didFailToLoadAd (MPAdView view);
 
 	/** Sent when an ad view is about to present modal content.
@@ -45,6 +44,7 @@ public interface MPAdViewDelegate extends NSObjectProtocol {
 	 * 
 	 * @param view The ad view sending the message.
 	 * @see #didDismissView */
+	@Method(selector = "willPresentModalViewForAd:")
 	void willPresentView (MPAdView view);
 
 	/** Sent when an ad view has dismissed its modal content, returning control to your application.
@@ -54,6 +54,7 @@ public interface MPAdViewDelegate extends NSObjectProtocol {
 	 * 
 	 * @param view The ad view sending the message.
 	 * @see #willPresentView */
+	@Method(selector = "didDismissModalViewForAd:")
 	void didDismissView (MPAdView view);
 
 	/** Sent when a user is about to leave your application as a result of tapping on an ad.
@@ -61,72 +62,6 @@ public interface MPAdViewDelegate extends NSObjectProtocol {
 	 * Your application will be moved to the background shortly after this method is called.
 	 * 
 	 * @param view The ad view sending the message. */
+	@Method(selector = "willLeaveApplicationFromAd:")
 	void willLeaveApplication (MPAdView view);
-
-	/** Extend this adapter to listen for events triggered by a {@link MPAdView}. */
-	public static class Adapter extends NSObject implements MPAdViewDelegate {
-		@NotImplemented("viewControllerForPresentingModalView")
-		@Override
-		public UIViewController getViewController () {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void didLoadAd (MPAdView view) {
-		}
-
-		@Override
-		public void didFailToLoadAd (MPAdView view) {
-		}
-
-		@Override
-		public void willPresentView (MPAdView view) {
-		}
-
-		@Override
-		public void didDismissView (MPAdView view) {
-		}
-
-		@Override
-		public void willLeaveApplication (MPAdView view) {
-		}
-	}
-
-	static class Callbacks {
-		@Callback
-		@BindSelector("viewControllerForPresentingModalView")
-		public static UIViewController getViewController (MPAdViewDelegate __self__, Selector __cmd__) {
-			return __self__.getViewController();
-		}
-
-		@Callback
-		@BindSelector("adViewDidLoadAd:")
-		public static void didLoadAd (MPAdViewDelegate __self__, Selector __cmd__, MPAdView view) {
-			__self__.didLoadAd(view);
-		}
-
-		@Callback
-		@BindSelector("adViewDidFailToLoadAd:")
-		public static void didFailToLoadAd (MPAdViewDelegate __self__, Selector __cmd__, MPAdView view) {
-			__self__.didFailToLoadAd(view);
-		}
-
-		@Callback
-		@BindSelector("willPresentModalViewForAd:")
-		public static void willPresentView (MPAdViewDelegate __self__, Selector __cmd__, MPAdView view) {
-			__self__.willPresentView(view);
-		}
-
-		@Callback
-		@BindSelector("didDismissModalViewForAd:")
-		public static void didDismissView (MPAdViewDelegate __self__, Selector __cmd__, MPAdView view) {
-			__self__.didDismissView(view);
-		}
-
-		@Callback
-		@BindSelector("willLeaveApplicationFromAd:")
-		public static void willLeaveApplication (MPAdViewDelegate __self__, Selector __cmd__, MPAdView view) {
-			__self__.willLeaveApplication(view);
-		}
-	}
 }

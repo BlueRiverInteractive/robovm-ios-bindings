@@ -1,11 +1,8 @@
 
 package org.robovm.bindings.mopub;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.foundation.NSObjectProtocol;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.BindSelector;
-import org.robovm.rt.bro.annotation.Callback;
+import org.robovm.apple.foundation.NSObjectProtocol;
+import org.robovm.objc.annotation.Method;
 
 /** The delegate of an {@link MPInterstitialAdController} object must adopt the MPInterstitialAdControllerDelegate protocol.
  * 
@@ -18,11 +15,13 @@ public interface MPInterstitialAdControllerDelegate extends NSObjectProtocol {
 	/** Sent when an interstitial ad object successfully loads an ad.
 	 * 
 	 * @param interstitial The interstitial ad object sending the message. */
+	@Method(selector = "interstitialDidLoadAd:")
 	void didLoadAd (MPInterstitialAdController interstitial);
 
 	/** Sent when an interstitial ad object fails to load an ad.
 	 * 
 	 * @param interstitial The interstitial ad object sending the message. */
+	@Method(selector = "interstitialDidFailToLoadAd:")
 	void didFailToLoadAd (MPInterstitialAdController interstitial);
 
 	/** Sent immediately before an interstitial ad object is presented on the screen.
@@ -30,16 +29,19 @@ public interface MPInterstitialAdControllerDelegate extends NSObjectProtocol {
 	 * Your implementation of this method should pause any application activity that requires user interaction.
 	 * 
 	 * @param interstitial The interstitial ad object sending the message. */
+	@Method(selector = "interstitialWillAppear:")
 	void willAppear (MPInterstitialAdController interstitial);
 
 	/** Sent after an interstitial ad object has been presented on the screen.
 	 * 
 	 * @param interstitial The interstitial ad object sending the message. */
+	@Method(selector = "interstitialDidAppear:")
 	void didAppear (MPInterstitialAdController interstitial);
 
 	/** Sent immediately before an interstitial ad object will be dismissed from the screen.
 	 * 
 	 * @param interstitial The interstitial ad object sending the message. */
+	@Method(selector = "interstitialWillDisappear:")
 	void willDisappear (MPInterstitialAdController interstitial);
 
 	/** Sent after an interstitial ad object has been dismissed from the screen, returning control to your application.
@@ -48,6 +50,7 @@ public interface MPInterstitialAdControllerDelegate extends NSObjectProtocol {
 	 * presented on-screen.
 	 * 
 	 * @param interstitial The interstitial ad object sending the message. */
+	@Method(selector = "interstitialDidDisappear:")
 	void didDisappear (MPInterstitialAdController interstitial);
 
 	/** Sent when a loaded interstitial ad is no longer eligible to be displayed.
@@ -62,87 +65,6 @@ public interface MPInterstitialAdControllerDelegate extends NSObjectProtocol {
 	 * Your implementation may include a call to `loadAd` to fetch a new ad, if desired.
 	 * 
 	 * @param interstitial The interstitial ad object sending the message. */
+	@Method(selector = "interstitialDidExpire:")
 	void didExpire (MPInterstitialAdController interstitial);
-
-	/** Extend this adapter to listen for events triggered by a {@link MPInterstitialAdController}. */
-	public static class Adapter extends NSObject implements MPInterstitialAdControllerDelegate {
-		@Override
-		public void didLoadAd (MPInterstitialAdController interstitial) {
-		}
-
-		@Override
-		public void didFailToLoadAd (MPInterstitialAdController interstitial) {
-		}
-
-		@Override
-		public void willAppear (MPInterstitialAdController interstitial) {
-		}
-
-		@Override
-		public void didAppear (MPInterstitialAdController interstitial) {
-		}
-
-		@Override
-		public void willDisappear (MPInterstitialAdController interstitial) {
-		}
-
-		@Override
-		public void didDisappear (MPInterstitialAdController interstitial) {
-		}
-
-		@Override
-		public void didExpire (MPInterstitialAdController interstitial) {
-		}
-	}
-
-	static class Callbacks {
-		@Callback
-		@BindSelector("interstitialDidLoadAd:")
-		public static void didLoadAd (MPInterstitialAdControllerDelegate __self__, Selector __cmd__,
-			MPInterstitialAdController interstitial) {
-			__self__.didLoadAd(interstitial);
-		}
-
-		@Callback
-		@BindSelector("interstitialDidFailToLoadAd:")
-		public static void didFailToLoadAd (MPInterstitialAdControllerDelegate __self__, Selector __cmd__,
-			MPInterstitialAdController interstitial) {
-			__self__.didFailToLoadAd(interstitial);
-		}
-
-		@Callback
-		@BindSelector("interstitialWillAppear:")
-		public static void willPresentView (MPInterstitialAdControllerDelegate __self__, Selector __cmd__,
-			MPInterstitialAdController interstitial) {
-			__self__.willAppear(interstitial);
-		}
-
-		@Callback
-		@BindSelector("interstitialDidAppear:")
-		public static void didDismissView (MPInterstitialAdControllerDelegate __self__, Selector __cmd__,
-			MPInterstitialAdController interstitial) {
-			__self__.didAppear(interstitial);
-		}
-
-		@Callback
-		@BindSelector("interstitialWillDisappear:")
-		public static void willLeaveApplication (MPInterstitialAdControllerDelegate __self__, Selector __cmd__,
-			MPInterstitialAdController interstitial) {
-			__self__.willDisappear(interstitial);
-		}
-
-		@Callback
-		@BindSelector("interstitialDidDisappear:")
-		public static void didDisappear (MPInterstitialAdControllerDelegate __self__, Selector __cmd__,
-			MPInterstitialAdController interstitial) {
-			__self__.didDisappear(interstitial);
-		}
-
-		@Callback
-		@BindSelector("interstitialDidExpire:")
-		public static void didExpire (MPInterstitialAdControllerDelegate __self__, Selector __cmd__,
-			MPInterstitialAdController interstitial) {
-			__self__.didExpire(interstitial);
-		}
-	}
 }

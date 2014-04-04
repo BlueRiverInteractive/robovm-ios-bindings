@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.mopub;
 
-import org.robovm.cocoatouch.coregraphics.CGSize;
-import org.robovm.cocoatouch.uikit.UIView;
+import org.robovm.apple.coregraphics.CGSize;
+import org.robovm.apple.uikit.UIView;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
