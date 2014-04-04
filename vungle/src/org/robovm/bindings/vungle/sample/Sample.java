@@ -1,20 +1,21 @@
 
 package org.robovm.bindings.vungle.sample;
 
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UIViewController;
+import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.vungle.VGPlayData;
 import org.robovm.bindings.vungle.VGStatusData;
 import org.robovm.bindings.vungle.VGVunglePub;
-import org.robovm.bindings.vungle.VGVunglePubDelegate;
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
-import org.robovm.cocoatouch.uikit.UIScreen;
-import org.robovm.cocoatouch.uikit.UIViewController;
-import org.robovm.cocoatouch.uikit.UIWindow;
+import org.robovm.bindings.vungle.VGVunglePubDelegateAdapter;
 
 /** Sample usage of the Vungle SDK. */
-public class Sample extends UIApplicationDelegate.Adapter {
-	UIViewController viewController;
+public class Sample extends UIApplicationDelegateAdapter {
+	private UIWindow window;
+	private UIViewController viewController;
 
 	@Override
 	public void didFinishLaunching (UIApplication application) {
@@ -22,7 +23,7 @@ public class Sample extends UIApplicationDelegate.Adapter {
 
 		// Setup Vungle.
 		VGVunglePub.start("YOUR_VUNGLE_APP_ID");
-		VGVunglePub.setDelegate(new VGVunglePubDelegate.Adapter() {
+		VGVunglePub.setDelegate(new VGVunglePubDelegateAdapter() {
 			@Override
 			public void moviePlayed (VGPlayData playData) {
 				if (playData.isPlayedFully()) {
@@ -52,14 +53,14 @@ public class Sample extends UIApplicationDelegate.Adapter {
 			}
 		});
 
-		UIWindow window = new UIWindow(UIScreen.getMainScreen().getBounds());
+		window = new UIWindow(UIScreen.getMainScreen().getBounds());
 		window.setRootViewController(viewController);
 		window.makeKeyAndVisible();
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }

@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.vungle;
 
-import org.robovm.cocoatouch.foundation.NSDictionary;
-import org.robovm.cocoatouch.foundation.NSObject;
+import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 

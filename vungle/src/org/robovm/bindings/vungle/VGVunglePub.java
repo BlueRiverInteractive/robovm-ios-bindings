@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.vungle;
 
-import org.robovm.cocoatouch.foundation.NSObject;
-import org.robovm.cocoatouch.uikit.UIViewController;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
