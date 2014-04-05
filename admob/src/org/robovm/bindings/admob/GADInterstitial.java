@@ -20,16 +20,20 @@ public class GADInterstitial extends NSObject {
 
 	/** Required value created in the AdSense website. Create a new ad unit for every unique placement of an ad in your application.
 	 * Set this to the ID assigned for this placement. Ad units are important for targeting and stats. Example values for different
-	 * request types: AdMob: a0123456789ABCD DFP: /0123/ca-pub-0123456789012345/my-ad-identifier AdSense:
-	 * ca-mb-app-pub-0123456789012345/my-ad-identifier */
+	 * request types:
+	 * 
+	 * <pre>
+	 * AdMob: a0123456789ABCD
+	 * DFP: /0123/ca-pub-0123456789012345/my-ad-identifier 
+	 * AdSense: ca-mb-app-pub-0123456789012345/my-ad-identifier
+	 * </pre> */
 	@Property
 	public native void setAdUnitID (String adUnitID);
 
 	@Property
 	public native GADInterstitialDelegate getDelegate ();
 
-	/** Optional delegate object that receives state change notifications from this GADInterstitalAd. Remember to nil the delegate
-	 * before deallocating this object. */
+	/** Optional delegate object that receives state change notifications from this GADInterstitalAd. */
 	@Property(strongRef = true)
 	public native void setDelegate (GADInterstitialDelegate delegate);
 
@@ -37,14 +41,14 @@ public class GADInterstitial extends NSObject {
 	 * request is allowed at a time.
 	 * 
 	 * This is best to do several seconds before the interstitial is needed to preload its content. Then when transitioning between
-	 * view controllers show the interstital with presentFromViewController.
+	 * view controllers show the interstitial with {@link #present(UIViewController)}.
 	 * @param request */
 	@Method(selector = "loadRequest:")
 	public native void loadRequest (GADRequest request);
 
 	/** The window will be shown with the image displayed until either the request interstitial is shown or a timeout occurs. The
-	 * delegate will receive an interstitialDidDismissScreen: callback to indicate that your app should continue when the
-	 * interstitial has finished.
+	 * delegate will receive an {@link GADInterstitialDelegate#didDismissScreen(GADInterstitial)} callback to indicate that your
+	 * app should continue when the interstitial has finished.
 	 * @param request
 	 * @param window
 	 * @param image */
@@ -61,8 +65,8 @@ public class GADInterstitial extends NSObject {
 	@Property(selector = "hasBeenUsed")
 	public native boolean isBeenUsed ();
 
-	/** @return the ad network class name that fetched the current ad. Returns nil while the latest ad request is in progress or if
-	 *         the latest ad request failed. For both standard and mediated Google AdMob ads, this method returns
+	/** @return the ad network class name that fetched the current ad. Returns {@code null} while the latest ad request is in
+	 *         progress or if the latest ad request failed. For both standard and mediated Google AdMob ads, this method returns
 	 * @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation custom events, this method returns
 	 * @"GADMAdapterCustomEvents". */
 	@Property
@@ -72,8 +76,9 @@ public class GADInterstitial extends NSObject {
 	 * isReady returns YES and/or the delegate's interstitialDidReceiveAd: has been received.
 	 * 
 	 * Set rootViewController to the current view controller at the time this method is called. If your application does not use
-	 * view controllers pass in nil and your views will be removed from the window to show the interstitial and restored when done.
-	 * After the interstitial has been removed, the delegate's interstitialDidDismissScreen: will be called.
+	 * view controllers pass in {@code null} and your views will be removed from the window to show the interstitial and restored
+	 * when done. After the interstitial has been removed, the delegate's
+	 * {@link GADInterstitialDelegate#didDismissScreen(GADInterstitial)} will be called.
 	 * @param rootViewController */
 	@Method(selector = "presentFromRootViewController:")
 	public native void present (UIViewController rootViewController);

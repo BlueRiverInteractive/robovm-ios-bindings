@@ -7,7 +7,6 @@ import org.robovm.apple.foundation.NSMutableDictionary;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSString;
 import org.robovm.bindings.facebook.session.FBSession;
-import org.robovm.objc.ObjCClass;
 import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
@@ -15,8 +14,6 @@ import org.robovm.objc.annotation.NativeClass;
 /** Provides methods to display web based dialogs to the user. */
 @NativeClass
 public class FBWebDialogs extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(FBWebDialogs.class);
-
 	/** Presents a Facebook web dialog (https://developers.facebook.com/docs/reference/dialogs/ ) such as feed or apprequest.
 	 * 
 	 * @param session Represents the session to use for the dialog. May be {@code null}, which uses the active session if present,

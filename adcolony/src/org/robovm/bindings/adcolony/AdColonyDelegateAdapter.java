@@ -1,7 +1,9 @@
 
 package org.robovm.bindings.adcolony;
 
-public class AdColonyDelegateAdapter implements AdColonyDelegate {
+import org.robovm.apple.foundation.NSObject;
+
+public class AdColonyDelegateAdapter extends NSObject implements AdColonyDelegate {
 	@Override
 	public void onAdAvailabilityChange (boolean available, String zoneID) {
 	}

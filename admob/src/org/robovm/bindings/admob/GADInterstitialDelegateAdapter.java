@@ -1,8 +1,9 @@
 
 package org.robovm.bindings.admob;
 
+import org.robovm.apple.foundation.NSObject;
 
-public class GADInterstitialDelegateAdapter implements GADInterstitialDelegate {
+public class GADInterstitialDelegateAdapter extends NSObject implements GADInterstitialDelegate {
 	@Override
 	public void didReceiveAd (GADInterstitial ad) {
 	}

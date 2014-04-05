@@ -1,7 +1,9 @@
 
 package org.robovm.bindings.appirater;
 
-public class AppiraterDelegateAdapter implements AppiraterDelegate {
+import org.robovm.apple.foundation.NSObject;
+
+public class AppiraterDelegateAdapter extends NSObject implements AppiraterDelegate {
 	@Override
 	public void didDisplayAlert (Appirater appirater) {
 	}

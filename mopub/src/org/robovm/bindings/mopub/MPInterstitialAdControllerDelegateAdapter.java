@@ -1,8 +1,9 @@
 
 package org.robovm.bindings.mopub;
 
+import org.robovm.apple.foundation.NSObject;
 
-public class MPInterstitialAdControllerDelegateAdapter implements MPInterstitialAdControllerDelegate {
+public class MPInterstitialAdControllerDelegateAdapter extends NSObject implements MPInterstitialAdControllerDelegate {
 	@Override
 	public void didLoadAd (MPInterstitialAdController interstitial) {
 	}

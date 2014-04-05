@@ -2,8 +2,9 @@
 package org.robovm.bindings.playhaven;
 
 import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
 
-public class PHPublisherContentRequestDelegateAdapter implements PHPublisherContentRequestDelegate {
+public class PHPublisherContentRequestDelegateAdapter extends NSObject implements PHPublisherContentRequestDelegate {
 	@Override
 	public void willGetContent (PHPublisherContentRequest request) {
 	}

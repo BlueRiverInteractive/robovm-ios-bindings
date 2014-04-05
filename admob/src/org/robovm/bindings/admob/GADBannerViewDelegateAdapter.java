@@ -1,7 +1,9 @@
 
 package org.robovm.bindings.admob;
 
-public class GADBannerViewDelegateAdapter implements GADBannerViewDelegate {
+import org.robovm.apple.foundation.NSObject;
+
+public class GADBannerViewDelegateAdapter extends NSObject implements GADBannerViewDelegate {
 	@Override
 	public void didReceiveAd (GADBannerView view) {
 	}

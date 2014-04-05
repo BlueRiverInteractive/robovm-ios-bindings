@@ -1,9 +1,10 @@
 
 package org.robovm.bindings.greystripe;
 
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.uikit.UIViewController;
 
-public class GSAdDelegateAdapter implements GSAdDelegate {
+public class GSAdDelegateAdapter extends NSObject implements GSAdDelegate {
 	@Override
 	public UIViewController getBannerDisplayViewController () {
 		return null;
