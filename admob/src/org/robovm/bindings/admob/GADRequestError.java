@@ -10,7 +10,7 @@ import org.robovm.rt.bro.annotation.GlobalValue;
 public class GADRequestError extends NSError {
 	/** Google AdMob Ads error domain. */
 	@GlobalValue(symbol = "kGADErrorDomain")
-	public static native String ErrorDomain ();
+	public static native String errorDomain ();
 
 	private GADRequestError () {
 	}
