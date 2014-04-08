@@ -9,7 +9,6 @@ import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.admob.GADInterstitial;
 import org.robovm.bindings.admob.GADInterstitialDelegateAdapter;
-import org.robovm.bindings.admob.GADRequest;
 
 public class Sample extends UIApplicationDelegateAdapter {
 
@@ -21,6 +20,7 @@ public class Sample extends UIApplicationDelegateAdapter {
 		rootViewController = new UIViewController();
 
 		GADInterstitial interstitial = new GADInterstitial();
+		interstitial.setAdUnitID("");
 
 		interstitial.setDelegate(new GADInterstitialDelegateAdapter() {
 			@Override
@@ -34,7 +34,7 @@ public class Sample extends UIApplicationDelegateAdapter {
 // window.addSubview(rootViewController.getView());
 		window.makeKeyAndVisible();
 
-		interstitial.loadRequest(GADRequest.request());
+// interstitial.loadRequest(GADRequest.request());
 		interstitial.present(rootViewController);
 	}
 

@@ -6,7 +6,7 @@ import org.robovm.objc.annotation.Method;
 
 /** Delegate for receiving state change messages from a GADBannerView such as ad requests succeeding/failing or when an ad has been
  * clicked. */
-public interface GADBannerViewDelegate extends NSObjectProtocol {
+interface GADBannerViewDelegate extends NSObjectProtocol {
 	/** Sent when an ad request loaded an ad. This is a good opportunity to add this view to the hierarchy if it has not yet been
 	 * added. If the ad was received as a part of the server-side auto refreshing, you can examine the hasAutoRefreshed property of
 	 * the view.

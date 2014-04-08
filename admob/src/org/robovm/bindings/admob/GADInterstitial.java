@@ -67,13 +67,14 @@ public class GADInterstitial extends NSObject {
 
 	/** @return the ad network class name that fetched the current ad. Returns {@code null} while the latest ad request is in
 	 *         progress or if the latest ad request failed. For both standard and mediated Google AdMob ads, this method returns
-	 * @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation custom events, this method returns
-	 * @"GADMAdapterCustomEvents". */
+	 *         "GADMAdapterGoogleAdMobAds". For ads fetched via mediation custom events, this method returns
+	 *         "GADMAdapterCustomEvents". */
 	@Property
 	public native String getAdNetworkClassName ();
 
 	/** Presents the interstitial ad which takes over the entire screen until the user dismisses it. This has no effect unless
-	 * isReady returns YES and/or the delegate's interstitialDidReceiveAd: has been received.
+	 * {@link #isReady()} returns {@code true} and/or the delegate's {@link GADInterstitialDelegate#didReceiveAd(GADInterstitial)}
+	 * has been received.
 	 * 
 	 * Set rootViewController to the current view controller at the time this method is called. If your application does not use
 	 * view controllers pass in {@code null} and your views will be removed from the window to show the interstitial and restored

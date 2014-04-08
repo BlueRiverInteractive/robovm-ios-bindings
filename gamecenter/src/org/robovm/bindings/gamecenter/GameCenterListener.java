@@ -3,8 +3,8 @@ package org.robovm.bindings.gamecenter;
 
 import java.util.ArrayList;
 
-import org.robovm.bindings.cocoatouch.gamekit.GKAchievement;
-import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboard;
+import org.robovm.bindings.apple.gamekit.GKAchievement;
+import org.robovm.bindings.apple.gamekit.GKLeaderboard;
 
 /** Listener for GameCenter events */
 public interface GameCenterListener {

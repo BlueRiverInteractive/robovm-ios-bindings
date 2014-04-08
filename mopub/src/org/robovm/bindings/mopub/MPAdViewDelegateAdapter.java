@@ -1,5 +1,7 @@
+
 package org.robovm.bindings.mopub;
 
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.annotation.NotImplemented;
 

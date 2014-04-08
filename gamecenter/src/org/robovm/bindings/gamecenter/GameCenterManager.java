@@ -10,22 +10,22 @@ import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.UIDevice;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
-import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSArrayNSErrorBlock;
-import org.robovm.bindings.cocoatouch.blocks.VoidNSArrayNSErrorBlock;
-import org.robovm.bindings.cocoatouch.blocks.VoidNSErrorBlock;
-import org.robovm.bindings.cocoatouch.blocks.VoidUIViewControllerNSErrorBlock;
-import org.robovm.bindings.cocoatouch.gamekit.GKAchievement;
-import org.robovm.bindings.cocoatouch.gamekit.GKAchievementViewController;
-import org.robovm.bindings.cocoatouch.gamekit.GKAchievementViewControllerDelegate;
-import org.robovm.bindings.cocoatouch.gamekit.GKGameCenterControllerDelegate;
-import org.robovm.bindings.cocoatouch.gamekit.GKGameCenterViewController;
-import org.robovm.bindings.cocoatouch.gamekit.GKGameCenterViewControllerState;
-import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboard;
-import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboardTimeScope;
-import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboardViewController;
-import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboardViewControllerDelegate;
-import org.robovm.bindings.cocoatouch.gamekit.GKLocalPlayer;
-import org.robovm.bindings.cocoatouch.gamekit.GKScore;
+import org.robovm.bindings.apple.blocks.VoidNSArrayNSArrayNSErrorBlock;
+import org.robovm.bindings.apple.blocks.VoidNSArrayNSErrorBlock;
+import org.robovm.bindings.apple.blocks.VoidNSErrorBlock;
+import org.robovm.bindings.apple.blocks.VoidUIViewControllerNSErrorBlock;
+import org.robovm.bindings.apple.gamekit.GKAchievement;
+import org.robovm.bindings.apple.gamekit.GKAchievementViewController;
+import org.robovm.bindings.apple.gamekit.GKAchievementViewControllerDelegate;
+import org.robovm.bindings.apple.gamekit.GKGameCenterControllerDelegate;
+import org.robovm.bindings.apple.gamekit.GKGameCenterViewController;
+import org.robovm.bindings.apple.gamekit.GKGameCenterViewControllerState;
+import org.robovm.bindings.apple.gamekit.GKLeaderboard;
+import org.robovm.bindings.apple.gamekit.GKLeaderboardTimeScope;
+import org.robovm.bindings.apple.gamekit.GKLeaderboardViewController;
+import org.robovm.bindings.apple.gamekit.GKLeaderboardViewControllerDelegate;
+import org.robovm.bindings.apple.gamekit.GKLocalPlayer;
+import org.robovm.bindings.apple.gamekit.GKScore;
 
 @SuppressWarnings("deprecation")
 public class GameCenterManager {

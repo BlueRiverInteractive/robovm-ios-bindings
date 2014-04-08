@@ -17,8 +17,8 @@ import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
-import org.robovm.bindings.cocoatouch.gamekit.GKAchievement;
-import org.robovm.bindings.cocoatouch.gamekit.GKLeaderboard;
+import org.robovm.bindings.apple.gamekit.GKAchievement;
+import org.robovm.bindings.apple.gamekit.GKLeaderboard;
 
 /** Sample usage of GameKit framework */
 public class Sample extends UIApplicationDelegateAdapter {

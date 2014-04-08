@@ -5,7 +5,7 @@ import org.robovm.apple.foundation.NSObjectProtocol;
 import org.robovm.objc.annotation.Method;
 
 /** Delegate for receiving state change messages from a GADInterstitial such as interstitial ad requests succeeding/failing. */
-public interface GADInterstitialDelegate extends NSObjectProtocol {
+interface GADInterstitialDelegate extends NSObjectProtocol {
 	/** Sent when an interstitial ad request succeeded. Show it at the next transition point in your application such as when
 	 * transitioning between view controllers. */
 	@Method(selector = "interstitialDidReceiveAd:")

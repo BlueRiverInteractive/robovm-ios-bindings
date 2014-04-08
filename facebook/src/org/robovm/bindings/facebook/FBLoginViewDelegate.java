@@ -1,7 +1,7 @@
 
 package org.robovm.bindings.facebook;
 
-import org.robovm.cocoatouch.foundation.NSObjectProtocol;
+import org.robovm.apple.foundation.NSObjectProtocol;
 
 /** The FBLoginViewDelegate protocol defines the methods used to receive event notifications from {@link FBLoginView} objects. */
 public interface FBLoginViewDelegate extends NSObjectProtocol {

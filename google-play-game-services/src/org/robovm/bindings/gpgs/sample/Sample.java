@@ -502,7 +502,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
 					System.out.println("listing leaderboards:");
 
 					// as well as achievement listing, this produces an annoying error...
-					// java.lang.ClassCastException: org.robovm.cocoatouch.foundation.NSObject cannot be cast to
+					// java.lang.ClassCastException: org.robovm.apple.foundation.NSObject cannot be cast to
 // com.michingo.robovmbindings.gpgs.GPGLeaderboardMetadata
 
 					/*
