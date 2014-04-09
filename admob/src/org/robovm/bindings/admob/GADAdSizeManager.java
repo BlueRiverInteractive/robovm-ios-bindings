@@ -44,13 +44,13 @@ public final class GADAdSizeManager extends NSObject {
 
 	/** @return An ad size that spans the full width of the application in portrait orientation. The height is typically 50 pixels on
 	 *         an iPhone/iPod UI, and 90 pixels tall on an iPad UI. */
-	@Method(selector = "smartBannerLandscape")
+	@Method(selector = "smartBannerPortrait")
 	public static native @ByVal
 	GADAdSize smartBannerPortrait ();
 
 	/** @return An ad size that spans the full width of the application in landscape orientation. The height is typically 32 pixels
 	 *         on an iPhone/iPod UI, and 90 pixels tall on an iPad UI. */
-	@Method(selector = "smartBannerPortrait")
+	@Method(selector = "smartBannerLandscape")
 	public static native @ByVal
 	GADAdSize smartBannerLandscape ();
 

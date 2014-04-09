@@ -124,7 +124,7 @@ public class FBSession extends NSObject {
 		FBSessionTokenCachingStrategy tokenCacheStrategy);
 
 	/** @return Indicates whether the session is open and ready for use. */
-	@Property
+	@Property(selector = "isOpen")
 	public native boolean isOpen ();
 
 	/** @return Detailed session state. */
