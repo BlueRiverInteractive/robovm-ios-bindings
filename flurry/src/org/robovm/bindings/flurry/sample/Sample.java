@@ -8,7 +8,7 @@ import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
-import org.robovm.bindings.flurry.Flurry;
+import org.robovm.bindings.flurry.analytics.Flurry;
 
 /** Basic usage of the Flurry Analytics SDK. */
 public class Sample extends UIApplicationDelegateAdapter {

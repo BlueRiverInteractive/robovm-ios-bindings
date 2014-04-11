@@ -6,7 +6,8 @@
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<libs>
-		<lib>libs/libflurry.a</lib>
+		<lib>libs/libflurry.a</lib>		<!-- Analytics SDK -->
+		<lib>libs/libflurryads.a</lib>	<!-- Ads SDK -->
 	</libs>
 	<frameworks>
 		<framework>CoreGraphics</framework>
@@ -15,6 +16,6 @@
 		<framework>UIKit</framework>
 	</frameworks>
 	<weakFrameworks>
-	    <framework>AdSupport</framework>
+		<framework>AdSupport</framework>
 	</weakFrameworks>
 </config>
