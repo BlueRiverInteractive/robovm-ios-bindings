@@ -9,7 +9,7 @@ public class GADInterstitialDelegateAdapter extends NSObject implements GADInter
 	}
 
 	@Override
-	public void didFailToReceiveAd (GADInterstitial ad, GADErrorCode error) {
+	public void didFailToReceiveAd (GADInterstitial ad, GADRequestError error) {
 	}
 
 	@Override

@@ -14,7 +14,7 @@ interface GADInterstitialDelegate extends NSObjectProtocol {
 	/** Sent when an interstitial ad request completed without an interstitial to show. This is common since interstitials are shown
 	 * sparingly to users. */
 	@Method(selector = "interstitial:didFailToReceiveAdWithError:")
-	void didFailToReceiveAd (GADInterstitial ad, GADErrorCode error);
+	void didFailToReceiveAd (GADInterstitial ad, GADRequestError error);
 
 	/** Sent just before presenting an interstitial. After this method finishes the interstitial will animate onto the screen. Use
 	 * this opportunity to stop animations and save the state of your application in case the user leaves while the interstitial is
