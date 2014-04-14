@@ -21,6 +21,7 @@
 	    <framework>GoogleOpenSource</framework>
 	    <framework>GooglePlayGames</framework>
 	    <framework>GooglePlus</framework>
+	    <framework>AddressBook</framework>
 		<framework>AssetsLibrary</framework>
 		<framework>CoreData</framework>
 		<framework>CoreGraphics</framework>
