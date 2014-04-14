@@ -2,8 +2,12 @@
 package org.robovm.bindings.facebook;
 
 import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSDate;
+import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSMutableDictionary;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.foundation.NSURL;
 import org.robovm.bindings.facebook.session.FBSessionLoginType;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
@@ -19,82 +23,54 @@ public class FBAccessTokenData extends NSObject {
 	private FBAccessTokenData () {
 	}
 
-	/*
-	 * !
-	 * 
-	 * @method
-	 * 
-	 * @abstract Creates an FBAccessTokenData from an App Link provided by the Facebook application or nil if the url is not valid.
+	/** Creates an FBAccessTokenData from an App Link provided by the Facebook application or {@code null} if the url is not valid.
 	 * 
 	 * @param url The url provided.
 	 * 
 	 * @param appID needed in order to verify URL format.
 	 * 
-	 * @param urlSchemeSuffix needed in order to verify URL format.
-	 */
-	// + (FBAccessTokenData *) createTokenFromFacebookURL:(NSURL *)url appID:(NSString *)appID urlSchemeSuffix:(NSString
-// *)urlSchemeSuffix;
+	 * @param urlSchemeSuffix needed in order to verify URL format. */
+	@Method(selector = "createTokenFromFacebookURL:appID:urlSchemeSuffix:")
+	public static native FBAccessTokenData create (NSURL url, String appID, String urlSchemeSuffix);
 
-	/*
-	 * !
+	/** Creates an FBAccessTokenData from a dictionary or returns {@code null} if required data is missing.
 	 * 
-	 * @method
-	 * 
-	 * @abstract Creates an FBAccessTokenData from a dictionary or returns nil if required data is missing.
-	 * 
-	 * @param dictionary the dictionary with FBSessionTokenCachingStrategy keys.
-	 */
-	// + (FBAccessTokenData *) createTokenFromDictionary:(NSDictionary *)dictionary;
+	 * @param dictionary the dictionary with FBSessionTokenCachingStrategy keys. */
+	@Method(selector = "createTokenFromDictionary:")
+	public static native FBAccessTokenData create (NSDictionary<?, ?> dictionary);
 
-	/*
-	 * !
+	/** Creates an FBAccessTokenData from existing information or returns {@code null} if required data is missing.
 	 * 
-	 * @method
+	 * @param accessToken The token string. If {@code null} or empty, this method will return {@code null}.
 	 * 
-	 * @abstract Creates an FBAccessTokenData from existing information or returns nil if required data is missing.
+	 * @param permissions The permissions set. A value of {@code null} indicates basic permissions.
 	 * 
-	 * @param accessToken The token string. If nil or empty, this method will return nil.
-	 * 
-	 * @param permissions The permissions set. A value of nil indicates basic permissions.
-	 * 
-	 * @param expirationDate The expiration date. A value of nil defaults to `[NSDate distantFuture]`.
+	 * @param expirationDate The expiration date. A value of {@code null} defaults to {@link NSDate#distantFuture()}.
 	 * 
 	 * @param loginType The login source of the token.
 	 * 
-	 * @param refreshDate The date that token was last refreshed. A value of nil defaults to `[NSDate date]`.
-	 */
-	// + (FBAccessTokenData *) createTokenFromString:(NSString *)accessToken
-	// permissions:(NSArray *)permissions
-	// expirationDate:(NSDate *)expirationDate
-	// loginType:(FBSessionLoginType)loginType
-	// refreshDate:(NSDate *)refreshDate;
+	 * @param refreshDate The date that token was last refreshed. A value of {@code null} defaults to {@link NSDate#date()}. */
+	@Method(selector = "createTokenFromString:permissions:expirationDate:loginType:refreshDate:")
+	public static native FBAccessTokenData create (String accessToken, NSArray<NSString> permissions, NSDate expirationDate,
+		FBSessionLoginType loginType, NSDate refreshDate);
 
-	/*
-	 * !
+	/** Creates an FBAccessTokenData from existing information or returns {@code null} if required data is missing.
 	 * 
-	 * @method
+	 * @param accessToken The token string. If {@code null} or empty, this method will return {@code null}.
 	 * 
-	 * @abstract Creates an FBAccessTokenData from existing information or returns nil if required data is missing.
+	 * @param permissions The permissions set. A value of {@code null} indicates basic permissions.
 	 * 
-	 * @param accessToken The token string. If nil or empty, this method will return nil.
-	 * 
-	 * @param permissions The permissions set. A value of nil indicates basic permissions.
-	 * 
-	 * @param expirationDate The expiration date. A value of nil defaults to `[NSDate distantFuture]`.
+	 * @param expirationDate The expiration date. A value of {@code null} defaults to {@link NSDate#distantFuture()}.
 	 * 
 	 * @param loginType The login source of the token.
 	 * 
-	 * @param refreshDate The date that token was last refreshed. A value of nil defaults to `[NSDate date]`.
+	 * @param refreshDate The date that token was last refreshed. A value of {@code null} defaults to {@link NSDate#date()}.
 	 * 
-	 * @param permissionsRefreshDate The date the permissions were last refreshed. A value of nil defaults to `[NSDate
-	 * distantPast]`.
-	 */
-	// + (FBAccessTokenData *) createTokenFromString:(NSString *)accessToken
-	// permissions:(NSArray *)permissions
-	// expirationDate:(NSDate *)expirationDate
-	// loginType:(FBSessionLoginType)loginType
-	// refreshDate:(NSDate *)refreshDate
-	// permissionsRefreshDate:(NSDate *)permissionsRefreshDate;
+	 * @param permissionsRefreshDate The date the permissions were last refreshed. A value of {@code null} defaults to
+	 *           {@link NSDate#distantPast()}. */
+	@Method(selector = "createTokenFromString:permissions:expirationDate:loginType:refreshDate:permissionsRefreshDate:")
+	public static native FBAccessTokenData create (String accessToken, NSArray<NSString> permissions, NSDate expirationDate,
+		FBSessionLoginType loginType, NSDate refreshDate, NSDate permissionsRefreshDate);
 
 	/** @return a dictionary representation of this instance. This is provided for backwards compatibility with previous access token
 	 *         related APIs that used a NSDictionary.
@@ -102,17 +78,16 @@ public class FBAccessTokenData extends NSObject {
 	@Method(selector = "dictionary")
 	public native NSMutableDictionary<?, ?> getDictionary ();
 
-	/*
-	 * !
+	@Override
+	public boolean equals (Object obj) {
+		return super.equals(obj) && obj instanceof FBAccessTokenData && equals(obj);
+	}
+
+	/** @return a Boolean value that indicates whether a given object is an FBAccessTokenData object and exactly equal the receiver.
 	 * 
-	 * @method
-	 * 
-	 * @abstract Returns a Boolean value that indicates whether a given object is an FBAccessTokenData object and exactly equal the
-	 * receiver.
-	 * 
-	 * @param accessTokenData the data to compare to the receiver.
-	 */
-	// - (BOOL) isEqualToAccessTokenData:(FBAccessTokenData *)accessTokenData;
+	 * @param accessTokenData the data to compare to the receiver. */
+	@Method(selector = "isEqualToAccessTokenData:")
+	public native boolean equals (FBAccessTokenData other);
 
 	/** @return the access token String. */
 	@Property
@@ -125,23 +100,16 @@ public class FBAccessTokenData extends NSObject {
 	/** @return the login type associated with the token. */
 	@Property
 	public native FBSessionLoginType getLoginType ();
-	/*
-	 * !
-	 * 
-	 * @abstract returns the expiration date of the access token.
-	 */
-	// @property (readonly, nonatomic, copy) NSDate *expirationDate;
-	/*
-	 * !
-	 * 
-	 * @abstract returns the date the token was last refreshed.
-	 */
-	// @property (readonly, nonatomic, copy) NSDate *refreshDate;
 
-	/*
-	 * !
-	 * 
-	 * @abstract returns the date the permissions were last refreshed.
-	 */
-	// @property (readonly, nonatomic, copy) NSDate *permissionsRefreshDate;
+	/** @return the expiration date of the access token. */
+	@Property
+	public native NSDate getExpirationDate ();
+
+	/** @return the date the token was last refreshed. */
+	@Property
+	public native NSDate getRefreshDate ();
+
+	/** @return the date the permissions were last refreshed. */
+	@Property
+	public native NSDate getPermissionsRefreshDate ();
 }

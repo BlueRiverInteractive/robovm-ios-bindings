@@ -1,9 +1,12 @@
 
 package org.robovm.bindings.facebook;
 
+import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.bindings.facebook.session.FBSession;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
+import org.robovm.rt.bro.annotation.GlobalValue;
 
 /** Client-side event logging for specialized application analytics available through Facebook App Insights and for use with
  * Facebook Ads conversion tracking and optimization.
@@ -18,7 +21,7 @@ import org.robovm.objc.annotation.NativeClass;
  * 
  * + Methods that control the way in which events are flushed out to the Facebook servers.
  * 
- * Here are some important characteristics of the logging mechanism provided by `FBAppEvents`:
+ * Here are some important characteristics of the logging mechanism provided by FBAppEvents:
  * 
  * + Events are not sent immediately when logged. They're cached and flushed out to the Facebook servers in a number of
  * situations: - when an event count threshold is passed (currently 100 logged events). - when a time threshold is passed
@@ -27,10 +30,10 @@ import org.robovm.objc.annotation.NativeClass;
  * + Events will be accumulated when the app is in a disconnected state, and sent when the connection is restored and one of the
  * above 'flush' conditions are met.
  * 
- * + The `FBAppEvents` class in thread-safe in that events may be logged from any of the app's threads.
+ * + The FBAppEvents class in thread-safe in that events may be logged from any of the app's threads.
  * 
- * + The developer can set the `flushBehavior` on `FBAppEvents` to force the flushing of events to only occur on an explicit call
- * to the `flush` method.
+ * + The developer can set the flushBehavior on FBAppEvents to force the flushing of events to only occur on an explicit call to
+ * the {@link #flush()} method.
  * 
  * + The developer can turn on console debug output for event logging and flushing to the server by using the
  * `FBLoggingBehaviorAppEvents` value in `[FBSettings setLoggingBehavior:]`.
@@ -53,9 +56,9 @@ public class FBAppEvents extends NSObject {
 // extern NSString *const FBAppEventsLoggingResultNotification;
 //
 //
-// // Predefined event names for logging events common to many apps. Logging occurs through the `logEvent` family of methods on
-// `FBAppEvents`.
-// // Common event parameters are provided in the `FBAppEventsParameterNames*` constants.
+// // Predefined event names for logging events common to many apps. Logging occurs through the logEvent family of methods on
+// FBAppEvents.
+// // Common event parameters are provided in the FBAppEventsParameterNames* constants.
 //
 // // General purpose
 //
@@ -113,8 +116,8 @@ public class FBAppEvents extends NSObject {
 //
 //
 //
-// // Predefined event name parameters for common additional information to accompany events logged through the `logEvent` family
-// // of methods on `FBAppEvents`. Common event names are provided in the `FBAppEventName*` constants.
+// // Predefined event name parameters for common additional information to accompany events logged through the logEvent family
+// // of methods on FBAppEvents. Common event names are provided in the FBAppEventName* constants.
 //
 // /*! Parameter key used to specify currency used with logged event. E.g. "USD", "EUR", "GBP". See ISO-4217 for specific values.
 // One reference for these is <http://en.wikipedia.org/wiki/ISO_4217>. */
@@ -155,24 +158,15 @@ public class FBAppEvents extends NSObject {
 // /*! Parameter key used to specify a description appropriate to the event being logged. E.g., the name of the achievement
 // unlocked in the `FBAppEventNameAchievementUnlocked` event. */
 // extern NSString *const FBAppEventParameterNameDescription;
-//
-//
-//
-// // Predefined values to assign to event parameters that accompany events logged through the `logEvent` family
-// // of methods on `FBAppEvents`. Common event parameters are provided in the `FBAppEventParameterName*` constants.
-//
-// /*! Yes-valued parameter value to be used with parameter keys that need a Yes/No value */
-// extern NSString *const FBAppEventParameterValueYes;
-//
-// /*! No-valued parameter value to be used with parameter keys that need a Yes/No value */
-// extern NSString *const FBAppEventParameterValueNo;
-//
-//
 
-//
-// /*
-// * Basic event logging
-// */
+	/** True-valued parameter value to be used with parameter keys that need a True/False value */
+	@GlobalValue(symbol = "FBAppEventParameterValueYes")
+	public static native String ParameterValueTrue ();
+
+	/** False-valued parameter value to be used with parameter keys that need a True/False value */
+	@GlobalValue(symbol = "FBAppEventParameterValueNo")
+	public static native String ParameterValueFalse ();
+
 //
 // /*!
 //
@@ -182,7 +176,7 @@ public class FBAppEvents extends NSObject {
 // Log an event with just an eventName.
 //
 // @param eventName The name of the event to record. Limitations on number of events and name length
-// are given in the `FBAppEvents` documentation.
+// are given in the FBAppEvents documentation.
 //
 // */
 // + (void)logEvent:(NSString *)eventName;
@@ -195,7 +189,7 @@ public class FBAppEvents extends NSObject {
 // Log an event with an eventName and a numeric value to be aggregated with other events of this name.
 //
 // @param eventName The name of the event to record. Limitations on number of events and name length
-// are given in the `FBAppEvents` documentation. Common event names are provided in `FBAppEventName*` constants.
+// are given in the FBAppEvents documentation. Common event names are provided in FBAppEventName* constants.
 //
 // @param valueToSum Amount to be aggregated into all events of this eventName, and App Insights will report
 // the cumulative and average value of this amount.
@@ -213,12 +207,12 @@ public class FBAppEvents extends NSObject {
 // Parameter limitations are described above.
 //
 // @param eventName The name of the event to record. Limitations on number of events and name construction
-// are given in the `FBAppEvents` documentation. Common event names are provided in `FBAppEventName*` constants.
+// are given in the FBAppEvents documentation. Common event names are provided in FBAppEventName* constants.
 //
 // @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must
 // be NSString's, and the values are expected to be NSString or NSNumber. Limitations on the number of
-// parameters and name construction are given in the `FBAppEvents` documentation. Commonly used parameter names
-// are provided in `FBAppEventParameterName*` constants.
+// parameters and name construction are given in the FBAppEvents documentation. Commonly used parameter names
+// are provided in `FBAppEventParameterName* constants.
 // */
 // + (void)logEvent:(NSString *)eventName
 // parameters:(NSDictionary *)parameters;
@@ -232,15 +226,15 @@ public class FBAppEvents extends NSObject {
 // and a set of key/value pairs in the parameters dictionary.
 //
 // @param eventName The name of the event to record. Limitations on number of events and name construction
-// are given in the `FBAppEvents` documentation. Common event names are provided in `FBAppEventName*` constants.
+// are given in the FBAppEvents documentation. Common event names are provided in FBAppEventName* constants.
 //
 // @param valueToSum Amount to be aggregated into all events of this eventName, and App Insights will report
 // the cumulative and average value of this amount.
 //
 // @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must
 // be NSString's, and the values are expected to be NSString or NSNumber. Limitations on the number of
-// parameters and name construction are given in the `FBAppEvents` documentation. Commonly used parameter names
-// are provided in `FBAppEventParameterName*` constants.
+// parameters and name construction are given in the FBAppEvents documentation. Commonly used parameter names
+// are provided in FBAppEventParameterName* constants.
 //
 // */
 // + (void)logEvent:(NSString *)eventName
@@ -255,22 +249,22 @@ public class FBAppEvents extends NSObject {
 // @abstract
 // Log an event with an eventName, a numeric value to be aggregated with other events of this name,
 // and a set of key/value pairs in the parameters dictionary. Providing session lets the developer
-// target a particular <FBSession>. If nil is provided, then `[FBSession activeSession]` will be used.
+// target a particular {@link FBSession}. If nil is provided, then {@link FBSession#getActiveSession()} will be used.
 //
 // @param eventName The name of the event to record. Limitations on number of events and name construction
-// are given in the `FBAppEvents` documentation. Common event names are provided in `FBAppEventName*` constants.
+// are given in the FBAppEvents documentation. Common event names are provided in FBAppEventName* constants.
 //
 // @param valueToSum Amount to be aggregated into all events of this eventName, and App Insights will report
-// the cumulative and average value of this amount. Note that this is an NSNumber, and a value of `nil` denotes
+// the cumulative and average value of this amount. Note that this is an NSNumber, and a value of {@code null} denotes
 // that this event doesn't have a value associated with it for summation.
 //
 // @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must
 // be NSString's, and the values are expected to be NSString or NSNumber. Limitations on the number of
-// parameters and name construction are given in the `FBAppEvents` documentation. Commonly used parameter names
-// are provided in `FBAppEventParameterName*` constants.
+// parameters and name construction are given in the FBAppEvents documentation. Commonly used parameter names
+// are provided in FBAppEventParameterName* constants.
 //
-// @param session <FBSession> to direct the event logging to, and thus be logged with whatever user (if any)
-// is associated with that <FBSession>.
+// @param session {@link FBSession} to direct the event logging to, and thus be logged with whatever user (if any)
+// is associated with that {@link FBSession}.
 // */
 // + (void)logEvent:(NSString *)eventName
 // valueToSum:(NSNumber *)valueToSum
@@ -295,7 +289,7 @@ public class FBAppEvents extends NSObject {
 // @param currency Currency, is denoted as, e.g. "USD", "EUR", "GBP". See ISO-4217 for
 // specific values. One reference for these is <http://en.wikipedia.org/wiki/ISO_4217>.
 //
-// @discussion This event immediately triggers a flush of the `FBAppEvents` event queue, unless the `flushBehavior` is set
+// @discussion This event immediately triggers a flush of the FBAppEvents event queue, unless the flushBehavior is set
 // to `FBAppEventsFlushBehaviorExplicitOnly`.
 //
 // */
@@ -318,94 +312,50 @@ public class FBAppEvents extends NSObject {
 //
 // @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must
 // be NSString's, and the values are expected to be NSString or NSNumber. Limitations on the number of
-// parameters and name construction are given in the `FBAppEvents` documentation. Commonly used parameter names
-// are provided in `FBAppEventParameterName*` constants.
+// parameters and name construction are given in the FBAppEvents documentation. Commonly used parameter names
+// are provided in FBAppEventParameterName* constants.
 //
-// @discussion This event immediately triggers a flush of the `FBAppEvents` event queue, unless the `flushBehavior` is set
-// to `FBAppEventsFlushBehaviorExplicitOnly`.
+// @discussion This event immediately triggers a flush of the FBAppEvents event queue, unless the flushBehavior is set
+// to {@link FBAppEventsFlushBehavior#ExplicitOnly}.
 //
 // */
 // + (void)logPurchase:(double)purchaseAmount
 // currency:(NSString *)currency
 // parameters:(NSDictionary *)parameters;
-//
-// /*!
-//
-// @method
-//
-// @abstract
-// Log a purchase of the specified amount, in the specified currency, also providing a set of
-// additional characteristics describing the purchase, as well as an <FBSession> to log to.
-//
-// @param purchaseAmount Purchase amount to be logged, as expressed in the specified currency.This value
-// will be rounded to the thousandths place (e.g., 12.34567 becomes 12.346).
-//
-// @param currency Currency, is denoted as, e.g. "USD", "EUR", "GBP". See ISO-4217 for
-// specific values. One reference for these is <http://en.wikipedia.org/wiki/ISO_4217>.
-//
-// @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must
-// be NSString's, and the values are expected to be NSString or NSNumber. Limitations on the number of
-// parameters and name construction are given in the `FBAppEvents` documentation. Commonly used parameter names
-// are provided in `FBAppEventParameterName*` constants.
-//
-// @param session <FBSession> to direct the event logging to, and thus be logged with whatever user (if any)
-// is associated with that <FBSession>. A value of `nil` will use `[FBSession activeSession]`.
-//
-// @discussion This event immediately triggers a flush of the `FBAppEvents` event queue, unless the `flushBehavior` is set
-// to `FBAppEventsFlushBehaviorExplicitOnly`.
-//
-// */
-// + (void)logPurchase:(double)purchaseAmount
-// currency:(NSString *)currency
-// parameters:(NSDictionary *)parameters
-// session:(FBSession *)session;
-//
-// /*!
-// @method
-//
-// @abstract This method has been replaced by [FBSettings limitEventAndDataUsage] */
-// + (BOOL)limitEventUsage __attribute__ ((deprecated("use [FBSettings limitEventAndDataUsage] instead")));
-//
-// /*!
-// @method
-//
-// @abstract This method has been replaced by [FBSettings setLimitEventUsage] */
-// + (void)setLimitEventUsage:(BOOL)limitEventUsage __attribute__
-// ((deprecated("use [FBSettings setLimitEventAndDataUsage] instead")));
-//
-// /*!
-//
-// @method
-//
-// @abstract
-// Notifies the events system that the app has launched & logs an activatedApp event. Should typically be placed in the app
-// delegates' `applicationDidBecomeActive:` method.
-// */
-// + (void)activateApp;
-//
-// /*
-// * Control over event batching/flushing
-// */
-//
-// /*!
-//
-// @method
-//
-// @abstract
-// Get the current event flushing behavior specifying when events are sent back to Facebook servers.
-// */
-// + (FBAppEventsFlushBehavior)flushBehavior;
-//
-// /*!
-//
-// @method
-//
-// @abstract
-// Set the current event flushing behavior specifying when events are sent back to Facebook servers.
-//
-// @param flushBehavior The desired `FBAppEventsFlushBehavior` to be used.
-// */
-// + (void)setFlushBehavior:(FBAppEventsFlushBehavior)flushBehavior;
+
+	/** This event immediately triggers a flush of the {@link FBAppEvents} event queue, unless the flushBehavior is set to
+	 * {@link FBAppEventsFlushBehavior#ExplicitOnly}.
+	 * 
+	 * Log a purchase of the specified amount, in the specified currency, also providing a set of additional characteristics
+	 * describing the purchase, as well as an {@link FBSession} to log to.
+	 * @param purchaseAmount Purchase amount to be logged, as expressed in the specified currency.This value will be rounded to the
+	 *           thousandths place (e.g., 12.34567 becomes 12.346).
+	 * @param currency Currency, is denoted as, e.g. "USD", "EUR", "GBP". See ISO-4217 for specific values. One reference for these
+	 *           is <http://en.wikipedia.org/wiki/ISO_4217>.
+	 * @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must be NSString's, and the
+	 *           values are expected to be NSString or NSNumber. Limitations on the number of parameters and name construction are
+	 *           given in the FBAppEvents documentation. Commonly used parameter names are provided in FBAppEventParameterName*
+	 *           constants.
+	 * @param session {@link FBSession} to direct the event logging to, and thus be logged with whatever user (if any) is
+	 *           associated with that {@link FBSession}. A value of {@code null} will use {@link FBSession#getActiveSession()}. */
+
+	@Method(selector = "logPurchase:currency:parameters:session:")
+	public static native void logPurchase (double purchaseAmount, String currency, NSDictionary<?, ?> parameters, FBSession session);
+
+	/** Notifies the events system that the app has launched & logs an activatedApp event. Should typically be placed in the app
+	 * delegates' `applicationDidBecomeActive:` method. */
+
+	@Method(selector = "activateApp")
+	public static native void activateApp ();
+
+	/** @return Get the current event flushing behavior specifying when events are sent back to Facebook servers. */
+	@Method(selector = "flushBehavior")
+	public static native FBAppEventsFlushBehavior getFlushBehavior ();
+
+	/** Set the current event flushing behavior specifying when events are sent back to Facebook servers.
+	 * @param flushBehavior The desired {@link FBAppEventsFlushBehavior} to be used. */
+	@Method(selector = "setFlushBehavior:")
+	public static native void setFlushBehavior (FBAppEventsFlushBehavior flushBehavior);
 
 	/** Explicitly kick off flushing of events to Facebook. This is an asynchronous method, but it does initiate an immediate kick
 	 * off. Server failures will be reported through the NotificationCenter with notification ID

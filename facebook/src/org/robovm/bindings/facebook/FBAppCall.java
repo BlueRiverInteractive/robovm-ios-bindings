@@ -130,21 +130,23 @@ public class FBAppCall extends NSObject {
 
 	/** Call this method from the main thread to fetch deferred applink data. This may require a network round trip. If successful,
 	 * {@link UIApplication#openURL(NSURL)} is invoked with the link data. Otherwise, the fallbackHandler will be dispatched to the
-	 * main thread.
-	 * @param fallbackHandler the handler to be invoked if applink data could not be opened.
+	 * main thread. This method should only be called from a location that occurs after any launching URL has been processed (e.g.,
+	 * you should call this method from your application delegate's applicationDidBecomeActive:) to avoid duplicate invocations of
+	 * openURL:.
 	 * 
-	 *           the fallbackHandler may contain an NSError instance to capture any errors. In the common case where there simply
-	 *           was no app link data, the NSError instance will be {@code null}.
+	 * If you must call this from the delegate's didFinishLaunchingWithOptions: you should only do so if the application is not
+	 * being launched by a URL. For example,
 	 * 
-	 *           This method should only be called from a location that occurs after any launching URL has been processed (e.g.,
-	 *           you should call this method from your application delegate's applicationDidBecomeActive:) to avoid duplicate
-	 *           invocations of openURL:.
-	 * 
-	 *           If you must call this from the delegate's didFinishLaunchingWithOptions: you should only do so if the application
-	 *           is not being launched by a URL. For example,
-	 * 
-	 *           if (launchOptions[UIApplicationLaunchOptionsURLKey] == nil) { [FBAppCall openDeferredAppLink:^(NSError *error) {
-	 *           // .... } } */
+	 * <pre>
+	 * if (launchOptions[UIApplicationLaunchOptionsURLKey] == nil) { 
+	 * 	[FBAppCall openDeferredAppLink:^(NSError *error) { 
+	 * 		// ...
+	 * 	} 
+	 * }
+	 * </pre>
+	 * @param fallbackHandler the handler to be invoked if applink data could not be opened. The fallbackHandler may contain an
+	 *           NSError instance to capture any errors. In the common case where there simply was no app link data, the NSError
+	 *           instance will be {@code null}. */
 	@Method(selector = "openDeferredAppLink:")
 	public static native void openDeferredAppLink (@Block FBAppLinkFallbackHandler fallbackHandler);
 }
