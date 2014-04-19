@@ -9,8 +9,11 @@ import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.admob.GADInterstitial;
 import org.robovm.bindings.admob.GADInterstitialDelegateAdapter;
+import org.robovm.bindings.admob.GADRequest;
+import org.robovm.bindings.admob.GADRequestError;
 
 public class Sample extends UIApplicationDelegateAdapter {
+	private static final String AD_UNIT_ID = "YOUR_AD_UNIT_ID";
 
 	private UIWindow window;
 	private UIViewController rootViewController;
@@ -20,21 +23,27 @@ public class Sample extends UIApplicationDelegateAdapter {
 		rootViewController = new UIViewController();
 
 		GADInterstitial interstitial = new GADInterstitial();
-		interstitial.setAdUnitID("");
+		interstitial.setAdUnitID(AD_UNIT_ID);
 
 		interstitial.setDelegate(new GADInterstitialDelegateAdapter() {
 			@Override
 			public void didReceiveAd (GADInterstitial ad) {
 				System.out.println("Did receive ad.");
 			}
+
+			@Override
+			public void didFailToReceiveAd (GADInterstitial ad, GADRequestError error) {
+				System.out.println(error.description());
+				System.out.println(error.getErrorCode());
+			}
 		});
 
 		window = new UIWindow(UIScreen.getMainScreen().getBounds());
 		window.setRootViewController(rootViewController);
-// window.addSubview(rootViewController.getView());
+		window.addSubview(rootViewController.getView());
 		window.makeKeyAndVisible();
 
-// interstitial.loadRequest(GADRequest.request());
+		interstitial.loadRequest(GADRequest.request());
 		interstitial.present(rootViewController);
 	}
 

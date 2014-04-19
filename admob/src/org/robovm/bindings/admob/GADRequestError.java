@@ -3,17 +3,23 @@ package org.robovm.bindings.admob;
 
 import org.robovm.apple.foundation.NSError;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.GlobalValue;
-import org.robovm.rt.bro.annotation.Library;
 
 /** This class represents the error generated due to invalid request parameters. */
-@Library(Library.INTERNAL)
 @NativeClass
 public class GADRequestError extends NSError {
 	/** Google AdMob Ads error domain. */
-	@GlobalValue(symbol = "kGADErrorDomain")
-	public static native String errorDomain ();
+	public static String errorDomain () {
+		return GADRequestErrorConstants.errorDomain();
+	}
 
 	private GADRequestError () {
+	}
+
+	public GADErrorCode getErrorCode () {
+		long code = code();
+		if (code >= 0 && code < GADErrorCode.values().length) {
+			return GADErrorCode.values()[(int)code];
+		}
+		return null;
 	}
 }
