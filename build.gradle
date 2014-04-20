@@ -1,0 +1,37 @@
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//        mavenLocal()
+//    }
+//    dependencies {
+//        classpath 'com.github.jtakakura:gradle-robovm-plugin:0.0.7'
+//    }
+//}
+//
+//allprojects {
+//    apply plugin: "eclipse"
+//    apply plugin: "idea"
+//
+//    version = '1.0'
+//    ext {
+//        roboVMVersion = '0.0.12-SNAPSHOT'
+//    }
+//
+//    repositories {
+//        mavenLocal()
+//        mavenCentral()
+//        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+//    }
+//}
+
+project(':in-app-purchase') {
+	apply plugin: 'java'
+	apply plugin: 'robovm'
+	
+	configurations { natives }
+	
+	dependencies {
+		compile "org.robovm:robovm-rt:${roboVMVersion}"
+		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
+	}
+}
