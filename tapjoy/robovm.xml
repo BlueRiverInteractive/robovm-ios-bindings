@@ -12,7 +12,7 @@
 		</resource>
 	</resources>
 	<libs>
-		<lib>libs/Tapjoy.a</lib>
+		<lib>libs/libtapjoy.a</lib>
 	</libs>
 	<frameworks>
 		<framework>CFNetwork</framework>
