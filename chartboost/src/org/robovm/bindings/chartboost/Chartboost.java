@@ -49,4 +49,7 @@ public class Chartboost extends NSObject {
 
 	@Property(strongRef = true)
 	public native void setDelegate (ChartboostDelegate delegate);
+
+	@Property
+	public native ChartboostDelegate getDelegate ();
 }
