@@ -259,6 +259,19 @@ public class FBSession extends NSObject {
 	 * @param publishPermissions
 	 * @param defaultAudience
 	 * @param handler */
+	public void requestNewPublishPermissions (String[] publishPermissions, FBSessionDefaultAudience defaultAudience,
+		FBSessionRequestPermissionResultHandler handler) {
+		List<NSString> permissions = new ArrayList<NSString>();
+		for (int i = 0; i < publishPermissions.length; i++) {
+			permissions.add(new NSString(publishPermissions[i]));
+		}
+		requestNewPublishPermissions(new NSArray<NSString>(permissions), defaultAudience, handler);
+	}
+
+	/** @see #requestNewPublishPermissions(NSArray, FBSessionDefaultAudience, FBSessionRequestPermissionResultHandler)
+	 * @param publishPermissions
+	 * @param defaultAudience
+	 * @param handler */
 	public void requestNewPublishPermissions (List<String> publishPermissions, FBSessionDefaultAudience defaultAudience,
 		FBSessionRequestPermissionResultHandler handler) {
 		List<NSString> permissions = new ArrayList<NSString>();
@@ -324,7 +337,21 @@ public class FBSession extends NSObject {
 	 * that the user will login, and the session will become open asynchronously. The primary use for this return value is to
 	 * switch-on facebook capabilities in your UX upon startup, in the case where the session is opened via cache.
 	 */
-	// + (BOOL)openActiveSessionWithAllowLoginUI:(BOOL)allowLoginUI;
+	// + (BOOL)openActiveSessionWithAllowLoginUI:(BOOL)allowLoginUI; TODO
+
+	/** @see #openForRead(NSArray, boolean, FBSessionStateHandler)
+	 * @param readPermissions
+	 * @param allowLoginUI
+	 * @param stateChangeHandler
+	 * @return */
+	public static boolean openForRead (String[] readPermissions, boolean allowLoginUI, FBSessionStateHandler stateChangeHandler) {
+		List<NSString> permissions = new ArrayList<NSString>();
+		for (int i = 0; i < readPermissions.length; i++) {
+			permissions.add(new NSString(readPermissions[i]));
+		}
+
+		return openForRead(new NSArray<NSString>(permissions), allowLoginUI, stateChangeHandler);
+	}
 
 	/** @see #openForRead(NSArray, boolean, FBSessionStateHandler)
 	 * @param readPermissions
