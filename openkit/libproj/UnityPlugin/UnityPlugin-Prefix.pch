@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'UnityPlugin' target in the 'UnityPlugin' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
