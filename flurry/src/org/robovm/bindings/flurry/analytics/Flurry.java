@@ -1,10 +1,14 @@
 
 package org.robovm.bindings.flurry.analytics;
 
+import java.util.Map;
+
 import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSException;
+import org.robovm.apple.foundation.NSMutableDictionary;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
@@ -182,8 +186,20 @@ public class Flurry extends NSObject {
 	 * @param eventName Name of the event. For maximum effectiveness, we recommend using a naming scheme that can be easily
 	 *           understood by non-technical people in your business domain.
 	 * @param parameters A map containing Name-Value pairs of parameters. */
-	public static void logEvent (String eventName, NSDictionary<?, ?> parameters) {
+	public static void logEvent (String eventName, NSDictionary<NSString, NSString> parameters) {
 		logEvent(eventName, parameters, false);
+	}
+
+	public static void logEvent (String eventName, Map<String, String> parameters) {
+		if (parameters != null) {
+			NSMutableDictionary<NSString, NSString> nsParams = new NSMutableDictionary<NSString, NSString>();
+			for (java.util.Map.Entry<String, String> entry : parameters.entrySet()) {
+				nsParams.put(new NSString(entry.getKey()), new NSString(entry.getKey()));
+			}
+			logEvent(eventName, nsParams, false);
+		} else {
+			logEvent(eventName, false);
+		}
 	}
 
 	/** <p>
@@ -236,7 +252,7 @@ public class Flurry extends NSObject {
 	 * @param parameters A map containing Name-Value pairs of parameters.
 	 * @param timed Specifies the event will be timed. */
 	@Method(selector = "logEvent:withParameters:timed:")
-	public static native void logEvent (String eventName, NSDictionary<?, ?> parameters, boolean timed);
+	public static native void logEvent (String eventName, NSDictionary<NSString, NSString> parameters, boolean timed);
 
 	/** <p>
 	 * Ends a timed event specified by {@code eventName} and optionally updates parameters with {@code parameters}.
@@ -262,7 +278,7 @@ public class Flurry extends NSObject {
 	 * 
 	 * @param parameters A map containing Name-Value pairs of parameters. */
 	@Method(selector = "endTimedEvent:withParameters:")
-	public static native void endTimedEvent (String eventName, NSDictionary<?, ?> parameters);
+	public static native void endTimedEvent (String eventName, NSDictionary<NSString, NSString> parameters);
 
 	/** <p>
 	 * Explicitly specifies the App Version that Flurry will use to group Analytics data.

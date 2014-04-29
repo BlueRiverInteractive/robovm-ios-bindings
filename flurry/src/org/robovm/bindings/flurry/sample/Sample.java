@@ -21,7 +21,7 @@ public class Sample extends UIApplicationDelegateAdapter {
 		// Track events with parameters.
 		HashMap<String, String> parameters = new HashMap<String, String>();
 		parameters.put("Param_1", "Value_1");
-		Flurry.logEvent("My_special_event", new NSDictionary(parameters));
+		Flurry.logEvent("My_special_event", parameters);
 
 		return true;
 	}
