@@ -14,7 +14,7 @@ import org.robovm.apple.storekit.SKPaymentQueue;
 import org.robovm.apple.storekit.SKPaymentTransaction;
 import org.robovm.apple.storekit.SKProduct;
 import org.robovm.apple.storekit.SKProductsRequest;
-import org.robovm.apple.storekit.SKProductsRequestDelegate;
+import org.robovm.apple.storekit.SKProductsRequestDelegateAdapter;
 import org.robovm.apple.storekit.SKProductsResponse;
 import org.robovm.apple.storekit.SKRequest;
 
@@ -92,7 +92,7 @@ public class InAppPurchaseManager {
 		}
 
 		System.out.println(TAG + "Purchasing product '" + product.getLocalizedTitle() + "'...");
-		SKPayment payment = SKPayment.fromProductIdentifier(product.getProductIdentifier());
+		SKPayment payment = SKPayment.fromProduct(product);
 		SKPaymentQueue.getDefaultQueue().addPayment(payment);
 		purchasingProduct = true;
 	}
@@ -119,9 +119,9 @@ public class InAppPurchaseManager {
 		return requestingProducts;
 	}
 
-	private class RequestDelegate extends SKProductsRequestDelegate.Adapter {
+	private class RequestDelegate extends SKProductsRequestDelegateAdapter {
 		@Override
-		public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
+		public void didReceiveResponse (SKProductsRequest request, SKProductsResponse response) {
 			System.out.println(TAG + "Products successfully received!");
 			requestingProducts = false;
 
@@ -131,7 +131,7 @@ public class InAppPurchaseManager {
 		}
 
 		@Override
-		public void requestFailed (SKRequest request, NSError error) {
+		public void didFail (SKRequest request, NSError error) {
 			System.out.println(TAG + "Products request failed! Error: " + (error != null ? error.toString() : "unknown"));
 			requestingProducts = false;
 

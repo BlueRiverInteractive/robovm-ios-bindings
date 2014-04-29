@@ -28,42 +28,35 @@ import org.robovm.rt.bro.annotation.*;
 import org.robovm.rt.bro.ptr.*;
 import org.robovm.apple.foundation.*;
 import org.robovm.apple.storekit.*;
+import org.robovm.apple.uikit.*;
 /*</imports>*/
 
 /**
  * <div class="javadoc"></div>
  */
 /*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
-/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKProduct/*</name>*/ 
-    extends /*<extends>*/NSObject/*</extends>*/ 
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKStoreProductViewController/*</name>*/ 
+    extends /*<extends>*/UIViewController/*</extends>*/ 
     /*<implements>*//*</implements>*/ {
 
-    /*<ptr>*/public static class SKProductPtr extends Ptr<SKProduct, SKProductPtr> {}/*</ptr>*/
-    /*<bind>*/static { ObjCRuntime.bind(SKProduct.class); }/*</bind>*/
+    /*<ptr>*/public static class SKStoreProductViewControllerPtr extends Ptr<SKStoreProductViewController, SKStoreProductViewControllerPtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKStoreProductViewController.class); }/*</bind>*/
     /*<constants>*//*</constants>*/
     /*<constructors>*/
-    public SKProduct() {}
-    protected SKProduct(SkipInit skipInit) { super(skipInit); }
+    public SKStoreProductViewController() {}
+    protected SKStoreProductViewController(SkipInit skipInit) { super(skipInit); }
     /*</constructors>*/
     /*<properties>*/
-    @Property(selector = "localizedDescription")
-    public native String getLocalizedDescription();
-    @Property(selector = "localizedTitle")
-    public native String getLocalizedTitle();
-    @Property(selector = "price")
-    public native NSDecimalNumber getPrice();
-    @Property(selector = "priceLocale")
-    public native NSLocale getPriceLocale();
-    @Property(selector = "productIdentifier")
-    public native String getProductIdentifier();
-    @Property(selector = "isDownloadable")
-    public native boolean isDownloadable();
-    @Property(selector = "downloadContentLengths")
-    public native NSArray<NSNumber> getDownloadContentLengths();
-    @Property(selector = "downloadContentVersion")
-    public native String getDownloadContentVersion();
+    @Property(selector = "delegate")
+    public native SKStoreProductViewControllerDelegate getDelegate();
+    @Property(selector = "setDelegate:", strongRef = true)
+    public native void setDelegate(SKStoreProductViewControllerDelegate delegate);
     /*</properties>*/
     /*<members>*//*</members>*/
     /*<methods>*/
+    @Method(selector = "loadProductWithParameters:completionBlock:")
+    public static native void loadProduct(NSDictionary<?, ?> parameters, VoidBlock2<Boolean, NSError> block);
+    @GlobalValue(symbol="SKStoreProductParameterITunesItemIdentifier", optional=true)
+    public static native String ProductParameterITunesItemIdentifier();
     /*</methods>*/
 }

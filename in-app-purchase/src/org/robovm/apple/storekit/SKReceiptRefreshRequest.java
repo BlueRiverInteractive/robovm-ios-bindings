@@ -34,36 +34,31 @@ import org.robovm.apple.storekit.*;
  * <div class="javadoc"></div>
  */
 /*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
-/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKProduct/*</name>*/ 
-    extends /*<extends>*/NSObject/*</extends>*/ 
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKReceiptRefreshRequest/*</name>*/ 
+    extends /*<extends>*/SKRequest/*</extends>*/ 
     /*<implements>*//*</implements>*/ {
 
-    /*<ptr>*/public static class SKProductPtr extends Ptr<SKProduct, SKProductPtr> {}/*</ptr>*/
-    /*<bind>*/static { ObjCRuntime.bind(SKProduct.class); }/*</bind>*/
+    /*<ptr>*/public static class SKReceiptRefreshRequestPtr extends Ptr<SKReceiptRefreshRequest, SKReceiptRefreshRequestPtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKReceiptRefreshRequest.class); }/*</bind>*/
     /*<constants>*//*</constants>*/
     /*<constructors>*/
-    public SKProduct() {}
-    protected SKProduct(SkipInit skipInit) { super(skipInit); }
+    public SKReceiptRefreshRequest() {}
+    protected SKReceiptRefreshRequest(SkipInit skipInit) { super(skipInit); }
+    public SKReceiptRefreshRequest(NSDictionary<?, ?> properties) { super((SkipInit) null); initObject(init(properties)); }
     /*</constructors>*/
     /*<properties>*/
-    @Property(selector = "localizedDescription")
-    public native String getLocalizedDescription();
-    @Property(selector = "localizedTitle")
-    public native String getLocalizedTitle();
-    @Property(selector = "price")
-    public native NSDecimalNumber getPrice();
-    @Property(selector = "priceLocale")
-    public native NSLocale getPriceLocale();
-    @Property(selector = "productIdentifier")
-    public native String getProductIdentifier();
-    @Property(selector = "isDownloadable")
-    public native boolean isDownloadable();
-    @Property(selector = "downloadContentLengths")
-    public native NSArray<NSNumber> getDownloadContentLengths();
-    @Property(selector = "downloadContentVersion")
-    public native String getDownloadContentVersion();
+    @Property(selector = "receiptProperties")
+    public native NSDictionary<?, ?> getReceiptProperties();
     /*</properties>*/
     /*<members>*//*</members>*/
     /*<methods>*/
+    @Method(selector = "initWithReceiptProperties:")
+    public native @Pointer long init(NSDictionary<?, ?> properties);
+    @GlobalValue(symbol="SKReceiptPropertyIsExpired", optional=true)
+    public static native String PropertyIsExpired();
+    @GlobalValue(symbol="SKReceiptPropertyIsRevoked", optional=true)
+    public static native String PropertyIsRevoked();
+    @GlobalValue(symbol="SKReceiptPropertyIsVolumePurchase", optional=true)
+    public static native String PropertyIsVolumePurchase();
     /*</methods>*/
 }

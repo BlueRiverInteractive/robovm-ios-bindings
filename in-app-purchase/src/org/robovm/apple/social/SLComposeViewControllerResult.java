@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.robovm.apple.storekit;
+package org.robovm.apple.social;
 
 /*<imports>*/
 import java.io.*;
@@ -26,33 +26,31 @@ import org.robovm.rt.*;
 import org.robovm.rt.bro.*;
 import org.robovm.rt.bro.annotation.*;
 import org.robovm.rt.bro.ptr.*;
-import org.robovm.apple.corefoundation.*;
-import org.robovm.apple.security.*;
+import org.robovm.apple.foundation.*;
+import org.robovm.apple.social.*;
 /*</imports>*/
 
 /**
  * <div class="javadoc"></div>
  */
 /*<annotations>*/@Marshaler(ValuedEnum.AsMachineSizedUIntMarshaler.class)/*</annotations>*/
-public enum /*<name>*/SKPaymentTransactionState/*</name>*/ implements ValuedEnum {
+public enum /*<name>*/SLComposeViewControllerResult/*</name>*/ implements ValuedEnum {
     /*<values>*/
-	 Purchasing(0L),
-	 Purchased(1L),
-	 Failed(2L),
-	 Restored(3L);
+	 Cancelled(0L),
+	 Done(1L);
     /*</values>*/
-    
+	 
     private final long n;
 
-    private /*<name>*/SKPaymentTransactionState/*</name>*/(long n) { this.n = n; }
+    private /*<name>*/SLComposeViewControllerResult/*</name>*/(long n) { this.n = n; }
     public long value() { return n; }
-    public static /*<name>*/SKPaymentTransactionState/*</name>*/ valueOf(long n) {
-        for (/*<name>*/SKPaymentTransactionState/*</name>*/ v : values()) {
+    public static /*<name>*/SLComposeViewControllerResult/*</name>*/ valueOf(long n) {
+        for (/*<name>*/SLComposeViewControllerResult/*</name>*/ v : values()) {
             if (v.n == n) {
                 return v;
             }
         }
         throw new IllegalArgumentException("No constant with value " + n + " found in " 
-            + /*<name>*/SKPaymentTransactionState/*</name>*/.class.getName());
+            + /*<name>*/SLComposeViewControllerResult/*</name>*/.class.getName());
     }
 }

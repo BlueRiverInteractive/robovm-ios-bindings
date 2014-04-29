@@ -34,7 +34,7 @@ import org.robovm.apple.storekit.*;
  * <div class="javadoc"></div>
  */
 /*<annotations>*//*</annotations>*/
-/*<visibility>*/public/*</visibility>*/ interface /*<name>*/SKPaymentTransactionObserver/*</name>*/ 
+/*<visibility>*/public/*</visibility>*/ interface /*<name>*/SKStoreProductViewControllerDelegate/*</name>*/ 
     extends /*<extends>*/NSObjectProtocol/*</extends>*/ 
     /*<implements>*//*</implements>*/ {
 
@@ -45,17 +45,8 @@ import org.robovm.apple.storekit.*;
     
     /*</properties>*/
     /*<methods>*/
-    @Method(selector = "paymentQueue:updatedTransactions:")
-    void updatedTransactions(SKPaymentQueue queue, NSArray<SKPaymentTransaction> transactions);
-    @Method(selector = "paymentQueue:removedTransactions:")
-    void removedTransactions(SKPaymentQueue queue, NSArray<SKPaymentTransaction> transactions);
-    @Method(selector = "paymentQueue:restoreCompletedTransactionsFailedWithError:")
-    void restoreCompletedTransactionsFailed(SKPaymentQueue queue, NSError error);
-    @Method(selector = "paymentQueueRestoreCompletedTransactionsFinished:")
-    void restoreCompletedTransactionsFinished(SKPaymentQueue queue);
-    @Method(selector = "paymentQueue:updatedDownloads:")
-    void updatedDownloads(SKPaymentQueue queue, NSArray<SKDownload> downloads);
-    /*</methods>*/
+    @Method(selector = "productViewControllerDidFinish:")
+    void didFinish(SKStoreProductViewController viewController);
     /*<adapter>*/
     /*</adapter>*/
 }

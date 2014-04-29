@@ -1,31 +1,52 @@
-
+/*
+ * Copyright (C) 2014 Trillian Mobile AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.robovm.apple.storekit;
 
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.BindSelector;
-import org.robovm.objc.annotation.NotImplemented;
-import org.robovm.rt.bro.annotation.Callback;
+/*<imports>*/
+import java.io.*;
+import java.nio.*;
+import java.util.*;
+import org.robovm.objc.*;
+import org.robovm.objc.annotation.*;
+import org.robovm.objc.block.*;
+import org.robovm.rt.*;
+import org.robovm.rt.bro.*;
+import org.robovm.rt.bro.annotation.*;
+import org.robovm.rt.bro.ptr.*;
+import org.robovm.apple.foundation.*;
+import org.robovm.apple.storekit.*;
+/*</imports>*/
 
-public interface SKProductsRequestDelegate extends SKRequestDelegate {
+/**
+ * <div class="javadoc"></div>
+ */
+/*<annotations>*//*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ interface /*<name>*/SKProductsRequestDelegate/*</name>*/ 
+    extends /*<extends>*/SKRequestDelegate/*</extends>*/ 
+    /*<implements>*//*</implements>*/ {
 
-	// - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response
-	// __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	void receivedResponse (SKProductsRequest request, SKProductsResponse response);
-
-	public static class Adapter extends SKRequestDelegate.Adapter implements SKProductsRequestDelegate {
-		@NotImplemented("productsRequest:didReceiveResponse:")
-		@Override
-		public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	static class Callbacks extends SKRequestDelegate.Callbacks {
-		@Callback
-		@BindSelector("productsRequest:didReceiveResponse:")
-		public static void receivedResponse (SKProductsRequestDelegate __self__, Selector __cmd__, SKProductsRequest request,
-			SKProductsResponse response) {
-			__self__.receivedResponse(request, response);
-		}
-	}
+    /*<ptr>*//*</ptr>*/
+    /*<bind>*//*</bind>*/
+    /*<constants>*//*</constants>*/
+    /*<properties>*/
+    
+    /*</properties>*/
+    /*<methods>*/
+    @Method(selector = "productsRequest:didReceiveResponse:")
+    void didReceiveResponse(SKProductsRequest request, SKProductsResponse response);
+    /*<adapter>*/
+    /*</adapter>*/
 }

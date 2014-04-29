@@ -34,34 +34,26 @@ import org.robovm.apple.storekit.*;
  * <div class="javadoc"></div>
  */
 /*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
-/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKProduct/*</name>*/ 
-    extends /*<extends>*/NSObject/*</extends>*/ 
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKMutablePayment/*</name>*/ 
+    extends /*<extends>*/SKPayment/*</extends>*/ 
     /*<implements>*//*</implements>*/ {
 
-    /*<ptr>*/public static class SKProductPtr extends Ptr<SKProduct, SKProductPtr> {}/*</ptr>*/
-    /*<bind>*/static { ObjCRuntime.bind(SKProduct.class); }/*</bind>*/
+    /*<ptr>*/public static class SKMutablePaymentPtr extends Ptr<SKMutablePayment, SKMutablePaymentPtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKMutablePayment.class); }/*</bind>*/
     /*<constants>*//*</constants>*/
     /*<constructors>*/
-    public SKProduct() {}
-    protected SKProduct(SkipInit skipInit) { super(skipInit); }
+    public SKMutablePayment() {}
+    protected SKMutablePayment(SkipInit skipInit) { super(skipInit); }
     /*</constructors>*/
     /*<properties>*/
-    @Property(selector = "localizedDescription")
-    public native String getLocalizedDescription();
-    @Property(selector = "localizedTitle")
-    public native String getLocalizedTitle();
-    @Property(selector = "price")
-    public native NSDecimalNumber getPrice();
-    @Property(selector = "priceLocale")
-    public native NSLocale getPriceLocale();
-    @Property(selector = "productIdentifier")
-    public native String getProductIdentifier();
-    @Property(selector = "isDownloadable")
-    public native boolean isDownloadable();
-    @Property(selector = "downloadContentLengths")
-    public native NSArray<NSNumber> getDownloadContentLengths();
-    @Property(selector = "downloadContentVersion")
-    public native String getDownloadContentVersion();
+    @Property(selector = "setProductIdentifier:")
+    public native void setProductIdentifier(String productIdentifier);
+    @Property(selector = "setRequestData:")
+    public native void setRequestData(NSData requestData);
+    @Property(selector = "setQuantity:")
+    public native void setQuantity(@MachineSizedSInt long quantity);
+    @Property(selector = "setApplicationUsername:")
+    public native void setApplicationUsername(String applicationUsername);
     /*</properties>*/
     /*<members>*//*</members>*/
     /*<methods>*/

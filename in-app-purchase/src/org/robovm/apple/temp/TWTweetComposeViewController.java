@@ -1,6 +1,7 @@
 
 package org.robovm.apple.temp;
 
+import org.robovm.apple.social.SLComposeViewControllerResult;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.ObjCClass;
 import org.robovm.objc.ObjCRuntime;
@@ -8,6 +9,7 @@ import org.robovm.objc.Selector;
 import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
+import org.robovm.objc.block.VoidBlock1;
 import org.robovm.rt.bro.annotation.Bridge;
 import org.robovm.rt.bro.annotation.Library;
 
@@ -30,7 +32,7 @@ public class TWTweetComposeViewController extends UIViewController {
 	}
 
 	@Property(selector = "setCompletionHandler:")
-	public native void setCompletionHandler (@Block SLComposeViewControllerResultHandler completionHandler);
+	public native void setCompletionHandler (@Block VoidBlock1<SLComposeViewControllerResult> completionHandler);
 
 	private static final Selector setInitialText$ = Selector.register("setInitialText:");
 

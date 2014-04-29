@@ -34,36 +34,40 @@ import org.robovm.apple.storekit.*;
  * <div class="javadoc"></div>
  */
 /*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
-/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKProduct/*</name>*/ 
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKDownload/*</name>*/ 
     extends /*<extends>*/NSObject/*</extends>*/ 
     /*<implements>*//*</implements>*/ {
 
-    /*<ptr>*/public static class SKProductPtr extends Ptr<SKProduct, SKProductPtr> {}/*</ptr>*/
-    /*<bind>*/static { ObjCRuntime.bind(SKProduct.class); }/*</bind>*/
+    /*<ptr>*/public static class SKDownloadPtr extends Ptr<SKDownload, SKDownloadPtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKDownload.class); }/*</bind>*/
     /*<constants>*//*</constants>*/
     /*<constructors>*/
-    public SKProduct() {}
-    protected SKProduct(SkipInit skipInit) { super(skipInit); }
+    public SKDownload() {}
+    protected SKDownload(SkipInit skipInit) { super(skipInit); }
     /*</constructors>*/
     /*<properties>*/
-    @Property(selector = "localizedDescription")
-    public native String getLocalizedDescription();
-    @Property(selector = "localizedTitle")
-    public native String getLocalizedTitle();
-    @Property(selector = "price")
-    public native NSDecimalNumber getPrice();
-    @Property(selector = "priceLocale")
-    public native NSLocale getPriceLocale();
-    @Property(selector = "productIdentifier")
-    public native String getProductIdentifier();
-    @Property(selector = "isDownloadable")
-    public native boolean isDownloadable();
-    @Property(selector = "downloadContentLengths")
-    public native NSArray<NSNumber> getDownloadContentLengths();
-    @Property(selector = "downloadContentVersion")
-    public native String getDownloadContentVersion();
+    @Property(selector = "downloadState")
+    public native SKDownloadState getDownloadState();
+    @Property(selector = "contentLength")
+    public native long getContentLength();
+    @Property(selector = "contentIdentifier")
+    public native String getContentIdentifier();
+    @Property(selector = "contentURL")
+    public native NSURL getContentURL();
+    @Property(selector = "contentVersion")
+    public native String getContentVersion();
+    @Property(selector = "error")
+    public native NSError getError();
+    @Property(selector = "progress")
+    public native float getProgress();
+    @Property(selector = "timeRemaining")
+    public native double getTimeRemaining();
+    @Property(selector = "transaction")
+    public native SKPaymentTransaction getTransaction();
     /*</properties>*/
     /*<members>*//*</members>*/
     /*<methods>*/
+    @GlobalValue(symbol="SKDownloadTimeRemainingUnknown", optional=true)
+    public static native double TimeRemainingUnknown();
     /*</methods>*/
 }

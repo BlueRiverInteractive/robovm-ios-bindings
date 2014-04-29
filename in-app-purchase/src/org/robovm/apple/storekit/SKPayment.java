@@ -1,81 +1,63 @@
-
+/*
+ * Copyright (C) 2014 Trillian Mobile AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.robovm.apple.storekit;
 
-import org.robovm.apple.foundation.NSObject;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.ObjCSuper;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
+/*<imports>*/
+import java.io.*;
+import java.nio.*;
+import java.util.*;
+import org.robovm.objc.*;
+import org.robovm.objc.annotation.*;
+import org.robovm.objc.block.*;
+import org.robovm.rt.*;
+import org.robovm.rt.bro.*;
+import org.robovm.rt.bro.annotation.*;
+import org.robovm.rt.bro.ptr.*;
+import org.robovm.apple.foundation.*;
+import org.robovm.apple.storekit.*;
+/*</imports>*/
 
-@Library("StoreKit")
-@NativeClass
-public class SKPayment extends NSObject {
+/**
+ * <div class="javadoc"></div>
+ */
+/*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKPayment/*</name>*/ 
+    extends /*<extends>*/NSObject/*</extends>*/ 
+    /*<implements>*//*</implements>*/ {
 
-	static {
-		ObjCRuntime.bind(SKPayment.class);
-	}
-
-	private static final ObjCClass objCClass = ObjCClass.getByType(/* <name> */SKPayment /* </name> */.class);
-
-	// + (id)paymentWithProductIdentifier:(NSString *)identifier
-// __OSX_AVAILABLE_BUT_DEPRECATED(__MAC_NA,__MAC_NA,__IPHONE_3_0,__IPHONE_5_0);
-	private static final Selector paymentWithProductIdentifier$ = Selector.register("paymentWithProductIdentifier:");
-
-	@Bridge
-	private native static SKPayment objc_paymentWithProductIdentifier (ObjCClass __self__, Selector __cmd__, String identifier);
-
-	public static SKPayment fromProductIdentifier (String identifier) {
-		return objc_paymentWithProductIdentifier(objCClass, paymentWithProductIdentifier$, identifier);
-	}
-
-	// @property(nonatomic, readonly) NSInteger quantity __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector setQuantity$ = Selector.register("setQuantity:");
-
-	@Bridge
-	private native static void objc_setQuantity (SKPayment __self__, Selector __cmd__, int quantity);
-
-	@Bridge
-	private native static void objc_setQuantitySuper (ObjCSuper __super__, Selector __cmd__, int quantity);
-
-	public void setQuantity (int quantity) {
-		if (customClass) {
-			objc_setQuantitySuper(getSuper(), setQuantity$, quantity);
-		} else {
-			objc_setQuantity(this, setQuantity$, quantity);
-		}
-	}
-
-	// @property(nonatomic, copy, readonly) NSString *applicationUsername __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_7_0);
-	private static final Selector setApplicationUsername$ = Selector.register("setApplicationUsername:");
-
-	@Bridge
-	private native static void objc_setApplicationUsername (SKPayment __self__, Selector __cmd__, String applicationUsername);
-
-	@Bridge
-	private native static void objc_setApplicationUsernameSuper (ObjCSuper __super__, Selector __cmd__, String applicationUsername);
-
-	public void setQuantity (String applicationUsername) {
-		if (customClass) {
-			objc_setApplicationUsernameSuper(getSuper(), setApplicationUsername$, applicationUsername);
-		} else {
-			objc_setApplicationUsername(this, setApplicationUsername$, applicationUsername);
-		}
-	}
-
-	// @property(nonatomic, copy, readonly) NSString *productIdentifier __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector productIdentifier = Selector.register("productIdentifier");
-
-	@Bridge
-	private native static String objc_getProductIdentifier (SKPayment __self__, Selector __cmd__);
-
-	@Bridge
-	private native static String objc_getProductIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
-
-	public String getProductIdentifier () {
-		return (customClass) ? objc_getProductIdentifierSuper(getSuper(), productIdentifier) : objc_getProductIdentifier(this,
-			productIdentifier);
-	}
+    /*<ptr>*/public static class SKPaymentPtr extends Ptr<SKPayment, SKPaymentPtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKPayment.class); }/*</bind>*/
+    /*<constants>*//*</constants>*/
+    /*<constructors>*/
+    public SKPayment() {}
+    protected SKPayment(SkipInit skipInit) { super(skipInit); }
+    /*</constructors>*/
+    /*<properties>*/
+    @Property(selector = "productIdentifier")
+    public native String getProductIdentifier();
+    @Property(selector = "requestData")
+    public native NSData getRequestData();
+    @Property(selector = "quantity")
+    public native @MachineSizedSInt long getQuantity();
+    @Property(selector = "applicationUsername")
+    public native String getApplicationUsername();
+    /*</properties>*/
+    /*<members>*//*</members>*/
+    /*<methods>*/
+    @Method(selector = "paymentWithProduct:")
+    public static native SKPayment fromProduct(SKProduct product);
+    /*</methods>*/
 }

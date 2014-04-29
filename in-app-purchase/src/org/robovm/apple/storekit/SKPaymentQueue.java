@@ -1,131 +1,79 @@
-
+/*
+ * Copyright (C) 2014 Trillian Mobile AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.robovm.apple.storekit;
 
-import org.robovm.apple.foundation.NSObject;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.ObjCSuper;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
+/*<imports>*/
+import java.io.*;
+import java.nio.*;
+import java.util.*;
+import org.robovm.objc.*;
+import org.robovm.objc.annotation.*;
+import org.robovm.objc.block.*;
+import org.robovm.rt.*;
+import org.robovm.rt.bro.*;
+import org.robovm.rt.bro.annotation.*;
+import org.robovm.rt.bro.ptr.*;
+import org.robovm.apple.foundation.*;
+import org.robovm.apple.storekit.*;
+/*</imports>*/
 
-@Library("StoreKit")
-@NativeClass
-public class SKPaymentQueue extends NSObject {
-	static {
-		ObjCRuntime.bind(SKPaymentQueue.class);
-	}
+/**
+ * <div class="javadoc"></div>
+ */
+/*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKPaymentQueue/*</name>*/ 
+    extends /*<extends>*/NSObject/*</extends>*/ 
+    /*<implements>*//*</implements>*/ {
 
-	private static final ObjCClass objCClass = ObjCClass.getByType(SKPaymentQueue.class);
-
-	// + (SKPaymentQueue *)defaultQueue __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector defaultQueue = Selector.register("defaultQueue");
-
-	@Bridge
-	private native static SKPaymentQueue objc_defaultQueue (ObjCClass __self__, Selector __cmd__);
-
-	public static SKPaymentQueue getDefaultQueue () {
-		return objc_defaultQueue(objCClass, defaultQueue);
-	}
-
-	// - (void)addPayment:(SKPayment *)payment __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector addPayment$ = Selector.register("addPayment:");
-
-	@Bridge
-	private native static void objc_addPayment (SKPaymentQueue __self__, Selector __cmd__, SKPayment payment);
-
-	@Bridge
-	private native static void objc_addPaymentSuper (ObjCSuper __super__, Selector __cmd__, SKPayment payment);
-
-	public void addPayment (SKPayment payment) {
-		if (customClass) {
-			objc_addPaymentSuper(getSuper(), addPayment$, payment);
-		} else {
-			objc_addPayment(this, addPayment$, payment);
-		}
-	}
-
-	// - (void)finishTransaction:(SKPaymentTransaction *)transaction __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector finishTransaction$ = Selector.register("finishTransaction:");
-
-	@Bridge
-	private native static void objc_finishTransaction (SKPaymentQueue __self__, Selector __cmd__, SKPaymentTransaction transaction);
-
-	@Bridge
-	private native static void objc_finishTransactionSuper (ObjCSuper __super__, Selector __cmd__, SKPaymentTransaction transaction);
-
-	public void finishTransaction (SKPaymentTransaction transaction) {
-		if (customClass) {
-			objc_finishTransactionSuper(getSuper(), finishTransaction$, transaction);
-		} else {
-			objc_finishTransaction(this, finishTransaction$, transaction);
-		}
-	}
-
-	// - (void)addTransactionObserver:(id <SKPaymentTransactionObserver>)observer __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector addTransactionObserver$ = Selector.register("addTransactionObserver:");
-
-	@Bridge
-	private native static void objc_addTransactionObserver (SKPaymentQueue __self__, Selector __cmd__,
-		SKPaymentTransactionObserver observer);
-
-	@Bridge
-	private native static void objc_addTransactionObserverSuper (ObjCSuper __super__, Selector __cmd__,
-		SKPaymentTransactionObserver observer);
-
-	public void addTransactionObserver (SKPaymentTransactionObserver observer) {
-		if (customClass) {
-			objc_addTransactionObserverSuper(getSuper(), addTransactionObserver$, observer);
-		} else {
-			objc_addTransactionObserver(this, addTransactionObserver$, observer);
-		}
-	}
-
-	// - (void)removeTransactionObserver:(id <SKPaymentTransactionObserver>)observer
-// __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector removeTransactionObserver$ = Selector.register("removeTransactionObserver:");
-
-	@Bridge
-	private native static void objc_removeTransactionObserver (SKPaymentQueue __self__, Selector __cmd__,
-		SKPaymentTransactionObserver observer);
-
-	@Bridge
-	private native static void objc_removeTransactionObserverSuper (ObjCSuper __super__, Selector __cmd__,
-		SKPaymentTransactionObserver observer);
-
-	public void removeTransactionObserver (SKPaymentTransactionObserver observer) {
-		if (customClass) {
-			objc_removeTransactionObserverSuper(getSuper(), removeTransactionObserver$, observer);
-		} else {
-			objc_removeTransactionObserver(this, removeTransactionObserver$, observer);
-		}
-	}
-
-	// - (void)restoreCompletedTransactions __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector restoreCompletedTransactions = Selector.register("restoreCompletedTransactions");
-
-	@Bridge
-	private native static void objc_restoreCompletedTransactions (SKPaymentQueue __self__, Selector __cmd__);
-
-	@Bridge
-	private native static void objc_restoreCompletedTransactionsSuper (ObjCSuper __super__, Selector __cmd__);
-
-	public void restoreCompletedTransactions () {
-		if (customClass) {
-			objc_restoreCompletedTransactionsSuper(getSuper(), restoreCompletedTransactions);
-		} else {
-			objc_restoreCompletedTransactions(this, restoreCompletedTransactions);
-		}
-	}
-
-	// + (BOOL)canMakePayments __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector canMakePayments$ = Selector.register("canMakePayments");
-
-	@Bridge
-	private native static boolean objc_canMakePayments (ObjCClass __self__, Selector __cmd__);
-
-	public static boolean canMakePayments () {
-		return objc_canMakePayments(objCClass, canMakePayments$);
-	}
+    /*<ptr>*/public static class SKPaymentQueuePtr extends Ptr<SKPaymentQueue, SKPaymentQueuePtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKPaymentQueue.class); }/*</bind>*/
+    /*<constants>*//*</constants>*/
+    /*<constructors>*/
+    public SKPaymentQueue() {}
+    protected SKPaymentQueue(SkipInit skipInit) { super(skipInit); }
+    /*</constructors>*/
+    /*<properties>*/
+    @Property(selector = "transactions")
+    public native NSArray<SKPaymentTransaction> getTransactions();
+    /*</properties>*/
+    /*<members>*//*</members>*/
+    /*<methods>*/
+    @Method(selector = "defaultQueue")
+    public static native SKPaymentQueue getDefaultQueue();
+    @Method(selector = "canMakePayments")
+    public static native boolean canMakePayments();
+    @Method(selector = "addPayment:")
+    public native void addPayment(SKPayment payment);
+    @Method(selector = "restoreCompletedTransactions")
+    public native void restoreCompletedTransactions();
+    @Method(selector = "restoreCompletedTransactionsWithApplicationUsername:")
+    public native void restoreCompletedTransactions(String username);
+    @Method(selector = "finishTransaction:")
+    public native void finishTransaction(SKPaymentTransaction transaction);
+    @Method(selector = "startDownloads:")
+    public native void startDownloads(NSArray<SKDownload> downloads);
+    @Method(selector = "pauseDownloads:")
+    public native void pauseDownloads(NSArray<SKDownload> downloads);
+    @Method(selector = "resumeDownloads:")
+    public native void resumeDownloads(NSArray<SKDownload> downloads);
+    @Method(selector = "cancelDownloads:")
+    public native void cancelDownloads(NSArray<SKDownload> downloads);
+    @Method(selector = "addTransactionObserver:")
+    public native void addTransactionObserver(SKPaymentTransactionObserver observer);
+    @Method(selector = "removeTransactionObserver:")
+    public native void removeTransactionObserver(SKPaymentTransactionObserver observer);
+    /*</methods>*/
 }

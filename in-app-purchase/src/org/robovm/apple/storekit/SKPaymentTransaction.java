@@ -1,75 +1,69 @@
-
+/*
+ * Copyright (C) 2014 Trillian Mobile AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.robovm.apple.storekit;
 
-import org.robovm.apple.foundation.NSError;
-import org.robovm.apple.foundation.NSObject;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.ObjCSuper;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
+/*<imports>*/
+import java.io.*;
+import java.nio.*;
+import java.util.*;
+import org.robovm.objc.*;
+import org.robovm.objc.annotation.*;
+import org.robovm.objc.block.*;
+import org.robovm.rt.*;
+import org.robovm.rt.bro.*;
+import org.robovm.rt.bro.annotation.*;
+import org.robovm.rt.bro.ptr.*;
+import org.robovm.apple.foundation.*;
+import org.robovm.apple.storekit.*;
+/*</imports>*/
 
-@Library("StoreKit")
-@NativeClass
-public class SKPaymentTransaction extends NSObject {
+/**
+ * <div class="javadoc"></div>
+ */
+/*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKPaymentTransaction/*</name>*/ 
+    extends /*<extends>*/NSObject/*</extends>*/ 
+    /*<implements>*//*</implements>*/ {
 
-	static {
-		ObjCRuntime.bind(/* <name> */SKPaymentTransaction /* </name> */.class);
-	}
-
-	// @property(nonatomic, readonly) NSError *error __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector error = Selector.register("error");
-
-	@Bridge
-	private native static NSError objc_getError (SKPaymentTransaction __self__, Selector __cmd__);
-
-	@Bridge
-	private native static NSError objc_getErrorSuper (ObjCSuper __super__, Selector __cmd__);
-
-	public NSError getError () {
-		return (customClass) ? objc_getErrorSuper(getSuper(), error) : objc_getError(this, error);
-	}
-
-	// @property(nonatomic, readonly) SKPaymentTransactionState transactionState __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector transactionState = Selector.register("transactionState");
-
-	@Bridge
-	private native static SKPaymentTransactionState objc_getTransactionState (SKPaymentTransaction __self__, Selector __cmd__);
-
-	@Bridge
-	private native static SKPaymentTransactionState objc_getTransactionStateSuper (ObjCSuper __super__, Selector __cmd__);
-
-	public SKPaymentTransactionState getTransactionState () {
-		return (customClass) ? objc_getTransactionStateSuper(getSuper(), transactionState) : objc_getTransactionState(this,
-			transactionState);
-	}
-
-	// @property(nonatomic, readonly) NSString *transactionIdentifier __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector transactionIdentifier = Selector.register("transactionIdentifier");
-
-	@Bridge
-	private native static String objc_getTransactionIdentifier (SKPaymentTransaction __self__, Selector __cmd__);
-
-	@Bridge
-	private native static String objc_getTransactionIdentifierSuper (ObjCSuper __super__, Selector __cmd__);
-
-	public String getTransactionIdentifier () {
-		return (customClass) ? objc_getTransactionIdentifierSuper(getSuper(), transactionIdentifier)
-			: objc_getTransactionIdentifier(this, transactionIdentifier);
-	}
-
-	// @property(nonatomic, readonly) SKPayment *payment __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	private static final Selector payment = Selector.register("payment");
-
-	@Bridge
-	private native static SKPayment objc_getPayment (SKPaymentTransaction __self__, Selector __cmd__);
-
-	@Bridge
-	private native static SKPayment objc_getPaymentSuper (ObjCSuper __super__, Selector __cmd__);
-
-	public SKPayment getPayment () {
-		return (customClass) ? objc_getPaymentSuper(getSuper(), payment) : objc_getPayment(this, payment);
-	}
-
+    /*<ptr>*/public static class SKPaymentTransactionPtr extends Ptr<SKPaymentTransaction, SKPaymentTransactionPtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKPaymentTransaction.class); }/*</bind>*/
+    /*<constants>*//*</constants>*/
+    /*<constructors>*/
+    public SKPaymentTransaction() {}
+    protected SKPaymentTransaction(SkipInit skipInit) { super(skipInit); }
+    /*</constructors>*/
+    /*<properties>*/
+    @Property(selector = "error")
+    public native NSError getError();
+    @Property(selector = "originalTransaction")
+    public native SKPaymentTransaction getOriginalTransaction();
+    @Property(selector = "payment")
+    public native SKPayment getPayment();
+    @Property(selector = "downloads")
+    public native NSArray<SKDownload> getDownloads();
+    @Property(selector = "transactionDate")
+    public native NSDate getTransactionDate();
+    @Property(selector = "transactionIdentifier")
+    public native String getTransactionIdentifier();
+    @Property(selector = "transactionReceipt")
+    public native NSData getTransactionReceipt();
+    @Property(selector = "transactionState")
+    public native SKPaymentTransactionState getTransactionState();
+    /*</properties>*/
+    /*<members>*//*</members>*/
+    /*<methods>*/
+    /*</methods>*/
 }

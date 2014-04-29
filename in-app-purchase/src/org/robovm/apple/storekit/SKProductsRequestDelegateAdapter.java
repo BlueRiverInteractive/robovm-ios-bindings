@@ -33,37 +33,25 @@ import org.robovm.apple.storekit.*;
 /**
  * <div class="javadoc"></div>
  */
-/*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
-/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKProduct/*</name>*/ 
+/*<annotations>*//*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKProductsRequestDelegateAdapter/*</name>*/ 
     extends /*<extends>*/NSObject/*</extends>*/ 
-    /*<implements>*//*</implements>*/ {
+    /*<implements>*/implements SKProductsRequestDelegate/*</implements>*/ {
 
-    /*<ptr>*/public static class SKProductPtr extends Ptr<SKProduct, SKProductPtr> {}/*</ptr>*/
-    /*<bind>*/static { ObjCRuntime.bind(SKProduct.class); }/*</bind>*/
+	 /*<ptr>*/
+    /*</ptr>*/
+    /*<bind>*/
+    /*</bind>*/
     /*<constants>*//*</constants>*/
-    /*<constructors>*/
-    public SKProduct() {}
-    protected SKProduct(SkipInit skipInit) { super(skipInit); }
-    /*</constructors>*/
+    /*<constructors>*//*</constructors>*/
     /*<properties>*/
-    @Property(selector = "localizedDescription")
-    public native String getLocalizedDescription();
-    @Property(selector = "localizedTitle")
-    public native String getLocalizedTitle();
-    @Property(selector = "price")
-    public native NSDecimalNumber getPrice();
-    @Property(selector = "priceLocale")
-    public native NSLocale getPriceLocale();
-    @Property(selector = "productIdentifier")
-    public native String getProductIdentifier();
-    @Property(selector = "isDownloadable")
-    public native boolean isDownloadable();
-    @Property(selector = "downloadContentLengths")
-    public native NSArray<NSNumber> getDownloadContentLengths();
-    @Property(selector = "downloadContentVersion")
-    public native String getDownloadContentVersion();
+   
     /*</properties>*/
     /*<members>*//*</members>*/
     /*<methods>*/
+	@NotImplemented("productsRequest:didReceiveResponse:")
+	public void didReceiveResponse(SKProductsRequest request, SKProductsResponse response) { throw new UnsupportedOperationException(); }
+   public void didFinish(SKRequest request) {}
+   public void didFail(SKRequest request, NSError error) {}
     /*</methods>*/
 }

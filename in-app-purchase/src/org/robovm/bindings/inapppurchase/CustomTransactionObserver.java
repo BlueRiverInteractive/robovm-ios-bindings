@@ -4,9 +4,9 @@ package org.robovm.bindings.inapppurchase;
 import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.storekit.SKPaymentQueue;
 import org.robovm.apple.storekit.SKPaymentTransaction;
-import org.robovm.apple.storekit.SKPaymentTransactionObserver;
+import org.robovm.apple.storekit.SKPaymentTransactionObserverAdapter;
 
-public class CustomTransactionObserver extends SKPaymentTransactionObserver.Adapter {
+public class CustomTransactionObserver extends SKPaymentTransactionObserverAdapter {
 	private final InAppPurchaseManager manager;
 
 	public CustomTransactionObserver (InAppPurchaseManager manager) {

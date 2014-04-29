@@ -1,58 +1,54 @@
-
+/*
+ * Copyright (C) 2014 Trillian Mobile AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.robovm.apple.storekit;
 
-import org.robovm.apple.foundation.NSError;
-import org.robovm.apple.foundation.NSObject;
-import org.robovm.apple.foundation.NSObjectProtocol;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.BindSelector;
-import org.robovm.objc.annotation.NotImplemented;
-import org.robovm.rt.bro.annotation.Callback;
+/*<imports>*/
+import java.io.*;
+import java.nio.*;
+import java.util.*;
+import org.robovm.objc.*;
+import org.robovm.objc.annotation.*;
+import org.robovm.objc.block.*;
+import org.robovm.rt.*;
+import org.robovm.rt.bro.*;
+import org.robovm.rt.bro.annotation.*;
+import org.robovm.rt.bro.ptr.*;
+import org.robovm.apple.foundation.*;
+import org.robovm.apple.storekit.*;
+/*</imports>*/
 
-public interface SKRequestDelegate extends NSObjectProtocol {
+/**
+ * <div class="javadoc"></div>
+ */
+/*<annotations>*//*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ interface /*<name>*/SKRequestDelegate/*</name>*/ 
+    extends /*<extends>*/NSObjectProtocol/*</extends>*/ 
+    /*<implements>*//*</implements>*/ {
 
-	// - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration NS_DEPRECATED_IOS(2_0,
-// 5_0);
-	// void didAccelerate(UIAccelerometer accelerometer, UIAcceleration acceleration);
-
-	// - (void)request:(SKRequest *)request didFailWithError:(NSError *)error __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	void requestFailed (SKRequest request, NSError error);
-
-	// - (void)requestDidFinish:(SKRequest *)request __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-	void requestFinished (SKRequest request);
-
-	public static class Adapter extends NSObject implements SKRequestDelegate {
-		// @NotImplemented("accelerometer:didAccelerate:") public void didAccelerate(UIAccelerometer accelerometer, UIAcceleration
-// acceleration) {
-		// throw new UnsupportedOperationException(); }
-		@Override
-		@NotImplemented("request:didFailWithError:")
-		public void requestFailed (SKRequest request, NSError error) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		@NotImplemented("requestDidFinish:")
-		public void requestFinished (SKRequest request) {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	static class Callbacks {
-		// @Callback @BindSelector("accelerometer:didAccelerate:") public static void didAccelerate(UIAccelerometerDelegate
-// __self__, Selector
-		// __cmd__, UIAccelerometer accelerometer, UIAcceleration acceleration) { __self__.didAccelerate(accelerometer,
-// acceleration); }
-		@Callback
-		@BindSelector("request:didFailWithError:")
-		public static void requestFailed (SKRequestDelegate __self__, Selector __cmd__, SKRequest request, NSError error) {
-			__self__.requestFailed(request, error);
-		}
-
-		@Callback
-		@BindSelector("requestDidFinish:")
-		public static void requestFinished (SKRequestDelegate __self__, Selector __cmd__, SKRequest request) {
-			__self__.requestFinished(request);
-		}
-	}
+    /*<ptr>*//*</ptr>*/
+    /*<bind>*//*</bind>*/
+    /*<constants>*//*</constants>*/
+    /*<properties>*/
+    
+    /*</properties>*/
+    /*<methods>*/
+    @Method(selector = "requestDidFinish:")
+    void didFinish(SKRequest request);
+    @Method(selector = "request:didFailWithError:")
+    void didFail(SKRequest request, NSError error);
+    /*<adapter>*/
+    /*</adapter>*/
 }

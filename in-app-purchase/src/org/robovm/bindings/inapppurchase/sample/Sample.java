@@ -67,13 +67,12 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 		});
-
 		// First request the available products from the app store.
 		iapManager.requestProducts("com.business.game.consumable", "com.business.game.nonconsumable");
-
 		// At any time you want to purchase a product.
-		if (iapManager.canMakePayments()) iapManager.purchaseProduct(appStoreProducts.get("com.business.game.consumable"));
-
+		if (iapManager.canMakePayments() && appStoreProducts != null) {
+			iapManager.purchaseProduct(appStoreProducts.get("com.business.game.consumable"));
+		}
 		// When you want to restore products like Ad-free.
 		iapManager.restoreTransactions();
 	}

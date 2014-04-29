@@ -1,73 +1,60 @@
-
+/*
+ * Copyright (C) 2014 Trillian Mobile AB
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.robovm.apple.storekit;
 
-import org.robovm.apple.foundation.NSSet;
-import org.robovm.objc.ObjCObject;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.ObjCSuper;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
-import org.robovm.rt.bro.annotation.Library;
+/*<imports>*/
+import java.io.*;
+import java.nio.*;
+import java.util.*;
+import org.robovm.objc.*;
+import org.robovm.objc.annotation.*;
+import org.robovm.objc.block.*;
+import org.robovm.rt.*;
+import org.robovm.rt.bro.*;
+import org.robovm.rt.bro.annotation.*;
+import org.robovm.rt.bro.ptr.*;
+import org.robovm.apple.foundation.*;
+import org.robovm.apple.storekit.*;
+/*</imports>*/
 
-@Library("StoreKit")
-@NativeClass
-public class SKProductsRequest extends SKRequest {
+/**
+ * <div class="javadoc"></div>
+ */
+/*<annotations>*/@Library("StoreKit") @NativeClass/*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SKProductsRequest/*</name>*/ 
+    extends /*<extends>*/SKRequest/*</extends>*/ 
+    /*<implements>*//*</implements>*/ {
 
-	static {
-		ObjCRuntime.bind(/* <name> */SKProductsRequest /* </name> */.class);
-	}
-
-	private static final Selector delegate = Selector.register("delegate");
-
-	@Bridge
-	private native static SKProductsRequestDelegate objc_getDelegate (SKProductsRequest __self__, Selector __cmd__);
-
-	@Bridge
-	private native static SKProductsRequestDelegate objc_getDelegateSuper (ObjCSuper __super__, Selector __cmd__);
-
-	public SKProductsRequestDelegate getDelegate () {
-		if (customClass) {
-			return objc_getDelegateSuper(getSuper(), delegate);
-		} else {
-			return objc_getDelegate(this, delegate);
-		}
-	}
-
-	private static final Selector setDelegate$ = Selector.register("setDelegate:");
-
-	@Bridge
-	private native static void objc_setDelegate (SKProductsRequest __self__, Selector __cmd__, SKProductsRequestDelegate delegate);
-
-	@Bridge
-	private native static void objc_setDelegateSuper (ObjCSuper __super__, Selector __cmd__, SKProductsRequestDelegate delegate);
-
-	public void setDelegate (SKProductsRequestDelegate delegate) {
-		addStrongRef((ObjCObject)delegate);
-		if (customClass) {
-			objc_setDelegateSuper(getSuper(), setDelegate$, delegate);
-		} else {
-			objc_setDelegate(this, setDelegate$, delegate);
-		}
-	}
-
-	// - (id)initWithProductIdentifiers:(NSSet *)productIdentifiers __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0);
-
-	private static final Selector initWithProductIdentifiers$ = Selector.register("initWithProductIdentifiers:");
-
-	@Bridge
-	private native static void objc_initWithProductIdentifiers (SKProductsRequest __self__, Selector __cmd__,
-		NSSet productIdentifiers);
-
-	@Bridge
-	private native static void objc_initWithProductIdentifiersSuper (ObjCSuper __super__, Selector __cmd__,
-		NSSet productIdentifiers);
-
-	public SKProductsRequest (NSSet productIdentifiers) {
-		if (customClass) {
-			objc_initWithProductIdentifiersSuper(getSuper(), initWithProductIdentifiers$, productIdentifiers);
-		} else {
-			objc_initWithProductIdentifiers(this, initWithProductIdentifiers$, productIdentifiers);
-		}
-	}
+    /*<ptr>*/public static class SKProductsRequestPtr extends Ptr<SKProductsRequest, SKProductsRequestPtr> {}/*</ptr>*/
+    /*<bind>*/static { ObjCRuntime.bind(SKProductsRequest.class); }/*</bind>*/
+    /*<constants>*//*</constants>*/
+    /*<constructors>*/
+    public SKProductsRequest() {}
+    protected SKProductsRequest(SkipInit skipInit) { super(skipInit); }
+    public SKProductsRequest(NSSet<NSString> productIdentifiers) { super((SkipInit) null); initObject(init(productIdentifiers)); }
+    /*</constructors>*/
+    /*<properties>*/
+    @Property(selector = "delegate")
+    public native SKProductsRequestDelegate getDelegate();
+    @Property(selector = "setDelegate:", strongRef = true)
+    public native void setDelegate(SKProductsRequestDelegate delegate);
+    /*</properties>*/
+    /*<members>*//*</members>*/
+    /*<methods>*/
+    @Method(selector = "initWithProductIdentifiers:")
+    public native @Pointer long init(NSSet<NSString> productIdentifiers);
+    /*</methods>*/
 }

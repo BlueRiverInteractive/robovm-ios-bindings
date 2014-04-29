@@ -34,25 +34,27 @@ import org.robovm.apple.security.*;
  * <div class="javadoc"></div>
  */
 /*<annotations>*/@Marshaler(ValuedEnum.AsMachineSizedUIntMarshaler.class)/*</annotations>*/
-public enum /*<name>*/SKPaymentTransactionState/*</name>*/ implements ValuedEnum {
+public enum /*<name>*/SKDownloadState/*</name>*/ implements ValuedEnum {
     /*<values>*/
-	 Purchasing(0L),
-	 Purchased(1L),
-	 Failed(2L),
-	 Restored(3L);
+	 Waiting(0L),
+	 Active(1L),
+	 Paused(2L),
+	 Finished(3L),
+	 Failed(4L),
+	 Cancelled(5L);
     /*</values>*/
-    
+	 
     private final long n;
 
-    private /*<name>*/SKPaymentTransactionState/*</name>*/(long n) { this.n = n; }
+    private /*<name>*/SKDownloadState/*</name>*/(long n) { this.n = n; }
     public long value() { return n; }
-    public static /*<name>*/SKPaymentTransactionState/*</name>*/ valueOf(long n) {
-        for (/*<name>*/SKPaymentTransactionState/*</name>*/ v : values()) {
+    public static /*<name>*/SKDownloadState/*</name>*/ valueOf(long n) {
+        for (/*<name>*/SKDownloadState/*</name>*/ v : values()) {
             if (v.n == n) {
                 return v;
             }
         }
         throw new IllegalArgumentException("No constant with value " + n + " found in " 
-            + /*<name>*/SKPaymentTransactionState/*</name>*/.class.getName());
+            + /*<name>*/SKDownloadState/*</name>*/.class.getName());
     }
 }

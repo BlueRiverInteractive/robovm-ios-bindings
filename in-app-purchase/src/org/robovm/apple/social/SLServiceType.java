@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.robovm.apple.storekit;
+package org.robovm.apple.social;
 
 /*<imports>*/
 import java.io.*;
@@ -27,35 +27,35 @@ import org.robovm.rt.bro.*;
 import org.robovm.rt.bro.annotation.*;
 import org.robovm.rt.bro.ptr.*;
 import org.robovm.apple.foundation.*;
-import org.robovm.apple.storekit.*;
+import org.robovm.apple.social.*;
 /*</imports>*/
 
 /**
  * <div class="javadoc"></div>
  */
-/*<annotations>*//*</annotations>*/
-/*<visibility>*/public/*</visibility>*/ interface /*<name>*/SKPaymentTransactionObserver/*</name>*/ 
-    extends /*<extends>*/NSObjectProtocol/*</extends>*/ 
+/*<annotations>*/@Library("Social")/*</annotations>*/
+/*<visibility>*/public/*</visibility>*/ class /*<name>*/SLServiceType/*</name>*/ 
+    extends /*<extends>*/Object/*</extends>*/ 
     /*<implements>*//*</implements>*/ {
 
     /*<ptr>*//*</ptr>*/
-    /*<bind>*//*</bind>*/
+    /*<bind>*/static { Bro.bind(SLServiceType.class); }/*</bind>*/
     /*<constants>*//*</constants>*/
+    /*<constructors>*/
+    /*</constructors>*/
     /*<properties>*/
-    
     /*</properties>*/
+    /*<members>*//*</members>*/
     /*<methods>*/
-    @Method(selector = "paymentQueue:updatedTransactions:")
-    void updatedTransactions(SKPaymentQueue queue, NSArray<SKPaymentTransaction> transactions);
-    @Method(selector = "paymentQueue:removedTransactions:")
-    void removedTransactions(SKPaymentQueue queue, NSArray<SKPaymentTransaction> transactions);
-    @Method(selector = "paymentQueue:restoreCompletedTransactionsFailedWithError:")
-    void restoreCompletedTransactionsFailed(SKPaymentQueue queue, NSError error);
-    @Method(selector = "paymentQueueRestoreCompletedTransactionsFinished:")
-    void restoreCompletedTransactionsFinished(SKPaymentQueue queue);
-    @Method(selector = "paymentQueue:updatedDownloads:")
-    void updatedDownloads(SKPaymentQueue queue, NSArray<SKDownload> downloads);
+    @GlobalValue(symbol="SLServiceTypeTwitter", optional=true)
+    public static native String Twitter();
+    @GlobalValue(symbol="SLServiceTypeFacebook", optional=true)
+    public static native String Facebook();
+    @GlobalValue(symbol="SLServiceTypeSinaWeibo", optional=true)
+    public static native String SinaWeibo();
+    @GlobalValue(symbol="SLServiceTypeTencentWeibo", optional=true)
+    public static native String TencentWeibo();
+    @GlobalValue(symbol="SLServiceTypeLinkedIn", optional=true)
+    public static native String LinkedIn();
     /*</methods>*/
-    /*<adapter>*/
-    /*</adapter>*/
 }
