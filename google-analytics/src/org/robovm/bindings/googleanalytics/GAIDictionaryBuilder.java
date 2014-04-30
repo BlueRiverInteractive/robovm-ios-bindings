@@ -13,8 +13,8 @@ import org.robovm.objc.annotation.NativeClass;
  * id<GAITracker> t = // get a tracker.
  * [t send:[[[GAIDictionaryBuilder createEventWithCategory:@"EventCategory"
  *                                                  action:@"EventAction"
- *                                                   label:nil
- *                                                   value:nil]
+ *                                                   label:{@code null}
+ *                                                   value:{@code null}]
  *     set:@"dimension1" forKey:[GAIFields customDimensionForIndex:1]] build]];
  * </code> This will send an event hit type with the specified parameters and a custom dimension parameter. <br>
  * If you want to send a parameter with all hits, set it on GAITracker directly. <code>
@@ -34,8 +34,8 @@ import org.robovm.objc.annotation.NativeClass;
  * [t send:...];
  * [t send[[[GAIDictionaryBuilder createEventWithCategory:@"click"
  *                                                 action:@"popup"
- *                                                  label:nil
- *                                                  value:nil]
+ *                                                  label:{@code null}
+ *                                                  value:{@code null}]
  *     set:@"popup title" forKey:kGAIScreenName] build]];
  * </code> The values set via [GAIDictionaryBuilder set] or [GAIDictionaryBuilder setAll] will override any existing values in the
  * GAIDictionaryBuilder object (i.e. initialized by [GAIDictionaryBuilder createXYZ]). e.g. <code>
@@ -43,7 +43,7 @@ import org.robovm.objc.annotation.NativeClass;
  *     GAIDictionaryBuilder createTimingWithCategory:@"category"
  *                                          interval:@0
  *                                              name:@"name"
- *                                             label:nil];
+ *                                             label:{@code null}];
  * [t send:[m.set:@"10" forKey:kGAITimingVar] build];
  * [t send:[m.set:@"20" forKey:kGAITimingVar] build];
  * </code> */
@@ -58,7 +58,7 @@ public class GAIDictionaryBuilder extends NSObject {
 	@Method(selector = "setAll:")
 	public native GAIDictionaryBuilder setAll (GAIDictionaryBuilder hitParams);
 
-	/** Returns the value for the input parameter paramName, or nil if paramName is not present. */
+	/** Returns the value for the input parameter paramName, or {@code null} if paramName is not present. */
 	@Method(selector = "get:")
 	public native String get (String paramName);
 
@@ -68,28 +68,26 @@ public class GAIDictionaryBuilder extends NSObject {
 
 	/** Parses and translates utm campaign parameters to analytics campaign param and returns them as a map.
 	 * 
-	 * @param params url containing utm campaign parameters.
+	 * Valid campaign parameters are:
+	 * <ul>
+	 * <li>utm_id</li>
+	 * <li>utm_campaign</li>
+	 * <li>utm_content</li>
+	 * <li>utm_medium</li>
+	 * <li>utm_source</li>
+	 * <li>utm_term</li>
+	 * <li>dclid</li>
+	 * <li>gclid</li>
+	 * <li>gmob_t</li>
+	 * </ul>
+	 * <p>
+	 * Example: http://my.site.com/index.html?utm_campaign=wow&utm_source=source utm_campaign=wow&utm_source=source.
+	 * <p>
+	 * For more information on auto-tagging, see http://support.google.com/googleanalytics/bin/answer.py?hl=en&answer=55590
+	 * <p>
+	 * For more information on manual tagging, see http://support.google.com/googleanalytics/bin/answer.py?hl=en&answer=55518
 	 * 
-	 *           Valid campaign parameters are:
-	 *           <ul>
-	 *           <li>utm_id</li>
-	 *           <li>utm_campaign</li>
-	 *           <li>utm_content</li>
-	 *           <li>utm_medium</li>
-	 *           <li>utm_source</li>
-	 *           <li>utm_term</li>
-	 *           <li>dclid</li>
-	 *           <li>gclid</li>
-	 *           <li>gmob_t</li>
-	 *           </ul>
-	 *           <p>
-	 *           Example: http://my.site.com/index.html?utm_campaign=wow&utm_source=source utm_campaign=wow&utm_source=source.
-	 *           <p>
-	 *           For more information on auto-tagging, see
-	 *           http://support.google.com/googleanalytics/bin/answer.py?hl=en&answer=55590
-	 *           <p>
-	 *           For more information on manual tagging, see
-	 *           http://support.google.com/googleanalytics/bin/answer.py?hl=en&answer=55518 */
+	 * @param params url containing utm campaign parameters. */
 	@Method(selector = "setCampaignParametersFromUrl:")
 	public native GAIDictionaryBuilder setCampaignParameters (String urlString);
 

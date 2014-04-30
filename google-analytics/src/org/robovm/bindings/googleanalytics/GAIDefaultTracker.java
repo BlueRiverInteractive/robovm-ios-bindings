@@ -3,6 +3,7 @@ package org.robovm.bindings.googleanalytics;
 
 import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 
 public class GAIDefaultTracker extends NSObject implements GAITracker {
 	@Override
@@ -20,6 +21,6 @@ public class GAIDefaultTracker extends NSObject implements GAITracker {
 	}
 
 	@Override
-	public void send (NSDictionary<?, ?> parameters) {
+	public void send (NSDictionary<NSString, NSString> parameters) {
 	}
 }

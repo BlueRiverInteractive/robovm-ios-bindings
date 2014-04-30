@@ -11,23 +11,24 @@
 			<skipPngCrush>true</skipPngCrush>
 		</resource>
 	</resources>
-	<libs>
-		<lib>libs/libtapjoy.a</lib>
-	</libs>
+	<frameworkPaths>
+	    <path>libs</path>
+	</frameworkPaths>
 	<frameworks>
+	    <framework>Tapjoy</framework>
 		<framework>CFNetwork</framework>
+		<framework>CoreData</framework>
 		<framework>CoreGraphics</framework>
 		<framework>CoreLocation</framework>
 		<framework>CoreMotion</framework>
 		<framework>CoreTelephony</framework>
-		<framework>EvenKitUI</framework>
-		<framework>EventKit</framework>
 		<framework>Foundation</framework>
 		<framework>MapKit</framework>
 		<framework>MediaPlayer</framework>
 		<framework>MessageUI</framework>
 		<framework>MobileCoreServices</framework>
 		<framework>QuartzCore</framework>
+		<framework>Security</framework>
 		<framework>SystemConfiguration</framework>
 		<framework>UIKit</framework>
 	</frameworks>
@@ -35,5 +36,7 @@
 	    <framework>AdSupport</framework>
 		<framework>StoreKit</framework>
 		<framework>Social</framework>
+		<framework>EventKit</framework>
+		<framework>EvenKitUI</framework>
 	</weakFrameworks>
 </config>

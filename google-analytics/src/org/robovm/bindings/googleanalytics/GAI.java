@@ -117,7 +117,7 @@ public class GAI extends NSObject {
 	/** Dispatches any pending tracking information.
 	 * 
 	 * It would be wise to call this when application is exiting to initiate the submission of any unsubmitted tracking
-	 * information. Note that this does not have any effect on dispatchInterval, and can be used in conjuntion with periodic
+	 * information. Note that this does not have any effect on dispatchInterval, and can be used in conjunction with periodic
 	 * dispatch. */
 	@Method(selector = "dispatch")
 	public native void dispatch ();
