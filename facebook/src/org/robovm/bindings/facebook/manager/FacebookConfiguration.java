@@ -101,7 +101,7 @@ public class FacebookConfiguration {
 		/** Set the array of permissions you want to use in your application.
 		 * 
 		 * @param permissions */
-		public Builder setPermissions (FBPermission[] permissions) {
+		public Builder setPermissions (FBPermission... permissions) {
 			for (FBPermission permission : permissions) {
 				switch (permission.getType()) {
 				case READ:

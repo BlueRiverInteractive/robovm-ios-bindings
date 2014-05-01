@@ -213,23 +213,18 @@ public class FBRequest extends NSObject {
 	@Method(selector = "startWithCompletionHandler:")
 	public native FBRequestConnection start (@Block FBRequestHandler handler);
 
-	/*
-	 * !
+	/** Creates a request representing a Graph API call to the "me" endpoint, using the active session.
 	 * 
-	 * @method
-	 * 
-	 * @abstract Creates a request representing a Graph API call to the "me" endpoint, using the active session.
-	 * 
-	 * @discussion Simplifies preparing a request to retrieve the user's identity.
+	 * Simplifies preparing a request to retrieve the user's identity.
 	 * 
 	 * This method does not initialize an <FBRequestConnection> object. To initiate the API call first instantiate an
 	 * <FBRequestConnection> object, add the request to this object, then call the `start` method on the connection instance.
 	 * 
 	 * A successful Graph API call will return an <FBGraphUser> object representing the user's identity.
 	 * 
-	 * Note you may change the session property after construction if a session other than the active session is preferred.
-	 */
-	// + (FBRequest *)requestForMe;
+	 * Note you may change the session property after construction if a session other than the active session is preferred. */
+	@Method(selector = "requestForMe")
+	public static native FBRequest requestForMe ();
 
 	/*
 	 * !

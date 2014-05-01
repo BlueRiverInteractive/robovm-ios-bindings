@@ -3,7 +3,6 @@ package org.robovm.bindings.facebook.manager.sample;
 
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
-import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSURL;
 import org.robovm.apple.uikit.UIApplication;
@@ -18,10 +17,13 @@ import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
-import org.robovm.bindings.facebook.manager.FBFeed;
+import org.robovm.bindings.facebook.manager.CommonFacebookRequests;
 import org.robovm.bindings.facebook.manager.FBPermission;
 import org.robovm.bindings.facebook.manager.FacebookConfiguration;
+import org.robovm.bindings.facebook.manager.FacebookLoginListener;
 import org.robovm.bindings.facebook.manager.FacebookManager;
+import org.robovm.bindings.facebook.manager.FacebookRequestListener;
+import org.robovm.bindings.facebook.manager.GraphObject;
 import org.robovm.bindings.facebook.session.FBSessionDefaultAudience;
 import org.robovm.bindings.facebook.session.FBSessionLoginBehavior;
 
@@ -77,63 +79,34 @@ public class Sample extends UIApplicationDelegateAdapter {
 
 		final UIButton loginButton = new UIButton(new CGRect(10, 10, 200, 30));
 		loginButton.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
-		if (!facebook.isLogged())
+		if (!facebook.isLoggedIn())
 			loginButton.setTitle("Login", UIControlState.Normal);
 		else
 			loginButton.setTitle("Logout", UIControlState.Normal);
 		loginButton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
 			public void onTouchUpInside (UIControl control, UIEvent event) {
-				if (facebook.isLogged()) {
-					facebook.logout(new FacebookManager.LogoutListener() {
-						@Override
-						public void onLogout () {
-							// Successfully logged out.
-							loadingOverlay.hide();
-							loginButton.setTitle("Login", UIControlState.Normal);
-						}
-
-						@Override
-						public void onRequest () {
-							loadingOverlay.show(viewController);
-						}
-
-						@Override
-						public void onException (NSError throwable) {
-							loadingOverlay.hide();
-						}
-
-						@Override
-						public void onFail (String reason) {
-							loadingOverlay.hide();
-						}
-					});
+				if (facebook.isLoggedIn()) {
+					facebook.logout();
 				} else {
-					facebook.login(new FacebookManager.LoginListener() {
+					loadingOverlay.show(viewController);
+					facebook.login(new FacebookLoginListener() {
 						@Override
-						public void onLogin () {
-							// Successfully logged in.
-							loadingOverlay.hide();
+						public void onSuccess (GraphObject user) {
+							System.out.println("Successfully logged in! " + user);
 							loginButton.setTitle("Logout", UIControlState.Normal);
-						}
-
-						@Override
-						public void onRequest () {
-							loadingOverlay.show(viewController);
-						}
-
-						@Override
-						public void onFail (String reason) {
 							loadingOverlay.hide();
 						}
 
 						@Override
-						public void onException (NSError throwable) {
+						public void onError (String error) {
+							System.out.println("An error happened: " + error);
 							loadingOverlay.hide();
 						}
 
 						@Override
-						public void onNotAcceptingPermissions () {
+						public void onCancel () {
+							System.out.println("User cancelled login!");
 							loadingOverlay.hide();
 						}
 					});
@@ -147,35 +120,28 @@ public class Sample extends UIApplicationDelegateAdapter {
 		publishButton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
 			@Override
 			public void onTouchUpInside (UIControl control, UIEvent event) {
-				FBFeed feed = new FBFeed.Builder().setLink("http://www.google.com").setMessage("Message").setName("Name")
-					.setCaption("Caption").setDescription("Description").build();
-				facebook.publishWithDialog(feed, new FacebookManager.PublishDialogListener() {
-					@Override
-					public void onComplete (String postId) {
-						// Publish successfully.
-						loadingOverlay.hide();
-					}
+				loadingOverlay.show(viewController);
 
-					@Override
-					public void onRequest () {
-						loadingOverlay.show(viewController);
-					}
+				facebook.request(CommonFacebookRequests.publishFeed("Name", "Caption", "Message", "Description", null,
+					"http://www.google.com", true, new FacebookRequestListener() {
+						@Override
+						public void onSuccess (GraphObject result) {
+							System.out.println("Successfully published: " + result);
+							loadingOverlay.hide();
+						}
 
-					@Override
-					public void onFail (String reason) {
-						loadingOverlay.hide();
-					}
+						@Override
+						public void onError (String error) {
+							System.out.println("An error happened: " + error);
+							loadingOverlay.hide();
+						}
 
-					@Override
-					public void onException (NSError throwable) {
-						loadingOverlay.hide();
-					}
-
-					@Override
-					public void onCancel () {
-						loadingOverlay.hide();
-					}
-				});
+						@Override
+						public void onCancel () {
+							System.out.println("User cancelled dialog!");
+							loadingOverlay.hide();
+						}
+					}));
 			}
 		});
 // UIButton boton3 = new UIButton(new CGRect(10, 110, 200, 30));
@@ -242,12 +208,17 @@ public class Sample extends UIApplicationDelegateAdapter {
 
 	@Override
 	public void didBecomeActive (UIApplication application) {
-		facebook.handleDidBecomeActive();
+		facebook.didBecomeActive(application);
 	}
 
 	@Override
 	public boolean openURL (UIApplication application, NSURL url, String sourceApplication, NSObject annotation) {
-		return facebook.handleOpenUrl(url, sourceApplication);
+		return facebook.openURL(application, url, sourceApplication, annotation);
+	}
+
+	@Override
+	public void willTerminate (UIApplication application) {
+		facebook.willTerminate(application);
 	}
 
 	public static void main (String[] argv) {
