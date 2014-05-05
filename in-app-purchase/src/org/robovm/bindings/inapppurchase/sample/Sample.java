@@ -4,6 +4,7 @@ package org.robovm.bindings.inapppurchase.sample;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.storekit.SKPaymentTransaction;
@@ -52,18 +53,23 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 			@Override
-			public void transactionFailed (SKPaymentTransaction transaction) {
-				// Something went wrong. Possibly no Internet connection.
+			public void transactionFailed (SKPaymentTransaction transaction, NSError error) {
+				// Something went wrong. Possibly no Internet connection or user cancelled.
 			}
 
 			@Override
-			public void transcationRestored (SKPaymentTransaction transaction) {
+			public void transactionRestored (SKPaymentTransaction transaction) {
 				// Purchase successfully restored.
 				// Get the product identifier and award the product to the user. This is only useful for non-consumable products.
 				String productId = transaction.getPayment().getProductIdentifier().toString();
 				if (productId.equals("com.business.game.nonconsumable")) {
 					// awardProduct2();
 				}
+			}
+
+			@Override
+			public void transactionRestoreFailed (NSArray<SKPaymentTransaction> transactions, NSError error) {
+				// Something went wrong. Possibly no Internet connection or user cancelled.
 			}
 
 		});

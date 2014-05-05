@@ -152,7 +152,7 @@ public class InAppPurchaseManager {
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
 		purchasingProduct = false;
 
-		listener.transcationRestored(transaction);
+		listener.transactionRestored(transaction);
 	}
 
 	protected void transactionFailed (SKPaymentTransaction transaction) {
@@ -161,6 +161,18 @@ public class InAppPurchaseManager {
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
 		purchasingProduct = false;
 
-		listener.transactionFailed(transaction);
+		listener.transactionFailed(transaction, transaction.getError());
+	}
+
+	protected void restoreCompleted (SKPaymentQueue queue) {
+		System.out.println(TAG + "Transactions successfully restored!");
+		purchasingProduct = false;
+	}
+
+	protected void restoreFailed (SKPaymentQueue queue, NSError error) {
+		System.out.println(TAG + "Restoring transactions failed with error " + error.description());
+		purchasingProduct = false;
+
+		listener.transactionRestoreFailed(queue.getTransactions(), error);
 	}
 }

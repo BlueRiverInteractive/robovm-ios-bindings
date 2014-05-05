@@ -1,6 +1,7 @@
 
 package org.robovm.bindings.inapppurchase;
 
+import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.storekit.SKPaymentTransaction;
 import org.robovm.apple.storekit.SKProduct;
@@ -24,11 +25,17 @@ public interface InAppPurchaseListener {
 
 	/** Called when the transaction has failed.
 	 * 
-	 * @param transaction */
-	public void transactionFailed (SKPaymentTransaction transaction);
+	 * @param transaction
+	 * @param error */
+	public void transactionFailed (SKPaymentTransaction transaction, NSError error);
 
 	/** Called when the already completed transactions have been successfully restored.
 	 * 
 	 * @param transaction */
-	public void transcationRestored (SKPaymentTransaction transaction);
+	public void transactionRestored (SKPaymentTransaction transaction);
+
+	/** Called when the transaction couldn't been restored.
+	 * @param transactions
+	 * @param error */
+	public void transactionRestoreFailed (NSArray<SKPaymentTransaction> transactions, NSError error);
 }

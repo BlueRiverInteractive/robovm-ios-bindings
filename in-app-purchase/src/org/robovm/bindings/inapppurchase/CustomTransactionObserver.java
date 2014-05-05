@@ -2,6 +2,7 @@
 package org.robovm.bindings.inapppurchase;
 
 import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.storekit.SKPaymentQueue;
 import org.robovm.apple.storekit.SKPaymentTransaction;
 import org.robovm.apple.storekit.SKPaymentTransactionObserverAdapter;
@@ -31,4 +32,15 @@ public class CustomTransactionObserver extends SKPaymentTransactionObserverAdapt
 			}
 		}
 	}
+
+	@Override
+	public void restoreCompletedTransactionsFinished (SKPaymentQueue queue) {
+		manager.restoreCompleted(queue);
+	}
+
+	@Override
+	public void restoreCompletedTransactionsFailed (SKPaymentQueue queue, NSError error) {
+		manager.restoreFailed(queue, error);
+	}
+
 }
