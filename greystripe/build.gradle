@@ -1,0 +1,17 @@
+sourceSets.main.java.srcDirs = [ "src/" ]
+sourceCompatibility = '1.7'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+ext {
+	mainClassName = "org.robovm.bindings.greystripe.sample.Sample"
+}
+
+launchIPhoneSimulator.dependsOn build
+launchIPadSimulator.dependsOn build
+launchIOSDevice.dependsOn build
+createIPA.dependsOn build
+
+eclipse.project {
+    name = "greystripe-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

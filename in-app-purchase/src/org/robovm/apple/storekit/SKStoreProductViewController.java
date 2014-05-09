@@ -55,7 +55,7 @@ import org.robovm.apple.uikit.*;
     /*<members>*//*</members>*/
     /*<methods>*/
     @Method(selector = "loadProductWithParameters:completionBlock:")
-    public static native void loadProduct(NSDictionary<?, ?> parameters, VoidBlock2<Boolean, NSError> block);
+    public static native void loadProduct(NSDictionary<?, ?> parameters, @Block VoidBlock2<Boolean, NSError> block);
     @GlobalValue(symbol="SKStoreProductParameterITunesItemIdentifier", optional=true)
     public static native String ProductParameterITunesItemIdentifier();
     /*</methods>*/

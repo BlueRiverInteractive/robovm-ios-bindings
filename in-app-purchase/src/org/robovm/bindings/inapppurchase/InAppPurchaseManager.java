@@ -161,7 +161,7 @@ public class InAppPurchaseManager {
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
 		purchasingProduct = false;
 
-		listener.transactionFailed(transaction, transaction.getError());
+		listener.transactionFailed(transaction, transaction.getError() );
 	}
 
 	protected void restoreCompleted (SKPaymentQueue queue) {

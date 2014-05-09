@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.robovm.eclipse.ROBOVM_CONTAINER"/>
-	<classpathentry kind="con" path="org.robovm.eclipse.ROBOVM_COCOA_TOUCH_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
+	<classpathentry sourcepath="/Users/Haslinger/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-rt/0.0.12-SNAPSHOT/4b33d64610ecbd6b75e1d323926da51090bbf5b8/robovm-rt-0.0.12-SNAPSHOT-sources.jar" kind="lib" path="/Users/Haslinger/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-rt/0.0.12-SNAPSHOT/1f2c5819ef67f9f9a8a09a6260bc795e64426d2a/robovm-rt-0.0.12-SNAPSHOT.jar" exported="true"/>
+	<classpathentry sourcepath="/Users/Haslinger/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-cocoatouch/0.0.12-SNAPSHOT/adb76227c983f290770ab6061f564186f846db36/robovm-cocoatouch-0.0.12-SNAPSHOT-sources.jar" kind="lib" path="/Users/Haslinger/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-cocoatouch/0.0.12-SNAPSHOT/e3dc014651d1f5b2b24b2ec0a67f0f1cddf25a0a/robovm-cocoatouch-0.0.12-SNAPSHOT.jar" exported="true"/>
+	<classpathentry sourcepath="/Users/Haslinger/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-objc/0.0.12-SNAPSHOT/77ccd692762472679c2ec091fd6910e9e2ac9120/robovm-objc-0.0.12-SNAPSHOT-sources.jar" kind="lib" path="/Users/Haslinger/.gradle/caches/modules-2/files-2.1/org.robovm/robovm-objc/0.0.12-SNAPSHOT/4472e30e87ba5e30a98acfb11492b6a0d1125dd/robovm-objc-0.0.12-SNAPSHOT.jar" exported="true"/>
 </classpath>
