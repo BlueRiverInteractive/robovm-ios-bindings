@@ -1,1 +1,11 @@
+.gradle
+.DS_Store
+.idea
+.nb-gradle
+*.classpath
+*.project
+*.settings
+*.sublime-*
+/bin
 /build
+/out
