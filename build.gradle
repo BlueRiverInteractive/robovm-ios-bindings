@@ -31,9 +31,17 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
+
+    sourceSets.main.java.srcDirs = [ "src/" ]
+    sourceCompatibility = '1.7'
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    launchIPhoneSimulator.dependsOn build
+    launchIPadSimulator.dependsOn build
+    launchIOSDevice.dependsOn build
+    createIPA.dependsOn build
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
-

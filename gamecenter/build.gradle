@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.gamecenter.Sample"
+}
+
+eclipse.project {
+    name = "gamecenter-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
