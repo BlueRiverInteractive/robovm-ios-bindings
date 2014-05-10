@@ -1,15 +1,6 @@
-sourceSets.main.java.srcDirs = [ "src/" ]
-sourceCompatibility = '1.7'
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
 ext {
-	mainClassName = "org.robovm.bindings.mopub.sample.Sample"
+    mainClassName = "org.robovm.bindings.mopub.sample.Sample"
 }
-
-launchIPhoneSimulator.dependsOn build
-launchIPadSimulator.dependsOn build
-launchIOSDevice.dependsOn build
-createIPA.dependsOn build
 
 eclipse.project {
     name = "mopub-ios"

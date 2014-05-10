@@ -2,9 +2,10 @@ buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.github.jtakakura:gradle-robovm-plugin:0.0.7'
+        classpath 'com.github.jtakakura:gradle-robovm-plugin:0.0.9-SNAPSHOT'
     }
 }
 
@@ -14,190 +15,33 @@ allprojects {
     apply plugin: "java"
     apply plugin: "robovm"
 
-    version = '1.0'
+    version = '1.0.0-SNAPSHOT'
+
     ext {
-        roboVMVersion = '0.0.12-SNAPSHOT'
+        roboVMVersion = '0.0.13-SNAPSHOT'
     }
 
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    dependencies {
+        compile "org.robovm:robovm-rt:${roboVMVersion}"
+        compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
+    }
 
     repositories {
         mavenLocal()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
+
+    sourceSets.main.java.srcDirs = [ "src/" ]
+    sourceCompatibility = '1.7'
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+    launchIPhoneSimulator.dependsOn build
+    launchIPadSimulator.dependsOn build
+    launchIOSDevice.dependsOn build
+    createIPA.dependsOn build
 }
 
-project(':adcolony') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
 }
-
-project(':admob') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':appirater') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':chartboost') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':crashlytics') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':facebook') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':flurry') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':google-analytics') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':google-play-game-services') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':greystripe') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':in-app-purchase') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':mopub') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':openkit') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':playhaven') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':tapjoy') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':thinkgaming') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
-project(':vungle') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
-}
-
