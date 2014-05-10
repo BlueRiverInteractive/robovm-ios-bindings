@@ -2,9 +2,10 @@ buildscript {
     repositories {
         mavenCentral()
         mavenLocal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.github.jtakakura:gradle-robovm-plugin:0.0.7'
+        classpath 'com.github.jtakakura:gradle-robovm-plugin:0.0.9-SNAPSHOT'
     }
 }
 
@@ -14,15 +15,16 @@ allprojects {
     apply plugin: "java"
     apply plugin: "robovm"
 
-    version = '1.0'
+    version = '1.0.0-SNAPSHOT'
+
     ext {
-        roboVMVersion = '0.0.12-SNAPSHOT'
+        roboVMVersion = '0.0.13-SNAPSHOT'
     }
 
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    dependencies {
+        compile "org.robovm:robovm-rt:${roboVMVersion}"
+        compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
+    }
 
     repositories {
         mavenLocal()
@@ -32,172 +34,120 @@ allprojects {
 }
 
 project(':adcolony') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.adcolony.sample.Sample'
+    }
 }
 
 project(':admob') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.admob.sample.Sample'
+    }
 }
 
 project(':appirater') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.appirater.sample.Sample'
+    }
 }
 
 project(':chartboost') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.chartboost.sample.Sample'
+    }
 }
 
 project(':crashlytics') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.crashlytics.sample.Sample'
+    }
 }
 
 project(':facebook') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.facebook.manager.sample.Sample'
+    }
 }
 
 project(':flurry') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.flurry.sample.Sample'
+    }
+}
+
+project(':gamecenter') {
+    ext {
+        mainClassName = 'org.robovm.bindings.gamecenter.Sample'
+    }
 }
 
 project(':google-analytics') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.googleanalytics.sample.Sample'
+    }
 }
 
 project(':google-play-game-services') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.gpgs.sample.Sample'
+    }
 }
 
 project(':greystripe') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.greystripe.sample.Sample'
+    }
 }
 
 project(':in-app-purchase') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.inapppurchase.sample.Sample'
+    }
+}
+
+project(':massageui') {
+    ext {
+        mainClassName = 'org.robovm.apple.messageui.sample.Sample'
+    }
 }
 
 project(':mopub') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.mopub.sample.Sample'
+    }
 }
 
 project(':openkit') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.openkit.sample.Sample'
+    }
 }
 
 project(':playhaven') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.playhaven.sample.Sample'
+    }
 }
 
 project(':tapjoy') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.tapjoy.sample.Sample'
+    }
 }
 
 project(':thinkgaming') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.thinkgaming.sample.Sample'
+    }
 }
 
 project(':vungle') {
-	apply plugin: 'java'
-	apply plugin: 'robovm'
-		
-	dependencies {
-		compile "org.robovm:robovm-rt:${roboVMVersion}"
-		compile "org.robovm:robovm-cocoatouch:${roboVMVersion}"
-	}
+    ext {
+        mainClassName = 'org.robovm.bindings.vungle.sample.Sample'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
 }
 
