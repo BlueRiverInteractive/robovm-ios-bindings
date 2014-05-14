@@ -6,7 +6,7 @@ import org.robovm.apple.foundation.NSObject;
 import org.robovm.bindings.facebook.session.FBSession;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.GlobalValue;
+import org.robovm.rt.bro.annotation.Library;
 
 /** Client-side event logging for specialized application analytics available through Facebook App Insights and for use with
  * Facebook Ads conversion tracking and optimization.
@@ -45,6 +45,7 @@ import org.robovm.rt.bro.annotation.GlobalValue;
  * individual call, but for all invocations for that eventName. + Event names and parameter names (the keys in the NSDictionary)
  * must be between 2 and 40 characters, and must consist of alphanumeric characters, _, -, or spaces. + The length of each
  * parameter value can be no more than on the order of 100 characters. */
+@Library(Library.INTERNAL)
 @NativeClass
 public class FBAppEvents extends NSObject {
 //
@@ -160,12 +161,12 @@ public class FBAppEvents extends NSObject {
 // extern NSString *const FBAppEventParameterNameDescription;
 
 	/** True-valued parameter value to be used with parameter keys that need a True/False value */
-	@GlobalValue(symbol = "FBAppEventParameterValueYes")
-	public static native String ParameterValueTrue ();
+// @GlobalValue(symbol = "FBAppEventParameterValueYes")
+// public static native String ParameterValueTrue ();
 
 	/** False-valued parameter value to be used with parameter keys that need a True/False value */
-	@GlobalValue(symbol = "FBAppEventParameterValueNo")
-	public static native String ParameterValueFalse ();
+// @GlobalValue(symbol = "FBAppEventParameterValueNo")
+// public static native String ParameterValueFalse ();
 
 //
 // /*!

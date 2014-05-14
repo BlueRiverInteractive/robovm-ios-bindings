@@ -11,11 +11,11 @@
 			<skipPngCrush>true</skipPngCrush>
 		</resource>
 	</resources>
-	<libs>
-		<lib>libs/libfacebook.a</lib>
-		<lib>libs/libarclite.a</lib>
-	</libs>
+	<frameworkPaths>
+	    <path>libs</path>
+	</frameworkPaths>
 	<frameworks>
+	    <framework>FacebookSDK</framework>
 		<framework>CoreLocation</framework>
 		<framework>CoreGraphics</framework>
 		<framework>Foundation</framework>
