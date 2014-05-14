@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.apple.messageui.sample.Sample"
-}
-
-eclipse.project {
-    name = "messageui-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}
