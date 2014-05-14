@@ -92,7 +92,7 @@ public class InAppPurchaseManager {
 		}
 
 		System.out.println(TAG + "Purchasing product '" + product.getLocalizedTitle() + "'...");
-		SKPayment payment = SKPayment.fromProduct(product);
+		SKPayment payment = SKPayment.createFromProduct(product);
 		SKPaymentQueue.getDefaultQueue().addPayment(payment);
 		purchasingProduct = true;
 	}
@@ -161,7 +161,7 @@ public class InAppPurchaseManager {
 		SKPaymentQueue.getDefaultQueue().finishTransaction(transaction);
 		purchasingProduct = false;
 
-		listener.transactionFailed(transaction, transaction.getError() );
+		listener.transactionFailed(transaction, transaction.getError());
 	}
 
 	protected void restoreCompleted (SKPaymentQueue queue) {
