@@ -7,7 +7,9 @@ import org.robovm.apple.foundation.NSURL;
 import org.robovm.apple.uikit.UIImage;
 import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Bridge;
+import org.robovm.rt.bro.annotation.Library;
 
 @Library(Library.INTERNAL)
 @NativeClass()
