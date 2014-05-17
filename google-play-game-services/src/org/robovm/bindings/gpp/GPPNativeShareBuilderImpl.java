@@ -9,6 +9,8 @@ import org.robovm.objc.ObjCRuntime;
 import org.robovm.objc.Selector;
 import org.robovm.rt.bro.annotation.Bridge;
 
+@Library(Library.INTERNAL)
+@NativeClass()
 public class GPPNativeShareBuilderImpl extends GPPShareBuilderImpl implements GPPNativeShareBuilder {
 
 	static {
@@ -76,7 +78,7 @@ public class GPPNativeShareBuilderImpl extends GPPShareBuilderImpl implements GP
 
 	@Override
 	public GPPNativeShareBuilderImpl setPreselectedPeopleIDs (NSArray preselectedPeopleIDs) {
-		return objc_setPreselectedPeopleIDs(this, attachImageData$, preselectedPeopleIDs);
+		return objc_setPreselectedPeopleIDs(this, setPreselectedPeopleIDs$, preselectedPeopleIDs);
 	}
 
 }
