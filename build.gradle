@@ -40,6 +40,15 @@ allprojects {
     launchIPadSimulator.dependsOn build
     launchIOSDevice.dependsOn build
     createIPA.dependsOn build
+
+    jar {
+      into('META-INF/robovm/ios') {
+        from(".") { include "robovm.xml" }        
+      }
+      into('META-INF/robovm/ios/libs') {
+        from 'libs'
+      }
+    }
 }
 
 task wrapper(type: Wrapper) {
