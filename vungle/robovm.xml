@@ -28,7 +28,7 @@
 		<framework>UIKit</framework>
 	</frameworks>
 	<weakFrameworks>
-	    <framework>AdSupport</framework>
+		<framework>AdSupport</framework>
 		<framework>StoreKit</framework>
 	</weakFrameworks>
 </config>

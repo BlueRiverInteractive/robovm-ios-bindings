@@ -15,7 +15,7 @@
 		</resource>
 	</resources>
 	<frameworks>
-	    <framework>Security</framework>
+		<framework>Security</framework>
 		<framework>SystemConfiguration</framework>
 		<framework>UIKit</framework>
 	</frameworks>

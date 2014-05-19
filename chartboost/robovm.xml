@@ -10,11 +10,9 @@
 	</resources>
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
-	<!-- Add a reference to this library to your RoboVM project. -->
 	<libs>
 		<lib>libs/libChartboost.a</lib>
 	</libs>
-	<!-- Add these frameworks to your RoboVM project. -->
 	<frameworks>
 		<framework>CoreGraphics</framework>
 		<framework>CoreMedia</framework>

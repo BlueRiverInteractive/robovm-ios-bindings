@@ -6,7 +6,7 @@
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<libs>
-	    <lib>c++</lib>
+		<lib>c++</lib>
 	</libs>
 	<resources>
 		<resource>
@@ -15,13 +15,13 @@
 		</resource>
 	</resources>
 	<frameworkPaths>
-	    <path>libs</path>
+		<path>libs</path>
 	</frameworkPaths>
 	<frameworks>
-	    <framework>GoogleOpenSource</framework>
-	    <framework>GooglePlayGames</framework>
-	    <framework>GooglePlus</framework>
-	    <framework>AddressBook</framework>
+		<framework>GoogleOpenSource</framework>
+		<framework>GooglePlayGames</framework>
+		<framework>GooglePlus</framework>
+		<framework>AddressBook</framework>
 		<framework>AssetsLibrary</framework>
 		<framework>CoreData</framework>
 		<framework>CoreGraphics</framework>

@@ -6,7 +6,7 @@
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<libs>
-		<lib>libs/libPlayHaven.a</lib>
+		<lib>libs/libplayhaven.a</lib>
 	</libs>
 	<frameworks>
 		<framework>CFNetwork</framework>
@@ -16,7 +16,7 @@
 		<framework>UIKit</framework>
 	</frameworks>
 	<weakFrameworks>
-	    <framework>AdSupport</framework>
+		<framework>AdSupport</framework>
 		<framework>StoreKit</framework>
 	</weakFrameworks>
 </config>

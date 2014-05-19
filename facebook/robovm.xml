@@ -5,17 +5,11 @@
 	<arch>thumbv7</arch>
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
-	<resources>
-	    <resource>
-			<directory>resources</directory>
-			<skipPngCrush>true</skipPngCrush>
-		</resource>
-	</resources>
 	<frameworkPaths>
-	    <path>libs</path>
+		<path>libs</path>
 	</frameworkPaths>
 	<frameworks>
-	    <framework>FacebookSDK</framework>
+		<framework>FacebookSDK</framework>
 		<framework>CoreLocation</framework>
 		<framework>CoreGraphics</framework>
 		<framework>Foundation</framework>

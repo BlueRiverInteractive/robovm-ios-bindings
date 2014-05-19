@@ -12,14 +12,14 @@
 		</resource>
 	</resources>
 	<frameworks>
-	    <framework>MobileCoreServices</framework>
-	    <framework>QuartzCore</framework>
-	    <framework>Security</framework>
-	    <framework>SystemConfiguration</framework>
+		<framework>MobileCoreServices</framework>
+		<framework>QuartzCore</framework>
+		<framework>Security</framework>
+		<framework>SystemConfiguration</framework>
 	</frameworks>
 	<weakFrameworks>
-	    <framework>Accounts</framework>
-	    <framework>AdSupport</framework>
-	    <framework>Social</framework>
+		<framework>Accounts</framework>
+		<framework>AdSupport</framework>
+		<framework>Social</framework>
 	</weakFrameworks>
 </config>
