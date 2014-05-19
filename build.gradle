@@ -48,6 +48,9 @@ allprojects {
       into('META-INF/robovm/ios/libs') {
         from 'libs'
       }
+      into('META-INF/robovm/ios/resources') {
+        from 'resources'
+      }
     }
 }
 
