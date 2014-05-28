@@ -4,7 +4,9 @@ package org.robovm.bindings.facebook.manager;
 import org.robovm.bindings.facebook.session.FBSessionAuthorizationType;
 
 public enum FBPermission {
-	BASIC_INFO("basic_info", Type.READ),
+	PUBLIC_PROFILE("public_profile", Type.READ),
+
+	USER_FRIENDS("user_friends", Type.READ),
 
 	USER_ABOUT_ME("user_about_me", Type.READ), FRIENDS_ABOUT_ME("friends_about_me", Type.READ),
 
@@ -64,19 +66,19 @@ public enum FBPermission {
 		static final FBSessionAuthorizationType READ = FBSessionAuthorizationType.READ;
 	};
 
-	private String mValue;
-	private FBSessionAuthorizationType mType;
+	private String value;
+	private FBSessionAuthorizationType type;
 
 	private FBPermission (String value, FBSessionAuthorizationType type) {
-		mValue = value;
-		mType = type;
+		this.value = value;
+		this.type = type;
 	}
 
 	public String getValue () {
-		return mValue;
+		return value;
 	}
 
 	public FBSessionAuthorizationType getType () {
-		return mType;
+		return type;
 	}
 }

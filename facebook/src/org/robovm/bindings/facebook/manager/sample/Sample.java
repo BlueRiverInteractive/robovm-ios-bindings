@@ -61,8 +61,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 		facebook = FacebookManager.getInstance();
 
 		// Setup an array of all used permissions.
-		FBPermission[] fbPermissions = new FBPermission[] {FBPermission.BASIC_INFO, FBPermission.FRIENDS_LIKES, FBPermission.EMAIL,
-			FBPermission.PUBLISH_ACTION};
+		FBPermission[] fbPermissions = new FBPermission[] {FBPermission.PUBLIC_PROFILE, FBPermission.USER_FRIENDS,
+			FBPermission.EMAIL, FBPermission.PUBLISH_ACTION};
 
 		// Create a Facebook configuration.
 		FacebookConfiguration fbConfiguration = new FacebookConfiguration.Builder().setAppId(APP_ID).setNamespace(APP_NAMESPACE)
