@@ -1,10 +1,11 @@
 
 package org.robovm.bindings.googleanalytics;
 
+import org.robovm.apple.foundation.NSObject;
 import org.robovm.objc.annotation.NativeClass;
 
 @NativeClass
-public class GAIDefaultLogger implements GAILogger {
+public class GAIDefaultLogger extends NSObject implements GAILogger {
 	private GAILogLevel logLevel;
 
 	@Override
