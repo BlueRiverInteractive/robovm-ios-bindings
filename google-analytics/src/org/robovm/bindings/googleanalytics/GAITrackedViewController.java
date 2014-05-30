@@ -16,7 +16,7 @@ public class GAITrackedViewController extends UIViewController {
 	/** The tracker on which view tracking calls are be made, or {@code null}, in which case {@link GAI#getDefaultTracker()} will be
 	 * used. */
 	@Property
-	public native GAIDefaultTracker getTracker ();
+	public native GAITracker getTracker ();
 
 	@Property
 	public native void setTracker (GAITracker tracker);

@@ -15,10 +15,10 @@ public class GAI extends NSObject {
 	 * 
 	 * The GAITrackedViewController class will, by default, use this tracker instance. */
 	@Property
-	public native GAIDefaultTracker getDefaultTracker ();
+	public native GAITracker getDefaultTracker ();
 
 	@Property
-	public native void setDefaultTracker (GAIDefaultTracker tracker);
+	public native void setDefaultTracker (GAITracker tracker);
 
 	/** The GAIDefaultLogger to use. */
 	@Property
@@ -89,7 +89,7 @@ public class GAI extends NSObject {
 	 * 
 	 *         If an error occurs or the name is not valid, this method will return {@code null}. */
 	@Method(selector = "trackerWithName:trackingId:")
-	public native GAIDefaultTracker getTracker (String name, String trackingId);
+	public native GAITracker getTracker (String name, String trackingId);
 
 	/** Creates or retrieves a GAITracker implementation with name equal to the specified tracking ID. If the tracker for the
 	 * respective name does not already exist, it is created, has it's tracking ID set to |trackingId|, and is returned; otherwise,
@@ -106,7 +106,7 @@ public class GAI extends NSObject {
 	 * 
 	 *         If an error occurs or the trackingId is not valid, this method will return {@code null}. */
 	@Method(selector = "trackerWithTrackingId:")
-	public native GAIDefaultTracker getTracker (String trackingId);
+	public native GAITracker getTracker (String trackingId);
 
 	/** Remove a tracker from the trackers dictionary. If it is the default tracker, clears the default tracker as well.
 	 * 

@@ -108,7 +108,7 @@ public class GAIDictionaryBuilder extends NSObject {
 
 	/** Returns a GAIDictionaryBuilder object with parameters specific to an item hit. */
 	@Method(selector = "createItemWithTransactionId:name:sku:category:price:quantity:currencyCode:")
-	public static native GAIDictionaryBuilder createItem (String transactionId, NSString name, String sku, String category,
+	public static native GAIDictionaryBuilder createItem (String transactionId, String name, String sku, String category,
 		NSNumber price, NSNumber quantity, String currencyCode);
 
 	/** Returns a GAIDictionaryBuilder object with parameters specific to a social hit. */
