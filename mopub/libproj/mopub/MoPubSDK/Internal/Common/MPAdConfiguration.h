@@ -6,8 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "MPInterstitialViewController.h"
+#import "MPGlobal.h"
 
 enum {
     MPAdTypeUnknown = -1,

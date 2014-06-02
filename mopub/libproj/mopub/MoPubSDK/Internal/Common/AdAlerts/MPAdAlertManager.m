@@ -10,7 +10,7 @@
 #import "MPAdAlertGestureRecognizer.h"
 #import "MPLogging.h"
 #import "MPIdentityProvider.h"
-#import "MPInstanceProvider.h"
+#import "MPCoreInstanceProvider.h"
 #import "MPLastResortDelegate.h"
 
 #import "UIViewController+MPAdditions.h"
@@ -45,7 +45,7 @@
     self = [super init];
     if(self != nil)
     {
-        self.adAlertGestureRecognizer = [[MPInstanceProvider sharedProvider] buildMPAdAlertGestureRecognizerWithTarget:self
+        self.adAlertGestureRecognizer = [[MPCoreInstanceProvider sharedProvider] buildMPAdAlertGestureRecognizerWithTarget:self
                                                                                                                 action:@selector(handleAdAlertGesture)];
         self.adAlertGestureRecognizer.delegate = self;
         self.processedAlert = NO;

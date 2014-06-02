@@ -8,11 +8,9 @@
 #import "MPAdConfiguration.h"
 
 #import "MPConstants.h"
-#import "MPGlobal.h"
 #import "MPLogging.h"
 #import "math.h"
-
-#import "CJSONDeserializer.h"
+#import "NSJSONSerialization+MPAdditions.h"
 
 NSString * const kAdTypeHeaderKey = @"X-Adtype";
 NSString * const kClickthroughHeaderKey = @"X-Clickthrough";
@@ -119,9 +117,9 @@ NSString * const kAdTypeClear = @"clear";
         self.customEventClass = [self setUpCustomEventClassFromHeaders:headers];
 
         self.customEventClassData = [self customEventClassDataFromHeaders:headers];
-
+        
         self.dspCreativeId = [headers objectForKey:kDspCreativeIdKey];
-
+        
         self.precacheRequired = [[headers objectForKey:kPrecacheRequiredKey] boolValue];
 
         self.creationTimestamp = [NSDate date];
@@ -185,7 +183,7 @@ NSString * const kAdTypeClear = @"clear";
     self.customEventClassData = nil;
     self.dspCreativeId = nil;
     self.creationTimestamp = nil;
-
+    
     [super dealloc];
 }
 
@@ -246,8 +244,11 @@ NSString * const kAdTypeClear = @"clear";
 - (NSDictionary *)dictionaryFromHeaders:(NSDictionary *)headers forKey:(NSString *)key
 {
     NSData *data = [(NSString *)[headers objectForKey:key] dataUsingEncoding:NSUTF8StringEncoding];
-    CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
-    return [deserializer deserializeAsDictionary:data error:NULL];
+    NSDictionary *JSONFromHeaders = nil;
+    if (data) {
+        JSONFromHeaders = [NSJSONSerialization mp_JSONObjectWithData:data options:NSJSONReadingMutableContainers clearNullObjects:YES error:nil];
+    }
+    return JSONFromHeaders;
 }
 
 - (NSTimeInterval)refreshIntervalFromHeaders:(NSDictionary *)headers
@@ -274,7 +275,7 @@ NSString * const kAdTypeClear = @"clear";
             interval = parsedInt;
         }
     }
-
+    
     return interval;
 }
 

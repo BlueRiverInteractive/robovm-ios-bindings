@@ -8,24 +8,26 @@
 #import "MPURLResolver.h"
 #import "NSURL+MPAdditions.h"
 #import "MPInstanceProvider.h"
+#import "MPLogging.h"
+#import "MPCoreInstanceProvider.h"
 
 static NSString * const kMoPubSafariScheme = @"mopubnativebrowser";
 static NSString * const kMoPubSafariNavigateHost = @"navigate";
-
-#define kNumEncodingsToTry 2
-static NSStringEncoding gEncodingWaterfall[kNumEncodingsToTry] = {NSUTF8StringEncoding, NSISOLatin1StringEncoding};
+static NSString * const kMoPubHTTPHeaderContentType = @"Content-Type";
 
 @interface MPURLResolver ()
 
 @property (nonatomic, retain) NSURL *URL;
 @property (nonatomic, retain) NSURLConnection *connection;
 @property (nonatomic, retain) NSMutableData *responseData;
+@property (nonatomic, assign) NSStringEncoding responseEncoding;
 
 - (BOOL)handleURL:(NSURL *)URL;
 - (NSString *)storeItemIdentifierForURL:(NSURL *)URL;
 - (BOOL)URLShouldOpenInApplication:(NSURL *)URL;
 - (BOOL)URLIsHTTPOrHTTPS:(NSURL *)URL;
 - (BOOL)URLPointsToAMap:(NSURL *)URL;
+- (NSStringEncoding)stringEncodingFromContentType:(NSString *)contentType;
 
 @end
 
@@ -57,9 +59,10 @@ static NSStringEncoding gEncodingWaterfall[kNumEncodingsToTry] = {NSUTF8StringEn
     self.URL = URL;
     self.delegate = delegate;
     self.responseData = [NSMutableData data];
+    self.responseEncoding = NSUTF8StringEncoding;
 
     if (![self handleURL:self.URL]) {
-        NSURLRequest *request = [[MPInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:self.URL];
+        NSURLRequest *request = [[MPCoreInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:self.URL];
         self.connection = [NSURLConnection connectionWithRequest:request delegate:self];
     }
 }
@@ -68,22 +71,6 @@ static NSStringEncoding gEncodingWaterfall[kNumEncodingsToTry] = {NSUTF8StringEn
 {
     [self.connection cancel];
     self.connection = nil;
-}
-
-- (NSString *)htmlStringForData:(NSData *)data
-{
-    NSString *htmlString = nil;
-
-    for(int i = 0; i < kNumEncodingsToTry; i++)
-    {
-        htmlString = [[NSString alloc] initWithData:data encoding:gEncodingWaterfall[i]];
-        if(htmlString != nil)
-        {
-            break;
-        }
-    }
-
-    return [htmlString autorelease];
 }
 
 #pragma mark - Handling Application/StoreKit URLs
@@ -170,6 +157,35 @@ static NSStringEncoding gEncodingWaterfall[kNumEncodingsToTry] = {NSUTF8StringEn
     return safariURL;
 }
 
+#pragma mark - Identifying NSStringEncoding from NSURLResponse Content-Type header
+
+- (NSStringEncoding)stringEncodingFromContentType:(NSString *)contentType
+{
+    NSStringEncoding encoding = NSUTF8StringEncoding;
+    
+    if (![contentType length]) {
+        MPLogWarn(@"Attempting to set string encoding from nil %@", kMoPubHTTPHeaderContentType);
+        return encoding;
+    }
+    
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(?<=charset=)[^;]*" options:kNilOptions error:nil];
+    
+    NSTextCheckingResult *charsetResult = [regex firstMatchInString:contentType options:kNilOptions range:NSMakeRange(0, [contentType length])];
+    if (charsetResult && charsetResult.range.location != NSNotFound) {
+        NSString *charset = [contentType substringWithRange:[charsetResult range]];
+        
+        CFStringRef cfCharset = (CFStringRef)charset;
+        
+        CFStringEncoding cfEncoding = CFStringConvertIANACharSetNameToEncoding(cfCharset);
+        if (cfEncoding == kCFStringEncodingInvalidId) {
+            return encoding;
+        }
+        encoding = CFStringConvertEncodingToNSStringEncoding(cfEncoding);
+    }
+    
+    return encoding;
+}
+
 #pragma mark - <NSURLConnectionDataDelegate>
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -188,10 +204,16 @@ static NSStringEncoding gEncodingWaterfall[kNumEncodingsToTry] = {NSUTF8StringEn
     }
 }
 
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    NSDictionary *headers = [(NSHTTPURLResponse *)response allHeaderFields];
+    NSString *contentType = [headers objectForKey:kMoPubHTTPHeaderContentType];
+    self.responseEncoding = [self stringEncodingFromContentType:contentType];
+}
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    [self.delegate showWebViewWithHTMLString:[self htmlStringForData:self.responseData]
-                                     baseURL:self.URL];
+    [self.delegate showWebViewWithHTMLString:[[[NSString alloc] initWithData:self.responseData encoding:self.responseEncoding] autorelease] baseURL:self.URL];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error

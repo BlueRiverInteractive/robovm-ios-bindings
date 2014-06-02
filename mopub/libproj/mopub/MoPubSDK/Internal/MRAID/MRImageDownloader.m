@@ -3,7 +3,7 @@
 //
 
 #import "MRImageDownloader.h"
-#import "MPInstanceProvider.h"
+#import "MPCoreInstanceProvider.h"
 
 @interface MRAIDStorePictureOperation : NSOperation
 
@@ -69,7 +69,7 @@
 - (void)downloadImageWithURL:(NSURL *)URL
 {
     if (!self.queue) {
-        self.queue = [[MPInstanceProvider sharedProvider] sharedOperationQueue];
+        self.queue = [[MPCoreInstanceProvider sharedProvider] sharedOperationQueue];
     }
 
     if ([self.pendingOperations objectForKey:URL]) {

@@ -9,7 +9,7 @@
 
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
-#import "MPInstanceProvider.h"
+#import "MPCoreInstanceProvider.h"
 
 const NSTimeInterval kRequestTimeoutInterval = 10.0;
 
@@ -132,7 +132,7 @@ const NSTimeInterval kRequestTimeoutInterval = 10.0;
 
 - (NSURLRequest *)adRequestForURL:(NSURL *)URL
 {
-    NSMutableURLRequest *request = [[MPInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:URL];
+    NSMutableURLRequest *request = [[MPCoreInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:URL];
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
     [request setTimeoutInterval:kRequestTimeoutInterval];
     return request;

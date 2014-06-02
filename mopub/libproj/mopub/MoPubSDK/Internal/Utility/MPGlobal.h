@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "CJSONDeserializer.h"
 
 #ifndef MP_ANIMATED
 #define MP_ANIMATED YES
@@ -21,6 +20,7 @@ CGRect MPApplicationFrame(void);
 CGRect MPScreenBounds(void);
 CGFloat MPDeviceScaleFactor(void);
 NSDictionary *MPDictionaryFromQueryString(NSString *query);
+NSString *MPSHA1Digest(NSString *string);
 BOOL MPViewIsVisible(UIView *view);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,13 +60,6 @@ enum {
 };
 typedef NSUInteger MPInterstitialOrientationType;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-@interface CJSONDeserializer (MPAdditions)
-
-+ (CJSONDeserializer *)deserializerWithNullObject:(id)obj;
-
-@end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,5 +96,20 @@ typedef NSUInteger MPInterstitialOrientationType;
 
 - (void)beginMonitoringAlerts;
 - (void)processAdAlertOnce;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Small alert wrapper class to handle telephone protocol prompting
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@class MPTelephoneConfirmationController;
+
+typedef void (^MPTelephoneConfirmationControllerClickHandler)(NSURL *targetTelephoneURL, BOOL confirmed);
+
+@interface MPTelephoneConfirmationController : NSObject <UIAlertViewDelegate>
+
+- (id)initWithURL:(NSURL *)url clickHandler:(MPTelephoneConfirmationControllerClickHandler)clickHandler;
+- (void)show;
 
 @end

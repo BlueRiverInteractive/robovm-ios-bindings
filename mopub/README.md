@@ -1,6 +1,6 @@
 MoPub iOS SDK
 ==================================
-SDK Version: 1.17.2.0
+SDK Version: 2.1.1
 
 Getting Started
 ----------------------------------

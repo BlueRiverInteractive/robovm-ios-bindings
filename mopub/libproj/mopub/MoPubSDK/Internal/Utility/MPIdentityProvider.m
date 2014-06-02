@@ -18,8 +18,8 @@
 
 + (BOOL)deviceHasASIdentifierManager;
 
-+ (NSString *)identifierFromASIdentifierManager;
-+ (NSString *)mopubIdentifier;
++ (NSString *)identifierFromASIdentifierManager:(BOOL)obfuscate;
++ (NSString *)mopubIdentifier:(BOOL)obfuscate;
 
 @end
 
@@ -32,10 +32,20 @@
 
 + (NSString *)identifier
 {
+    return [self _identifier:NO];
+}
+
++ (NSString *)obfuscatedIdentifier
+{
+    return [self _identifier:YES];
+}
+
++ (NSString *)_identifier:(BOOL)obfuscate
+{
     if ([self deviceHasASIdentifierManager]) {
-        return [self identifierFromASIdentifierManager];
+        return [self identifierFromASIdentifierManager:obfuscate];
     } else {
-        return [self mopubIdentifier];
+        return [self mopubIdentifier:obfuscate];
     }
 }
 
@@ -52,17 +62,26 @@
     return enabled;
 }
 
-+ (NSString *)identifierFromASIdentifierManager
++ (NSString *)identifierFromASIdentifierManager:(BOOL)obfuscate
 {
+    if (obfuscate) {
+        return @"ifa:XXXX";
+    }
+    
     NSString *identifier = nil;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
     identifier = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
 #endif
+    
     return [NSString stringWithFormat:@"ifa:%@", [identifier uppercaseString]];
 }
 
-+ (NSString *)mopubIdentifier
++ (NSString *)mopubIdentifier:(BOOL)obfuscate
 {
+    if (obfuscate) {
+        return @"mopub:XXXX";
+    }
+
     NSString *identifier = [[NSUserDefaults standardUserDefaults] objectForKey:MOPUB_IDENTIFIER_DEFAULTS_KEY];
     if (!identifier) {
         CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
@@ -74,6 +93,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:MOPUB_IDENTIFIER_DEFAULTS_KEY];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+
     return identifier;
 }
 

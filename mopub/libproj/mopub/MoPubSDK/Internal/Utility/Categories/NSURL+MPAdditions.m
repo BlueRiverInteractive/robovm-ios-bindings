@@ -7,6 +7,9 @@
 
 #import "NSURL+MPAdditions.h"
 
+static NSString * const kTelephoneScheme = @"tel";
+static NSString * const kTelephonePromptScheme = @"telprompt";
+
 @implementation NSURL (MPAdditions)
 
 - (NSDictionary *)mp_queryAsDictionary
@@ -23,6 +26,16 @@
         }
     }
     return queryDict;
+}
+
+- (BOOL)mp_hasTelephoneScheme
+{
+    return [[[self scheme] lowercaseString] isEqualToString:kTelephoneScheme];
+}
+
+- (BOOL)mp_hasTelephonePromptScheme
+{
+    return [[[self scheme] lowercaseString] isEqualToString:kTelephonePromptScheme];
 }
 
 @end

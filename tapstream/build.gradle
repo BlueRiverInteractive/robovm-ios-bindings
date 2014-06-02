@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.tapstream.sample.Sample"
+}
+
+eclipse.project {
+    name = "tapstream-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

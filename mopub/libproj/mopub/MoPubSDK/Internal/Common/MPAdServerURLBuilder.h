@@ -15,4 +15,11 @@
                   location:(CLLocation *)location
                    testing:(BOOL)testing;
 
++ (NSURL *)URLWithAdUnitID:(NSString *)adUnitID
+                  keywords:(NSString *)keywords
+                  location:(CLLocation *)location
+      versionParameterName:(NSString *)versionParameterName
+                   version:(NSString *)version
+                   testing:(BOOL)testing;
+
 @end

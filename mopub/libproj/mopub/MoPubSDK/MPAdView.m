@@ -179,7 +179,7 @@
         // Make sure we're not deallocated immediately as a result of a delegate
         // action in reponse to this callback.
         [[self retain] autorelease];
-
+        
         [self.delegate adViewDidFailToLoadAd:self];
     }
 }

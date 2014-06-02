@@ -13,6 +13,7 @@
 #import "MPInterstitialAdController.h"
 #import "MPInterstitialCustomEventAdapter.h"
 #import "MPInstanceProvider.h"
+#import "MPCoreInstanceProvider.h"
 #import "MPInterstitialAdManagerDelegate.h"
 #import "MPLogging.h"
 
@@ -43,7 +44,7 @@
 {
     self = [super init];
     if (self) {
-        self.communicator = [[MPInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self];
+        self.communicator = [[MPCoreInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self];
         self.delegate = delegate;
     }
     return self;

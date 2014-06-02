@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E08DDA8A193C016300E4BBBA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08DDA89193C016300E4BBBA /* Foundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E08DDA99193C016300E4BBBA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08DDA89193C016300E4BBBA /* Foundation.framework */; };
+		E08DDA9E193C016300E4BBBA /* libtapstream.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E08DDA86193C016300E4BBBA /* libtapstream.a */; };
+		E08DDACC193C029400E4BBBA /* TSAppEventSourceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAB2193C029400E4BBBA /* TSAppEventSourceImpl.m */; };
+		E08DDACD193C029400E4BBBA /* TSConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAB4193C029400E4BBBA /* TSConfig.m */; };
+		E08DDACE193C029400E4BBBA /* TSCore.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAB6193C029400E4BBBA /* TSCore.m */; };
+		E08DDACF193C029400E4BBBA /* TSCoreListenerImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAB9193C029400E4BBBA /* TSCoreListenerImpl.m */; };
+		E08DDAD0193C029400E4BBBA /* TSEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDABC193C029400E4BBBA /* TSEvent.m */; };
+		E08DDAD1193C029400E4BBBA /* TSHit.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDABF193C029400E4BBBA /* TSHit.m */; };
+		E08DDAD2193C029400E4BBBA /* TSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAC1193C029400E4BBBA /* TSLogging.m */; };
+		E08DDAD3193C029400E4BBBA /* TSPlatformImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAC5193C029400E4BBBA /* TSPlatformImpl.m */; };
+		E08DDAD4193C029400E4BBBA /* TSResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAC7193C029400E4BBBA /* TSResponse.m */; };
+		E08DDAD5193C029400E4BBBA /* TSTapstream.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDAC9193C029400E4BBBA /* TSTapstream.m */; };
+		E08DDAD6193C029400E4BBBA /* TSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E08DDACB193C029400E4BBBA /* TSUtils.m */; };
+		E08DDAD8193C029D00E4BBBA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E08DDAD7193C029D00E4BBBA /* StoreKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E08DDA9C193C016300E4BBBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E08DDA7E193C016300E4BBBA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E08DDA85193C016300E4BBBA;
+			remoteInfo = tapstream;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E08DDA84193C016300E4BBBA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E08DDA86193C016300E4BBBA /* libtapstream.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtapstream.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E08DDA89193C016300E4BBBA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E08DDA8D193C016300E4BBBA /* tapstream-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tapstream-Prefix.pch"; sourceTree = "<group>"; };
+		E08DDA96193C016300E4BBBA /* tapstreamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tapstreamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E08DDAAF193C029400E4BBBA /* TSApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSApi.h; sourceTree = SOURCE_ROOT; };
+		E08DDAB0193C029400E4BBBA /* TSAppEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAppEventSource.h; sourceTree = SOURCE_ROOT; };
+		E08DDAB1193C029400E4BBBA /* TSAppEventSourceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAppEventSourceImpl.h; sourceTree = SOURCE_ROOT; };
+		E08DDAB2193C029400E4BBBA /* TSAppEventSourceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAppEventSourceImpl.m; sourceTree = SOURCE_ROOT; };
+		E08DDAB3193C029400E4BBBA /* TSConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSConfig.h; sourceTree = SOURCE_ROOT; };
+		E08DDAB4193C029400E4BBBA /* TSConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSConfig.m; sourceTree = SOURCE_ROOT; };
+		E08DDAB5193C029400E4BBBA /* TSCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCore.h; sourceTree = SOURCE_ROOT; };
+		E08DDAB6193C029400E4BBBA /* TSCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCore.m; sourceTree = SOURCE_ROOT; };
+		E08DDAB7193C029400E4BBBA /* TSCoreListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCoreListener.h; sourceTree = SOURCE_ROOT; };
+		E08DDAB8193C029400E4BBBA /* TSCoreListenerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCoreListenerImpl.h; sourceTree = SOURCE_ROOT; };
+		E08DDAB9193C029400E4BBBA /* TSCoreListenerImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCoreListenerImpl.m; sourceTree = SOURCE_ROOT; };
+		E08DDABA193C029400E4BBBA /* TSDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSDelegate.h; sourceTree = SOURCE_ROOT; };
+		E08DDABB193C029400E4BBBA /* TSEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSEvent.h; sourceTree = SOURCE_ROOT; };
+		E08DDABC193C029400E4BBBA /* TSEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSEvent.m; sourceTree = SOURCE_ROOT; };
+		E08DDABD193C029400E4BBBA /* TSHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSHelpers.h; sourceTree = SOURCE_ROOT; };
+		E08DDABE193C029400E4BBBA /* TSHit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSHit.h; sourceTree = SOURCE_ROOT; };
+		E08DDABF193C029400E4BBBA /* TSHit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSHit.m; sourceTree = SOURCE_ROOT; };
+		E08DDAC0193C029400E4BBBA /* TSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLogging.h; sourceTree = SOURCE_ROOT; };
+		E08DDAC1193C029400E4BBBA /* TSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLogging.m; sourceTree = SOURCE_ROOT; };
+		E08DDAC2193C029400E4BBBA /* TSLogLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLogLevel.h; sourceTree = SOURCE_ROOT; };
+		E08DDAC3193C029400E4BBBA /* TSPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPlatform.h; sourceTree = SOURCE_ROOT; };
+		E08DDAC4193C029400E4BBBA /* TSPlatformImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPlatformImpl.h; sourceTree = SOURCE_ROOT; };
+		E08DDAC5193C029400E4BBBA /* TSPlatformImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPlatformImpl.m; sourceTree = SOURCE_ROOT; };
+		E08DDAC6193C029400E4BBBA /* TSResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSResponse.h; sourceTree = SOURCE_ROOT; };
+		E08DDAC7193C029400E4BBBA /* TSResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSResponse.m; sourceTree = SOURCE_ROOT; };
+		E08DDAC8193C029400E4BBBA /* TSTapstream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTapstream.h; sourceTree = SOURCE_ROOT; };
+		E08DDAC9193C029400E4BBBA /* TSTapstream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTapstream.m; sourceTree = SOURCE_ROOT; };
+		E08DDACA193C029400E4BBBA /* TSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSUtils.h; sourceTree = SOURCE_ROOT; };
+		E08DDACB193C029400E4BBBA /* TSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSUtils.m; sourceTree = SOURCE_ROOT; };
+		E08DDAD7193C029D00E4BBBA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E08DDA83193C016300E4BBBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E08DDAD8193C029D00E4BBBA /* StoreKit.framework in Frameworks */,
+				E08DDA8A193C016300E4BBBA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E08DDA93193C016300E4BBBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E08DDA9E193C016300E4BBBA /* libtapstream.a in Frameworks */,
+				E08DDA99193C016300E4BBBA /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E08DDA7D193C016300E4BBBA = {
+			isa = PBXGroup;
+			children = (
+				E08DDA8B193C016300E4BBBA /* tapstream */,
+				E08DDA88193C016300E4BBBA /* Frameworks */,
+				E08DDA87193C016300E4BBBA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E08DDA87193C016300E4BBBA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E08DDA86193C016300E4BBBA /* libtapstream.a */,
+				E08DDA96193C016300E4BBBA /* tapstreamTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E08DDA88193C016300E4BBBA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E08DDAD7193C029D00E4BBBA /* StoreKit.framework */,
+				E08DDA89193C016300E4BBBA /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E08DDA8B193C016300E4BBBA /* tapstream */ = {
+			isa = PBXGroup;
+			children = (
+				E08DDAAF193C029400E4BBBA /* TSApi.h */,
+				E08DDAB0193C029400E4BBBA /* TSAppEventSource.h */,
+				E08DDAB1193C029400E4BBBA /* TSAppEventSourceImpl.h */,
+				E08DDAB2193C029400E4BBBA /* TSAppEventSourceImpl.m */,
+				E08DDAB3193C029400E4BBBA /* TSConfig.h */,
+				E08DDAB4193C029400E4BBBA /* TSConfig.m */,
+				E08DDAB5193C029400E4BBBA /* TSCore.h */,
+				E08DDAB6193C029400E4BBBA /* TSCore.m */,
+				E08DDAB7193C029400E4BBBA /* TSCoreListener.h */,
+				E08DDAB8193C029400E4BBBA /* TSCoreListenerImpl.h */,
+				E08DDAB9193C029400E4BBBA /* TSCoreListenerImpl.m */,
+				E08DDABA193C029400E4BBBA /* TSDelegate.h */,
+				E08DDABB193C029400E4BBBA /* TSEvent.h */,
+				E08DDABC193C029400E4BBBA /* TSEvent.m */,
+				E08DDABD193C029400E4BBBA /* TSHelpers.h */,
+				E08DDABE193C029400E4BBBA /* TSHit.h */,
+				E08DDABF193C029400E4BBBA /* TSHit.m */,
+				E08DDAC0193C029400E4BBBA /* TSLogging.h */,
+				E08DDAC1193C029400E4BBBA /* TSLogging.m */,
+				E08DDAC2193C029400E4BBBA /* TSLogLevel.h */,
+				E08DDAC3193C029400E4BBBA /* TSPlatform.h */,
+				E08DDAC4193C029400E4BBBA /* TSPlatformImpl.h */,
+				E08DDAC5193C029400E4BBBA /* TSPlatformImpl.m */,
+				E08DDAC6193C029400E4BBBA /* TSResponse.h */,
+				E08DDAC7193C029400E4BBBA /* TSResponse.m */,
+				E08DDAC8193C029400E4BBBA /* TSTapstream.h */,
+				E08DDAC9193C029400E4BBBA /* TSTapstream.m */,
+				E08DDACA193C029400E4BBBA /* TSUtils.h */,
+				E08DDACB193C029400E4BBBA /* TSUtils.m */,
+				E08DDA8C193C016300E4BBBA /* Supporting Files */,
+			);
+			path = tapstream;
+			sourceTree = "<group>";
+		};
+		E08DDA8C193C016300E4BBBA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E08DDA8D193C016300E4BBBA /* tapstream-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E08DDA85193C016300E4BBBA /* tapstream */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E08DDAA9193C016300E4BBBA /* Build configuration list for PBXNativeTarget "tapstream" */;
+			buildPhases = (
+				E08DDA82193C016300E4BBBA /* Sources */,
+				E08DDA83193C016300E4BBBA /* Frameworks */,
+				E08DDA84193C016300E4BBBA /* CopyFiles */,
+				E08DDAD9193C02AC00E4BBBA /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tapstream;
+			productName = tapstream;
+			productReference = E08DDA86193C016300E4BBBA /* libtapstream.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E08DDA95193C016300E4BBBA /* tapstreamTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E08DDAAC193C016300E4BBBA /* Build configuration list for PBXNativeTarget "tapstreamTests" */;
+			buildPhases = (
+				E08DDA92193C016300E4BBBA /* Sources */,
+				E08DDA93193C016300E4BBBA /* Frameworks */,
+				E08DDA94193C016300E4BBBA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E08DDA9D193C016300E4BBBA /* PBXTargetDependency */,
+			);
+			name = tapstreamTests;
+			productName = tapstreamTests;
+			productReference = E08DDA96193C016300E4BBBA /* tapstreamTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E08DDA7E193C016300E4BBBA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "BlueRiver Interactive";
+			};
+			buildConfigurationList = E08DDA81193C016300E4BBBA /* Build configuration list for PBXProject "tapstream" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E08DDA7D193C016300E4BBBA;
+			productRefGroup = E08DDA87193C016300E4BBBA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E08DDA85193C016300E4BBBA /* tapstream */,
+				E08DDA95193C016300E4BBBA /* tapstreamTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E08DDA94193C016300E4BBBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E08DDAD9193C02AC00E4BBBA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Version 2.0 (updated for Xcode 4, with some fixes)\n# Changes:\n#    - Works with xcode 4, even when running xcode 3 projects (Workarounds for apple bugs)\n#    - Faster / better: only runs lipo once, instead of once per recursion\n#    - Added some debugging statemetns that can be switched on/off by changing the DEBUG_THIS_SCRIPT variable to \"true\"\n#    - Fixed some typos\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#   Because Apple staff DELIBERATELY broke Xcode to make this impossible from the GUI (Xcode 3.2.3 specifically states this in the Release notes!)\n#   ...no, I don't understand why they did this!\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\"\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\n# * needs to be outside the double quotes?\ncp \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include/\"* \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\nfi\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E08DDA82193C016300E4BBBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E08DDAD6193C029400E4BBBA /* TSUtils.m in Sources */,
+				E08DDAD1193C029400E4BBBA /* TSHit.m in Sources */,
+				E08DDAD4193C029400E4BBBA /* TSResponse.m in Sources */,
+				E08DDAD5193C029400E4BBBA /* TSTapstream.m in Sources */,
+				E08DDAD3193C029400E4BBBA /* TSPlatformImpl.m in Sources */,
+				E08DDAD0193C029400E4BBBA /* TSEvent.m in Sources */,
+				E08DDACE193C029400E4BBBA /* TSCore.m in Sources */,
+				E08DDAD2193C029400E4BBBA /* TSLogging.m in Sources */,
+				E08DDACD193C029400E4BBBA /* TSConfig.m in Sources */,
+				E08DDACC193C029400E4BBBA /* TSAppEventSourceImpl.m in Sources */,
+				E08DDACF193C029400E4BBBA /* TSCoreListenerImpl.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E08DDA92193C016300E4BBBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E08DDA9D193C016300E4BBBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E08DDA85193C016300E4BBBA /* tapstream */;
+			targetProxy = E08DDA9C193C016300E4BBBA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E08DDAA7193C016300E4BBBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E08DDAA8193C016300E4BBBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E08DDAAA193C016300E4BBBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					"$(ARCHS_STANDARD)",
+				);
+				DSTROOT = /tmp/tapstream.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tapstream/tapstream-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Debug;
+		};
+		E08DDAAB193C016300E4BBBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					i386,
+					"$(ARCHS_STANDARD)",
+				);
+				DSTROOT = /tmp/tapstream.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tapstream/tapstream-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "i386 armv7 armv7s";
+			};
+			name = Release;
+		};
+		E08DDAAD193C016300E4BBBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tapstream/tapstream-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "tapstreamTests/tapstreamTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		E08DDAAE193C016300E4BBBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tapstream/tapstream-Prefix.pch";
+				INFOPLIST_FILE = "tapstreamTests/tapstreamTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E08DDA81193C016300E4BBBA /* Build configuration list for PBXProject "tapstream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E08DDAA7193C016300E4BBBA /* Debug */,
+				E08DDAA8193C016300E4BBBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E08DDAA9193C016300E4BBBA /* Build configuration list for PBXNativeTarget "tapstream" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E08DDAAA193C016300E4BBBA /* Debug */,
+				E08DDAAB193C016300E4BBBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E08DDAAC193C016300E4BBBA /* Build configuration list for PBXNativeTarget "tapstreamTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E08DDAAD193C016300E4BBBA /* Debug */,
+				E08DDAAE193C016300E4BBBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E08DDA7E193C016300E4BBBA /* Project object */;
+}

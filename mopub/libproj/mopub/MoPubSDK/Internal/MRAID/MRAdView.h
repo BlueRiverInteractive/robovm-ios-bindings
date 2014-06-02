@@ -78,7 +78,7 @@ typedef NSUInteger MRAdViewAdType;
 
     // Enum indicating whether this view is being used as an inline ad or an interstitial ad.
     MRAdViewPlacementType _placementType;
-
+    
     // Enum indicating the type of this ad. Default ad or ad that requires pre-caching.
     MRAdViewAdType _adType;
 }

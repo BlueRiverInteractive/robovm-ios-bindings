@@ -7,6 +7,7 @@
 //
 
 #import "MPLogging.h"
+#import "MPIdentityProvider.h"
 
 static MPLogLevel MPLOG_LEVEL = MPLogLevelInfo;
 
@@ -20,6 +21,27 @@ void MPLogSetLevel(MPLogLevel level)
     MPLOG_LEVEL = level;
 }
 
+void _MPLog(NSString *format, va_list args)
+{
+    static NSString *sIdentifier;
+    static NSString *sObfuscatedIdentifier;
+
+    if (!sIdentifier) {
+        sIdentifier = [[MPIdentityProvider identifier] copy];
+    }
+
+    if (!sObfuscatedIdentifier) {
+        sObfuscatedIdentifier = [[MPIdentityProvider obfuscatedIdentifier] copy];
+    }
+
+    NSString *logString = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
+
+    // Replace identifier with a obfuscated version when logging.
+    logString = [logString stringByReplacingOccurrencesOfString:sIdentifier withString:sObfuscatedIdentifier];
+
+    NSLog(@"%@", logString);
+}
+
 void _MPLogTrace(NSString *format, ...)
 {
     if (MPLOG_LEVEL <= MPLogLevelTrace)
@@ -27,7 +49,7 @@ void _MPLogTrace(NSString *format, ...)
         format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
-        NSLogv(format, args);
+        _MPLog(format, args);
         va_end(args);
     }
 }
@@ -39,7 +61,7 @@ void _MPLogDebug(NSString *format, ...)
         format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
-        NSLogv(format, args);
+        _MPLog(format, args);
         va_end(args);
     }
 }
@@ -51,7 +73,7 @@ void _MPLogWarn(NSString *format, ...)
         format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
-        NSLogv(format, args);
+        _MPLog(format, args);
         va_end(args);
     }
 }
@@ -63,7 +85,7 @@ void _MPLogInfo(NSString *format, ...)
         format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
-        NSLogv(format, args);
+        _MPLog(format, args);
         va_end(args);
     }
 }
@@ -75,7 +97,7 @@ void _MPLogError(NSString *format, ...)
         format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
-        NSLogv(format, args);
+        _MPLog(format, args);
         va_end(args);
     }
 }
@@ -87,7 +109,7 @@ void _MPLogFatal(NSString *format, ...)
         format = [NSString stringWithFormat:@"MOPUB: %@", format];
         va_list args;
         va_start(args, format);
-        NSLogv(format, args);
+        _MPLog(format, args);
         va_end(args);
     }
 }

@@ -99,6 +99,10 @@
                   @"a nil view controller was passed to -showFromViewController:.");
         return;
     }
+    
+    if (![controller.view.window isKeyWindow]) {
+        MPLogWarn(@"Attempted to present an interstitial ad in non-key window. The ad may not render properly");
+    }
 
     [self.manager presentInterstitialFromViewController:controller];
 }

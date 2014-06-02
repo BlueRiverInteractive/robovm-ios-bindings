@@ -6,14 +6,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <EventKitUI/EventKitUI.h>
 #import <StoreKit/StoreKit.h>
 
-@interface MPLastResortDelegate : NSObject<EKEventEditViewDelegate
+@interface MPLastResortDelegate : NSObject
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
-, SKStoreProductViewControllerDelegate
+<SKStoreProductViewControllerDelegate>
 #endif
->
 
 + (id)sharedDelegate;
 

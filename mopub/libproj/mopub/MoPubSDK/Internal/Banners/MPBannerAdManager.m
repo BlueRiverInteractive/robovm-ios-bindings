@@ -8,6 +8,7 @@
 #import "MPBannerAdManager.h"
 #import "MPAdServerURLBuilder.h"
 #import "MPInstanceProvider.h"
+#import "MPCoreInstanceProvider.h"
 #import "MPBannerAdManagerDelegate.h"
 #import "MPError.h"
 #import "MPTimer.h"
@@ -50,7 +51,7 @@
     if (self) {
         self.delegate = delegate;
 
-        self.communicator = [[MPInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self];
+        self.communicator = [[MPCoreInstanceProvider sharedProvider] buildMPAdServerCommunicatorWithDelegate:self];
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationWillEnterForeground)
@@ -168,7 +169,7 @@
     NSTimeInterval timeInterval = self.requestingConfiguration ? self.requestingConfiguration.refreshInterval : DEFAULT_BANNER_REFRESH_INTERVAL;
 
     if (timeInterval > 0) {
-        self.refreshTimer = [[MPInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:timeInterval
+        self.refreshTimer = [[MPCoreInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:timeInterval
                                                                                        target:self
                                                                                      selector:@selector(refreshTimerDidFire)
                                                                                       repeats:NO];
@@ -191,7 +192,7 @@
     self.requestingConfiguration = configuration;
 
     MPLogInfo(@"Banner ad view is fetching ad network type: %@", self.requestingConfiguration.networkType);
-
+    
     if (configuration.adType == MPAdTypeUnknown) {
         [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorServerError]];
         return;
@@ -199,14 +200,14 @@
 
     if (configuration.adType == MPAdTypeInterstitial) {
         MPLogWarn(@"Could not load ad: banner object received an interstitial ad unit ID.");
-
+        
         [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorAdapterInvalid]];
         return;
     }
 
     if ([configuration.networkType isEqualToString:kAdTypeClear]) {
         MPLogInfo(@"Ad server response indicated no ad available.");
-
+        
         [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorNoInventory]];
         return;
     }

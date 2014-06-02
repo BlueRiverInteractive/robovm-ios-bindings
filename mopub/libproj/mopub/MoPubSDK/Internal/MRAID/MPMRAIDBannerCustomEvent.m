@@ -36,7 +36,7 @@
                                                              closeButtonStyle:MRAdViewCloseButtonStyleAdControlled
                                                                 placementType:MRAdViewPlacementTypeInline
                                                                      delegate:self];
-
+    
     self.banner.delegate = self;
     [self.banner loadCreativeWithHTMLString:[configuration adResponseHTMLString]
                                     baseURL:nil];

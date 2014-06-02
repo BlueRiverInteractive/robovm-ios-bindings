@@ -38,7 +38,7 @@
                                                                            closeButtonStyle:MRAdViewCloseButtonStyleAdControlled
                                                                               placementType:MRAdViewPlacementTypeInterstitial
                                                                                    delegate:self];
-
+        
         self.interstitialView.adType = configuration.precacheRequired ? MRAdViewAdTypePreCached : MRAdViewAdTypeDefault;
         self.configuration = configuration;
         self.orientationType = [self.configuration orientationType];

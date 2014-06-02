@@ -9,12 +9,20 @@
 #import "MPAdConfiguration.h"
 #import "MPGlobal.h"
 #import "MPLogging.h"
-#import "CJSONDeserializer.h"
 #import "MPAdDestinationDisplayAgent.h"
 #import "NSURL+MPAdditions.h"
 #import "UIWebView+MPAdditions.h"
 #import "MPAdWebView.h"
 #import "MPInstanceProvider.h"
+#import "MPCoreInstanceProvider.h"
+#import "NSJSONSerialization+MPAdditions.h"
+#import "NSURL+MPAdditions.h"
+
+#ifndef NSFoundationVersionNumber_iOS_6_1
+#define NSFoundationVersionNumber_iOS_6_1 993.00
+#endif
+
+#define MPOffscreenWebViewNeedsRenderingWorkaround() (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
 
 NSString * const kMoPubURLScheme = @"mopub";
 NSString * const kMoPubCloseHost = @"close";
@@ -51,11 +59,11 @@ NSString * const kMoPubCustomHost = @"custom";
     self = [super init];
     if (self) {
         self.view = [[MPInstanceProvider sharedProvider] buildMPAdWebViewWithFrame:frame delegate:self];
-        self.destinationDisplayAgent = [[MPInstanceProvider sharedProvider] buildMPAdDestinationDisplayAgentWithDelegate:self];
+        self.destinationDisplayAgent = [[MPCoreInstanceProvider sharedProvider] buildMPAdDestinationDisplayAgentWithDelegate:self];
         self.delegate = delegate;
         self.customMethodDelegate = customMethodDelegate;
         self.shouldHandleRequests = YES;
-        self.adAlertManager = [[MPInstanceProvider sharedProvider] buildMPAdAlertManagerWithDelegate:self];
+        self.adAlertManager = [[MPCoreInstanceProvider sharedProvider] buildMPAdAlertManagerWithDelegate:self];
     }
     return self;
 }
@@ -214,9 +222,11 @@ NSString * const kMoPubCustomHost = @"custom";
     if ([self.customMethodDelegate respondsToSelector:zeroArgumentSelector]) {
         [self.customMethodDelegate performSelector:zeroArgumentSelector];
     } else if ([self.customMethodDelegate respondsToSelector:oneArgumentSelector]) {
-        CJSONDeserializer *deserializer = [CJSONDeserializer deserializerWithNullObject:NULL];
         NSData *data = [[queryParameters objectForKey:@"data"] dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dataDictionary = [deserializer deserializeAsDictionary:data error:NULL];
+        NSDictionary *dataDictionary = nil;
+        if (data) {
+            dataDictionary = [NSJSONSerialization mp_JSONObjectWithData:data options:NSJSONReadingMutableContainers clearNullObjects:YES error:nil];
+        }
 
         [self.customMethodDelegate performSelector:oneArgumentSelector
                                         withObject:dataDictionary];
@@ -229,7 +239,9 @@ NSString * const kMoPubCustomHost = @"custom";
 #pragma mark - URL Interception
 - (BOOL)shouldIntercept:(NSURL *)URL navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (!(self.configuration.shouldInterceptLinks)) {
+    if ([URL mp_hasTelephoneScheme] || [URL mp_hasTelephonePromptScheme]) {
+        return YES;
+    } else if (!(self.configuration.shouldInterceptLinks)) {
         return NO;
     } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         return YES;
@@ -300,6 +312,23 @@ NSString * const kMoPubCustomHost = @"custom";
                                       @".setAttribute('content', 'width=%f;', false);",
                                       self.view.frame.size.width];
     [self.view stringByEvaluatingJavaScriptFromString:viewportUpdateScript];
+
+    // XXX: In iOS 7, off-screen UIWebViews will fail to render certain image creatives.
+    // Specifically, creatives that only contain an <img> tag whose src attribute uses a 302
+    // redirect will not be rendered at all. One workaround is to temporarily change the web view's
+    // internal contentInset property; this seems to force the web view to re-draw.
+    if (MPOffscreenWebViewNeedsRenderingWorkaround()) {
+        if ([self.view respondsToSelector:@selector(scrollView)]) {
+            UIScrollView *scrollView = self.view.scrollView;
+            UIEdgeInsets originalInsets = scrollView.contentInset;
+            UIEdgeInsets newInsets = UIEdgeInsetsMake(originalInsets.top + 1,
+                                                      originalInsets.left,
+                                                      originalInsets.bottom,
+                                                      originalInsets.right);
+            scrollView.contentInset = newInsets;
+            scrollView.contentInset = originalInsets;
+        }
+    }
 }
 
 @end

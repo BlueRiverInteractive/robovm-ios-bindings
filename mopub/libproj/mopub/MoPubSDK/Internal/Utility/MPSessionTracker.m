@@ -9,7 +9,7 @@
 #import "MPConstants.h"
 #import "MPIdentityProvider.h"
 #import "MPGlobal.h"
-#import "MPInstanceProvider.h"
+#import "MPCoreInstanceProvider.h"
 
 @implementation MPSessionTracker
 
@@ -30,7 +30,7 @@
 
 + (void)trackEvent
 {
-    [NSURLConnection connectionWithRequest:[[MPInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:[self URL]]
+    [NSURLConnection connectionWithRequest:[[MPCoreInstanceProvider sharedProvider] buildConfiguredURLRequestWithURL:[self URL]]
                                   delegate:nil];
 }
 

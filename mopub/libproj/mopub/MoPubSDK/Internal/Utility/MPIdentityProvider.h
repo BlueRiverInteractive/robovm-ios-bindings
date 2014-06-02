@@ -10,6 +10,7 @@
 @interface MPIdentityProvider : NSObject
 
 + (NSString *)identifier;
++ (NSString *)obfuscatedIdentifier;
 + (BOOL)advertisingTrackingEnabled;
 
 @end
