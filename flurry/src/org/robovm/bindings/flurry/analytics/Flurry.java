@@ -194,7 +194,7 @@ public class Flurry extends NSObject {
 		if (parameters != null) {
 			NSMutableDictionary<NSString, NSString> nsParams = new NSMutableDictionary<NSString, NSString>();
 			for (java.util.Map.Entry<String, String> entry : parameters.entrySet()) {
-				nsParams.put(new NSString(entry.getKey()), new NSString(entry.getKey()));
+				nsParams.put(new NSString(entry.getKey()), new NSString(entry.getValue()));
 			}
 			logEvent(eventName, nsParams, false);
 		} else {
