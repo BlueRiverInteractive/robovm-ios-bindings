@@ -1,1 +1,0 @@
-To use the Chartboost Ad Network, download the Chartboost SDK and place the header and static library files in this folder.

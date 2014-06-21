@@ -4,6 +4,14 @@ package org.robovm.bindings.thinkgaming;
 import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.storekit.SKDownload;
+import org.robovm.apple.storekit.SKPaymentQueue;
+import org.robovm.apple.storekit.SKPaymentTransaction;
+import org.robovm.apple.storekit.SKPaymentTransactionObserver;
+import org.robovm.apple.storekit.SKProductsRequest;
+import org.robovm.apple.storekit.SKProductsRequestDelegate;
+import org.robovm.apple.storekit.SKProductsResponse;
+import org.robovm.apple.storekit.SKRequest;
 import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
@@ -37,14 +45,30 @@ public class ThinkGamingStoreSDK extends NSObject implements SKProductsRequestDe
 	}
 
 	@Override
-	public void receivedResponse (SKProductsRequest request, SKProductsResponse response) {
+	public void didFinish (SKRequest request) {
 	}
 
 	@Override
-	public void requestFailed (SKRequest request, NSError error) {
+	public void didFail (SKRequest request, NSError error) {
 	}
 
 	@Override
-	public void requestFinished (SKRequest request) {
+	public void removedTransactions (SKPaymentQueue queue, NSArray<SKPaymentTransaction> transactions) {
+	}
+
+	@Override
+	public void restoreCompletedTransactionsFailed (SKPaymentQueue queue, NSError error) {
+	}
+
+	@Override
+	public void restoreCompletedTransactionsFinished (SKPaymentQueue queue) {
+	}
+
+	@Override
+	public void updatedDownloads (SKPaymentQueue queue, NSArray<SKDownload> downloads) {
+	}
+
+	@Override
+	public void didReceiveResponse (SKProductsRequest request, SKProductsResponse response) {
 	}
 }

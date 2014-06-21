@@ -2,6 +2,7 @@
 package org.robovm.bindings.facebook;
 
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
 
@@ -148,15 +149,12 @@ public class FBSettings extends NSObject {
 // */
 // + (NSString *)defaultDisplayName;
 //
-// /*!
-// @method
-//
-// @abstract Set the default Facebook App ID to use for sessions. The SDK allows the appID
-// to be overridden per instance in certain cases (e.g. per instance of FBSession)
-//
-// @param appID The default Facebook App ID to be used by the SDK.
-// */
-// + (void)setDefaultAppID:(NSString*)appID;
+	/** Set the default Facebook App ID to use for sessions. The SDK allows the appID to be overridden per instance in certain cases
+	 * (e.g. per instance of FBSession)
+	 * @param appID The default Facebook App ID to be used by the SDK. */
+	@Method(selector = "setDefaultAppID:")
+	public static native void setDefaultAppID (String appID);
+
 //
 // /*!
 // @method

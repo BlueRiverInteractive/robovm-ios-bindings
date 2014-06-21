@@ -1,6 +1,6 @@
 Chartboost iOS SDK
 ==================================
-SDK Version: 4.1 
+SDK Version: 4.5 
 
 Getting Started
 ----------------------------------

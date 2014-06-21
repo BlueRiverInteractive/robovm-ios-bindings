@@ -9,7 +9,8 @@ https://github.com/mopub/mopub-ios-sdk/wiki/Getting-Started
 Supported Ad Networks
 ----------------------------------
 * AdColony (SDK Version: 2.2.4)
-* Chartboost (SDK Version: 4.1)
+* AppLoving (SDK Version: 2.4.1)
+* Chartboost (SDK Version: 4.5)
 * Google AdMob (SDK Version: 6.8.0)
 * iAd
 * InMobi (SDK Version: 4.1.0)

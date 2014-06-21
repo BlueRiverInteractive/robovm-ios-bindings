@@ -2,6 +2,7 @@
 package org.robovm.bindings.thinkgaming;
 
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.storekit.SKPaymentTransaction;
 
 public class ThinkGamingStoreDelegateAdapter extends NSObject implements ThinkGamingStoreDelegate {
 	@Override

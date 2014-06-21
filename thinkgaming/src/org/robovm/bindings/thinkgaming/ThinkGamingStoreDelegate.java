@@ -2,6 +2,7 @@
 package org.robovm.bindings.thinkgaming;
 
 import org.robovm.apple.foundation.NSObjectProtocol;
+import org.robovm.apple.storekit.SKPaymentTransaction;
 import org.robovm.objc.annotation.Method;
 
 public interface ThinkGamingStoreDelegate extends NSObjectProtocol {
