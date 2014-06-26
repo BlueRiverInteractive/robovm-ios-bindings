@@ -16,22 +16,22 @@ public interface GameCenterListener {
 
 	public void achievementReportCompleted ();
 
-	public void achievementReportFailed ();
+	public void achievementReportFailed (NSError error);
 
 	public void achievementsLoadCompleted (ArrayList<GKAchievement> achievements);
 
-	public void achievementsLoadFailed ();
+	public void achievementsLoadFailed (NSError error);
 
 	public void achievementsResetCompleted ();
 
-	public void achievementsResetFailed ();
+	public void achievementsResetFailed (NSError error);
 
 	public void scoreReportCompleted ();
 
-	public void scoreReportFailed ();
+	public void scoreReportFailed (NSError error);
 
 	public void leaderboardsLoadCompleted (ArrayList<GKLeaderboard> scores);
 
-	public void leaderboardsLoadFailed ();
+	public void leaderboardsLoadFailed (NSError error);
 
 }

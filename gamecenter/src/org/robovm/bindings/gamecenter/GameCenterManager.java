@@ -2,8 +2,11 @@
 package org.robovm.bindings.gamecenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSString;
@@ -31,7 +34,9 @@ import org.robovm.bindings.apple.gamekit.GKScore;
 public class GameCenterManager {
 	private static final int IOS_6 = 6;
 	private static final int IOS_7 = 7;
-
+	private static final String GCM_DOMAIN = "GameCenterManaager";
+	public static final long GCM_ERROR_NOT_AUTHENTICATED = -1024;
+	
 	private final UIWindow keyWindow;
 	private final GameCenterListener listener;
 
@@ -92,7 +97,7 @@ public class GameCenterManager {
 	public void reportAchievement (String identifier, double percentComplete) {
 		// If player is not authenticated, do nothing
 		if (!GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
-			listener.achievementReportFailed();
+			listener.achievementReportFailed(buildUnauthenticatedPlayerError());
 			return;
 		}
 
@@ -109,7 +114,7 @@ public class GameCenterManager {
 				@Override
 				public void invoke (NSError error) {
 					if (error != null) {
-						listener.achievementReportFailed();
+						listener.achievementReportFailed(error);
 					} else {
 						listener.achievementReportCompleted();
 					}
@@ -120,7 +125,7 @@ public class GameCenterManager {
 				@Override
 				public void invoke (NSError error) {
 					if (error != null) {
-						listener.achievementReportFailed();
+						listener.achievementReportFailed(error);
 					} else {
 						listener.achievementReportCompleted();
 					}
@@ -133,7 +138,7 @@ public class GameCenterManager {
 	public void loadAchievements () {
 		// If player is not authenticated, do nothing
 		if (!GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
-			listener.achievementsLoadFailed();
+			listener.achievementsLoadFailed(buildUnauthenticatedPlayerError());
 			return;
 		}
 
@@ -142,7 +147,7 @@ public class GameCenterManager {
 			@Override
 			public void invoke (NSArray array, NSError error) {
 				if (error != null) {
-					listener.achievementsLoadFailed();
+					listener.achievementsLoadFailed(error);
 				} else {
 					ArrayList<GKAchievement> achievements = new ArrayList<GKAchievement>();
 					for (NSObject achievement : (NSArray<NSObject>)array) {
@@ -158,7 +163,7 @@ public class GameCenterManager {
 	public void resetAchievements () {
 		// If player is not authenticated, do nothing
 		if (!GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
-			listener.achievementsResetFailed();
+			listener.achievementsResetFailed(buildUnauthenticatedPlayerError());
 			return;
 		}
 
@@ -166,7 +171,7 @@ public class GameCenterManager {
 			@Override
 			public void invoke (NSError error) {
 				if (error != null) {
-					listener.achievementsResetFailed();
+					listener.achievementsResetFailed(error);
 				} else {
 					listener.achievementsResetCompleted();
 				}
@@ -180,7 +185,7 @@ public class GameCenterManager {
 	public void reportScore (String identifier, long score) {
 		// If player is not authenticated, do nothing
 		if (!GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
-			listener.scoreReportFailed();
+			listener.scoreReportFailed(buildUnauthenticatedPlayerError());
 			return;
 		}
 
@@ -195,7 +200,7 @@ public class GameCenterManager {
 				@Override
 				public void invoke (NSError error) {
 					if (error != null) {
-						listener.scoreReportFailed();
+						listener.scoreReportFailed(error);
 					} else {
 						listener.scoreReportCompleted();
 					}
@@ -206,7 +211,7 @@ public class GameCenterManager {
 				@Override
 				public void invoke (NSError error) {
 					if (error != null) {
-						listener.scoreReportFailed();
+						listener.scoreReportFailed(error);
 					} else {
 						listener.scoreReportCompleted();
 					}
@@ -220,7 +225,7 @@ public class GameCenterManager {
 	public void loadLeaderboards () {
 		// If player is not authenticated, do nothing
 		if (!GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
-			listener.leaderboardsLoadFailed();
+			listener.leaderboardsLoadFailed(buildUnauthenticatedPlayerError());
 			return;
 		}
 
@@ -231,7 +236,7 @@ public class GameCenterManager {
 				@Override
 				public void invoke (NSArray array, NSError error) {
 					if (error != null) {
-						listener.leaderboardsLoadFailed();
+						listener.leaderboardsLoadFailed(error);
 					} else {
 						ArrayList<GKLeaderboard> leaderboards = new ArrayList<GKLeaderboard>();
 						for (NSObject leaderboard : (NSArray<NSObject>)array) {
@@ -247,7 +252,7 @@ public class GameCenterManager {
 				@Override
 				public void invoke (NSArray array, NSArray array2, NSError error) {
 					if (error != null) {
-						listener.leaderboardsLoadFailed();
+						listener.leaderboardsLoadFailed(error);
 					} else {
 						ArrayList<GKLeaderboard> leaderboards = new ArrayList<GKLeaderboard>();
 						for (NSObject category : (NSArray<NSObject>)array) {
@@ -384,6 +389,19 @@ public class GameCenterManager {
 		String systemVersion = UIDevice.getCurrentDevice().getSystemVersion();
 		int version = Character.getNumericValue(systemVersion.charAt(0));
 		return version;
+	}
+
+
+	/**
+	 * Generate an {@link NSError} indicating that the local player is
+	 * unauthenticated.
+	 * 
+	 * @return {@link NSError}
+	 */
+	private NSError buildUnauthenticatedPlayerError() {
+		final Map<NSString, NSObject> errorMap = new HashMap<NSString, NSObject>();
+		errorMap.put(new NSString("NSLocalizedDescriptionKey"), new NSString("Local player is unauthenticated"));
+		return new NSError(GCM_DOMAIN, GCM_ERROR_NOT_AUTHENTICATED, new NSDictionary<NSString, NSObject>(errorMap));
 	}
 
 }
