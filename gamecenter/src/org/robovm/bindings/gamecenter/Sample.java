@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
 import org.robovm.apple.uikit.UIButton;
@@ -120,7 +121,7 @@ public class Sample extends UIApplicationDelegateAdapter {
 
 		gcManager = new GameCenterManager(UIApplication.getSharedApplication().getKeyWindow(), new GameCenterListener() {
 			@Override
-			public void playerLoginFailed () {
+			public void playerLoginFailed (NSError error) {
 				System.out.println("playerLoginFailed");
 			}
 

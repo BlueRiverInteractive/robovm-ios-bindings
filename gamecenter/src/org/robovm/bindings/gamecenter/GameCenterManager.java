@@ -60,7 +60,7 @@ public class GameCenterManager {
 					}
 					// If the viewController is null and the player is not authenticated the login has failed
 					else {
-						listener.playerLoginFailed();
+						listener.playerLoginFailed(error);
 					}
 				}
 			});
@@ -71,7 +71,7 @@ public class GameCenterManager {
 					if (GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
 						listener.playerLoginCompleted();
 					} else {
-						listener.playerLoginFailed();
+						listener.playerLoginFailed(error);
 					}
 				}
 			});
