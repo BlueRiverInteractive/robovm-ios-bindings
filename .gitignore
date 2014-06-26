@@ -45,3 +45,5 @@
 /playhaven/build
 /tapjoy/build
 /gamecenter/build
+*.iml
+tapstream/build
