@@ -3,6 +3,7 @@ package org.robovm.bindings.gamecenter;
 
 import java.util.ArrayList;
 
+import org.robovm.apple.foundation.NSError;
 import org.robovm.bindings.apple.gamekit.GKAchievement;
 import org.robovm.bindings.apple.gamekit.GKLeaderboard;
 
@@ -11,7 +12,7 @@ public interface GameCenterListener {
 
 	public void playerLoginCompleted ();
 
-	public void playerLoginFailed ();
+	public void playerLoginFailed (NSError error);
 
 	public void achievementReportCompleted ();
 
