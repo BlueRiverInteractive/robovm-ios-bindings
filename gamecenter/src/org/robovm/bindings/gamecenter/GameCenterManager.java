@@ -32,10 +32,11 @@ import org.robovm.bindings.apple.gamekit.GKScore;
 
 @SuppressWarnings("deprecation")
 public class GameCenterManager {
+	public static final String GCM_DOMAIN = GameCenterManager.class.getSimpleName();
+	public static final long GCM_ERROR_NOT_AUTHENTICATED = -1024;
+	
 	private static final int IOS_6 = 6;
 	private static final int IOS_7 = 7;
-	private static final String GCM_DOMAIN = "GameCenterManaager";
-	public static final long GCM_ERROR_NOT_AUTHENTICATED = -1024;
 	
 	private final UIWindow keyWindow;
 	private final GameCenterListener listener;
