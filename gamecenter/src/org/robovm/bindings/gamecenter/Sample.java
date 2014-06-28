@@ -179,6 +179,16 @@ public class Sample extends UIApplicationDelegateAdapter {
 			public void leaderboardsLoadFailed (NSError error) {
 				System.out.println("scoresLoadFailed. error: " + error);
 			}
+
+            @Override
+            public void leaderboardViewDismissed() {
+                System.out.println("leaderboardViewDismissed");
+            }
+
+            @Override
+            public void achievementViewDismissed() {
+                System.out.println("achievementViewDismissed");
+            }
 		});
 	}
 
