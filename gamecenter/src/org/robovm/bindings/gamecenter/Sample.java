@@ -178,6 +178,16 @@ public class Sample extends UIApplicationDelegateAdapter {
 			public void leaderboardsLoadFailed () {
 				System.out.println("scoresLoadFailed");
 			}
+
+            @Override
+            public void leaderboardViewDismissed() {
+                System.out.println("leaderboardViewDismissed");
+            }
+
+            @Override
+            public void achievementViewDismissed() {
+                System.out.println("achievementViewDismissed");
+            }
 		});
 	}
 
