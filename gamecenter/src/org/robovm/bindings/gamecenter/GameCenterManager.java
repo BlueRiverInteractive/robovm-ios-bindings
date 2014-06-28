@@ -293,7 +293,7 @@ public class GameCenterManager {
 			gameCenterView.setGameCenterDelegate(new GKGameCenterControllerDelegate.Adapter() {
 				@Override
 				public void gameCenterViewControllerDidFinish (GKGameCenterViewController gameCenterViewController) {
-					gameCenterViewController.dismissViewController(true, null);
+                    dismissViewControllerAndNotifyListener(gameCenterViewController, GKGameCenterViewControllerState.GKGameCenterViewControllerStateAchievements);
 				}
 			});
 			gameCenterView.setViewState(GKGameCenterViewControllerState.GKGameCenterViewControllerStateAchievements);
@@ -303,7 +303,7 @@ public class GameCenterManager {
 			gameCenterView.setAchievementDelegate(new GKAchievementViewControllerDelegate.Adapter() {
 				@Override
 				public void achievementViewControllerDidFinish (GKAchievementViewController viewController) {
-					viewController.dismissViewController(true, null);
+				    dismissViewControllerAndNotifyListener(viewController, GKGameCenterViewControllerState.GKGameCenterViewControllerStateAchievements);
 				}
 			});
 			keyWindow.getRootViewController().presentViewController(gameCenterView, true, null);
@@ -323,7 +323,7 @@ public class GameCenterManager {
 			gameCenterView.setGameCenterDelegate(new GKGameCenterControllerDelegate.Adapter() {
 				@Override
 				public void gameCenterViewControllerDidFinish (GKGameCenterViewController gameCenterViewController) {
-					gameCenterViewController.dismissViewController(true, null);
+				    dismissViewControllerAndNotifyListener(gameCenterViewController, GKGameCenterViewControllerState.GKGameCenterViewControllerStateLeaderboards);
 				}
 			});
 			gameCenterView.setViewState(GKGameCenterViewControllerState.GKGameCenterViewControllerStateLeaderboards);
@@ -336,7 +336,7 @@ public class GameCenterManager {
 			gameCenterView.setLeaderboardDelegate(new GKLeaderboardViewControllerDelegate.Adapter() {
 				@Override
 				public void leaderboardViewControllerDidFinish (GKLeaderboardViewController viewController) {
-					viewController.dismissViewController(true, null);
+				    dismissViewControllerAndNotifyListener(viewController, GKGameCenterViewControllerState.GKGameCenterViewControllerStateLeaderboards);
 				}
 			});
 			keyWindow.getRootViewController().presentViewController(gameCenterView, true, null);
@@ -357,7 +357,7 @@ public class GameCenterManager {
 			gameCenterView.setGameCenterDelegate(new GKGameCenterControllerDelegate.Adapter() {
 				@Override
 				public void gameCenterViewControllerDidFinish (GKGameCenterViewController gameCenterViewController) {
-					gameCenterViewController.dismissViewController(true, null);
+				    dismissViewControllerAndNotifyListener(gameCenterViewController, GKGameCenterViewControllerState.GKGameCenterViewControllerStateLeaderboards);
 				}
 			});
 			gameCenterView.setViewState(GKGameCenterViewControllerState.GKGameCenterViewControllerStateLeaderboards);
@@ -375,12 +375,38 @@ public class GameCenterManager {
 			gameCenterView.setLeaderboardDelegate(new GKLeaderboardViewControllerDelegate.Adapter() {
 				@Override
 				public void leaderboardViewControllerDidFinish (GKLeaderboardViewController viewController) {
-					viewController.dismissViewController(true, null);
+				    dismissViewControllerAndNotifyListener(viewController, GKGameCenterViewControllerState.GKGameCenterViewControllerStateLeaderboards);
 				}
 			});
 
 			keyWindow.getRootViewController().presentViewController(gameCenterView, true, null);
 		}
+	}
+	
+	/**
+	 * Dismiss the {@link UIViewController} and invoke the appropriate callback on the {@link #listener}.
+	 * 
+	 * @param viewController the {@link UIViewController} to dismiss
+	 * @param viewControllerState the type of the View Controller being dismissed
+	 */
+	private void dismissViewControllerAndNotifyListener(UIViewController viewController, final GKGameCenterViewControllerState viewControllerState) {
+	    viewController.dismissViewController(true, new Runnable() {
+            @Override
+            public void run() {
+                switch (viewControllerState) {
+                    case GKGameCenterViewControllerStateAchievements:
+                        listener.achievementViewDismissed();                                                    
+                        break;
+
+                    case GKGameCenterViewControllerStateLeaderboards:
+                        listener.leaderboardViewDismissed();                                                    
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
 	}
 
 	/** Returns the iOS version of the current device
