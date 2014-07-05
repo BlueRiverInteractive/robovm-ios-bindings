@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
 import org.robovm.apple.uikit.UIButton;
@@ -120,8 +121,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 
 		gcManager = new GameCenterManager(UIApplication.getSharedApplication().getKeyWindow(), new GameCenterListener() {
 			@Override
-			public void playerLoginFailed () {
-				System.out.println("playerLoginFailed");
+			public void playerLoginFailed (NSError error) {
+				System.out.println("playerLoginFailed. error: " + error);
 			}
 
 			@Override
@@ -135,8 +136,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 			@Override
-			public void achievementReportFailed () {
-				System.out.println("achievementReportFailed");
+			public void achievementReportFailed (NSError error) {
+				System.out.println("achievementReportFailed. error: " + error);
 			}
 
 			@Override
@@ -145,8 +146,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 			@Override
-			public void achievementsLoadFailed () {
-				System.out.println("achievementsLoadFailed");
+			public void achievementsLoadFailed (NSError error) {
+				System.out.println("achievementsLoadFailed. error: " + error);
 			}
 
 			@Override
@@ -155,8 +156,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 			@Override
-			public void achievementsResetFailed () {
-				System.out.println("achievementsResetFailed");
+			public void achievementsResetFailed (NSError error) {
+				System.out.println("achievementsResetFailed. error: " + error);
 			}
 
 			@Override
@@ -165,8 +166,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 			@Override
-			public void scoreReportFailed () {
-				System.out.println("scoreReportFailed");
+			public void scoreReportFailed (NSError error) {
+				System.out.println("scoreReportFailed. error: " + error);
 			}
 
 			@Override
@@ -175,8 +176,8 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 			@Override
-			public void leaderboardsLoadFailed () {
-				System.out.println("scoresLoadFailed");
+			public void leaderboardsLoadFailed (NSError error) {
+				System.out.println("scoresLoadFailed. error: " + error);
 			}
 
             @Override
