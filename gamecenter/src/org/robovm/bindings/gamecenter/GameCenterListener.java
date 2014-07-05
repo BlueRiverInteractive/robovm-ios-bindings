@@ -33,4 +33,8 @@ public interface GameCenterListener {
 
 	public void leaderboardsLoadFailed ();
 
+    public void leaderboardViewDismissed();
+
+    public void achievementViewDismissed();
+
 }
