@@ -18,7 +18,7 @@ allprojects {
     version = '1.0.0-SNAPSHOT'
 
     ext {
-        roboVMVersion = '0.0.13'
+        roboVMVersion = '0.0.15-SNAPSHOT'
     }
 
     dependencies {
