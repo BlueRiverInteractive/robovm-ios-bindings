@@ -91,7 +91,7 @@ NSString *MPSHA1Digest(NSString *string)
 {
     unsigned char digest[CC_SHA1_DIGEST_LENGTH];
     NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
-    CC_SHA1([data bytes], [data length], digest);
+    CC_SHA1([data bytes], (CC_LONG)[data length], digest);
 
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
     for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
@@ -239,7 +239,7 @@ BOOL MPViewIntersectsKeyWindow(UIView *view)
     self.alertView.delegate = nil;
     [self.alertView dismissWithClickedButtonIndex:0 animated:YES];
     self.alertView = nil;
-    
+
     self.clickHandler = nil;
     self.telephoneURL = nil;
     [super dealloc];

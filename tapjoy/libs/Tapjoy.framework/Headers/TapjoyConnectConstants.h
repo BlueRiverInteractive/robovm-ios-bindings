@@ -96,6 +96,8 @@ typedef enum TJCTransitionEnum
 typedef enum TJCViewTypeEnum
 {
 	TJC_EVENT_CONTENT_VIEW,		/*!< The content view for an event. */
+	TJC_OFFER_WALL_AD_VIEW,		/*!< The Offer Wall Ad view type. */
+	TJC_FULL_SCREEN_AD_VIEW,	/*!< The Full Screen Ad view type. */
 	TJC_OTHER_AD_VIEW,			/*!< Any other type of Tapjoy view. */
 	TJC_AD_VIEW_MAX,
 } TJCViewTypeEnum;
@@ -110,3 +112,12 @@ typedef enum TJCMacAddressOption
 	TJCMacAddressOptionOffWithVersionCheck,  /*!< Disables collection of MAC address for iOS versions 6.0 and above. */
 	TJCMacAddressOptionOff          /*!< Completely disables collection of MAC address. THIS WILL EFFECTIVELY DISABLE THE SDK FOR IOS VERSIONS BELOW 6.0! */
 } TJCMacAddressOption;
+
+/*!  \enum TJCEventPreloadStatusEnum
+ *  \brief Status codes use in the protocol method for TJEventCallback contentIsReady
+ */
+typedef enum TJCEventPreloadStatusEnum
+{
+	TJCEventPreloadPartial = 0,		/*!< Only some of the assets requested for the event were cached. You can still show content, and the remaining assets will be streamed from the server. */
+	TJCEventPreloadComplete			/*!< All assets requested for the event were cached */
+} TJCEventPreloadStatusEnum;

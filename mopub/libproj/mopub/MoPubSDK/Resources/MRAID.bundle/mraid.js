@@ -126,7 +126,7 @@
 
   // Constants. ////////////////////////////////////////////////////////////////////////////////////
 
-  var VERSION = mraid.VERSION = '2.0';
+  var VERSION = mraid.VERSION = '1.0';
 
   var STATES = mraid.STATES = {
     LOADING: 'loading',     // Initial state.
@@ -463,19 +463,33 @@
   };
 
   mraid.removeEventListener = function(event, listener) {
-    if (!event) broadcastEvent(EVENTS.ERROR, 'Event is required.', 'removeEventListener');
-    else {
-      if (listener && (!listeners[event] || !listeners[event].remove(listener))) {
-        broadcastEvent(EVENTS.ERROR, 'Listener not currently registered for event.',
-          'removeEventListener');
-        return;
-      } else if (listeners[event]) listeners[event].removeAll();
-
-      if (listeners[event] && listeners[event].count === 0) {
-        listeners[event] = null;
-        delete listeners[event];
-      }
+    if (!event) {
+      broadcastEvent(EVENTS.ERROR, 'Event is required.', 'removeEventListener');
+      return;
     }
+
+    if (listener) {
+      // If we have a valid event, we'll try to remove the listener from it.
+      var success = false;
+      if (listeners[event]) {
+        success = listeners[event].remove(listener);
+      }
+
+      // If we didn't have a valid event or couldn't remove the listener from the event, broadcast an error and return early.
+      if (!success) {
+        broadcastEvent(EVENTS.ERROR, 'Listener not currently registered for event.', 'removeEventListener');
+        return;
+      }
+ 
+    } else if (!listener && listeners[event]) {
+      listeners[event].removeAll();
+    }
+
+    if (listeners[event] && listeners[event].count === 0) {
+      listeners[event] = null;
+      delete listeners[event];
+    }
+
   };
 
   mraid.setExpandProperties = function(properties) {

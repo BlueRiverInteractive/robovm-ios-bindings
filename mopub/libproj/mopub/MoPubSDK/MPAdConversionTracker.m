@@ -18,7 +18,7 @@
 @interface MPAdConversionTracker ()
 
 @property (nonatomic, retain) NSMutableData *responseData;
-@property (nonatomic, assign) int statusCode;
+@property (nonatomic, assign) NSInteger statusCode;
 
 - (NSURL *)URLForAppID:(NSString *)appID;
 

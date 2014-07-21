@@ -15,7 +15,7 @@
  
  Below is a sample example:
  
-        IMNative* nativeAd = [[IMBanner alloc] initWithAppId:@"YOUR_APP_ID"];
+        IMNative* nativeAd = [[IMNative alloc] initWithAppId:@"YOUR_APP_ID"];
         nativeAd.delegate = self;
         [nativeAd loadAd];
  
@@ -34,7 +34,7 @@
 /**
  * Native delegate to get success/failure response for the native ad.
  */
-@property (nonatomic, assign) id<IMNativeDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<IMNativeDelegate> delegate;
 
 /**
  * Initializes the native ad instance with the appId provided
@@ -72,7 +72,7 @@
  * A free form NSDictionary for any demographic information,
  * not available via InMobi class.
  */
-@property (nonatomic,retain) NSDictionary *additionaParameters;
+@property (nonatomic,strong) NSDictionary *additionaParameters;
 /**
  * A free form set of keywords, separated by ','
  * E.g: "sports,cars,bikes"

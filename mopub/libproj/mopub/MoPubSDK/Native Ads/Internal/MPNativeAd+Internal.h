@@ -7,6 +7,12 @@
 
 @interface MPNativeAd (Internal)
 
+- (NSTimeInterval)requiredSecondsForImpression;
+- (void)willAttachToView:(UIView *)view;
 - (void)setVisible:(BOOL)visible;
+- (NSMutableSet *)impressionTrackers;
+- (NSURL *)engagementTrackingURL;
+
+- (void)setEngagementTrackingURL:(NSURL *)engagementTrackingURL;
 
 @end

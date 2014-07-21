@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InMobi.h"
 #import "IMInterstitialDelegate.h"
+#import "IMIncentivisedDelegate.h"
 @protocol IMNetworkExtras;
 
 /**
@@ -82,7 +83,14 @@
  * @warning Whenever you release the Interstitial object, make sure to set its
  * delegate to nil to prevent any chance of your application crashing.
  */
-@property (nonatomic, assign) NSObject<IMInterstitialDelegate> *delegate;
+@property (nonatomic, unsafe_unretained) NSObject<IMInterstitialDelegate> *delegate;
+
+/**
+ * Delegate object that receives the params when an incentivised action is complete. 
+ * @warning Whenever you release the Interstitial object, make sure to set its
+ * incentivisedDelegate to nil to prevent any chance of your application crashing.
+ */
+@property (nonatomic, unsafe_unretained) NSObject<IMIncentivisedDelegate> *incentivisedDelegate;
 /**
  * Returns the state of the interstitial ad. The delegate's
  * interstitialDidFinishRequest: will be called when this switches from the
@@ -99,7 +107,7 @@
  * A free form NSDictionary for any demographic information,
  * not available via InMobi class.
  */
-@property (nonatomic,retain) NSDictionary *additionaParameters;
+@property (nonatomic,strong) NSDictionary *additionaParameters;
 /**
  * A free form set of keywords, separated by ','
  * E.g: "sports,cars,bikes"

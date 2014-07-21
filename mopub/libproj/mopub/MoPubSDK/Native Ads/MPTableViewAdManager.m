@@ -32,7 +32,7 @@
         _impressionTracker = [[MPTableViewCellImpressionTracker alloc] initWithTableView:tableView
                                                                                  delegate:self];
         [_impressionTracker startTracking];
-        
+
         _ads = [[NSMutableSet alloc] init];
         _cells = [[NSMutableSet alloc] init];
     }
@@ -42,13 +42,13 @@
 - (void)dealloc
 {
     [self removeAssociatedAdObjectsFromCells];
-    
+
     [_tableView release];
     [_impressionTracker stopTracking];
     [_impressionTracker release];
     [_ads release];
     [_cells release];
- 
+
     [super dealloc];
 }
 
@@ -67,18 +67,19 @@
         cell = [[[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
         [self.cells addObject:cell];
     }
-    
+
     [self.ads addObject:adObject];
     [cell mp_setNativeAd:adObject];
-    
+
     if ([cell conformsToProtocol:@protocol(MPNativeAdRendering)]) {
+        [adObject willAttachToView:cell];
         [(id<MPNativeAdRendering>)cell layoutAdAssets:adObject];
     } else {
         MPLogWarn(@"A cell class (%@) passed to -adCellForAd:cellClass: does not conform to the "
                   @"MPNativeAdRendering protocol. The resultant cell will not display any ad assets.",
                   NSStringFromClass(cellClass));
     }
-    
+
     return cell;
 }
 
@@ -87,12 +88,12 @@
 - (void)tracker:(MPTableViewCellImpressionTracker *)tracker didDetectVisibleRowsAtIndexPaths:(NSArray *)indexPaths
 {
     NSMutableSet *visibleAds = [NSMutableSet set];
-    
+
     for (NSIndexPath *path in indexPaths) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:path];
         if ([self.cells containsObject:cell]) {
             MPNativeAd *ad = [cell mp_nativeAd];
-            
+
             // Edge case: if the same ad is being displayed in multiple on-screen cells,
             // simultaneously, don't set its visibility more than once (side effects).
             if (![visibleAds containsObject:ad]) {
@@ -101,10 +102,10 @@
             }
         }
     }
-    
+
     NSMutableSet *invisibleAds = [NSMutableSet setWithSet:self.ads];
     [invisibleAds minusSet:visibleAds];
-    
+
     for (MPNativeAd *ad in invisibleAds) {
         ad.visible = NO;
     }

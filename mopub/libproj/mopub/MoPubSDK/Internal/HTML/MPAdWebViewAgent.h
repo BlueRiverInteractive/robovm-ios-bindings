@@ -32,8 +32,8 @@ typedef NSUInteger MPAdWebViewEvent;
 - (void)invokeJavaScriptForEvent:(MPAdWebViewEvent)event;
 - (void)forceRedraw;
 
-- (void)stopHandlingRequests;
-- (void)continueHandlingRequests;
+- (void)enableRequestHandling;
+- (void)disableRequestHandling;
 
 @end
 

@@ -15,6 +15,7 @@
 #import "MPAdWebView.h"
 #import "MPInstanceProvider.h"
 #import "MPCoreInstanceProvider.h"
+#import "MPUserInteractionGestureRecognizer.h"
 #import "NSJSONSerialization+MPAdditions.h"
 #import "NSURL+MPAdditions.h"
 
@@ -30,12 +31,14 @@ NSString * const kMoPubFinishLoadHost = @"finishLoad";
 NSString * const kMoPubFailLoadHost = @"failLoad";
 NSString * const kMoPubCustomHost = @"custom";
 
-@interface MPAdWebViewAgent ()
+@interface MPAdWebViewAgent () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, retain) MPAdConfiguration *configuration;
 @property (nonatomic, retain) MPAdDestinationDisplayAgent *destinationDisplayAgent;
 @property (nonatomic, assign) BOOL shouldHandleRequests;
 @property (nonatomic, retain) id<MPAdAlertManagerProtocol> adAlertManager;
+@property (nonatomic, assign) BOOL userInteractedWithWebView;
+@property (nonatomic, retain) MPUserInteractionGestureRecognizer *userInteractionRecognizer;
 
 - (void)performActionForMoPubSpecificURL:(NSURL *)URL;
 - (BOOL)shouldIntercept:(NSURL *)URL navigationType:(UIWebViewNavigationType)navigationType;
@@ -53,6 +56,8 @@ NSString * const kMoPubCustomHost = @"custom";
 @synthesize shouldHandleRequests = _shouldHandleRequests;
 @synthesize view = _view;
 @synthesize adAlertManager = _adAlertManager;
+@synthesize userInteractedWithWebView = _userInteractedWithWebView;
+@synthesize userInteractionRecognizer = _userInteractionRecognizer;
 
 - (id)initWithAdWebViewFrame:(CGRect)frame delegate:(id<MPAdWebViewAgentDelegate>)delegate customMethodDelegate:(id)customMethodDelegate;
 {
@@ -64,12 +69,20 @@ NSString * const kMoPubCustomHost = @"custom";
         self.customMethodDelegate = customMethodDelegate;
         self.shouldHandleRequests = YES;
         self.adAlertManager = [[MPCoreInstanceProvider sharedProvider] buildMPAdAlertManagerWithDelegate:self];
+
+        self.userInteractionRecognizer = [[[MPUserInteractionGestureRecognizer alloc] initWithTarget:self action:@selector(handleInteraction:)] autorelease];
+        self.userInteractionRecognizer.cancelsTouchesInView = NO;
+        [self.view addGestureRecognizer:self.userInteractionRecognizer];
+        self.userInteractionRecognizer.delegate = self;
     }
     return self;
 }
 
 - (void)dealloc
 {
+    self.userInteractionRecognizer.delegate = nil;
+    [self.userInteractionRecognizer removeTarget:self action:nil];
+    self.userInteractionRecognizer = nil;
     self.adAlertManager.targetAdView = nil;
     self.adAlertManager.delegate = nil;
     self.adAlertManager = nil;
@@ -80,6 +93,20 @@ NSString * const kMoPubCustomHost = @"custom";
     self.view.delegate = nil;
     self.view = nil;
     [super dealloc];
+}
+
+- (void)handleInteraction:(UITapGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        self.userInteractedWithWebView = YES;
+    }
+}
+
+#pragma mark - <UIGestureRecognizerDelegate>
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer;
+{
+    return YES;
 }
 
 #pragma mark - <MPAdAlertManagerDelegate>
@@ -112,10 +139,15 @@ NSString * const kMoPubCustomHost = @"custom";
         }
     }
 
+    // excuse interstitials from user tapped check since it's already a takeover experience
+    // and certain videos may delay tap gesture recognition
+    if (configuration.adType == MPAdTypeInterstitial) {
+        self.userInteractedWithWebView = YES;
+    }
+
     [self.view mp_setScrollable:configuration.scrollable];
     [self.view disableJavaScriptDialogs];
-    [self.view loadHTMLString:[configuration adResponseHTMLString]
-                         baseURL:nil];
+    [self.view loadHTMLString:[configuration adResponseHTMLString] baseURL:nil];
 
     [self initAdAlertManager];
 }
@@ -134,13 +166,13 @@ NSString * const kMoPubCustomHost = @"custom";
     }
 }
 
-- (void)stopHandlingRequests
+- (void)disableRequestHandling
 {
     self.shouldHandleRequests = NO;
     [self.destinationDisplayAgent cancel];
 }
 
-- (void)continueHandlingRequests
+- (void)enableRequestHandling
 {
     self.shouldHandleRequests = YES;
 }
@@ -184,7 +216,8 @@ NSString * const kMoPubCustomHost = @"custom";
         [self interceptURL:URL];
         return NO;
     } else {
-        return YES;
+        // don't handle any deep links without user interaction
+        return self.userInteractedWithWebView || [URL mp_isSafeForLoadingWithoutUserAction];
     }
 }
 

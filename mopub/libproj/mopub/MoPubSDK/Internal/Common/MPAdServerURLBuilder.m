@@ -36,6 +36,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 + (NSString *)queryParameterForMobileCountryCode;
 + (NSString *)queryParameterForDeviceName;
 + (NSString *)queryParameterForTwitterAvailability;
++ (NSString *)queryParameterForDesiredAdAssets:(NSArray *)assets;
 + (BOOL)advertisingTrackingEnabled;
 
 @end
@@ -54,7 +55,8 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
                         location:location
             versionParameterName:@"nv"
                          version:MP_SDK_VERSION
-                         testing:testing];
+                         testing:testing
+                   desiredAssets:nil];
 }
 
 + (NSURL *)URLWithAdUnitID:(NSString *)adUnitID
@@ -63,6 +65,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
       versionParameterName:(NSString *)versionParameterName
                    version:(NSString *)version
                    testing:(BOOL)testing
+             desiredAssets:(NSArray *)assets
 {
     NSString *URLString = [NSString stringWithFormat:@"http://%@/m/ad?v=%@&udid=%@&id=%@&%@=%@",
                            testing ? HOSTNAME_FOR_TESTING : HOSTNAME,
@@ -86,6 +89,7 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
     URLString = [URLString stringByAppendingString:[self queryParameterForMobileCountryCode]];
     URLString = [URLString stringByAppendingString:[self queryParameterForDeviceName]];
     URLString = [URLString stringByAppendingString:[self queryParameterForTwitterAvailability]];
+    URLString = [URLString stringByAppendingString:[self queryParameterForDesiredAdAssets:assets]];
 
     return [NSURL URLWithString:URLString];
 }
@@ -224,13 +228,19 @@ NSString * const kMoPubInterfaceOrientationLandscape = @"l";
 {
     MPTwitterAvailability twitterAvailability = [[MPCoreInstanceProvider sharedProvider] twitterAvailabilityOnDevice];
     NSString *queryString = @"";
-    
+
     if (twitterAvailability)
     {
         queryString = [NSString stringWithFormat:@"&ts=%u", twitterAvailability];
     }
-    
+
     return queryString;
+}
+
++ (NSString *)queryParameterForDesiredAdAssets:(NSArray *)assets
+{
+    NSString *concatenatedAssets = [assets componentsJoinedByString:@","];
+    return [concatenatedAssets length] ? [NSString stringWithFormat:@"&assets=%@", concatenatedAssets] : @"";
 }
 
 + (BOOL)advertisingTrackingEnabled

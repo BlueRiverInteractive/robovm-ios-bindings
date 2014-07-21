@@ -41,6 +41,7 @@ extern NSString * const kAdTypeHtml;
 extern NSString * const kAdTypeInterstitial;
 extern NSString * const kAdTypeMraid;
 extern NSString * const kAdTypeClear;
+extern NSString * const kAdTypeNative;
 
 @interface MPAdConfiguration : NSObject
 

@@ -5,8 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MPAdServerCommunicator.h"
-
 @class MPNativeAd;
 @class MPNativeAdRequest;
 @class MPNativeAdRequestTargeting;
@@ -18,10 +16,10 @@ typedef void(^MPNativeAdRequestHandler)(MPNativeAdRequest *request,
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * The MPNativeAdRequest class is used to manage requests to the MoPub ad server for Native Ads.
+ * The MPNativeAdRequest class is used to manage requests to the MoPub ad server for native ads.
  */
 
-@interface MPNativeAdRequest : NSObject <MPAdServerCommunicatorDelegate>
+@interface MPNativeAdRequest : NSObject
 
 /** @name Targeting Information */
 

@@ -31,7 +31,7 @@
 #define kProgressOverlayShadowRadius        8.0
 #define kProgressOverlayCloseButtonDelay    4.0
 
-static void exponentialDecayInterpolation(void *info, const float *input, float *output);
+static void exponentialDecayInterpolation(void *info, const CGFloat *input, CGFloat *output);
 
 @implementation MPProgressOverlayView
 
@@ -176,8 +176,8 @@ static void exponentialDecayInterpolation(void *info, const float *input, float 
 
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 
-    static const float input_value_range[2] = {0, 1};
-    static const float output_value_range[8] = {0, 1, 0, 1, 0, 1, 0, 1};
+    static const CGFloat input_value_range[2] = {0, 1};
+    static const CGFloat output_value_range[8] = {0, 1, 0, 1, 0, 1, 0, 1};
     CGFunctionCallbacks callbacks = {0, exponentialDecayInterpolation, NULL};
 
     CGFunctionRef shadingFunction = CGFunctionCreate(self, 1, input_value_range, 4,
@@ -202,11 +202,11 @@ static void exponentialDecayInterpolation(void *info, const float *input, float 
 #define kGradientMaximumAlphaValue  0.90
 #define kGradientAlphaDecayFactor   1.1263
 
-static void exponentialDecayInterpolation(void *info, const float *input, float *output)
+static void exponentialDecayInterpolation(void *info, const CGFloat *input, CGFloat *output)
 {
     // output is an RGBA array corresponding to the color black with an alpha value somewhere on
     // our exponential decay curve.
-    float progress = *input;
+    CGFloat progress = *input;
     output[0] = 0.0;
     output[1] = 0.0;
     output[2] = 0.0;

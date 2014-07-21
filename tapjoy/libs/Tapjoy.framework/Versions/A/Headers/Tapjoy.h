@@ -68,7 +68,6 @@ typedef void (^tapPointsCompletion)(NSDictionary *parameters, NSError *error);
 @property (nonatomic, strong) TJCUtil *util;
 @property (nonatomic, strong) TJCLog *log;
 
-
 /** 
  * This method is called to initialize the Tapjoy system and notify the server that this device is running your application.
  *
@@ -87,7 +86,16 @@ typedef void (^tapPointsCompletion)(NSDictionary *parameters, NSError *error);
  *
  * @param appID The application ID. Retrieved from the app dashboard in your Tapjoy account.
  * @param secretKey The application secret key. Retrieved from the app dashboard in your Tapjoy account.
- * @param optionsDict NSDictionary of special flags to enable non-standard settings
+ * @param options NSDictionary of special flags to enable non-standard settings. Valid key:value options:
+ *
+ * TJC_OPTION_ENABLE_LOGGING : BOOL to enable logging
+ *
+ * TJC_OPTION_USER_ID : NSString user id that must be set if your currency is not managed by Tapjoy. If you don’t have a user id on launch you can call setUserID later
+ *
+ * TJC_OPTION_DISABLE_GENERIC_ERROR_ALERT : BOOL to disable our default error dialogs
+ *
+ * TJC_OPTION_SEGMENTATION_PARAMS : NSDictionary of values used for event segmentation. See http://tech.tapjoy.com for information about valid segments
+ *
  * @return n/a
  */
 + (void)requestTapjoyConnect:(NSString*)appID secretKey:(NSString*)secretKey options:(NSDictionary*)optionsDict;

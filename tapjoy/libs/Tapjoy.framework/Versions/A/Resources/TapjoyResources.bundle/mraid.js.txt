@@ -11,6 +11,7 @@
   var mraidview = window.mraidview = {};
   var isCustomClose = false;
 
+  mraidview.canProcessBridgeCalls = false;
 
 
   /****************************************************/
@@ -245,7 +246,9 @@
     }
 
     // add call to queue
-    if (nativeCallInFlight) {
+	if (!mraidview.canProcessBridgeCalls) {
+		return;
+    } else if (nativeCallInFlight) {
       // call pending, queue up request
       nativeCallQueue.push(bridgeCall);
     } else {
@@ -966,6 +969,7 @@ mraidview.storePicture = function(URL) {
   var changeHandlers = {
     state: function(val) {
       if (state == STATES.UNKNOWN) {
+        mraidview.canProcessBridgeCalls = true;
         window.mraid.signalReady();
         broadcastEvent(EVENTS.INFO, 'controller initialized, attempting callback');
       }

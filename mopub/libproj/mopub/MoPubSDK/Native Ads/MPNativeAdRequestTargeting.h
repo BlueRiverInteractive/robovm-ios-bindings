@@ -42,4 +42,12 @@
  */
 @property (nonatomic, copy) CLLocation *location;
 
+/**
+ * A set of defined strings that correspond to assets for the intended native ad
+ * object. This set should contain only those assets that will be displayed in the ad.
+ *
+ * The MoPub ad server will attempt to only return the assets in desiredAssets.
+ */
+@property (nonatomic, retain) NSSet *desiredAssets;
+
 @end

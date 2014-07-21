@@ -1,6 +1,6 @@
 Flurry iOS SDK
 ==================================
-SDK Version: 4.4.0
+SDK Version: 5.2.0
 
 Getting Started
 ----------------------------------

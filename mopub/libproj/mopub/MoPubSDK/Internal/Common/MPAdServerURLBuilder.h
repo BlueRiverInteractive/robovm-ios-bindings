@@ -20,6 +20,7 @@
                   location:(CLLocation *)location
       versionParameterName:(NSString *)versionParameterName
                    version:(NSString *)version
-                   testing:(BOOL)testing;
+                   testing:(BOOL)testing
+             desiredAssets:(NSArray *)assets;
 
 @end

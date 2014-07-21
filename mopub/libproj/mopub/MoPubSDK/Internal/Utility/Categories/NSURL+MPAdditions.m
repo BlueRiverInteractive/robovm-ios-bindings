@@ -38,4 +38,11 @@ static NSString * const kTelephonePromptScheme = @"telprompt";
     return [[[self scheme] lowercaseString] isEqualToString:kTelephonePromptScheme];
 }
 
+- (BOOL)mp_isSafeForLoadingWithoutUserAction
+{
+    return [[self scheme].lowercaseString isEqualToString:@"http"] ||
+        [[self scheme].lowercaseString isEqualToString:@"https"] ||
+        [[self scheme].lowercaseString isEqualToString:@"about"];
+}
+
 @end

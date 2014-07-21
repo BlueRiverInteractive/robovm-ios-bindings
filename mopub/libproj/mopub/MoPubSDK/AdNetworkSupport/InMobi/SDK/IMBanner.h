@@ -118,7 +118,7 @@
  * to nil and remove it from its superview to prevent any chance of your
  * application crashing.
  */
-@property (nonatomic, assign) IBOutlet NSObject<IMBannerDelegate> *delegate;
+@property (nonatomic, unsafe_unretained) IBOutlet NSObject<IMBannerDelegate> *delegate;
 /**
  * Starts or stops the auto refresh of ads.
  * The refresh interval is measured between the completion(success or failure)
@@ -141,7 +141,7 @@
  * A free form NSDictionary for any demographic information,
  * not available via InMobi class.
  */
-@property (nonatomic,retain) NSDictionary *additionaParameters;
+@property (nonatomic,strong) NSDictionary *additionaParameters;
 /**
  * A free form set of keywords, separated by ','
  * E.g: "sports,cars,bikes"

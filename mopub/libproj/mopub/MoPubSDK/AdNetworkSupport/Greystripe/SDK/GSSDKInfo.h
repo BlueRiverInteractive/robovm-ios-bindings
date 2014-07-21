@@ -1,9 +1,9 @@
 //
 //  GSSDKInfo.h
-//  SDK
+//  ConversantSDK
 //
 //  Created by Justine DiPrete on 1/13/12.
-//  Copyright 2013 Greystripe
+//  Copyright 2014 Conversant
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.

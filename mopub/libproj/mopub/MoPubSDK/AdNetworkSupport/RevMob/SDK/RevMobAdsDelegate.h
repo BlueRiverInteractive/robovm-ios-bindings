@@ -15,6 +15,16 @@
 # pragma mark Ad Callbacks (Fullscreen, Banner and Popup)
 
 /**
+ Fired when session is started.
+ */
+- (void)revmobSessionIsStarted;
+
+/**
+ Fired when session fails to start.
+ */
+- (void)revmobSessionNotStartedWithError:(NSError *)error;
+
+/**
  Fired by Fullscreen, banner and popup. Called when the communication with the server is finished with success.
  */
 - (void)revmobAdDidReceive;

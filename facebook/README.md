@@ -1,6 +1,6 @@
 Facebook iOS SDK
 ==================================
-SDK Version: 3.14
+SDK Version: 3.16.1
 
 Getting Started
 ----------------------------------

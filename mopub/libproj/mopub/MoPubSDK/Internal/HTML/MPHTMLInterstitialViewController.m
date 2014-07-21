@@ -66,7 +66,7 @@
 
 - (void)didPresentInterstitial
 {
-    [self.backingViewAgent continueHandlingRequests];
+    [self.backingViewAgent enableRequestHandling];
     [self.backingViewAgent invokeJavaScriptForEvent:MPAdWebViewEventAdDidAppear];
 
     // XXX: In certain cases, UIWebView's content appears off-center due to rotation / auto-
@@ -84,7 +84,7 @@
 
 - (void)willDismissInterstitial
 {
-    [self.backingViewAgent stopHandlingRequests];
+    [self.backingViewAgent disableRequestHandling];
     [self.delegate interstitialWillDisappear:self];
 }
 

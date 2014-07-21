@@ -26,6 +26,7 @@
 @property (nonatomic, retain) MPTimer *refreshTimer;
 @property (nonatomic, assign) BOOL adActionInProgress;
 @property (nonatomic, assign) BOOL automaticallyRefreshesContents;
+@property (nonatomic, assign) BOOL hasRequestedAtLeastOneAd;
 @property (nonatomic, assign) UIInterfaceOrientation currentOrientation;
 
 - (void)loadAdWithURL:(NSURL *)URL;
@@ -93,6 +94,10 @@
 
 - (void)loadAd
 {
+    if (!self.hasRequestedAtLeastOneAd) {
+        self.hasRequestedAtLeastOneAd = YES;
+    }
+
     if (self.loading) {
         MPLogWarn(@"Banner view (%@) is already loading an ad. Wait for previous load to finish.", [self.delegate adUnitId]);
         return;
@@ -108,7 +113,7 @@
 
 - (void)applicationWillEnterForeground
 {
-    if (self.automaticallyRefreshesContents) {
+    if (self.automaticallyRefreshesContents && self.hasRequestedAtLeastOneAd) {
         [self loadAdWithURL:nil];
     }
 }
@@ -192,7 +197,7 @@
     self.requestingConfiguration = configuration;
 
     MPLogInfo(@"Banner ad view is fetching ad network type: %@", self.requestingConfiguration.networkType);
-    
+
     if (configuration.adType == MPAdTypeUnknown) {
         [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorServerError]];
         return;
@@ -200,14 +205,14 @@
 
     if (configuration.adType == MPAdTypeInterstitial) {
         MPLogWarn(@"Could not load ad: banner object received an interstitial ad unit ID.");
-        
+
         [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorAdapterInvalid]];
         return;
     }
 
     if ([configuration.networkType isEqualToString:kAdTypeClear]) {
         MPLogInfo(@"Ad server response indicated no ad available.");
-        
+
         [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorNoInventory]];
         return;
     }

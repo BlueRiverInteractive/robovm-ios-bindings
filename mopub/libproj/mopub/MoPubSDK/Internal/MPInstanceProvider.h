@@ -50,6 +50,10 @@
 @protocol MRVideoPlayerManagerDelegate;
 @class MPMoviePlayerViewController;
 
+//Native
+@protocol MPNativeCustomEventDelegate;
+@class MPNativeCustomEvent;
+
 
 @interface MPInstanceProvider : NSObject
 
@@ -98,5 +102,11 @@
 - (MRImageDownloader *)buildMRImageDownloaderWithDelegate:(id<MRImageDownloaderDelegate>)delegate;
 - (MRVideoPlayerManager *)buildMRVideoPlayerManagerWithDelegate:(id<MRVideoPlayerManagerDelegate>)delegate;
 - (MPMoviePlayerViewController *)buildMPMoviePlayerViewControllerWithURL:(NSURL *)URL;
+
+#pragma mark - Native
+
+- (MPNativeCustomEvent *)buildNativeCustomEventFromCustomClass:(Class)customClass
+                                                      delegate:(id<MPNativeCustomEventDelegate>)delegate;
+
 
 @end
