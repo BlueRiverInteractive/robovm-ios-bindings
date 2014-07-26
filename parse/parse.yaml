@@ -1,0 +1,41 @@
+package: org.robovm.bindings.parse
+include: [foundation.yaml]
+library: Library.Internal
+framework: Parse
+clang_args: ['-x', 'objective-c']
+headers:
+    - ./libs/Parse.framework/Headers/Parse.h
+typedefs: {}
+
+enums: {}
+
+classes: {}
+
+protocols: {}
+
+functions:
+    # Make sure we don't miss any functions if new ones are introduced in a later version
+    (PF.*):
+        class: ParseSDK
+        name: "Function__#{g[0]}"
+    (Parse.*):
+        class: ParseSDK
+        name: "Function__#{g[0]}"
+
+values:
+    # Make sure we don't miss any values if new ones are introduced in a later version
+    (PF):
+        class: ParseSDK
+        name: "Value__#{g[0]}"
+    (Parse.*):
+        class: ParseSDK
+        name: "Value__#{g[0]}"
+
+constants:       
+    # Make sure we don't miss any constants if new ones are introduced in a later version
+    (PF.*):
+        class: ParseSDK
+        name: "Constant__#{g[0]}"
+    (Parse.*):
+        class: ParseSDK
+        name: "Constant__#{g[0]}"
