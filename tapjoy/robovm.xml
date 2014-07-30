@@ -31,6 +31,6 @@
 		<framework>StoreKit</framework>
 		<framework>Social</framework>
 		<framework>EventKit</framework>
-		<framework>EvenKitUI</framework>
+		<framework>EventKitUI</framework>
 	</weakFrameworks>
 </config>
