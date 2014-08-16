@@ -17,6 +17,22 @@ A collection of third party bindings for RoboVM iOS.
 
 6. To find out how to use the binding take a look at its Sample class for basic usage and take a look at the original documentation of the framework or SDK.
 
+## How do I use these bindings with LibGDX 1.x?
+
+1. Go to http://libgdx.badlogicgames.com/robovm-ios-bindings/ and download the JAR file for the binding you want to use
+
+2. Put the JAR file into the `ios/libs` folder of your LibGDX project (create it if need be)
+
+3. Open the `/build.gradle` file and look for the section starting with `project(":ios")`.
+
+4. Look for the `dependencies` section and add the following line:
+````
+    compile fileTree(dir: 'libs', include: '*.jar')
+````
+5. Save and refresh gradle, per usual. (E.g. in Eclipse, right-click on the `-ios` project and choose Gradle -> Refresh All)
+
+Those bindings will now be available within your project as needed. Be sure to download updated JAR files at regular intervals if you want the latest updates.
+
 ## How do I create a binding?
 
 When you want to create a binding, you should have a basic knowledge of the syntax of Objective-C. Also it wouldn’t hurt if you know how to use Xcode and how static libraries work.  
