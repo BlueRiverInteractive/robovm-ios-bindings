@@ -114,7 +114,7 @@ public class GADBannerView extends UIView {
 }
 ```
 
-**HINT**: If you are binding Cocoa or CocoaTouch frameworks you should add the @Library annotation to the class and specify the necessary framework.
+**HINT**: If you are binding Cocoa or CocoaTouch frameworks you should add the `@Library` annotation to the class and specify the necessary framework.
 Example CTCallCenter in the CoreTelephony framework:
 ```Java
 @Library("CoreTelephony")
@@ -276,7 +276,7 @@ In any way, you can identify them by the `^` symbol.
 
 There are two ways in Java to bind a block type:
 
-Inline:
+**Inline:**
 ```Java
 @Method(selector = "handleOpenURL:sourceApplication:fallbackHandler:")
 public static native boolean handleOpenURL(NSURL url, String sourceApplication, @Block VoidBlock1<FBAppCall> handler);
@@ -284,10 +284,10 @@ public static native boolean handleOpenURL(NSURL url, String sourceApplication, 
 
 The `@Block` annotation is obligatory to identify block types and needs to be applied to the block type. 
 RoboVM provides several generic classes that help defining inline blocks:
-- VoidBlockX: defines a block without return type (void) and *X* amount parameters. In our example we need just one parameter and no return type, therefore we take VoidBlock1. 
-- BlockX: defines a block with return type and *X* amount parameters. The last defined generic type becomes the return type.
+- **VoidBlockX**: defines a block without return type (void) and *X* amount parameters. In our example we need just one parameter and no return type, therefore we take `VoidBlock1`. 
+- **BlockX**: defines a block with return type and *X* amount parameters. The last defined generic type becomes the return type.
 
-Custom Type:
+**Custom Type:**
 ```Java
 public interface FBAppCallHandler {
   void invoke(FBAppCall call);
@@ -377,7 +377,7 @@ NetworkError(1 | (1 << 9))
 
 Don't be scared if you find an enum without any name:
 ```objc
-typedef enum {
+enum {
    kGADExampleTypeFirst,
    kGADExampleTypeSecond
 };
@@ -395,7 +395,7 @@ To be done…
 
 ### Binding global values 
 
-Global values in Obj-C can be identified by the `extern` keyword.
+Global values in Obj-C can be identified by the `extern` and the `const` keyword.
 For example:
 
 ```objc
@@ -410,7 +410,9 @@ We can bind this value in Java like this:
 public static native @ByVal GADAdSize Banner();
 ```
 
-Global values are always static and can have any name you want. The `optional` parameter is used to weakly bind this global value. This prevents the binding from crashing if it used on any OS or library version that doesn't support this global value.
+Global values are always static and can have any name you want.  
+The `optional` parameter is used to weakly bind this global value. This prevents the binding from crashing if it used on any OS or library version that doesn't support this global value.  
+
 The @ByVal annotation is only needed for struct types as explained in the structs section.
 
 ### Binding constants
