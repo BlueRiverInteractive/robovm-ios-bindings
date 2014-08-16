@@ -221,16 +221,12 @@ public class PFObject extends NSObject {
 // */
 // - (void)incrementKey:(NSString *)key byAmount:(NSNumber *)amount;
 //
-// #pragma mark -
-// #pragma mark Save
 //
-// /*! @name Saving an Object to Parse */
-//
-// /*!
-// Saves the PFObject.
-// @result Returns whether the save succeeded.
-// */
-// - (BOOL)save;
+    /** Saves the PFObject.
+     * @return whether the save succeeded. */
+    @Method(selector = "save")
+    public native boolean save ();
+
 //
 // /*!
 // Saves the PFObject and sets an error if it occurs.

@@ -1,13 +1,20 @@
 
 package org.robovm.bindings.parse;
 
+import org.robovm.objc.annotation.Method;
+import org.robovm.objc.annotation.NativeClass;
+
 /** A Parse Framework User Object that is a local representation of a user persisted to the Parse cloud. This class is a subclass
  * of a PFObject, and retains the same functionality of a PFObject, but also extends it with various user specific methods, like
  * authentication, signing up, and validation uniqueness.
  * 
  * Many APIs responsible for linking a PFUser with Facebook or Twitter have been deprecated in favor of dedicated utilities for
  * each social network. See PFFacebookUtils and PFTwitterUtils for more information. */
+@NativeClass
 public class PFUser extends PFObject implements PFSubclassing {
+
+    private PFUser () {
+    }
 
 //
 // /*! The name of the PFUser class in the REST API. This is a required
@@ -16,12 +23,11 @@ public class PFUser extends PFObject implements PFSubclassing {
 //
 // /** @name Accessing the Current User */
 //
-// /*!
-// Gets the currently logged in user from disk and returns an instance of it.
-// @result Returns a PFUser that is the currently logged in user. If there is none, returns nil.
-// */
-// + (instancetype)currentUser;
-//
+    /** Gets the currently logged in user from disk and returns an instance of it.
+     * @result Returns a PFUser that is the currently logged in user. If there is none, returns nil. */
+    @Method(selector = "currentUser")
+    public static native PFUser currentUser ();
+
 // /// The session token for the PFUser. This is set by the server upon successful authentication.
 // @property (nonatomic, strong) NSString *sessionToken;
 //
@@ -35,13 +41,10 @@ public class PFUser extends PFObject implements PFSubclassing {
 // */
 // - (BOOL)isAuthenticated;
 //
-// /** @name Creating a New User */
-//
-// /*!
-// Creates a new PFUser object.
-// @result Returns a new PFUser object.
-// */
-// + (PFUser *)user;
+    /** Creates a new PFUser object.
+     * @result Returns a new PFUser object. */
+    @Method(selector = "user")
+    public static native PFUser create ();
 //
 // /*!
 // Enables automatic creation of anonymous users. After calling this method, [PFUser currentUser] will always have a value.
