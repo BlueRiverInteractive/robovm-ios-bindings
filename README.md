@@ -26,9 +26,9 @@ A collection of third party bindings for RoboVM iOS.
 3. Open the `/build.gradle` file and look for the section starting with `project(":ios")`.
 
 4. Look for the `dependencies` section and add the following line:
-````
-    compile fileTree(dir: 'libs', include: '*.jar')
-````
+   ```
+   compile fileTree(dir: 'libs', include: '*.jar')
+   ```
 5. Save and refresh gradle, per usual. (E.g. in Eclipse, right-click on the `-ios` project and choose Gradle -> Refresh All)
 
 Those bindings will now be available within your project as needed. Be sure to download updated JAR files at regular intervals if you want the latest updates.
@@ -64,19 +64,19 @@ Open up the newly created project and add the missing packages and the Sample cl
 ```Java
 package org.robovm.bindings.admob.sample;
 
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.uikit.UIApplication;
-import org.robovm.cocoatouch.uikit.UIApplicationDelegate;
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
 
-public class Sample extends UIApplicationDelegate.Adapter {
+public class Sample extends UIApplicationDelegateAdapter {
 	@Override
 	public void didFinishLaunching (UIApplication application) {
 	}
 
 	public static void main (String[] argv) {
-		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, Sample.class);
-		pool.drain();
+		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+			UIApplication.main(argv, null, Sample.class);
+		}
 	}
 }
 ```
@@ -90,7 +90,7 @@ Now we are ready to create the bindings!
 ### Binding classes
 
 First of all we will create a Java class for every Objective-C interface. Typically this is one class per header file.  
-To be sure, open up each header (.h) file and check if it contains a line starting with `@interface`. The name after `@interface` will become the class name, the name after `:` will become the extended class and the name(s) between the angle brackets `<>` (if any) will become implemented interfaces.  
+To be sure, open up each header (.h) file and check if it contains a line starting with `@interface`. The name after `@interface` will become the class name, the name after the colon `:` will become the extended class and the name(s) between the angle brackets `<>` (if any) will become implemented interfaces.  
 The syntax would look like this:
 
 > @interface **ClassName** : **ExtendedClassName**<*ImplementedInterfaceName*>
@@ -100,7 +100,7 @@ In our case this will be:
 - class GADAdMobExtras extends NSObject implements GADAdNetworkExtras
 - class GADBannerView extends UIView
 - class GADInterstitial extends NSObject
-- class GADRequest extends NSObject implements NSCopying
+- class GADRequest extends NSObject (**HINT**: NSCopying is not used in RoboVM)
 - class GADRequestError extends NSError
 
 Create those classes inside the `org.robovm.bindings.admob` package.
@@ -110,6 +110,16 @@ Example GADBannerView:
 ```Java
 @NativeClass
 public class GADBannerView extends UIView {
+
+}
+```
+
+**HINT**: If you are binding Cocoa or CocoaTouch frameworks you should add the @Library annotation to the class and specify the necessary framework.
+Example CTCallCenter in the CoreTelephony framework:
+```Java
+@Library("CoreTelephony")
+@NativeClass
+public class CTCallCenter extends NSObject {
 
 }
 ```
@@ -132,7 +142,7 @@ For example, let’s bind this method:
 ```
 This method is an instance method (`-`), it’s selector/name is `loadRequest:`, it has one parameter `GADRequest request` and the return type is `void`.
 
-In RoboVM we can bind this method like so:
+In RoboVM we can bind this method like this:
 ```Java
 @Method(selector = "loadRequest:")
 public native void loadRequest(GADRequest request);
@@ -151,6 +161,18 @@ Use Java Bean naming conventions for consistency. Shorten long method names. The
 @Method(selector = "setLocationWithLatitude:longitude:accuracy:")
 public native void setLocation(float latitude, float longitude, float accuracyInMeters);
 ```
+
+Don't forget to add the static keyword for methods starting with a `+`:
+```objc
+/// Creates an autoreleased GADRequest.
++ (instancetype)request;
+```
+becomes
+```Java
+@Method(selector = "request")
+public static native GADRequest request();
+```
+
 
 ### Binding constructors
 
@@ -223,7 +245,72 @@ public native GADBannerViewDelegate getDelegate();
 public native void setDelegate(GADBannerViewDelegate delegate);
 ```
 
-**HINT**: You can leave out the selector parameter, if you name the property methods with getProperty/isProperty and setProperty. The example above would still work, if we hadn’t specified the selector parameter.
+**HINT**: You can leave out the selector parameter, if you name the property methods with getProperty/isProperty and setProperty. The example above would still work, if we hadn’t specified the selector parameter of the annotations.
+
+### Binding delegates
+
+To be done…
+
+### Binding blocks
+
+Obj-C blocks can be compared to Java listeners with just one method. A typical example of this is the Runnable class.
+These blocks can occur in two forms: 
+
+As a custom type:
+```objc
+typedef void (^FBAppCallHandler)(FBAppCall *call);
+
++ (BOOL)handleOpenURL:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication
+      fallbackHandler:(FBAppCallHandler)handler;
+```
+
+Or inline of an Obj-C method:
+```objc
++ (BOOL)handleOpenURL:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication
+      fallbackHandler:(void(^)(FBAppCall *call))handler;
+```
+In any way, you can identify them by the `^` symbol.
+`void` is the return type of the block, `FBAppCallHandler` is the name and `FBAppCall call` is the first parameter of this block.
+
+There are two ways in Java to bind a block type:
+
+Inline:
+```Java
+@Method(selector = "handleOpenURL:sourceApplication:fallbackHandler:")
+public static native boolean handleOpenURL(NSURL url, String sourceApplication, @Block VoidBlock1<FBAppCall> handler);
+```
+
+The `@Block` annotation is obligatory to identify block types and needs to be applied to the block type. 
+RoboVM provides several generic classes that help defining inline blocks:
+- VoidBlockX: defines a block without return type (void) and *X* amount parameters. In our example we need just one parameter and no return type, therefore we take VoidBlock1. 
+- BlockX: defines a block with return type and *X* amount parameters. The last defined generic type becomes the return type.
+
+Custom Type:
+```Java
+public interface FBAppCallHandler {
+  void invoke(FBAppCall call);
+}
+
+@Method(selector = "handleOpenURL:sourceApplication:fallbackHandler:")
+public static native boolean handleOpenURL(NSURL url, String sourceApplication, @Block FBAppCallHandler handler);
+```
+
+You create a custom interface with exactly one function. The function must have the exact return type and parameters as the Obj-C block.
+This approach is slightly more work but gives you better readability, as you can name your block and parameters.
+
+Both of these approaches apply two both forms of Obj-C blocks.
+
+**HINT**: If you need to define a void block with no parameter, you can just use `@Block Runnable`.
+
+### Binding structs
+
+To be done...
+
+### Binding C functions
+
+To be done...
 
 ### Binding enums
 
@@ -288,21 +375,62 @@ Error(1),
 NetworkError(1 | (1 << 9))
 ```
 
-### Binding constants and global values
+Don't be scared if you find an enum without any name:
+```objc
+typedef enum {
+   kGADExampleTypeFirst,
+   kGADExampleTypeSecond
+};
+```
+Just invent a proper enum name:
+```Java
+public enum GADExampleType implements ValuedEnum {
+   ...
+}
+```
+
+### Binding bitmasks
 
 To be done…
 
-### Binding blocks
+### Binding global values 
 
-To be done…
+Global values in Obj-C can be identified by the `extern` keyword.
+For example:
 
-### Binding delegates
+```objc
+extern GADAdSize const kGADAdSizeBanner;
+```
 
-To be done…
+The name of this global value is `kGADAdSizeBanner` and the type `GADAdSize`.
+We can bind this value in Java like this:
+
+```Java
+@GlobalValue(symbol = "kGADAdSizeBanner", optional=true)
+public static native @ByVal GADAdSize Banner();
+```
+
+Global values are always static and can have any name you want. The `optional` parameter is used to weakly bind this global value. This prevents the binding from crashing if it used on any OS or library version that doesn't support this global value.
+The @ByVal annotation is only needed for struct types as explained in the structs section.
+
+### Binding constants
+
+C constants are identified by the `#define` keyword and don't need to be bound in any way. You just take the value of the constant and create a Java constant with that value.
+
+```objc
+#define PI 3.14159265359
+```
+
+```Java
+public static final long PI = 3.14159265359;
+```
+
+**HINT**: You can also define enums as constants. This is especially useful if the enum has just one entry.
 
 ### Finishing the binding
 
 To be done…
+robovm.xml... reference to integration instructions above... 
 
 ### Creating a static library in Xcode
 
