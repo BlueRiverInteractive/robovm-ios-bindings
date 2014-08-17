@@ -271,8 +271,8 @@ Or inline of an Obj-C method:
     sourceApplication:(NSString *)sourceApplication
       fallbackHandler:(void(^)(FBAppCall *call))handler;
 ```
-In any way, you can identify them by the `^` symbol.
-`void` is the return type of the block, `FBAppCallHandler` is the name and `FBAppCall call` is the first parameter of this block.
+In any way, you can identify them by the `^` symbol.  
+`void` is the return type of this block, `FBAppCallHandler` is the name and `FBAppCall call` is the first parameter of this block.
 
 There are two ways in Java to bind a block type:
 

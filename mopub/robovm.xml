@@ -19,6 +19,7 @@
 		<framework>AddressBookUI</framework>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
+		<framework>CoreData</framework>
 		<framework>CoreGraphics</framework>
 		<framework>CoreLocation</framework>
 		<framework>CoreMedia</framework>
