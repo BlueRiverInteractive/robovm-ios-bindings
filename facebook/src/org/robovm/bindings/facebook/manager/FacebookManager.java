@@ -125,21 +125,7 @@ public class FacebookManager {
 																	if (!containsRequiredPermissions(configuration.getPublishPermissions())) {
 																		listener.onError("Facebook publish permissions couldn't be retrieved!");
 																	} else {
-																		FBRequest.requestForMe().start(new FBRequestHandler() {
-																			@Override
-																			public void invoke (FBRequestConnection connection, NSObject result,
-																				NSError error) {
-																				if (error == null) {
-																					listener.onSuccess(createGraphObject(result));
-																				} else {
-																					if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-																						listener.onCancel();
-																					} else {
-																						listener.onError(error.description());
-																					}
-																				}
-																			}
-																		});
+																		requestForMe(listener);
 																	}
 																}
 															}
@@ -148,7 +134,9 @@ public class FacebookManager {
 												});
 										}
 									});
-								}
+								} else {
+                                    requestForMe(listener);
+                                }								
 							}
 						}
 					});
@@ -156,20 +144,7 @@ public class FacebookManager {
 					NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
 						@Override
 						public void run () {
-							FBRequest.requestForMe().start(new FBRequestHandler() {
-								@Override
-								public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
-									if (error == null) {
-										listener.onSuccess(createGraphObject(result));
-									} else {
-										if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-											listener.onCancel();
-										} else {
-											listener.onError(error.description());
-										}
-									}
-								}
-							});
+							requestForMe(listener);
 						}
 					});
 				}
@@ -424,6 +399,23 @@ public class FacebookManager {
 			}
 		}
 	}
+	
+    private void requestForMe(final FacebookLoginListener listener) {
+        FBRequest.requestForMe().start(new FBRequestHandler() {
+            @Override
+            public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
+                if (error == null) {
+                    listener.onSuccess(createGraphObject(result));
+                } else {
+                    if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
+                        listener.onCancel();
+                    } else {
+                        listener.onError(error.description());
+                    }
+                }
+            }
+        });
+    }	
 
 	public void didBecomeActive (UIApplication application) {
 		FBAppCall.handleDidBecomeActive();
