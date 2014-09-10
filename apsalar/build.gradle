@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.apsalar.sample.Sample"
+}
+
+eclipse.project {
+    name = "apsalar-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

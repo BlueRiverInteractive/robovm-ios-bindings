@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.bugsense.sample.Sample"
+}
+
+eclipse.project {
+    name = "bugsense-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

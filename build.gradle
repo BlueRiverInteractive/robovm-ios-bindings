@@ -5,7 +5,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'com.github.jtakakura:gradle-robovm-plugin:0.0.10'
+	classpath 'org.robovm:robovm-gradle-plugin:1.0.0-alpha-01'
     }
 }
 
@@ -18,7 +18,7 @@ allprojects {
     version = '1.0.0-SNAPSHOT'
 
     ext {
-        roboVMVersion = '0.0.15-SNAPSHOT'
+        roboVMVersion = '1.0.0-SNAPSHOT'
     }
 
     dependencies {

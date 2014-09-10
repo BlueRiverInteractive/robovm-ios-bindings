@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.gtm.sample.Sample"
+}
+
+eclipse.project {
+    name = „gtm-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}

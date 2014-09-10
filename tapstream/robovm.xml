@@ -13,9 +13,6 @@
 	<lib>
 	    <lib>libs/libtapstream.a</lib>
 	</lib>
-	<frameworks>
-		<framework>Foundation</framework>
-	</frameworks>
 	<weakFrameworks>
 		<framework>StoreKit</framework>
 	</weakFrameworks>

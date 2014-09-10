@@ -1,8 +1,8 @@
 
 package org.robovm.bindings.parse;
 
-import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.uikit.UIRemoteNotification;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
@@ -299,7 +299,7 @@ public class PFPush extends NSObject {
      * @param userInfo The userInfo dictionary you get in didReceiveRemoteNotification.
      */
     @Method(selector = "handlePush:")
-    public static native void handlePush (NSDictionary<?, ?> userInfo);
+    public static native void handlePush (UIRemoteNotification userInfo);
 
 //
 // /*!
