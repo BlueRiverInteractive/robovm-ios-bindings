@@ -3,7 +3,7 @@ package org.robovm.bindings.facebook.manager.sample;
 
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
-import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSPropertyList;
 import org.robovm.apple.foundation.NSURL;
 import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
@@ -50,100 +50,100 @@ import org.robovm.bindings.facebook.session.FBSessionLoginBehavior;
  * }
  * </pre> */
 public class Sample extends UIApplicationDelegateAdapter {
-	private static final String APP_ID = "YOUR_FB_APP_ID";
-	private static final String APP_NAMESPACE = "namespace";
+    private static final String APP_ID = "YOUR_FB_APP_ID";
+    private static final String APP_NAMESPACE = "namespace";
 
-	private FacebookManager facebook;
-	private LoadingOverlay loadingOverlay;
+    private FacebookManager facebook;
+    private LoadingOverlay loadingOverlay;
 
-	@Override
-	public void didFinishLaunching (UIApplication application) {
-		facebook = FacebookManager.getInstance();
+    @Override
+    public void didFinishLaunching (UIApplication application) {
+        facebook = FacebookManager.getInstance();
 
-		// Setup an array of all used permissions.
-		FBPermission[] fbPermissions = new FBPermission[] {FBPermission.PUBLIC_PROFILE, FBPermission.USER_FRIENDS,
-			FBPermission.EMAIL, FBPermission.PUBLISH_ACTION};
+        // Setup an array of all used permissions.
+        FBPermission[] fbPermissions = new FBPermission[] {FBPermission.PUBLIC_PROFILE, FBPermission.USER_FRIENDS,
+            FBPermission.EMAIL, FBPermission.PUBLISH_ACTION};
 
-		// Create a Facebook configuration.
-		FacebookConfiguration fbConfiguration = new FacebookConfiguration.Builder().setAppId(APP_ID).setNamespace(APP_NAMESPACE)
-			.setPermissions(fbPermissions).setDefaultAudience(FBSessionDefaultAudience.Everyone)
-			.setLoginBehavior(FBSessionLoginBehavior.UseSystemAccountIfPresent).build();
-		facebook.setConfiguration(fbConfiguration);
+        // Create a Facebook configuration.
+        FacebookConfiguration fbConfiguration = new FacebookConfiguration.Builder().setAppId(APP_ID).setNamespace(APP_NAMESPACE)
+            .setPermissions(fbPermissions).setDefaultAudience(FBSessionDefaultAudience.Everyone)
+            .setLoginBehavior(FBSessionLoginBehavior.UseSystemAccountIfPresent).build();
+        facebook.setConfiguration(fbConfiguration);
 
-		// Create our sample UI.
-		loadingOverlay = new LoadingOverlay(UIScreen.getMainScreen().getApplicationFrame(), "Loading...");
+        // Create our sample UI.
+        loadingOverlay = new LoadingOverlay(UIScreen.getMainScreen().getApplicationFrame(), "Loading...");
 
-		UIWindow window = new UIWindow(UIScreen.getMainScreen().getApplicationFrame());
+        UIWindow window = new UIWindow(UIScreen.getMainScreen().getApplicationFrame());
 
-		final UIViewController viewController = new UIViewController();
+        final UIViewController viewController = new UIViewController();
 
-		final UIButton loginButton = new UIButton(new CGRect(10, 10, 200, 30));
-		loginButton.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
-		if (!facebook.isLoggedIn())
-			loginButton.setTitle("Login", UIControlState.Normal);
-		else
-			loginButton.setTitle("Logout", UIControlState.Normal);
-		loginButton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-				if (facebook.isLoggedIn()) {
-					facebook.logout();
-				} else {
-					loadingOverlay.show(viewController);
-					facebook.login(new FacebookLoginListener() {
-						@Override
-						public void onSuccess (GraphObject user) {
-							System.out.println("Successfully logged in! " + user);
-							loginButton.setTitle("Logout", UIControlState.Normal);
-							loadingOverlay.hide();
-						}
+        final UIButton loginButton = new UIButton(new CGRect(10, 10, 200, 30));
+        loginButton.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
+        if (!facebook.isLoggedIn())
+            loginButton.setTitle("Login", UIControlState.Normal);
+        else
+            loginButton.setTitle("Logout", UIControlState.Normal);
+        loginButton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+            @Override
+            public void onTouchUpInside (UIControl control, UIEvent event) {
+                if (facebook.isLoggedIn()) {
+                    facebook.logout();
+                } else {
+                    loadingOverlay.show(viewController);
+                    facebook.login(new FacebookLoginListener() {
+                        @Override
+                        public void onSuccess (GraphObject user) {
+                            System.out.println("Successfully logged in! " + user);
+                            loginButton.setTitle("Logout", UIControlState.Normal);
+                            loadingOverlay.hide();
+                        }
 
-						@Override
-						public void onError (String error) {
-							System.out.println("An error happened: " + error);
-							loadingOverlay.hide();
-						}
+                        @Override
+                        public void onError (String error) {
+                            System.out.println("An error happened: " + error);
+                            loadingOverlay.hide();
+                        }
 
-						@Override
-						public void onCancel () {
-							System.out.println("User cancelled login!");
-							loadingOverlay.hide();
-						}
-					});
-				}
-			}
-		});
+                        @Override
+                        public void onCancel () {
+                            System.out.println("User cancelled login!");
+                            loadingOverlay.hide();
+                        }
+                    });
+                }
+            }
+        });
 
-		UIButton publishButton = new UIButton(new CGRect(10, 60, 200, 30));
-		publishButton.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
-		publishButton.setTitle("Publish with dialog", UIControlState.Normal);
-		publishButton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
-			@Override
-			public void onTouchUpInside (UIControl control, UIEvent event) {
-				loadingOverlay.show(viewController);
+        UIButton publishButton = new UIButton(new CGRect(10, 60, 200, 30));
+        publishButton.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
+        publishButton.setTitle("Publish with dialog", UIControlState.Normal);
+        publishButton.addOnTouchUpInsideListener(new OnTouchUpInsideListener() {
+            @Override
+            public void onTouchUpInside (UIControl control, UIEvent event) {
+                loadingOverlay.show(viewController);
 
-				facebook.request(CommonFacebookRequests.publishFeed("Name", "Caption", "Message", "Description", null,
-					"http://www.google.com", true, new FacebookRequestListener() {
-						@Override
-						public void onSuccess (GraphObject result) {
-							System.out.println("Successfully published: " + result);
-							loadingOverlay.hide();
-						}
+                facebook.request(CommonFacebookRequests.publishFeed("Name", "Caption", "Message", "Description", null,
+                    "http://www.google.com", true, new FacebookRequestListener() {
+                        @Override
+                        public void onSuccess (GraphObject result) {
+                            System.out.println("Successfully published: " + result);
+                            loadingOverlay.hide();
+                        }
 
-						@Override
-						public void onError (String error) {
-							System.out.println("An error happened: " + error);
-							loadingOverlay.hide();
-						}
+                        @Override
+                        public void onError (String error) {
+                            System.out.println("An error happened: " + error);
+                            loadingOverlay.hide();
+                        }
 
-						@Override
-						public void onCancel () {
-							System.out.println("User cancelled dialog!");
-							loadingOverlay.hide();
-						}
-					}));
-			}
-		});
+                        @Override
+                        public void onCancel () {
+                            System.out.println("User cancelled dialog!");
+                            loadingOverlay.hide();
+                        }
+                    }));
+            }
+        });
 // UIButton boton3 = new UIButton(new CGRect(10, 110, 200, 30));
 // boton3.setBackgroundColor(new UIColor(1, 0, 0, 0.5f));
 // boton3.setTitle("Load Achievements", UIControlState.Normal);
@@ -190,40 +190,40 @@ public class Sample extends UIApplicationDelegateAdapter {
 // }
 // });
 
-		UIView view = new UIView(UIScreen.getMainScreen().getApplicationFrame());
-		view.setBackgroundColor(UIColor.colorLightGray());
-		view.addSubview(loginButton);
-		view.addSubview(publishButton);
+        UIView view = new UIView(UIScreen.getMainScreen().getApplicationFrame());
+        view.setBackgroundColor(UIColor.lightGray());
+        view.addSubview(loginButton);
+        view.addSubview(publishButton);
 // view.addSubview(boton3);
 // view.addSubview(boton4);
 // view.addSubview(boton5);
 // view.addSubview(boton6);
 // view.addSubview(boton7);
 // view.addSubview(boton8);
-		viewController.setView(view);
+        viewController.setView(view);
 
-		window.setRootViewController(viewController);
-		window.makeKeyAndVisible();
-	}
+        window.setRootViewController(viewController);
+        window.makeKeyAndVisible();
+    }
 
-	@Override
-	public void didBecomeActive (UIApplication application) {
-		facebook.didBecomeActive(application);
-	}
+    @Override
+    public void didBecomeActive (UIApplication application) {
+        facebook.didBecomeActive(application);
+    }
 
-	@Override
-	public boolean openURL (UIApplication application, NSURL url, String sourceApplication, NSObject annotation) {
-		return facebook.openURL(application, url, sourceApplication, annotation);
-	}
+    @Override
+    public boolean openURL (UIApplication application, NSURL url, String sourceApplication, NSPropertyList annotation) {
+        return facebook.openURL(application, url, sourceApplication, annotation);
+    }
 
-	@Override
-	public void willTerminate (UIApplication application) {
-		facebook.willTerminate(application);
-	}
+    @Override
+    public void willTerminate (UIApplication application) {
+        facebook.willTerminate(application);
+    }
 
-	public static void main (String[] argv) {
-		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
-			UIApplication.main(argv, null, Sample.class);
-		}
-	}
+    public static void main (String[] argv) {
+        try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+            UIApplication.main(argv, null, Sample.class);
+        }
+    }
 }

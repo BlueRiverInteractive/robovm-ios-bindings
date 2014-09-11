@@ -70,7 +70,7 @@ public class GameCenterManager {
                 }
             });
         } else { // If iOS version is 5 or less we use the deprecated method
-            GKLocalPlayer.getLocalPlayer().authenticateWithCompletionHandler(new VoidBlock1<NSError>() {
+            GKLocalPlayer.getLocalPlayer().authenticate(new VoidBlock1<NSError>() {
                 @Override
                 public void invoke (NSError error) {
                     if (GKLocalPlayer.getLocalPlayer().isAuthenticated()) {
