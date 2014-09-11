@@ -3,6 +3,6 @@ ext {
 }
 
 eclipse.project {
-    name = „gtm-ios"
+    name = "gtm-ios"
     natures 'org.robovm.eclipse.RoboVMNature'
 }
