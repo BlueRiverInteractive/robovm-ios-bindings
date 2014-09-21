@@ -128,6 +128,8 @@
         self.hasTrackedClick = YES;
         [self trackClick];
     }
+
+    [self.delegate interstitialDidReceiveTapEventForAdapter:self];
 }
 
 - (void)interstitialCustomEventWillLeaveApplication:(MPInterstitialCustomEvent *)customEvent

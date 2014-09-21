@@ -26,7 +26,7 @@
 /**
  *  An <code>NSString</code> label which describes this ad size.
  */
-@property (strong, nonatomic) NSString * label;
+@property (strong, nonatomic, readonly) NSString * label;
 
 /**
  * @name Supported Ad Size Singletons

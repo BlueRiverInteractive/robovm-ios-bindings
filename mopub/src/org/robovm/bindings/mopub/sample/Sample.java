@@ -19,100 +19,105 @@ import org.robovm.bindings.mopub.MPInterstitialAdControllerDelegateAdapter;
 
 /** Basic usage of banners and interstitials. */
 public class Sample extends UIApplicationDelegateAdapter {
-	private static final String INTERSTITIAL_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
-	private static final String BANNER_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
+    private static final String INTERSTITIAL_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
+    private static final String BANNER_AD_UNIT_ID = "YOUR_AD_UNIT_ID";
 
-	private UIWindow window;
-	private UIViewController rootViewController;
-	private MPAdViewController adViewController;
+    private UIWindow window;
+    private UIViewController rootViewController;
+    private MPAdViewController adViewController;
 
-	@Override
-	public void didFinishLaunching (UIApplication application) {
-		// We need a view controller to see ads.
-		rootViewController = new UIViewController();
-		// If you are already using a UIWindow with a root view controller, get the root view controller (f.e. LibGDX):
-		// rootViewController = UIApplication.getSharedApplication().getKeyWindow().getRootViewController();
+    @Override
+    public UIWindow getWindow () {
+        return window;
+    }
 
-		// Create an interstitial.
-		final MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController(INTERSTITIAL_AD_UNIT_ID);
-		// The delegate for an interstitial is optional.
-		MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegateAdapter() {
-			@Override
-			public void didDisappear (MPInterstitialAdController interstitial) {
-				// If the ad disappears, load a new ad, so we can show it immediately the next time.
-				interstitial.loadAd();
-			}
+    @Override
+    public void didFinishLaunching (UIApplication application) {
+        // We need a view controller to see ads.
+        rootViewController = new UIViewController();
+        // If you are already using a UIWindow with a root view controller, get the root view controller (f.e. LibGDX):
+        // rootViewController = UIApplication.getSharedApplication().getKeyWindow().getRootViewController();
 
-			@Override
-			public void didExpire (MPInterstitialAdController interstitial) {
-				// If the ad did expire, load a new ad, so we can show it immediately the next time.
-				interstitial.loadAd();
-			}
+        // Create an interstitial.
+        final MPInterstitialAdController interstitial = MPInterstitialAdController.getAdController(INTERSTITIAL_AD_UNIT_ID);
+        // The delegate for an interstitial is optional.
+        MPInterstitialAdControllerDelegate delegate = new MPInterstitialAdControllerDelegateAdapter() {
+            @Override
+            public void didDisappear (MPInterstitialAdController interstitial) {
+                // If the ad disappears, load a new ad, so we can show it immediately the next time.
+                interstitial.loadAd();
+            }
 
-			@Override
-			public void didLoadAd (MPInterstitialAdController interstitial) {
-				// If the ad is ready, show it.
-				// It's best to call these methods manually and not in didLoadAd(). Use this only for testing purposes!
-				if (interstitial.isReady()) interstitial.show(rootViewController);
-			}
+            @Override
+            public void didExpire (MPInterstitialAdController interstitial) {
+                // If the ad did expire, load a new ad, so we can show it immediately the next time.
+                interstitial.loadAd();
+            }
 
-			@Override
-			public void didFailToLoadAd (MPInterstitialAdController interstitial) {
-				// If the ad did fail to load, load a new ad. Check the debug log to see why it didn't load.
-				interstitial.loadAd();
-			}
-		};
-		interstitial.setDelegate(delegate);
+            @Override
+            public void didLoadAd (MPInterstitialAdController interstitial) {
+                // If the ad is ready, show it.
+                // It's best to call these methods manually and not in didLoadAd(). Use this only for testing purposes!
+                if (interstitial.isReady()) interstitial.show(rootViewController);
+            }
 
-		// Create a MoPub ad. In this case a banner, but you can make it any size you want.
-		final MPAdView banner = new MPAdView(BANNER_AD_UNIT_ID, MPConstants.MOPUB_BANNER_SIZE);
+            @Override
+            public void didFailToLoadAd (MPInterstitialAdController interstitial) {
+                // If the ad did fail to load, load a new ad. Check the debug log to see why it didn't load.
+                interstitial.loadAd();
+            }
+        };
+        interstitial.setDelegate(delegate);
 
-		// Let's calculate our banner size. We need to do this because the resolution of a retina and normal device is different.
-		double bannerWidth = UIScreen.getMainScreen().getBounds().size().width();
-		double bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
+        // Create a MoPub ad. In this case a banner, but you can make it any size you want.
+        final MPAdView banner = new MPAdView(BANNER_AD_UNIT_ID, MPConstants.MOPUB_BANNER_SIZE);
 
-		// Let's set the frame (bounds) of our banner view. Remember on iOS view coordinates have their origin top-left.
-		// Position banner on the top.
-		// banner.setFrame(new CGRect(0, 0, bannerWidth, bannerHeight));
-		// Position banner on the bottom.
-		banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getBounds().size().height() - bannerHeight, bannerWidth,
-			bannerHeight));
-		// Let's color the background for testing, so we can see if it is positioned correctly, even if no ad is loaded yet.
-		banner.setBackgroundColor(new UIColor(1, 0, 0, 1)); // Remove this after testing.
+        // Let's calculate our banner size. We need to do this because the resolution of a retina and normal device is different.
+        double bannerWidth = UIScreen.getMainScreen().getBounds().size().width();
+        double bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
 
-		// We use our custom ad view controller to notify for orientation changes.
-		adViewController = new MPAdViewController(banner);
+        // Let's set the frame (bounds) of our banner view. Remember on iOS view coordinates have their origin top-left.
+        // Position banner on the top.
+        // banner.setFrame(new CGRect(0, 0, bannerWidth, bannerHeight));
+        // Position banner on the bottom.
+        banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getBounds().size().height() - bannerHeight, bannerWidth,
+            bannerHeight));
+        // Let's color the background for testing, so we can see if it is positioned correctly, even if no ad is loaded yet.
+        banner.setBackgroundColor(new UIColor(1, 0, 0, 1)); // Remove this after testing.
 
-		// The delegate for the banner. It is required to override getViewController() to get ads.
-		MPAdViewDelegate bannerDelegate = new MPAdViewDelegateAdapter() {
-			@Override
-			public UIViewController getViewController () {
-				return adViewController;
-			}
-		};
-		banner.setDelegate(bannerDelegate);
-		// Add banner to our view controller.
-		adViewController.getView().addSubview(banner);
+        // We use our custom ad view controller to notify for orientation changes.
+        adViewController = new MPAdViewController(banner);
 
-		// We add the ad view controller to our root view controller.
-		rootViewController.addChildViewController(adViewController);
-		rootViewController.getView().addSubview(adViewController.getView());
+        // The delegate for the banner. It is required to override getViewController() to get ads.
+        MPAdViewDelegate bannerDelegate = new MPAdViewDelegateAdapter() {
+            @Override
+            public UIViewController getViewController () {
+                return adViewController;
+            }
+        };
+        banner.setDelegate(bannerDelegate);
+        // Add banner to our view controller.
+        adViewController.getView().addSubview(banner);
 
-		// Create a standard UIWindow at screen size, add the view controller and show it.
-		window = new UIWindow(UIScreen.getMainScreen().getBounds());
-		window.setRootViewController(rootViewController);
-		window.addSubview(rootViewController.getView());
-		window.makeKeyAndVisible();
+        // We add the ad view controller to our root view controller.
+        rootViewController.addChildViewController(adViewController);
+        rootViewController.getView().addSubview(adViewController.getView());
 
-		// Load an interstitial ad.
-		interstitial.loadAd();
-		// Load a banner ad. This ad gets refreshed automatically, although you can refresh it at any time via refreshAd().
-		banner.loadAd();
-	}
+        // Create a standard UIWindow at screen size, add the view controller and show it.
+        window = new UIWindow(UIScreen.getMainScreen().getBounds());
+        window.setRootViewController(rootViewController);
+        window.addSubview(rootViewController.getView());
+        window.makeKeyAndVisible();
 
-	public static void main (String[] argv) {
-		try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
-			UIApplication.main(argv, null, Sample.class);
-		}
-	}
+        // Load an interstitial ad.
+        interstitial.loadAd();
+        // Load a banner ad. This ad gets refreshed automatically, although you can refresh it at any time via refreshAd().
+        banner.loadAd();
+    }
+
+    public static void main (String[] argv) {
+        try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+            UIApplication.main(argv, null, Sample.class);
+        }
+    }
 }

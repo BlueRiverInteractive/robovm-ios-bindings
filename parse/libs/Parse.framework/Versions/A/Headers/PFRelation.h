@@ -18,14 +18,15 @@
 
 @property (nonatomic, strong) NSString *targetClass;
 
-
+#pragma mark -
 #pragma mark Accessing objects
+
 /*!
  @return A ParseQuery that can be used to get objects in this relation.
  */
 - (PFQuery *)query;
 
-
+#pragma mark -
 #pragma mark Modifying relations
 
 /*!
@@ -39,6 +40,5 @@
  @param object ParseObject to add relation to.
  */
 - (void)removeObject:(PFObject *)object;
+
 @end
-
-

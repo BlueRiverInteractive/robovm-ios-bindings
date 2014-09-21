@@ -46,14 +46,14 @@
 {
     MPLogInfo(@"Requesting InMobi interstitial");
     self.inMobiInterstitial = [[MPInstanceProvider sharedProvider] buildIMInterstitialWithDelegate:self appId:kInMobiAppID];
-    NSMutableDictionary *paramsDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *paramsDict = [NSMutableDictionary dictionary];
     [paramsDict setObject:@"c_mopub" forKey:@"tp"];
     [paramsDict setObject:MP_SDK_VERSION forKey:@"tp-ver"];
     self.inMobiInterstitial.additionaParameters = paramsDict; // For supply source identification
     if (self.delegate.location) {
         [InMobi setLocationWithLatitude:self.delegate.location.coordinate.latitude
-                              longitude:self.delegate.location.coordinate.longitude
-                               accuracy:self.delegate.location.horizontalAccuracy];
+                               longitude:self.delegate.location.coordinate.longitude
+                                accuracy:self.delegate.location.horizontalAccuracy];
     }
     [self.inMobiInterstitial loadInterstitial];
 }
@@ -79,7 +79,7 @@
 }
 
 - (void)interstitial:(IMInterstitial *)ad didFailToReceiveAdWithError:(IMError *)error {
-    
+
     MPLogInfo(@"InMobi banner did fail with error: %@", error.localizedDescription);
     [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
 }
@@ -87,7 +87,7 @@
 - (void)interstitialWillPresentScreen:(IMInterstitial *)ad {
     MPLogInfo(@"InMobi interstitial will present");
     [self.delegate interstitialCustomEventWillAppear:self];
-    
+
     // InMobi doesn't seem to have a separate callback for the "did appear" event, so we
     // signal that manually.
     [self.delegate interstitialCustomEventDidAppear:self];

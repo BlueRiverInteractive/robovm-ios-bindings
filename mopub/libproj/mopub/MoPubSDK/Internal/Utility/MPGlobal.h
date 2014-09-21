@@ -22,6 +22,8 @@ CGFloat MPDeviceScaleFactor(void);
 NSDictionary *MPDictionaryFromQueryString(NSString *query);
 NSString *MPSHA1Digest(NSString *string);
 BOOL MPViewIsVisible(UIView *view);
+BOOL MPViewIntersectsKeyWindowWithPercent(UIView *view, CGFloat percentVisible);
+BOOL MPViewIntersectsApplicationWindowWithPercent(UIView *view, CGFloat percentVisible);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 

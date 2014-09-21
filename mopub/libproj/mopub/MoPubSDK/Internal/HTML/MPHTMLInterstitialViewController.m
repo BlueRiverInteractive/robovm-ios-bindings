@@ -132,7 +132,7 @@
 
 - (void)adActionWillBegin:(MPAdWebView *)ad
 {
-    // No need to tell anyone.
+    [self.delegate interstitialDidReceiveTapEvent:self];
 }
 
 - (void)adActionWillLeaveApplication:(MPAdWebView *)ad

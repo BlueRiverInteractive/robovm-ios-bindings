@@ -41,18 +41,15 @@ public class PFObject extends NSObject {
 // @result Returns the object that is instantiated with the given class name.
 // */
 // + (instancetype)objectWithClassName:(NSString *)className;
-//
-// /*!
-// Creates a reference to an existing PFObject for use in creating associations between PFObjects. Calling isDataAvailable on this
-// object will return NO until fetchIfNeeded or refresh has been called. No network request will be made.
-//
-// @param className The object's class.
-// @param objectId The object id for the referenced object.
-// @result A PFObject without data.
-// */
-// + (instancetype)objectWithoutDataWithClassName:(NSString *)className
-// objectId:(NSString *)objectId;
-//
+
+    /** Creates a reference to an existing PFObject for use in creating associations between PFObjects. Calling isDataAvailable on
+     * this object will return NO until fetchIfNeeded or refresh has been called. No network request will be made.
+     * @param className The object's class.
+     * @param objectId The object id for the referenced object.
+     * @retuen A PFObject without data. */
+    @Method(selector = "objectWithoutDataWithClassName:objectId:")
+    public static native PFObject create (String className, String objectId);
+
 // /*!
 // Creates a new PFObject with a class name, initialized with data constructed from the specified set of objects and keys.
 // @param className The object's class.

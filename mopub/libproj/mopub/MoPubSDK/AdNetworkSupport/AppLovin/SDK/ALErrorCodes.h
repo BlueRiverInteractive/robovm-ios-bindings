@@ -8,8 +8,6 @@
 
 // Loading & Displaying Ads
 
-
-
 // Indicates that no ads are currently eligible for your device & location.
 #define kALErrorCodeNoFill 204
 
@@ -35,15 +33,6 @@
 // Indicates that a reward validation requested timed out (usually due to poor connectivity).
 #define kALErrorCodeIncentivizedValidationNetworkTimeout -500
 
-// Indicates that the user exited out of the video. You may or may not wish to grant a reward depending on your preference.
+// Indicates that the user exited out of the video early.
+// You may or may not wish to grant a reward depending on your preference.
 #define kALErrorCodeIncentivizedUserClosedVideo -600
-
-
-
-
-
-// Deprecated, SDK 2.4.1
-// Please use the above "Incentivized" error codes instead.
-#define kALErrorCodeUnknownServerError -400
-#define kALErrorCodeServerTimeout -500
-#define kALErrorCodeUserClosedVideo -600

@@ -1,6 +1,6 @@
 //
 //  VungleInterstitialCustomEvent.m
-//  MoPubSampleApp
+//  MoPub
 //
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
@@ -12,54 +12,52 @@
 // This is a sample Vungle app ID. You will need to replace it with your Vungle app ID.
 #define kVungleAppID @"YOUR_VUNGLE_APP_ID"
 
+// If you need to play ads with vungle options, you may modify playVungleAdFromRootViewController and create an options dictionary and call the playAd:withOptions: method on the vungle SDK.
+
 @interface VungleInterstitialCustomEvent ()
 
-@property (nonatomic, assign) BOOL respondedToStatusEvent;
+@property (nonatomic, assign) BOOL handledAdAvailable;
 
 @end
 
 @implementation VungleInterstitialCustomEvent
-
-@synthesize respondedToStatusEvent = _respondedToStatusEvent;
 
 #pragma mark - MPInterstitialCustomEvent Subclass Methods
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
     MPLogInfo(@"Requesting Vungle video interstitial");
-    
-    VGUserData *data = [VGUserData defaultUserData];
-    if([self.delegate location])
-    {
-        data.locationEnabled = YES;
-    }
-    
-    self.respondedToStatusEvent = NO;
-    
-    if(![VGVunglePub running])
-    {
+
+    self.handledAdAvailable = NO;
+
+    VungleSDK *sdk = [VungleSDK sharedSDK];
+
+    static dispatch_once_t vungleInitToken;
+    dispatch_once(&vungleInitToken, ^{
         NSString *appId = [info objectForKey:@"appId"];
         if(appId == nil)
         {
             appId = kVungleAppID;
         }
-        
-        [VGVunglePub startWithPubAppID:appId userData:data];
+
+        [sdk startWithAppId:appId];
+    });
+
+    [sdk setDelegate:self];
+
+    // Need to check immediately as an ad may be cached.
+    if ([sdk isCachedAdAvailable]) {
+        [self handleAdAvailable];
     }
-    
-    [VGVunglePub setDelegate:self];
-    
-    // let Vungle notify us through the delegate's vungleStatusUpdate when a video is ready, or we hit our MoPub timeout
+
+    // MoPub timeout will handle the case for an ad failing to load.
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
 {
-    if([VGVunglePub adIsAvailable])
-    {
-        [VGVunglePub playModalAd:rootViewController animated:MP_ANIMATED];
-    }
-    else
-    {
+    if ([[VungleSDK sharedSDK] isCachedAdAvailable]) {
+        [self playVungleAdFromRootViewController:rootViewController];
+    } else {
         MPLogInfo(@"Failed to show Vungle video interstitial: Vungle now claims that there is no available video ad.");
         [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
     }
@@ -68,7 +66,7 @@
 - (void)dealloc
 {
     [self clearSelfAsVGDelegate];
-    
+
     [super dealloc];
 }
 
@@ -79,62 +77,64 @@
 
 - (void)clearSelfAsVGDelegate
 {
-    // if we're the current delegate, nil it out
-    if([VGVunglePub delegate] == self)
+    VungleSDK *sdk = [VungleSDK sharedSDK];
+
+    // if we're the current delegate, nil it out.
+    if([sdk delegate] == self)
     {
-        [VGVunglePub setDelegate:nil];
+        [sdk setDelegate:nil];
     }
 }
 
-#pragma mark - VGVunglePubDelegate
-
-- (void)vungleMoviePlayed:(VGPlayData *)playData
+- (void)playVungleAdFromRootViewController:(UIViewController *)rootViewController
 {
-    MPLogInfo(@"Vungle video interstitial movie complete");
+    VungleSDK* sdk = [VungleSDK sharedSDK];
+
+    // By default, don't call with options.  Here you can create your own options dictionary and change the following method call to playAd:withOptions.
+    [sdk playAd:rootViewController];
 }
 
-- (void)vungleStatusUpdate:(VGStatusData *)statusData
+- (void)handleAdAvailable
 {
-    // this is a continuous polling update from Vungle, we only want to notify our delegate once per ad "request"
-    if(self.respondedToStatusEvent)
-    {
-        return;
-    }
-    
-    if(statusData.status == VGStatusOkay)
-    {
-        if([VGVunglePub adIsAvailable])
-        {
-            self.respondedToStatusEvent = YES;
-            [self.delegate interstitialCustomEvent:self didLoadAd:nil];
-        }
-    }
-    else
-    {
-        self.respondedToStatusEvent = YES;
-        [self.delegate interstitialCustomEvent:self didFailToLoadAdWithError:nil];
+    if (!self.handledAdAvailable) {
+        self.handledAdAvailable = YES;
+        [self.delegate interstitialCustomEvent:self didLoadAd:nil];
     }
 }
 
-- (void)vungleViewDidDisappear:(UIViewController *)viewController
+- (void)handleVungleAdViewWillClose
 {
     MPLogInfo(@"Vungle video interstitial did disappear");
-    
+
     [self.delegate interstitialCustomEventWillDisappear:self];
     [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
-- (void)vungleViewWillAppear:(UIViewController *)viewController
+#pragma mark - VungleSDKDelegate
+
+- (void)vungleSDKhasCachedAdAvailable
+{
+    [self handleAdAvailable];
+}
+
+- (void)vungleSDKwillShowAd
 {
     MPLogInfo(@"Vungle video interstitial will appear");
-    
+
     [self.delegate interstitialCustomEventWillAppear:self];
     [self.delegate interstitialCustomEventDidAppear:self];
 }
 
-- (void)vungleAppStoreViewDidDisappear
+- (void)vungleSDKwillCloseAdWithViewInfo:(NSDictionary *)viewInfo willPresentProductSheet:(BOOL)willPresentProductSheet
 {
-    MPLogInfo(@"Vungle video interstitial app store view did disappear");
+    if (!willPresentProductSheet) {
+        [self handleVungleAdViewWillClose];
+    }
+}
+
+- (void)vungleSDKwillCloseProductSheet:(id)productSheet
+{
+    [self handleVungleAdViewWillClose];
 }
 
 @end

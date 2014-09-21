@@ -12,6 +12,7 @@
 #import "PFAnonymousUtils.h"
 #import "PFCloud.h"
 #import "PFConstants.h"
+#import "PFConfig.h"
 #import "PFFile.h"
 #import "PFGeoPoint.h"
 #import "PFObject.h"
@@ -33,18 +34,11 @@
 #import "PFSignUpViewController.h"
 #import "PFTableViewCell.h"
 #import "PFTwitterUtils.h"
-
-#if defined(__has_include)
-#if __has_include(<FacebookSDK/FacebookSDK.h>)
-#import <FacebookSDK/FacebookSDK.h>
-#import "PFFacebookUtils.h"
-#else
-#define PFFacebookUtils Please_add_the_Facebook_SDK_to_your_project
-#endif
 #endif
 
-#endif
-
+/*!
+ The Parse class contains static functions that handle global configuration for the Parse framework.
+ */
 @interface Parse : NSObject
 
 /** @name Connecting to Parse */
@@ -63,15 +57,15 @@
 
 /*!
  Set whether to show offline messages when using a Parse view or view controller related classes.
- @param enabled Whether a UIAlert should be shown when the device is offline and network access is required
+ @param enabled Whether a UIAlertView should be shown when the device is offline and network access is required
                 from a view or view controller.
  */
 + (void)offlineMessagesEnabled:(BOOL)enabled;
 
 /*!
- Set whether to show an error message when using a Parse view or view controller related classes 
+ Set whether to show an error message when using a Parse view or view controller related classes
  and a Parse error was generated via a query.
- @param enabled Whether a UIAlert should be shown when a Parse error occurs.
+ @param enabled Whether a UIAlertView should be shown when a Parse error occurs.
  */
 + (void)errorMessagesEnabled:(BOOL)enabled;
 #endif

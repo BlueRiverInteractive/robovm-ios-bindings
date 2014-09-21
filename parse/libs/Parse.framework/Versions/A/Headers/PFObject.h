@@ -2,6 +2,7 @@
 // Copyright 2011 Parse, Inc. All rights reserved.
 
 #import <Foundation/Foundation.h>
+
 #import "PFACL.h"
 #import "PFConstants.h"
 
@@ -12,7 +13,6 @@
  This is the main class that is used to interact with objects in your app.
 */
 @class PFRelation;
-@class PFTask;
 
 NS_REQUIRES_PROPERTY_DEFINITIONS
 @interface PFObject : NSObject {
@@ -46,7 +46,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 /*!
  Creates a reference to an existing PFObject for use in creating associations between PFObjects.  Calling isDataAvailable on this
  object will return NO until fetchIfNeeded or refresh has been called.  No network request will be made.
- 
+
  @param className The object's class.
  @param objectId The object id for the referenced object.
  @result A PFObject without data.
@@ -143,15 +143,17 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 - (void)setObject:(id)object forKeyedSubscript:(NSString *)key;
 
 /*!
- Returns the relation object associated with the given key 
- @param key The key that the relation is associated with. 
+ Returns the relation object associated with the given key.
+ @param key The key that the relation is associated with.
  */
 - (PFRelation *)relationForKey:(NSString *)key;
 
 /*!
- Use relationForKey instead. This method exists only for backward compatibility.
+ Returns the relation object associated with the given key.
+ @param key The key that the relation is associated with.
+ @deprecated Please use relationForKey: instead.
  */
-- (PFRelation *)relationforKey:(NSString *)key PARSE_DEPRECATED("Use -relationForKey: instead.");
+- (PFRelation *)relationforKey:(NSString *)key PARSE_DEPRECATED("Please use -relationForKey: instead.");
 
 #pragma mark -
 #pragma mark Array add and remove
@@ -245,7 +247,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 
 /*!
  Saves the PFObject asynchronously and executes the given callback block.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error) 
+ @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
  */
 - (void)saveInBackgroundWithBlock:(PFBooleanResultBlock)block;
 
@@ -266,13 +268,15 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
  Use this when you may not have a solid network connection, and don't need to know when the save completes.
  If there is some problem with the object such that it can't be saved, it will be silently discarded.  If the save
  completes successfully while the object is still in memory, then callback will be called.
- 
+
  Objects saved with this method will be stored locally in an on-disk cache until they can be delivered to Parse.
  They will be sent immediately if possible.  Otherwise, they will be sent the next time a network connection is
  available.  Objects saved this way will persist even after the app is closed, in which case they will be sent the
  next time the app is opened.  If more than 10MB of data is waiting to be sent, subsequent calls to saveEventually
  will cause old saves to be silently discarded until the connection can be re-established, and the queued objects
  can be saved.
+
+ @param callback The block to execute. It should have the following argument signature: (BOOL succeeded, NSError *error)
  */
 - (void)saveEventually:(PFBooleanResultBlock)callback;
 
@@ -305,7 +309,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 /*!
  Saves a collection of objects all at once asynchronously and the block when done.
  @param objects The array of objects to save.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error) 
+ @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
  */
 + (void)saveAllInBackground:(NSArray *)objects
                       block:(PFBooleanResultBlock)block;
@@ -314,7 +318,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
  Saves a collection of objects all at once asynchronously and calls a callback when done.
  @param objects The array of objects to save.
  @param target The object to call selector on.
- @param selector The selector to call. It should have the following signature: (void)callbackWithError:(NSError *)error. error will be nil on success and set if there was an error. 
+ @param selector The selector to call. It should have the following signature: (void)callbackWithError:(NSError *)error. error will be nil on success and set if there was an error.
  */
 + (void)saveAllInBackground:(NSArray *)objects
                      target:(id)target
@@ -426,7 +430,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 
 /*!
  Fetches the PFObject asynchronously and executes the given callback block.
- @param block The block to execute. The block should have the following argument signature: (PFObject *object, NSError *error) 
+ @param block The block to execute. The block should have the following argument signature: (PFObject *object, NSError *error)
  */
 - (void)fetchInBackgroundWithBlock:(PFObjectResultBlock)block;
 
@@ -446,7 +450,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 /*!
  Fetches the PFObject's data asynchronously if isDataAvailable is false, then calls the callback.
  @param target The target on which the selector will be called.
- @param selector The selector to call.  It should have the following signature: (void)callbackWithResult:(PFObject *)fetchedObject error:(NSError *)error. error will be nil on success and set if there was an error. 
+ @param selector The selector to call.  It should have the following signature: (void)callbackWithResult:(PFObject *)fetchedObject error:(NSError *)error. error will be nil on success and set if there was an error.
  */
 - (void)fetchIfNeededInBackgroundWithTarget:(id)target
                                    selector:(SEL)selector;
@@ -482,7 +486,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 /*!
  Fetches all of the PFObjects with the current data from the server asynchronously and calls the given block.
  @param objects The list of objects to fetch.
- @param block The block to execute. The block should have the following argument signature: (NSArray *objects, NSError *error) 
+ @param block The block to execute. The block should have the following argument signature: (NSArray *objects, NSError *error)
  */
 + (void)fetchAllInBackground:(NSArray *)objects
                        block:(PFArrayResultBlock)block;
@@ -500,7 +504,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 /*!
  Fetches all of the PFObjects with the current data from the server asynchronously and calls the given block.
  @param objects The list of objects to fetch.
- @param block The block to execute. The block should have the following argument signature: (NSArray *objects, NSError *error) 
+ @param block The block to execute. The block should have the following argument signature: (NSArray *objects, NSError *error)
  */
 + (void)fetchAllIfNeededInBackground:(NSArray *)objects
                                block:(PFArrayResultBlock)block;
@@ -525,7 +529,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
  Deletes the PFObject.
  @result Returns whether the delete succeeded.
  */
-- (BOOL)delete;   
+- (BOOL)delete;
 
 /*!
  Deletes the PFObject and sets an error if it occurs.
@@ -541,7 +545,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 
 /*!
  Deletes the PFObject asynchronously and executes the given callback block.
- @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error) 
+ @param block The block to execute. The block should have the following argument signature: (BOOL succeeded, NSError *error)
  */
 - (void)deleteInBackgroundWithBlock:(PFBooleanResultBlock)block;
 
@@ -557,7 +561,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
  Deletes this object from the server at some unspecified time in the future, even if Parse is currently inaccessible.
  Use this when you may not have a solid network connection, and don't need to know when the delete completes.
  If there is some problem with the object such that it can't be deleted, the request will be silently discarded.
- 
+
  Delete instructions made with this method will be stored locally in an on-disk cache until they can be transmitted
  to Parse. They will be sent immediately if possible.  Otherwise, they will be sent the next time a network connection
  is available. Delete requests will persist even after the app is closed, in which case they will be sent the
@@ -568,7 +572,7 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 - (void)deleteEventually;
 
 #pragma mark -
-#pragma Dirtiness
+#pragma mark Dirtiness
 
 /*!
  Gets whether any key-value pair in this object (or its children) has been added/updated/removed and not saved yet.
@@ -582,7 +586,5 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
  @result Returns whether this key has been altered and not saved yet.
  */
 - (BOOL)isDirtyForKey:(NSString *)key;
-
-#pragma mark -
 
 @end

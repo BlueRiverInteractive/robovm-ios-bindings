@@ -12,7 +12,7 @@
 @interface MPInstanceProvider (AdMobBanners)
 
 - (GADBannerView *)buildGADBannerViewWithFrame:(CGRect)frame;
-- (GADRequest *)buildGADRequest;
+- (GADRequest *)buildGADBannerRequest;
 
 @end
 
@@ -23,7 +23,7 @@
     return [[[GADBannerView alloc] initWithFrame:frame] autorelease];
 }
 
-- (GADRequest *)buildGADRequest
+- (GADRequest *)buildGADBannerRequest
 {
     return [GADRequest request];
 }
@@ -66,7 +66,7 @@
     self.adBannerView.adUnitID = [info objectForKey:@"adUnitID"];
     self.adBannerView.rootViewController = [self.delegate viewControllerForPresentingModalView];
 
-    GADRequest *request = [[MPInstanceProvider sharedProvider] buildGADRequest];
+    GADRequest *request = [[MPInstanceProvider sharedProvider] buildGADBannerRequest];
 
     CLLocation *location = self.delegate.location;
     if (location) {

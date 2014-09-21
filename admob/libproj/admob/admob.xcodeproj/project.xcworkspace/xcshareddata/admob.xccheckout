@@ -10,29 +10,29 @@
 	<string>admob</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>46EB7CB1-4723-46DC-996A-7A93C4228A58</key>
+		<key>996418491470870869C6A5D953FA576BC33F1338</key>
 		<string>https://github.com/BlueRiverInteractive/robovm-ios-bindings.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>admob/libproj/admob/admob.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>46EB7CB1-4723-46DC-996A-7A93C4228A58</key>
+		<key>996418491470870869C6A5D953FA576BC33F1338</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/BlueRiverInteractive/robovm-ios-bindings.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>46EB7CB1-4723-46DC-996A-7A93C4228A58</string>
+	<string>996418491470870869C6A5D953FA576BC33F1338</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>46EB7CB1-4723-46DC-996A-7A93C4228A58</string>
+			<string>996418491470870869C6A5D953FA576BC33F1338</string>
 			<key>IDESourceControlWCCName</key>
 			<string>robovm-ios-bindings</string>
 		</dict>

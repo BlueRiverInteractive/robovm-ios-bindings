@@ -10,11 +10,15 @@
 			<directory>resources</directory>
 			<skipPngCrush>true</skipPngCrush>
 		</resource>
+        <resource>
+            <directory>libs</directory>
+        </resource>
 	</resources>
-	<libs>
-		<lib>libs/libvunglepub.a</lib>
-	</libs>
-	<frameworks>
+    <frameworkPaths>
+        <path>libs</path>
+    </frameworkPaths>
+   	<frameworks>
+        <framework>VungleSDK</framework>
 		<framework>AudioToolbox</framework>
 		<framework>AVFoundation</framework>
 		<framework>CFNetwork</framework>

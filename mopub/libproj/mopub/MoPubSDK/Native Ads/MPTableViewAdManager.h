@@ -10,8 +10,11 @@
 
 /**
  * The MPTableViewAdManager class provides convenient functionality for adding advertisements
- * to a table view. Such advertisements are displayed in table view cells alongside your 
+ * to a table view. Such advertisements are displayed in table view cells alongside your
  * application's content, and can be styled to support your application's native look and feel.
+ *
+ * **Warning**: This class has been deprecated. Use the `MPTableViewAdPlacer` class instead to
+ * display ads within a table view.
  */
 
 @interface MPTableViewAdManager : NSObject
@@ -23,7 +26,7 @@
  *
  * @param tableView A table view that will be used to display ads.
  */
-- (id)initWithTableView:(UITableView *)tableView;
+- (id)initWithTableView:(UITableView *)tableView __attribute__((deprecated));
 
 /** @name Obtaining Configured Ad Cells */
 
@@ -40,6 +43,6 @@
  * should implement the MPNativeAdRendering protocol.
  * @see MPNativeAdRendering
  */
-- (UITableViewCell *)adCellForAd:(MPNativeAd *)adObject cellClass:(Class)cellClass;
+- (UITableViewCell *)adCellForAd:(MPNativeAd *)adObject cellClass:(Class)cellClass __attribute__((deprecated));
 
 @end

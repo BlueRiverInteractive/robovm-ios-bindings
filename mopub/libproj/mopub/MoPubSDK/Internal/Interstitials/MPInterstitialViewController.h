@@ -44,6 +44,7 @@
 - (void)interstitialDidAppear:(MPInterstitialViewController *)interstitial;
 - (void)interstitialWillDisappear:(MPInterstitialViewController *)interstitial;
 - (void)interstitialDidDisappear:(MPInterstitialViewController *)interstitial;
+- (void)interstitialDidReceiveTapEvent:(MPInterstitialViewController *)interstitial;
 - (void)interstitialWillLeaveApplication:(MPInterstitialViewController *)interstitial;
 
 @end

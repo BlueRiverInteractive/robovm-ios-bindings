@@ -263,6 +263,17 @@
  */
 - (void)interstitialDidExpire:(MPInterstitialAdController *)interstitial;
 
+/**
+ * Sent when the user taps the interstitial ad and the ad is about to perform its target action.
+ *
+ * This action may include displaying a modal or leaving your application. Certain ad networks
+ * may not expose a "tapped" callback so you should not rely on this callback to perform
+ * critical tasks.
+ *
+ * @param interstitial The interstitial ad object sending the message.
+ */
+- (void)interstitialDidReceiveTapEvent:(MPInterstitialAdController *)interstitial;
+
 /*
  * DEPRECATED: This callback notifies you to dismiss the interstitial, and allows you to implement
  * any pre-dismissal behavior (e.g. unpausing a game). This method is being deprecated as it is no

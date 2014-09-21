@@ -17,7 +17,9 @@
 
 BOOL MPViewHasHiddenAncestor(UIView *view);
 BOOL MPViewIsDescendantOfKeyWindow(UIView *view);
+BOOL MPViewIsDescendantOfApplicationWindow(UIView *view);
 BOOL MPViewIntersectsKeyWindow(UIView *view);
+BOOL MPViewIntersectsApplicationWindow(UIView *view);
 NSString *MPSHA1Digest(NSString *string);
 
 UIInterfaceOrientation MPInterfaceOrientation()
@@ -28,6 +30,11 @@ UIInterfaceOrientation MPInterfaceOrientation()
 UIWindow *MPKeyWindow()
 {
     return [UIApplication sharedApplication].keyWindow;
+}
+
+UIWindow *MPApplicationWindow()
+{
+    return [[UIApplication sharedApplication].delegate window];
 }
 
 CGFloat MPStatusBarHeight() {
@@ -114,8 +121,8 @@ BOOL MPViewIsVisible(UIView *view)
 
     return (!view.hidden &&
             !MPViewHasHiddenAncestor(view) &&
-            MPViewIsDescendantOfKeyWindow(view) &&
-            MPViewIntersectsKeyWindow(view));
+            MPViewIsDescendantOfApplicationWindow(view) &&
+            MPViewIntersectsApplicationWindow(view));
 }
 
 BOOL MPViewHasHiddenAncestor(UIView *view)
@@ -139,6 +146,17 @@ BOOL MPViewIsDescendantOfKeyWindow(UIView *view)
     return NO;
 }
 
+BOOL MPViewIsDescendantOfApplicationWindow(UIView *view)
+{
+    UIView *ancestor = view.superview;
+    UIWindow *appWindow = MPApplicationWindow();
+    while (ancestor) {
+        if (ancestor == appWindow) return YES;
+        ancestor = ancestor.superview;
+    }
+    return NO;
+}
+
 BOOL MPViewIntersectsKeyWindow(UIView *view)
 {
     UIWindow *keyWindow = MPKeyWindow();
@@ -147,6 +165,44 @@ BOOL MPViewIntersectsKeyWindow(UIView *view)
     CGRect viewFrameInWindowCoordinates = [view.superview convertRect:view.frame toView:keyWindow];
 
     return CGRectIntersectsRect(viewFrameInWindowCoordinates, keyWindow.frame);
+}
+
+BOOL MPViewIntersectsApplicationWindow(UIView *view)
+{
+    UIWindow *appWindow = MPApplicationWindow();
+
+    // We need to call convertRect:toView: on this view's superview rather than on this view itself.
+    CGRect viewFrameInWindowCoordinates = [view.superview convertRect:view.frame toView:appWindow];
+
+    return CGRectIntersectsRect(viewFrameInWindowCoordinates, appWindow.frame);
+}
+
+BOOL MPViewIntersectsKeyWindowWithPercent(UIView *view, CGFloat percentVisible)
+{
+    UIWindow *keyWindow = MPKeyWindow();
+
+    // We need to call convertRect:toView: on this view's superview rather than on this view itself.
+    CGRect viewFrameInWindowCoordinates = [view.superview convertRect:view.frame toView:keyWindow];
+    CGRect intersection = CGRectIntersection(viewFrameInWindowCoordinates, keyWindow.frame);
+
+    CGFloat intersectionArea = CGRectGetWidth(intersection) * CGRectGetHeight(intersection);
+    CGFloat originalArea = CGRectGetWidth(view.bounds) * CGRectGetHeight(view.bounds);
+
+    return intersectionArea >= (originalArea * percentVisible);
+}
+
+BOOL MPViewIntersectsApplicationWindowWithPercent(UIView *view, CGFloat percentVisible)
+{
+    UIWindow *appWindow = MPApplicationWindow();
+
+    // We need to call convertRect:toView: on this view's superview rather than on this view itself.
+    CGRect viewFrameInWindowCoordinates = [view.superview convertRect:view.frame toView:appWindow];
+    CGRect intersection = CGRectIntersection(viewFrameInWindowCoordinates, appWindow.frame);
+
+    CGFloat intersectionArea = CGRectGetWidth(intersection) * CGRectGetHeight(intersection);
+    CGFloat originalArea = CGRectGetWidth(view.bounds) * CGRectGetHeight(view.bounds);
+
+    return intersectionArea >= (originalArea * percentVisible);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

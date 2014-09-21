@@ -57,13 +57,13 @@
     self.inMobiBanner.refreshInterval = REFRESH_INTERVAL_OFF;
     NSMutableDictionary *paramsDict = [[NSMutableDictionary alloc] init];
     [paramsDict setObject:@"c_mopub" forKey:@"tp"];
-    [paramsDict setObject:MP_SDK_VERSION forKey:@"tp-ver"];
+	[paramsDict setObject:MP_SDK_VERSION forKey:@"tp-ver"];
     self.inMobiBanner.additionaParameters = paramsDict; // For supply source identification
-    
+
     if (self.delegate.location) {
         [InMobi setLocationWithLatitude:self.delegate.location.coordinate.latitude
-                              longitude:self.delegate.location.coordinate.longitude
-                               accuracy:self.delegate.location.horizontalAccuracy];
+                               longitude:self.delegate.location.coordinate.longitude
+                                accuracy:self.delegate.location.horizontalAccuracy];
     }
     [self.inMobiBanner loadBanner];
     

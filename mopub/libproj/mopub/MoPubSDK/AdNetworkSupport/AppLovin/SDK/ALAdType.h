@@ -22,7 +22,7 @@
 /**
  *  String representing the name of this ad type.
  */
-@property (readonly) NSString* label;
+@property (strong, readonly) NSString* label;
 
 /**
  *  @name Supported Ad Type Singletons

@@ -9,6 +9,8 @@
 #import "MPLogging.h"
 #import "MPIdentityProvider.h"
 
+NSString * const kMPClearErrorLogFormatWithAdUnitID = @"No ads found for ad unit: %@";
+
 static MPLogLevel MPLOG_LEVEL = MPLogLevelInfo;
 
 MPLogLevel MPLogGetLevel()

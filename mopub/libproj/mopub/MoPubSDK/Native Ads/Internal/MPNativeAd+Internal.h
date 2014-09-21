@@ -7,6 +7,8 @@
 
 @interface MPNativeAd (Internal)
 
+@property (nonatomic, readonly) NSDate *creationDate;
+
 - (NSTimeInterval)requiredSecondsForImpression;
 - (void)willAttachToView:(UIView *)view;
 - (void)setVisible:(BOOL)visible;

@@ -55,9 +55,6 @@
  */
 @property (strong, atomic) UIViewController * parentController;
 
-// AppLovin SDK no longer uses placements; this is left for compatibility reasons.
-@property (strong, atomic) NSString * adPlacement __deprecated;
-
 /**
  * @name Loading and Rendering Ads
  */
@@ -67,6 +64,13 @@
  * advertisement will be rendered by this view asynchonously when available.
  */
 -(void)loadNextAd;
+
+/**
+ * Check if the next ad is currently ready to display.
+ *
+ * @return YES if a subsequent call to a show method will result in an immediate display. NO if a call to a show method will require network activity first.
+ */
+@property (readonly, atomic, getter=isReadyForDisplay) BOOL readyForDisplay;
 
 /**
  * Render a specific ad that was loaded via ALAdService.

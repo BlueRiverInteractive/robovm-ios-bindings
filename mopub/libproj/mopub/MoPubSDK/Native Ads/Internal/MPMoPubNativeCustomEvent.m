@@ -10,6 +10,7 @@
 #import "MPNativeAd+Internal.h"
 #import "MPNativeAdError.h"
 #import "MPLogging.h"
+#import "MPNativeAdUtils.h"
 
 @implementation MPMoPubNativeCustomEvent
 
@@ -25,9 +26,12 @@
         NSMutableArray *imageURLs = [NSMutableArray array];
         for (NSString *key in [info allKeys]) {
             if ([[key lowercaseString] hasSuffix:@"image"] && [[info objectForKey:key] isKindOfClass:[NSString class]]) {
-                [imageURLs addObject:[NSURL URLWithString:[info objectForKey:key]]];
+                if (![MPNativeAdUtils addURLString:[info objectForKey:key] toURLArray:imageURLs]) {
+                    [self.delegate nativeCustomEvent:self didFailToLoadAdWithError:[NSError errorWithDomain:MoPubNativeAdsSDKDomain code:MPNativeAdErrorInvalidServerResponse userInfo:nil]];
+                }
             }
         }
+
         [super precacheImagesWithURLs:imageURLs completionBlock:^(NSArray *errors) {
             if (errors) {
                 MPLogDebug(@"%@", errors);

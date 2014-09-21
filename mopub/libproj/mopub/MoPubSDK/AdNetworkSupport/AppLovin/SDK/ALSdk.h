@@ -135,6 +135,4 @@
 
 - (id)init __attribute__((unavailable("Use [ALSdk shared] instead of alloc-init pattern.")));
 
-// Please start using [ALSdk version] instead.
-extern NSString * const ALSdkVersion __deprecated;
 @end

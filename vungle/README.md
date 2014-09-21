@@ -1,6 +1,6 @@
 Vungle iOS SDK
 ==================================
-SDK Version: 2.0.1
+SDK Version: 3.0.10
 
 Getting Started
 ----------------------------------

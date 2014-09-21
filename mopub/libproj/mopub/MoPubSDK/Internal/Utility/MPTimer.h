@@ -13,6 +13,8 @@
  */
 @interface MPTimer : NSObject
 
+@property (nonatomic, copy) NSString *runLoopMode;
+
 + (MPTimer *)timerWithTimeInterval:(NSTimeInterval)seconds
                             target:(id)target
                           selector:(SEL)aSelector

@@ -14,7 +14,7 @@
  * An object that adopts this protocol must implement the `properties` property to specify a
  * dictionary of assets, such as title and text, that should be rendered as part of a native ad.
  * When possible, you should place values in the returned dictionary such that they correspond to
- * the pre-defined keys in `MPNativeAdConstants`.
+ * the pre-defined keys in the MPNativeAdConstants header file.
  *
  * An adopting object must additionally implement -displayContentForURL:rootViewController:completion:
  * to supply the behavior that should occur when the user interacts with the ad.
@@ -33,9 +33,7 @@
  * native ad.
  *
  * When possible, you should place values in the returned dictionary such that they correspond to
- * the pre-defined keys in `MPNativeAdConstants`.
- *
- * @see MPNativeAdConstants
+ * the pre-defined keys in the MPNativeAdConstants header file.
  */
 @property (nonatomic, readonly) NSDictionary *properties;
 
@@ -91,8 +89,6 @@
  * This value represents the time required for an impression to be tracked.
  *
  * The default value is `kDefaultRequiredSecondsForImpression`.
- *
- * @see MPNativeAdConstants
  */
 @property (nonatomic, readonly) NSTimeInterval requiredSecondsForImpression;
 

@@ -161,7 +161,7 @@
 
 - (void)appShouldSuspendForAd:(MRAdView *)adView
 {
-
+    [self.delegate interstitialDidReceiveTapEvent:self];
 }
 
 - (void)appShouldResumeFromAd:(MRAdView *)adView

@@ -131,8 +131,8 @@
 
     MPLogInfo(@"Interstatial ad view is fetching ad network type: %@", self.configuration.networkType);
 
-    if ([self.configuration.networkType isEqualToString:@"clear"]) {
-        MPLogInfo(@"Ad server response indicated no ad available.");
+    if ([self.configuration.networkType isEqualToString:kAdTypeClear]) {
+        MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.delegate.interstitialAdController.adUnitId);
         self.loading = NO;
         [self.delegate manager:self didFailToLoadInterstitialWithError:nil];
         return;
@@ -212,9 +212,14 @@
     [self.delegate managerDidExpireInterstitial:self];
 }
 
+- (void)interstitialDidReceiveTapEventForAdapter:(MPBaseInterstitialAdapter *)adapter
+{
+    [self.delegate managerDidReceiveTapEventFromInterstitial:self];
+}
+
 - (void)interstitialWillLeaveApplicationForAdapter:(MPBaseInterstitialAdapter *)adapter
 {
-    // TODO: Signal to delegate.
+    //noop
 }
 
 #pragma mark - Legacy Custom Events

@@ -1,8 +1,7 @@
 //
 //  AdColonyInterstitialCustomEvent.m
-//  MoPubSampleApp
+//  MoPub
 //
-//  Created by Yuan Ren on 10/22/13.
 //  Copyright (c) 2013 MoPub. All rights reserved.
 //
 

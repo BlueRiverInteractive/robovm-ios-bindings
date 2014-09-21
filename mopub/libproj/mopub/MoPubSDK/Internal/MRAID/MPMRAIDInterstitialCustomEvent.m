@@ -89,6 +89,12 @@
     [self.delegate interstitialCustomEventDidDisappear:self];
 }
 
+- (void)interstitialDidReceiveTapEvent:(MPInterstitialViewController *)interstitial
+{
+    MPLogInfo(@"MoPub MRAID interstitial did receive tap event");
+    [self.delegate interstitialCustomEventDidReceiveTapEvent:self];
+}
+
 - (void)interstitialWillLeaveApplication:(MPInterstitialViewController *)interstitial
 {
     MPLogInfo(@"MoPub MRAID interstitial will leave application");

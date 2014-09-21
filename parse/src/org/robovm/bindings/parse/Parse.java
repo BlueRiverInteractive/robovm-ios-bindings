@@ -30,5 +30,4 @@ public class Parse extends NSObject {
      * @param enabled Whether a UIAlert should be shown when a Parse error occurs. */
     @Method(selector = "errorMessagesEnabled:")
     public static native void setErrorMessagesEnabled (boolean enabled);
-
 }

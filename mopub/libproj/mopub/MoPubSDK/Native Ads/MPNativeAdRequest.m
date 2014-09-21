@@ -91,6 +91,29 @@
     }
 }
 
+- (void)startForAdSequence:(NSInteger)adSequence withCompletionHandler:(MPNativeAdRequestHandler)handler
+{
+    if (handler)
+    {
+        self.URL = [MPAdServerURLBuilder URLWithAdUnitID:self.adUnitIdentifier
+                                                keywords:self.targeting.keywords
+                                                location:self.targeting.location
+                                    versionParameterName:@"nsv"
+                                                 version:MP_SDK_VERSION
+                                                 testing:NO
+                                           desiredAssets:[self.targeting.desiredAssets allObjects]
+                                              adSequence:adSequence];
+
+        self.completionHandler = handler;
+
+        [self loadAdWithURL:self.URL];
+    }
+    else
+    {
+        MPLogWarn(@"Native Ad Request did not start - requires completion handler block.");
+    }
+}
+
 #pragma mark - Private
 
 - (void)loadAdWithURL:(NSURL *)URL
@@ -110,9 +133,12 @@
 
 - (void)getAdWithConfiguration:(MPAdConfiguration *)configuration
 {
-    MPLogInfo(@"Looking for custom event class named %@.", configuration.customEventClass);\
+    if (configuration.customEventClass) {
+        MPLogInfo(@"Looking for custom event class named %@.", configuration.customEventClass);
+    }
+
     // Adserver doesn't return a customEventClass for MoPub native ads
-    if([configuration.networkType isEqualToString:kAdTypeNative] && configuration.customEventClass == nil) {
+    if ([configuration.networkType isEqualToString:kAdTypeNative] && configuration.customEventClass == nil) {
         configuration.customEventClass = [MPMoPubNativeCustomEvent class];
         NSDictionary *classData = [NSJSONSerialization mp_JSONObjectWithData:configuration.adResponseData options:0 clearNullObjects:YES error:nil];
         configuration.customEventClassData = classData;
@@ -135,6 +161,11 @@
 - (void)completeAdRequestWithAdObject:(MPNativeAd *)adObject error:(NSError *)error
 {
     self.loading = NO;
+
+    if (!error) {
+        MPLogInfo(@"Successfully loaded native ad.");
+    }
+
     if (self.completionHandler) {
         self.completionHandler(self, adObject, error);
         self.completionHandler = nil;
@@ -148,14 +179,13 @@
     self.adConfiguration = configuration;
 
     if ([configuration.networkType isEqualToString:kAdTypeClear]) {
-        MPLogInfo(@"No inventory available for ad unit: %@", self.adUnitIdentifier);
+        MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.adUnitIdentifier);
 
         [self completeAdRequestWithAdObject:nil error:[NSError errorWithDomain:MoPubNativeAdsSDKDomain code:MPNativeAdErrorNoInventory userInfo:nil]];
         [self release];
     }
     else {
-        MPLogInfo(@"Received data from MoPub to construct Native ad.");
-
+        MPLogInfo(@"Received data from MoPub to construct native ad.\n");
         [self getAdWithConfiguration:configuration];
     }
 }

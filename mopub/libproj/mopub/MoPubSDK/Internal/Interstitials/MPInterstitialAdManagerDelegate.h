@@ -24,5 +24,6 @@ didFailToLoadInterstitialWithError:(NSError *)error;
 - (void)managerWillDismissInterstitial:(MPInterstitialAdManager *)manager;
 - (void)managerDidDismissInterstitial:(MPInterstitialAdManager *)manager;
 - (void)managerDidExpireInterstitial:(MPInterstitialAdManager *)manager;
+- (void)managerDidReceiveTapEventFromInterstitial:(MPInterstitialAdManager *)manager;
 
 @end

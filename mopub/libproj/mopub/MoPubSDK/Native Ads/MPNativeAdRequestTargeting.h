@@ -8,7 +8,8 @@
 @class CLLocation;
 
 /**
- * The MPNativeAdRequestTargeting class is used to attach targeting information to MPNativeAdRequests.
+ * The `MPNativeAdRequestTargeting` class is used to attach targeting information to
+ * `MPNativeAdRequest` objects.
  */
 
 @interface MPNativeAdRequestTargeting : NSObject

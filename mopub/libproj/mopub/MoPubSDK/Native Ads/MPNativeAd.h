@@ -10,9 +10,9 @@
 @class MPAdConfiguration;
 
 /**
- * The MPNativeAd class is used to render and manage events for a native advertisement. The
+ * The `MPNativeAd` class is used to render and manage events for a native advertisement. The
  * class provides methods for accessing native ad properties returned by the server, as well as
- * convenience methods for URL navigation and metrics gathering.
+ * convenience methods for URL navigation and metrics-gathering.
  */
 
 @interface MPNativeAd : NSObject
@@ -47,10 +47,11 @@
 /**
  * Instructs the ad object to configure the provided view with ad content.
  *
- * The provided view should implement the MPNativeAdRendering protocol to correctly display the ad content.
+ * The provided view should implement the `MPNativeAdRendering` protocol to correctly display the ad
+ * content.
  *
- * When this method is called, an impression will automatically be recorded at the appropriate time, so there is no need to additionally
- * invoke -trackImpression.
+ * When this method is called, an impression will automatically be recorded at the appropriate time,
+ * so there is no need to additionally invoke -trackImpression.
  *
  * @param view A view that will contain the ad content.
  * @see MPNativeAdRendering
@@ -62,22 +63,22 @@
 /**
  * Records an impression event.
  *
- * When -prepareForDisplayInView is called, -trackImpression will automatically be invoked at the appropriate time, so there is no need to
- * additionally invoke -trackImpression.
+ * When -prepareForDisplayInView is called, -trackImpression will automatically be invoked at the
+ * appropriate time, so there is no need to additionally invoke -trackImpression.
  */
 - (void)trackImpression;
 
 /**
  * Records a click event.
  *
- * When -displaycontentForURL:rootViewController:completion: is called, a click event will automatically be recorded, so there is no
- * need to additionally invoke -trackClick.
+ * When -displaycontentForURL:rootViewController:completion: is called, a click event will
+ * automatically be recorded, so there is no need to additionally invoke -trackClick.
  */
 - (void)trackClick;
 
 /**
- * Opens a resource defined by the ad using an appropriate mechanism (typically, an in-application modal web browser or a modal App
- * Store controller).
+ * Opens a resource defined by the ad using an appropriate mechanism (typically, an in-application
+ * modal web browser or a modal App Store controller).
  *
  * @param controller The view controller that should be used to present the modal view controller.
  * @param completionBlock The block to be executed when the action defined by the URL has been
@@ -92,7 +93,8 @@
 - (void)displayContentFromRootViewController:(UIViewController *)controller completion:(void (^)(BOOL success, NSError *error))completionBlock;
 
 /**
- * Opens a URL using an appropriate mechanism (typically, an in-application modal web browser or a modal App Store controller).
+ * Opens a URL using an appropriate mechanism (typically, an in-application modal web browser or a
+ * modal App Store controller).
  *
  * @param URL The URL to be opened.
  * @param controller The view controller that should be used to present the modal view controller.

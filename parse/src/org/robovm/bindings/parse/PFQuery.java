@@ -1,17 +1,17 @@
 
 package org.robovm.bindings.parse;
 
-public class PFQuery {
-// /*!
-// A class that defines a query that is used to query for PFObjects.
-// */
-// @interface PFQuery : NSObject
-//
-// #pragma mark Query options
-//
-// /** @name Creating a Query for a Class */
-//
-// /*!
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
+import org.robovm.objc.annotation.NativeClass;
+import org.robovm.objc.block.VoidBlock2;
+
+/** A class that defines a query that is used to query for PFObjects. */
+@NativeClass
+public class PFQuery extends NSObject {
 // Returns a PFQuery for a given class.
 // @param className The class to query on.
 // @return A PFQuery object.
@@ -78,14 +78,13 @@ public class PFQuery {
 // */
 // - (void)whereKeyDoesNotExist:(NSString *)key;
 //
-// /*!
-// Add a constraint to the query that requires a particular key's object to be equal to the provided object.
-// @param key The key to be constrained.
-// @param object The object that must be equalled.
-// */
-// - (void)whereKey:(NSString *)key equalTo:(id)object;
-//
-// /*!
+    /** Add a constraint to the query that requires a particular key's object to be equal to the provided object.
+     * @param key The key to be constrained.
+     * @param object The object that must be equalled. */
+    @Method(selector = "whereKey:equalTo:")
+    public native void whereKeyEqualsTo (String key, NSObject object);
+
+    // /*!
 // Add a constraint to the query that requires a particular key's object to be less than the provided object.
 // @param key The key to be constrained.
 // @param object The object that provides an upper bound.
@@ -430,12 +429,11 @@ public class PFQuery {
 // */
 // - (NSArray *)findObjects:(NSError **)error;
 //
-// /*!
-// Finds objects asynchronously and calls the given block with the results.
-// @param block The block to execute. The block should have the following argument signature:(NSArray *objects, NSError *error)
-// */
-// - (void)findObjectsInBackgroundWithBlock:(PFArrayResultBlock)block;
-//
+    /** Finds objects asynchronously and calls the given block with the results.
+     * @param block The block to execute. The block should have the following argument signature:(NSArray *objects, NSError
+     *            *error) */
+    @Method(selector = "findObjectsInBackgroundWithBlock:")
+    public native void findObjectsInBackground (@Block VoidBlock2<NSArray<NSObject>, NSError> block);
 // /*!
 // Finds objects asynchronously and calls the given callback with the results.
 // @param target The object to call the selector on.

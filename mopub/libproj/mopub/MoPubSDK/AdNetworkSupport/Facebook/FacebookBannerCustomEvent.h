@@ -5,12 +5,12 @@
 //  Copyright (c) 2014 MoPub. All rights reserved.
 //
 
-#import <FBAudienceNetwork/FBAudienceNetwork.h>
+#import "FBAudienceNetwork.h"
 
 #import "MPBannerCustomEvent.h"
 
 /**
- * Certified with the Facebook Audience Network (Beta) for iOS
+ * Certified with the Facebook iOS SDK version 3.14.1
  */
 
 @interface FacebookBannerCustomEvent : MPBannerCustomEvent <FBAdViewDelegate>

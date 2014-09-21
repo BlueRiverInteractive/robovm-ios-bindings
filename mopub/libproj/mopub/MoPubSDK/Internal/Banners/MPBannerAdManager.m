@@ -211,7 +211,7 @@
     }
 
     if ([configuration.networkType isEqualToString:kAdTypeClear]) {
-        MPLogInfo(@"Ad server response indicated no ad available.");
+        MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.delegate.adUnitId);
 
         [self didFailToLoadAdapterWithError:[MPError errorWithCode:MPErrorNoInventory]];
         return;

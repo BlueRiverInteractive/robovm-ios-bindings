@@ -23,4 +23,13 @@
                    testing:(BOOL)testing
              desiredAssets:(NSArray *)assets;
 
++ (NSURL *)URLWithAdUnitID:(NSString *)adUnitID
+                  keywords:(NSString *)keywords
+                  location:(CLLocation *)location
+      versionParameterName:(NSString *)versionParameterName
+                   version:(NSString *)version
+                   testing:(BOOL)testing
+             desiredAssets:(NSArray *)assets
+                adSequence:(NSInteger)adSequence;
+
 @end

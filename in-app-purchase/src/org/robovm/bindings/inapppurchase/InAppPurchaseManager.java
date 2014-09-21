@@ -1,14 +1,12 @@
 
 package org.robovm.bindings.inapppurchase;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSSet;
-import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.storekit.SKPayment;
 import org.robovm.apple.storekit.SKPaymentQueue;
 import org.robovm.apple.storekit.SKPaymentTransaction;
@@ -61,25 +59,18 @@ public class InAppPurchaseManager {
      * {@link InAppPurchaseListener#productsReceived(SKProduct[])} on success or
      * {@link InAppPurchaseListener#productsRequestFailed(SKRequest, NSError)} on fail.
      * 
-     * @param productIds The identifiers of the products you want to query as a java List. */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+     * @param productIds The identifiers of the products you want to query. */
     public void requestProducts (List<String> productIds) {
         if (requestingProducts) {
             System.out.println(TAG + "Already requesting products!");
             return;
         }
-
-        List<NSString> products = new ArrayList<NSString>();
-        for (int i = 0; i < productIds.size(); i++) {
-            products.add(new NSString(productIds.get(i)));
-        }
-
+        requestingProducts = true;
         System.out.println(TAG + "Requesting product data...");
 
-        productsRequest = new SKProductsRequest(new NSSet(products));
+        productsRequest = new SKProductsRequest(NSSet.fromStrings(productIds));
         productsRequest.setDelegate(new RequestDelegate());
         productsRequest.start();
-        requestingProducts = true;
     }
 
     /** Purchase the specified product. Should be preceded by a call to {@link #canMakePayments()} to check if the user can buy.
@@ -94,11 +85,11 @@ public class InAppPurchaseManager {
             System.out.println(TAG + "The product to be purchased cannot be null!");
             return;
         }
+        purchasingProduct = true;
 
         System.out.println(TAG + "Purchasing product '" + product.getLocalizedTitle() + "'...");
         SKPayment payment = SKPayment.createFromProduct(product);
         SKPaymentQueue.getDefaultQueue().addPayment(payment);
-        purchasingProduct = true;
     }
 
     /** Restore any transactions that occurred for this Apple ID. */
@@ -107,10 +98,10 @@ public class InAppPurchaseManager {
             System.out.println(TAG + "Already purchasing a product!");
             return;
         }
+        purchasingProduct = true;
 
         System.out.println(TAG + "Restoring products...");
         SKPaymentQueue.getDefaultQueue().restoreCompletedTransactions();
-        purchasingProduct = true;
     }
 
     /** Returns {@code true} if a product is already being purchased, else {@code false}. **/

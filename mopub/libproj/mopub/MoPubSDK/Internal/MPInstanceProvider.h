@@ -53,7 +53,11 @@
 //Native
 @protocol MPNativeCustomEventDelegate;
 @class MPNativeCustomEvent;
-
+@class MPNativeAdSource;
+@protocol MPNativeAdSourceDelegate;
+@class MPStreamAdPlacementData;
+@class MPStreamAdPlacer;
+@class MPAdPositioning;
 
 @interface MPInstanceProvider : NSObject
 
@@ -107,6 +111,8 @@
 
 - (MPNativeCustomEvent *)buildNativeCustomEventFromCustomClass:(Class)customClass
                                                       delegate:(id<MPNativeCustomEventDelegate>)delegate;
-
+- (MPNativeAdSource *)buildNativeAdSourceWithDelegate:(id<MPNativeAdSourceDelegate>)delegate;
+- (MPStreamAdPlacementData *)buildStreamAdPlacementDataWithPositioning:(MPAdPositioning *)positioning;
+- (MPStreamAdPlacer *)buildStreamAdPlacerWithViewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:defaultAdRenderingClass;
 
 @end

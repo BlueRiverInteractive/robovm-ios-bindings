@@ -15,7 +15,7 @@
 @interface MPInstanceProvider (AdMobInterstitials)
 
 - (GADInterstitial *)buildGADInterstitialAd;
-- (GADRequest *)buildRequest;
+- (GADRequest *)buildGADInterstitialRequest;
 
 @end
 
@@ -26,7 +26,7 @@
     return [[[GADInterstitial alloc] init] autorelease];
 }
 
-- (GADRequest *)buildRequest
+- (GADRequest *)buildGADInterstitialRequest
 {
     return [GADRequest request];
 }
@@ -55,7 +55,7 @@
     self.interstitial.adUnitID = [info objectForKey:@"adUnitID"];
     self.interstitial.delegate = self;
 
-    GADRequest *request = [[MPInstanceProvider sharedProvider] buildRequest];
+    GADRequest *request = [[MPInstanceProvider sharedProvider] buildGADInterstitialRequest];
 
     CLLocation *location = self.delegate.location;
     if (location) {

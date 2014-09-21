@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "PFObject.h"
 #import "PFSubclassing.h"
 
@@ -16,7 +17,7 @@
  PFObject, and retains the same functionality of a PFObject, but also extends
  it with installation-specific fields and related immutability and validity
  checks.
- 
+
  A valid PFInstallation can only be instantiated via
  [PFInstallation currentInstallation] because the required identifier fields
  are readonly. The timeZone and badge fields are also readonly properties which
@@ -53,6 +54,7 @@
  it. If this installation is not stored on disk, returns a PFInstallation
  with deviceType and installationId fields set to those of the
  current installation.
+
  @result Returns a PFInstallation that represents the currently-running
  installation.
  */
@@ -60,6 +62,8 @@
 
 /*!
  Sets the device token string property from an NSData-encoded token.
+
+ @param deviceTokenData A token that identifies the device.
  */
 - (void)setDeviceTokenFromData:(NSData *)deviceTokenData;
 

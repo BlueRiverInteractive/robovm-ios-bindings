@@ -1,8 +1,12 @@
 
 package org.robovm.bindings.parse;
 
+import org.robovm.apple.foundation.NSError;
+import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
+import org.robovm.objc.annotation.Property;
+import org.robovm.objc.block.VoidBlock2;
 
 /** A Parse Framework User Object that is a local representation of a user persisted to the Parse cloud. This class is a subclass
  * of a PFObject, and retains the same functionality of a PFObject, but also extends it with various user specific methods, like
@@ -28,23 +32,28 @@ public class PFUser extends PFObject implements PFSubclassing {
     @Method(selector = "currentUser")
     public static native PFUser currentUser ();
 
-// /// The session token for the PFUser. This is set by the server upon successful authentication.
-// @property (nonatomic, strong) NSString *sessionToken;
-//
-// /// Whether the PFUser was just created from a request. This is only set after a Facebook or Twitter login.
-// @property (assign, readonly) BOOL isNew;
-//
-// /*!
-// Whether the user is an authenticated object for the device. An authenticated PFUser is one that is obtained via
-// a signUp or logIn method. An authenticated object is required in order to save (with altered values) or delete it.
-// @result Returns whether the user is authenticated.
-// */
-// - (BOOL)isAuthenticated;
-//
+    /** The session token for the PFUser. This is set by the server upon successful authentication. */
+    @Property
+    public native String getSessionToken ();
+
+    @Property
+    public native void setSessionToken (String sessionToken);
+
+    /** Whether the PFUser was just created from a request. This is only set after a Facebook or Twitter login. */
+    @Property(selector = "isNew")
+    public native boolean isNew ();
+
+    /** Whether the user is an authenticated object for the device. An authenticated PFUser is one that is obtained via a signUp or
+     * logIn method. An authenticated object is required in order to save (with altered values) or delete it.
+     * @return whether the user is authenticated. */
+    @Property(selector = "isAuthenticated")
+    public native boolean isAuthenticated ();
+
     /** Creates a new PFUser object.
      * @result Returns a new PFUser object. */
     @Method(selector = "user")
     public static native PFUser create ();
+
 //
 // /*!
 // Enables automatic creation of anonymous users. After calling this method, [PFUser currentUser] will always have a value.
@@ -103,19 +112,15 @@ public class PFUser extends PFObject implements PFSubclassing {
 // */
 // - (void)signUpInBackgroundWithTarget:(id)target selector:(SEL)selector;
 //
-// /** @name Logging in */
-//
-// /*!
-// Makes a request to login a user with specified credentials. Returns an instance
-// of the successfully logged in PFUser. This will also cache the user locally so
-// that calls to currentUser will use the latest logged in user.
-// @param username The username of the user.
-// @param password The password of the user.
-// @result Returns an instance of the PFUser on success. If login failed for either wrong password or wrong username, returns nil.
-// */
-// + (instancetype)logInWithUsername:(NSString *)username
-// password:(NSString *)password;
-//
+    /** Makes a request to login a user with specified credentials. Returns an instance of the successfully logged in PFUser. This
+     * will also cache the user locally so that calls to currentUser will use the latest logged in user.
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @result Returns an instance of the PFUser on success. If login failed for either wrong password or wrong username, returns
+     *         nil. */
+    @Method(selector = "logInWithUsername:password:")
+    public static native PFUser logIn (String username, String password);
+
 // /*!
 // Makes a request to login a user with specified credentials. Returns an
 // instance of the successfully logged in PFUser. This will also cache the user
@@ -209,16 +214,14 @@ public class PFUser extends PFObject implements PFSubclassing {
 // target:(id)target
 // selector:(SEL)selector;
 //
-// /*!
-// Makes an asynchronous request to become a user with the given session token. Returns an
-// instance of the successfully logged in PFUser. This also caches the user locally
-// so that calls to currentUser will use the latest logged in user.
-// The selector for the callback should look like: myCallback:(PFUser *)user error:(NSError **)error
-// @param sessionToken The session token for the user.
-// @param block The block to execute. The block should have the following argument signature: (PFUser *user, NSError *error)
-// */
-// + (void)becomeInBackground:(NSString *)sessionToken
-// block:(PFUserResultBlock)block;
+    /** Makes an asynchronous request to become a user with the given session token. Returns an instance of the successfully logged
+     * in PFUser. This also caches the user locally so that calls to currentUser will use the latest logged in user. The selector
+     * for the callback should look like: myCallback:(PFUser *)user error:(NSError **)error
+     * @param sessionToken The session token for the user.
+     * @param block The block to execute. The block should have the following argument signature: (PFUser *user, NSError *error) */
+    @Method(selector = "becomeInBackground:block:")
+    public static native void becomeInBackground (String sessionToken, @Block VoidBlock2<PFUser, NSError.NSErrorPtr> block);
+
 //
 // /** @name Logging Out */
 //
@@ -279,12 +282,8 @@ public class PFUser extends PFObject implements PFSubclassing {
 // */
 // + (void)requestPasswordResetForEmailInBackground:(NSString *)email
 // block:(PFBooleanResultBlock)block;
-//
-// /** @name Querying for Users */
-//
-// /*!
-// Creates a query for PFUser objects.
-// */
-// + (PFQuery *)query;
 
+    /** Creates a query for PFUser objects. */
+    @Method(selector = "query")
+    public static native PFQuery getQuery ();
 }

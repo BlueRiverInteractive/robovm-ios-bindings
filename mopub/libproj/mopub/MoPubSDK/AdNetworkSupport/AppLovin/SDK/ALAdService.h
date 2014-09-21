@@ -37,7 +37,7 @@
  *
  * @param adSize Size of the ad to cache.
  */
--(void)preloadAdOfSize: (ALAdSize*) adSize;
+-(void) preloadAdOfSize: (ALAdSize*) adSize;
 
 /**
  * Check whether an ad of a given size is pre-loaded and ready to be displayed.
@@ -46,7 +46,7 @@
  *
  * @return YES if an ad of this size is pre-loaded and ready to display without further network activity. NO if requesting an ad of this size would require fetching over the network.
  */
--(BOOL)hasPreloadedAdOfSize: (ALAdSize*) adSize;
+-(BOOL) hasPreloadedAdOfSize: (ALAdSize*) adSize;
 
 /**
  * @name Observing Ad Rotations

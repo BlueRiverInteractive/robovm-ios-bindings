@@ -54,6 +54,13 @@
 +(ALInterstitialAd*) showOver:(UIWindow *)window;
 
 /**
+ * Check if an ad is currently ready to display.
+ *
+ * @return YES if a subsequent call to a show method will result in an immediate display. NO if a call to a show method will require network activity first.
+ */
++(BOOL) isReadyForDisplay;
+
+/**
  * Get a reference to the shared singleton instance.
  *
  * This method calls [ALSdk shared] which requires you to have an SDK key defined in <code>Info.plist</code>.
@@ -87,6 +94,13 @@
  * @param ad     The ad to render into this interstitial.
  */
 -(void) showOver:(UIWindow *)window andRender: (ALAd *) ad;
+
+/**
+ * Check if an ad is currently ready to display.
+ *
+ * @return YES if a subsequent call to a show method will result in an immediate display. NO if a call to a show method will require network activity first.
+ */
+@property (readonly, atomic, getter=isReadyForDisplay) BOOL readyForDisplay;
 
 /**
  *  @name Dismissing Interstitials Expliticly
@@ -129,11 +143,18 @@
  */
 
 /**
- *  Optional frame to be passed through to the interstitial.
+ *  Frame to be passed through to the descendent UIView containing this interstitial.
  *
- *  We recommend not changing this unless you have a particular need to do so.
+ *  Note that this has no effect on video ads, as they are presented in their own view controller.
  */
-@property (assign, atomic) CGRect frame;
+@property (assign, nonatomic) CGRect frame;
+
+/**
+ *  Hidden setting to be passed through to the descendent UIView containing this interstitial.
+ *
+ *  Note that this has no effect on video ads, as they are presented in their own view controller.
+ */
+@property (assign, nonatomic) BOOL hidden;
 
 - (id)init __attribute__((unavailable("Use [ALInterstitialAd shared] or initInterstitialAdWithSdk: instead.")));
 @end

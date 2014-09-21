@@ -48,6 +48,7 @@
                                     userInfo:nil
                                      repeats:repeats];
     timer.timeInterval = seconds;
+    timer.runLoopMode = NSDefaultRunLoopMode;
     return [timer autorelease];
 }
 
@@ -56,6 +57,7 @@
     [self.timer invalidate];
     self.timer = nil;
     self.pauseDate = nil;
+    [_runLoopMode release];
 
     [super dealloc];
 }
@@ -84,7 +86,19 @@
         return NO;
     }
     CFRunLoopRef runLoopRef = [[NSRunLoop currentRunLoop] getCFRunLoop];
-    return CFRunLoopContainsTimer(runLoopRef, (CFRunLoopTimerRef)self.timer, kCFRunLoopDefaultMode);
+    CFArrayRef arrayRef = CFRunLoopCopyAllModes(runLoopRef);
+    CFIndex count = CFArrayGetCount(arrayRef);
+
+    for (CFIndex i = 0; i < count; ++i) {
+        CFStringRef runLoopMode = CFArrayGetValueAtIndex(arrayRef, i);
+        if (CFRunLoopContainsTimer(runLoopRef, (CFRunLoopTimerRef)self.timer, runLoopMode)) {
+            CFRelease(arrayRef);
+            return YES;
+        }
+    }
+
+    CFRelease(arrayRef);
+    return NO;
 }
 
 - (BOOL)scheduleNow
@@ -95,7 +109,7 @@
         return NO;
     }
 
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:self.runLoopMode];
     return YES;
 }
 
@@ -157,7 +171,7 @@
     [self.timer setFireDate:newFireDate];
 
     if (![self isScheduled])
-        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:self.runLoopMode];
 
     self.isPaused = NO;
     return YES;
