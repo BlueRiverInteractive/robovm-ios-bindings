@@ -59,7 +59,7 @@ public class Sample extends UIApplicationDelegateAdapter {
             // Override methods as needed
         };
         Chartboost
-        .startWithAppId("YOUR_APP_ID", "YOUR_APP_SIGNATURE", delegate);
+        .start("YOUR_APP_ID", "YOUR_APP_SIGNATURE", delegate);
         
         Chartboost.cacheInterstitial("Test Screen");
     }
