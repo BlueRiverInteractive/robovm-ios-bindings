@@ -2,11 +2,12 @@
 package org.robovm.bindings.inapppurchase;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSError;
-import org.robovm.apple.foundation.NSSet;
 import org.robovm.apple.storekit.SKPayment;
 import org.robovm.apple.storekit.SKPaymentQueue;
 import org.robovm.apple.storekit.SKPaymentTransaction;
@@ -52,7 +53,7 @@ public class InAppPurchaseManager {
      * 
      * @param productIds The identifiers of the products you want to query. */
     public void requestProducts (String... productIds) {
-        requestProducts(Arrays.asList(productIds));
+        requestProducts(new HashSet<>(Arrays.asList(productIds)));
     }
 
     /** Request the product information for the specified product identifiers. Calls
@@ -60,7 +61,16 @@ public class InAppPurchaseManager {
      * {@link InAppPurchaseListener#productsRequestFailed(SKRequest, NSError)} on fail.
      * 
      * @param productIds The identifiers of the products you want to query. */
-    public void requestProducts (List<String> productIds) {
+    public void requestProduct (List<String> productIds) {
+        requestProducts(new HashSet<>(productIds));
+    }
+
+    /** Request the product information for the specified product identifiers. Calls
+     * {@link InAppPurchaseListener#productsReceived(SKProduct[])} on success or
+     * {@link InAppPurchaseListener#productsRequestFailed(SKRequest, NSError)} on fail.
+     * 
+     * @param productIds The identifiers of the products you want to query. */
+    public void requestProducts (Set<String> productIds) {
         if (requestingProducts) {
             System.out.println(TAG + "Already requesting products!");
             return;
@@ -68,7 +78,7 @@ public class InAppPurchaseManager {
         requestingProducts = true;
         System.out.println(TAG + "Requesting product data...");
 
-        productsRequest = new SKProductsRequest(NSSet.fromStrings(productIds));
+        productsRequest = new SKProductsRequest(productIds);
         productsRequest.setDelegate(new RequestDelegate());
         productsRequest.start();
     }
