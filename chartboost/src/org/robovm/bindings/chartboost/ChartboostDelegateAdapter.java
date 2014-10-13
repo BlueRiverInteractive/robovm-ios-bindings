@@ -1,71 +1,70 @@
-
 package org.robovm.bindings.chartboost;
 
 import org.robovm.apple.foundation.NSObject;
 
-public class ChartboostDelegateAdapter extends NSObject implements ChartboostDelegate {
+public class ChartboostDelegateAdapter extends NSObject implements
+		ChartboostDelegate {
 	@Override
-	public boolean shouldRequestInterstitial (String location) {
-		return false;
+	public boolean shouldRequestInterstitial(String location) {
+		return true;
 	}
 
 	@Override
-	public boolean shouldDisplayInterstitial (String location) {
-		return false;
+	public boolean shouldDisplayInterstitial(String location) {
+		return true;
 	}
 
 	@Override
-	public void didCacheInterstitial (String location) {
+	public void didDisplayInterstitial(String location) {
 	}
 
 	@Override
-	public void didFailToLoadInterstitial (String location) {
+	public void didFailToLoadInterstitial(String location, CBLoadError loadError) {
 	}
 
 	@Override
-	public void didDismissInterstitial (String location) {
+	public void didCacheInterstitial(String location) {
 	}
 
 	@Override
-	public void didCloseInterstitial (String location) {
+	public void didDismissInterstitial(String location) {
 	}
 
 	@Override
-	public void didClickInterstitial (String location) {
+	public void didCloseInterstitial(String location) {
 	}
 
 	@Override
-	public boolean shouldDisplayLoadingViewForMoreApps () {
-		return false;
+	public void didClickInterstitial(String location) {
 	}
 
 	@Override
-	public boolean shouldDisplayMoreApps () {
-		return false;
+	public void didFailToRecordClick(String location, CBClickError clickError) {
 	}
 
 	@Override
-	public void didCacheMoreApps () {
+	public boolean shouldDisplayMoreApps(String location) {
+		return true;
 	}
 
 	@Override
-	public void didFailToLoadMoreApps () {
+	public void didCacheMoreApps(String location) {
 	}
 
 	@Override
-	public void didDismissMoreApps () {
+	public void didDismissMoreApps(String location) {
 	}
 
 	@Override
-	public void didCloseMoreApps () {
+	public void didCloseMoreApps(String location) {
 	}
 
 	@Override
-	public void didClickMoreApps () {
+	public void didClickMoreApps(String location) {
 	}
 
 	@Override
-	public boolean shouldRequestInterstitialsInFirstSession () {
-		return false;
+	public void didFailToLoadMoreApps(String location, CBLoadError loadError) {
 	}
+
 }

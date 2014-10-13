@@ -25,4 +25,23 @@
 		<framework>AdSupport</framework>
 		<framework>StoreKit</framework>
 	</weakFrameworks>
+	<exportedSymbols>
+		<symbol>CBLocationStartup</symbol>
+		<symbol>CBLocationHomeScreen</symbol>
+		<symbol>CBLocationMainMenu</symbol>
+		<symbol>CBLocationGameScreen</symbol>
+		<symbol>CBLocationAchievements</symbol>
+		<symbol>CBLocationQuests</symbol>
+		<symbol>CBLocationPause</symbol>
+		<symbol>CBLocationLevelStart</symbol>
+		<symbol>CBLocationLevelComplete</symbol>
+		<symbol>CBLocationTurnComplete</symbol>
+		<symbol>CBLocationIAPStore</symbol>
+		<symbol>CBLocationItemStore</symbol>
+		<symbol>CBLocationGameOver</symbol>
+		<symbol>CBLocationLeaderBoard</symbol>
+		<symbol>CBLocationSettings</symbol>
+		<symbol>CBLocationQuit</symbol>
+		<symbol>CBLocationDefault</symbol>
+	</exportedSymbols>
 </config>
