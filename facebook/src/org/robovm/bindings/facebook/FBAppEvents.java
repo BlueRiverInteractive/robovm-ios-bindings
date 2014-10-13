@@ -160,11 +160,11 @@ public class FBAppEvents extends NSObject {
 // unlocked in the `FBAppEventNameAchievementUnlocked` event. */
 // extern NSString *const FBAppEventParameterNameDescription;
 
-	/** True-valued parameter value to be used with parameter keys that need a True/False value */
+    /** True-valued parameter value to be used with parameter keys that need a True/False value */
 // @GlobalValue(symbol = "FBAppEventParameterValueYes")
 // public static native String ParameterValueTrue ();
 
-	/** False-valued parameter value to be used with parameter keys that need a True/False value */
+    /** False-valued parameter value to be used with parameter keys that need a True/False value */
 // @GlobalValue(symbol = "FBAppEventParameterValueNo")
 // public static native String ParameterValueFalse ();
 
@@ -276,26 +276,16 @@ public class FBAppEvents extends NSObject {
 // /*
 // * Purchase logging
 // */
-//
-// /*!
-//
-// @method
-//
-// @abstract
-// Log a purchase of the specified amount, in the specified currency.
-//
-// @param purchaseAmount Purchase amount to be logged, as expressed in the specified currency. This value
-// will be rounded to the thousandths place (e.g., 12.34567 becomes 12.346).
-//
-// @param currency Currency, is denoted as, e.g. "USD", "EUR", "GBP". See ISO-4217 for
-// specific values. One reference for these is <http://en.wikipedia.org/wiki/ISO_4217>.
-//
-// @discussion This event immediately triggers a flush of the FBAppEvents event queue, unless the flushBehavior is set
-// to `FBAppEventsFlushBehaviorExplicitOnly`.
-//
-// */
-// + (void)logPurchase:(double)purchaseAmount
-// currency:(NSString *)currency;
+
+    /** Log a purchase of the specified amount, in the specified currency. This event immediately triggers a flush of the
+     * FBAppEvents event queue, unless the flushBehavior is set to `FBAppEventsFlushBehaviorExplicitOnly`.
+     * @param purchaseAmount Purchase amount to be logged, as expressed in the specified currency. This value will be rounded to
+     *            the thousandths place (e.g., 12.34567 becomes 12.346).
+     * @param currency Currency, is denoted as, e.g. "USD", "EUR", "GBP". See ISO-4217 for specific values. One reference for
+     *            these is <a href="http://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a>. */
+    @Method(selector = "logPurchase:currency:")
+    public static native void logPurchase (double purchaseAmount, String currency);
+
 //
 // /*!
 //
@@ -324,43 +314,44 @@ public class FBAppEvents extends NSObject {
 // currency:(NSString *)currency
 // parameters:(NSDictionary *)parameters;
 
-	/** This event immediately triggers a flush of the {@link FBAppEvents} event queue, unless the flushBehavior is set to
-	 * {@link FBAppEventsFlushBehavior#ExplicitOnly}.
-	 * 
-	 * Log a purchase of the specified amount, in the specified currency, also providing a set of additional characteristics
-	 * describing the purchase, as well as an {@link FBSession} to log to.
-	 * @param purchaseAmount Purchase amount to be logged, as expressed in the specified currency.This value will be rounded to the
-	 *           thousandths place (e.g., 12.34567 becomes 12.346).
-	 * @param currency Currency, is denoted as, e.g. "USD", "EUR", "GBP". See ISO-4217 for specific values. One reference for these
-	 *           is <http://en.wikipedia.org/wiki/ISO_4217>.
-	 * @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must be NSString's, and the
-	 *           values are expected to be NSString or NSNumber. Limitations on the number of parameters and name construction are
-	 *           given in the FBAppEvents documentation. Commonly used parameter names are provided in FBAppEventParameterName*
-	 *           constants.
-	 * @param session {@link FBSession} to direct the event logging to, and thus be logged with whatever user (if any) is
-	 *           associated with that {@link FBSession}. A value of {@code null} will use {@link FBSession#getActiveSession()}. */
+    /** This event immediately triggers a flush of the {@link FBAppEvents} event queue, unless the flushBehavior is set to
+     * {@link FBAppEventsFlushBehavior#ExplicitOnly}.
+     * 
+     * Log a purchase of the specified amount, in the specified currency, also providing a set of additional characteristics
+     * describing the purchase, as well as an {@link FBSession} to log to.
+     * @param purchaseAmount Purchase amount to be logged, as expressed in the specified currency.This value will be rounded to
+     *            the thousandths place (e.g., 12.34567 becomes 12.346).
+     * @param currency Currency, is denoted as, e.g. "USD", "EUR", "GBP". See ISO-4217 for specific values. One reference for
+     *            these is <http://en.wikipedia.org/wiki/ISO_4217>.
+     * @param parameters Arbitrary parameter dictionary of characteristics. The keys to this dictionary must be NSString's, and
+     *            the values are expected to be NSString or NSNumber. Limitations on the number of parameters and name
+     *            construction are given in the FBAppEvents documentation. Commonly used parameter names are provided in
+     *            FBAppEventParameterName* constants.
+     * @param session {@link FBSession} to direct the event logging to, and thus be logged with whatever user (if any) is
+     *            associated with that {@link FBSession}. A value of {@code null} will use {@link FBSession#getActiveSession()}. */
 
-	@Method(selector = "logPurchase:currency:parameters:session:")
-	public static native void logPurchase (double purchaseAmount, String currency, NSDictionary<?, ?> parameters, FBSession session);
+    @Method(selector = "logPurchase:currency:parameters:session:")
+    public static native void logPurchase (double purchaseAmount, String currency, NSDictionary<?, ?> parameters,
+        FBSession session);
 
-	/** Notifies the events system that the app has launched & logs an activatedApp event. Should typically be placed in the app
-	 * delegates' `applicationDidBecomeActive:` method. */
+    /** Notifies the events system that the app has launched & logs an activatedApp event. Should typically be placed in the app
+     * delegates' `applicationDidBecomeActive:` method. */
 
-	@Method(selector = "activateApp")
-	public static native void activateApp ();
+    @Method(selector = "activateApp")
+    public static native void activateApp ();
 
-	/** @return Get the current event flushing behavior specifying when events are sent back to Facebook servers. */
-	@Method(selector = "flushBehavior")
-	public static native FBAppEventsFlushBehavior getFlushBehavior ();
+    /** @return Get the current event flushing behavior specifying when events are sent back to Facebook servers. */
+    @Method(selector = "flushBehavior")
+    public static native FBAppEventsFlushBehavior getFlushBehavior ();
 
-	/** Set the current event flushing behavior specifying when events are sent back to Facebook servers.
-	 * @param flushBehavior The desired {@link FBAppEventsFlushBehavior} to be used. */
-	@Method(selector = "setFlushBehavior:")
-	public static native void setFlushBehavior (FBAppEventsFlushBehavior flushBehavior);
+    /** Set the current event flushing behavior specifying when events are sent back to Facebook servers.
+     * @param flushBehavior The desired {@link FBAppEventsFlushBehavior} to be used. */
+    @Method(selector = "setFlushBehavior:")
+    public static native void setFlushBehavior (FBAppEventsFlushBehavior flushBehavior);
 
-	/** Explicitly kick off flushing of events to Facebook. This is an asynchronous method, but it does initiate an immediate kick
-	 * off. Server failures will be reported through the NotificationCenter with notification ID
-	 * "FBAppEventsLoggingResultNotification". */
-	@Method(selector = "flush")
-	public static native void flush ();
+    /** Explicitly kick off flushing of events to Facebook. This is an asynchronous method, but it does initiate an immediate kick
+     * off. Server failures will be reported through the NotificationCenter with notification ID
+     * "FBAppEventsLoggingResultNotification". */
+    @Method(selector = "flush")
+    public static native void flush ();
 }

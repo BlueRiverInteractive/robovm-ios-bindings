@@ -1,7 +1,7 @@
 /*
  * CBAnalytics.h
  * Chartboost
- * 5.0.2
+ * 5.0.3
  *
  * Copyright 2011 Chartboost. All rights reserved.
  */

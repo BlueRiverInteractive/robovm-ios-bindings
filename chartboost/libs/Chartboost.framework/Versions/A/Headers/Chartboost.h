@@ -1,7 +1,7 @@
 /*
  * Chartboost.h
  * Chartboost
- * 5.0.2
+ * 5.0.3
  *
  * Copyright 2011 Chartboost. All rights reserved.
  */
@@ -818,6 +818,18 @@ extern CBLocation const CBLocationDefault;
                   withError:(CBLoadError)error;
 
 #pragma mark - General Delegate
+
+/*!
+ @abstract
+ Called before a video has been displayed on the screen.
+ 
+ @param location The location for the Chartboost impression type.
+ 
+ @discussion Implement to be notified of when a video will
+ be displayed on the screen for a given CBLocation.  You can then do things like mute
+ effects and sounds.
+ */
+- (void)willDisplayVideo:(CBLocation)location;
 
 /*!
  @abstract
