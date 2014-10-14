@@ -4,6 +4,7 @@ package org.robovm.bindings.chartboost;
 import org.robovm.rt.bro.Bro;
 import org.robovm.rt.bro.LazyGlobalValue;
 import org.robovm.rt.bro.annotation.GlobalValue;
+import org.robovm.rt.bro.annotation.Library;
 
 @Library(Library.INTERNAL)
 public class CBLocation {
