@@ -5,6 +5,7 @@ import org.robovm.rt.bro.Bro;
 import org.robovm.rt.bro.LazyGlobalValue;
 import org.robovm.rt.bro.annotation.GlobalValue;
 
+@Library(Library.INTERNAL)
 public class CBLocation {
     static {
         Bro.bind(CBLocation.class);
