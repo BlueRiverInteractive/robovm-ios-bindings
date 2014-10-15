@@ -43,7 +43,7 @@ public class Sample extends UIApplicationDelegateAdapter {
         window.addSubview(rootViewController.getView());
         window.makeKeyAndVisible();
 
-        interstitial.loadRequest(GADRequest.request());
+        interstitial.loadRequest(GADRequest.create());
         interstitial.present(rootViewController);
     }
 

@@ -33,7 +33,6 @@
 		E004EEDC18E263E100242A43 /* admob-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "admob-Prefix.pch"; sourceTree = "<group>"; };
 		E004EEDD18E263E100242A43 /* GADAdSizeWrapped.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdSizeWrapped.h; sourceTree = "<group>"; };
 		E004EEDF18E263E100242A43 /* GADAdSizeWrapped.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GADAdSizeWrapped.m; sourceTree = "<group>"; };
-		E004EEE618E263E100242A43 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E004EEFE18E264D200242A43 /* libgoogleadmobads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgoogleadmobads.a; path = admob/libgoogleadmobads.a; sourceTree = "<group>"; };
 		E004EF0018E2679900242A43 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
 		E061399E19CCA54F00A3B1BF /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
@@ -86,7 +85,6 @@
 			children = (
 				E004EEFE18E264D200242A43 /* libgoogleadmobads.a */,
 				E004EED818E263E100242A43 /* Foundation.framework */,
-				E004EEE618E263E100242A43 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -96,6 +94,9 @@
 			children = (
 				E061399E19CCA54F00A3B1BF /* GADAdMobExtras.h */,
 				E061399F19CCA54F00A3B1BF /* GADAdNetworkExtras.h */,
+				E004EF0018E2679900242A43 /* GADAdSize.h */,
+				E004EEDD18E263E100242A43 /* GADAdSizeWrapped.h */,
+				E004EEDF18E263E100242A43 /* GADAdSizeWrapped.m */,
 				E06139A019CCA54F00A3B1BF /* GADBannerView.h */,
 				E06139A119CCA54F00A3B1BF /* GADBannerViewDelegate.h */,
 				E06139A219CCA54F00A3B1BF /* GADInAppPurchase.h */,
@@ -105,9 +106,6 @@
 				E06139A619CCA54F00A3B1BF /* GADModules.h */,
 				E06139A719CCA54F00A3B1BF /* GADRequest.h */,
 				E0A5C7CE1902A6ED0047397C /* GADRequestError.h */,
-				E004EF0018E2679900242A43 /* GADAdSize.h */,
-				E004EEDD18E263E100242A43 /* GADAdSizeWrapped.h */,
-				E004EEDF18E263E100242A43 /* GADAdSizeWrapped.m */,
 				E0A5C7CF1902A8810047397C /* GADRequestErrorWrapped.h */,
 				E0A5C7D01902A8810047397C /* GADRequestErrorWrapped.m */,
 				E004EEDB18E263E100242A43 /* Supporting Files */,
