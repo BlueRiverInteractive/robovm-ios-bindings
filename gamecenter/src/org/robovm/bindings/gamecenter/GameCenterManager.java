@@ -188,11 +188,12 @@ public class GameCenterManager {
             return;
         }
 
-        GKScore scoreReporter = new GKScore(identifier);
+        GKScore scoreReporter = new GKScore();
         scoreReporter.setValue(score);
 
         // If iOS version is 7 or more we use the new method
         if (getIosVersion() >= IOS_7) {
+            scoreReporter.setLeaderboardIdentifier(identifier);
             NSArray<GKScore> scores = new NSArray<GKScore>(scoreReporter);
 
             GKScore.reportScores(scores, new VoidBlock1<NSError>() {
@@ -206,6 +207,7 @@ public class GameCenterManager {
                 }
             });
         } else { // If iOS version is 6 or less we use the deprecated method
+            scoreReporter.setCategory(identifier);
             scoreReporter.reportScore(new VoidBlock1<NSError>() {
                 @Override
                 public void invoke (NSError error) {
