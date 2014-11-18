@@ -1,7 +1,6 @@
 Xplode iOS SDK
 ==================================
-SDK Version: 6.12.0
 
 Getting Started
 ----------------------------------
-https://developers.google.com/mobile-ads-sdk/docs/#ios
+https://xplode.iddiction.com/#!wiki/readme_ios

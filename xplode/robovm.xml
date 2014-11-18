@@ -8,13 +8,18 @@
 	<libs>
 		<lib>libs/libxplode.a</lib>
 	</libs>
+	<frameworkPaths>
+		<path>libs</path>
+	</frameworkPaths>
 	<frameworks>
-		<framework>AudioToolbox</framework>
-		<framework>AVFoundation</framework>
-		<framework>CoreGraphics</framework>
+		<framework>XplodeSDK</framework>
 		<framework>CoreTelephony</framework>
-		<framework>MessageUI</framework>
-		<framework>SystemConfiguration</framework>
+		<framework>Security</framework>
+		<framework>QuartzCore</framework>
+		<framework>Accelerate</framework>
+		<framework>CoreGraphics</framework>
+		<framework>UIKit</framework>
+		<framework>Foundation</framework>
 	</frameworks>
 	<weakFrameworks>
 		<framework>AdSupport</framework>
