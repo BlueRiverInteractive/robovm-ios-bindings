@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1DEDEA21A1A1A9F00DE6CEF"
+               BlueprintIdentifier = "F1DEDEFF1A1B6D7000DE6CEF"
                BuildableName = "libxplode.a"
                BlueprintName = "xplode"
                ReferencedContainer = "container:xplode.xcodeproj">
@@ -22,13 +22,13 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1DEDEAD1A1A1A9F00DE6CEF"
+               BlueprintIdentifier = "F1DEDF0A1A1B6D7000DE6CEF"
                BuildableName = "xplodeTests.xctest"
                BlueprintName = "xplodeTests"
                ReferencedContainer = "container:xplode.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1DEDEAD1A1A1A9F00DE6CEF"
+               BlueprintIdentifier = "F1DEDF0A1A1B6D7000DE6CEF"
                BuildableName = "xplodeTests.xctest"
                BlueprintName = "xplodeTests"
                ReferencedContainer = "container:xplode.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F1DEDEA21A1A1A9F00DE6CEF"
+            BlueprintIdentifier = "F1DEDEFF1A1B6D7000DE6CEF"
             BuildableName = "libxplode.a"
             BlueprintName = "xplode"
             ReferencedContainer = "container:xplode.xcodeproj">
@@ -75,7 +75,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F1DEDEA21A1A1A9F00DE6CEF"
+            BlueprintIdentifier = "F1DEDEFF1A1B6D7000DE6CEF"
             BuildableName = "libxplode.a"
             BlueprintName = "xplode"
             ReferencedContainer = "container:xplode.xcodeproj">
@@ -93,7 +93,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F1DEDEA21A1A1A9F00DE6CEF"
+            BlueprintIdentifier = "F1DEDEFF1A1B6D7000DE6CEF"
             BuildableName = "libxplode.a"
             BlueprintName = "xplode"
             ReferencedContainer = "container:xplode.xcodeproj">
