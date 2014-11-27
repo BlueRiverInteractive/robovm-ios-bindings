@@ -10,9 +10,6 @@
 			<directory>resources</directory>
 			<skipPngCrush>true</skipPngCrush>
 		</resource>
-        <resource>
-            <directory>libs</directory>
-        </resource>
 	</resources>
     <frameworkPaths>
         <path>libs</path>

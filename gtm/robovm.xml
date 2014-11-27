@@ -5,11 +5,6 @@
     <arch>thumbv7</arch>
     <target>ios</target>
     <iosInfoPList>Info.plist.xml</iosInfoPList>
-    <resources>
-        <resource>
-            <directory>resources</directory>
-        </resource>
-    </resources>
     <libs>
         <lib>libs/libgtm.a</lib>
     </libs>

@@ -8,12 +8,6 @@
 	<libs>
 		<lib>libs/libthinkgaming.a</lib>
 	</libs>
-	<resources>
-		<resource>
-			<directory>resources</directory>
-			<skipPngCrush>true</skipPngCrush>
-		</resource>
-	</resources>
 	<frameworks>
 		<framework>Security</framework>
 		<framework>SystemConfiguration</framework>

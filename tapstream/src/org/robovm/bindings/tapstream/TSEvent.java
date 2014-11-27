@@ -19,10 +19,10 @@ public class TSEvent extends NSObject {
 // @property (nonatomic, assign, readonly) BOOL isOneTimeOnly;
 // @property (nonatomic, assign, readonly) BOOL isTransaction;
 
-	@Method(selector = "eventWithName:oneTimeOnly:")
-	public static native TSEvent create (String name, boolean oneTimeOnly);
+    @Method(selector = "eventWithName:oneTimeOnly:")
+    public static native TSEvent create (String name, boolean oneTimeOnly);
 
-	// + (id)eventWithTransactionId:(NSString *)transactionId
+    // + (id)eventWithTransactionId:(NSString *)transactionId
 // productId:(NSString *)productId
 // quantity:(int)quantity;
 //
@@ -39,22 +39,22 @@ public class TSEvent extends NSObject {
 // currency:(NSString *)currencyCode
 // base64Receipt:(NSString *)base64Receipt;
 
-	public void addValues (Map<String, String> values) {
-		if (values != null) {
-			for (java.util.Map.Entry<String, String> entry : values.entrySet()) {
-				addValue(entry.getKey(), entry.getValue());
-			}
-		}
-	}
+    public void addValues (Map<String, String> values) {
+        if (values != null) {
+            for (java.util.Map.Entry<String, String> entry : values.entrySet()) {
+                addValue(entry.getKey(), entry.getValue());
+            }
+        }
+    }
 
-	public void addValue (String key, String value) {
-		addValue(new NSString(value), key);
-	}
+    public void addValue (String key, String value) {
+        addValue(new NSString(value), key);
+    }
 
-	public void addValue (String key, NSObject value) {
-		addValue(value, key);
-	}
+    public void addValue (String key, NSObject value) {
+        addValue(value, key);
+    }
 
-	@Method(selector = "addValue:forKey:")
-	private native void addValue (NSObject obj, String key);
+    @Method(selector = "addValue:forKey:")
+    private native void addValue (NSObject obj, String key);
 }
