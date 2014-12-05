@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E02883991A30C1CE002242D1 /* AEPriceMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = E02883971A30C1CE002242D1 /* AEPriceMatrix.m */; };
+		E07D747F1A30B1460039B9F9 /* Adjust.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D745F1A30B1460039B9F9 /* Adjust.m */; };
+		E07D74801A30B1460039B9F9 /* AIActivityHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74611A30B1460039B9F9 /* AIActivityHandler.m */; };
+		E07D74811A30B1460039B9F9 /* AIActivityKind.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74631A30B1460039B9F9 /* AIActivityKind.m */; };
+		E07D74821A30B1460039B9F9 /* AIActivityPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74651A30B1460039B9F9 /* AIActivityPackage.m */; };
+		E07D74831A30B1460039B9F9 /* AIActivityState.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74671A30B1460039B9F9 /* AIActivityState.m */; };
+		E07D74841A30B1460039B9F9 /* NSData+AIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D746A1A30B1460039B9F9 /* NSData+AIAdditions.m */; };
+		E07D74851A30B1460039B9F9 /* NSString+AIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D746C1A30B1460039B9F9 /* NSString+AIAdditions.m */; };
+		E07D74861A30B1460039B9F9 /* UIDevice+AIAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D746E1A30B1460039B9F9 /* UIDevice+AIAdditions.m */; };
+		E07D74871A30B1460039B9F9 /* AIAdjustFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74701A30B1460039B9F9 /* AIAdjustFactory.m */; };
+		E07D74881A30B1460039B9F9 /* AILogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74721A30B1460039B9F9 /* AILogger.m */; };
+		E07D74891A30B1460039B9F9 /* AIPackageBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74741A30B1460039B9F9 /* AIPackageBuilder.m */; };
+		E07D748A1A30B1460039B9F9 /* AIPackageHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74761A30B1460039B9F9 /* AIPackageHandler.m */; };
+		E07D748B1A30B1460039B9F9 /* AIRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D74781A30B1460039B9F9 /* AIRequestHandler.m */; };
+		E07D748C1A30B1460039B9F9 /* AIResponseData.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D747A1A30B1460039B9F9 /* AIResponseData.m */; };
+		E07D748D1A30B1460039B9F9 /* AITimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D747C1A30B1460039B9F9 /* AITimer.m */; };
+		E07D748E1A30B1460039B9F9 /* AIUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E07D747E1A30B1460039B9F9 /* AIUtil.m */; };
+		E07D74901A30B15F0039B9F9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07D748F1A30B15F0039B9F9 /* CoreGraphics.framework */; };
+		E07D74921A30B1660039B9F9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07D74911A30B1650039B9F9 /* UIKit.framework */; };
+		E07D74941A30B1700039B9F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07D74931A30B1700039B9F9 /* Foundation.framework */; };
+		E07D74961A30B1750039B9F9 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07D74951A30B1750039B9F9 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E07D74981A30B17A0039B9F9 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07D74971A30B17A0039B9F9 /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E07D74421A30B0E40039B9F9 /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E02883961A30C1CE002242D1 /* AEPriceMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEPriceMatrix.h; sourceTree = "<group>"; };
+		E02883971A30C1CE002242D1 /* AEPriceMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AEPriceMatrix.m; sourceTree = "<group>"; };
+		E02883981A30C1CE002242D1 /* AEPriceMatrix.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AEPriceMatrix.plist; sourceTree = "<group>"; };
+		E07D74441A30B0E40039B9F9 /* libadjust.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libadjust.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E07D74551A30B0E40039B9F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E07D745E1A30B1460039B9F9 /* Adjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Adjust.h; sourceTree = "<group>"; };
+		E07D745F1A30B1460039B9F9 /* Adjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Adjust.m; sourceTree = "<group>"; };
+		E07D74601A30B1460039B9F9 /* AIActivityHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityHandler.h; sourceTree = "<group>"; };
+		E07D74611A30B1460039B9F9 /* AIActivityHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityHandler.m; sourceTree = "<group>"; };
+		E07D74621A30B1460039B9F9 /* AIActivityKind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityKind.h; sourceTree = "<group>"; };
+		E07D74631A30B1460039B9F9 /* AIActivityKind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityKind.m; sourceTree = "<group>"; };
+		E07D74641A30B1460039B9F9 /* AIActivityPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityPackage.h; sourceTree = "<group>"; };
+		E07D74651A30B1460039B9F9 /* AIActivityPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityPackage.m; sourceTree = "<group>"; };
+		E07D74661A30B1460039B9F9 /* AIActivityState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIActivityState.h; sourceTree = "<group>"; };
+		E07D74671A30B1460039B9F9 /* AIActivityState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIActivityState.m; sourceTree = "<group>"; };
+		E07D74691A30B1460039B9F9 /* NSData+AIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AIAdditions.h"; sourceTree = "<group>"; };
+		E07D746A1A30B1460039B9F9 /* NSData+AIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AIAdditions.m"; sourceTree = "<group>"; };
+		E07D746B1A30B1460039B9F9 /* NSString+AIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+AIAdditions.h"; sourceTree = "<group>"; };
+		E07D746C1A30B1460039B9F9 /* NSString+AIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AIAdditions.m"; sourceTree = "<group>"; };
+		E07D746D1A30B1460039B9F9 /* UIDevice+AIAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+AIAdditions.h"; sourceTree = "<group>"; };
+		E07D746E1A30B1460039B9F9 /* UIDevice+AIAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+AIAdditions.m"; sourceTree = "<group>"; };
+		E07D746F1A30B1460039B9F9 /* AIAdjustFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIAdjustFactory.h; sourceTree = "<group>"; };
+		E07D74701A30B1460039B9F9 /* AIAdjustFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIAdjustFactory.m; sourceTree = "<group>"; };
+		E07D74711A30B1460039B9F9 /* AILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AILogger.h; sourceTree = "<group>"; };
+		E07D74721A30B1460039B9F9 /* AILogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AILogger.m; sourceTree = "<group>"; };
+		E07D74731A30B1460039B9F9 /* AIPackageBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIPackageBuilder.h; sourceTree = "<group>"; };
+		E07D74741A30B1460039B9F9 /* AIPackageBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIPackageBuilder.m; sourceTree = "<group>"; };
+		E07D74751A30B1460039B9F9 /* AIPackageHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIPackageHandler.h; sourceTree = "<group>"; };
+		E07D74761A30B1460039B9F9 /* AIPackageHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIPackageHandler.m; sourceTree = "<group>"; };
+		E07D74771A30B1460039B9F9 /* AIRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIRequestHandler.h; sourceTree = "<group>"; };
+		E07D74781A30B1460039B9F9 /* AIRequestHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIRequestHandler.m; sourceTree = "<group>"; };
+		E07D74791A30B1460039B9F9 /* AIResponseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIResponseData.h; sourceTree = "<group>"; };
+		E07D747A1A30B1460039B9F9 /* AIResponseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIResponseData.m; sourceTree = "<group>"; };
+		E07D747B1A30B1460039B9F9 /* AITimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AITimer.h; sourceTree = "<group>"; };
+		E07D747C1A30B1460039B9F9 /* AITimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AITimer.m; sourceTree = "<group>"; };
+		E07D747D1A30B1460039B9F9 /* AIUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AIUtil.h; sourceTree = "<group>"; };
+		E07D747E1A30B1460039B9F9 /* AIUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIUtil.m; sourceTree = "<group>"; };
+		E07D748F1A30B15F0039B9F9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E07D74911A30B1650039B9F9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E07D74931A30B1700039B9F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E07D74951A30B1750039B9F9 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		E07D74971A30B17A0039B9F9 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E07D74411A30B0E40039B9F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E07D74981A30B17A0039B9F9 /* iAd.framework in Frameworks */,
+				E07D74961A30B1750039B9F9 /* AdSupport.framework in Frameworks */,
+				E07D74941A30B1700039B9F9 /* Foundation.framework in Frameworks */,
+				E07D74921A30B1660039B9F9 /* UIKit.framework in Frameworks */,
+				E07D74901A30B15F0039B9F9 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E07D743B1A30B0E40039B9F9 = {
+			isa = PBXGroup;
+			children = (
+				E07D74461A30B0E40039B9F9 /* adjust */,
+				E07D74531A30B0E40039B9F9 /* adjustTests */,
+				E07D74991A30B19A0039B9F9 /* Frameworks */,
+				E07D74451A30B0E40039B9F9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E07D74451A30B0E40039B9F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E07D74441A30B0E40039B9F9 /* libadjust.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E07D74461A30B0E40039B9F9 /* adjust */ = {
+			isa = PBXGroup;
+			children = (
+				E02883961A30C1CE002242D1 /* AEPriceMatrix.h */,
+				E02883971A30C1CE002242D1 /* AEPriceMatrix.m */,
+				E02883981A30C1CE002242D1 /* AEPriceMatrix.plist */,
+				E07D745E1A30B1460039B9F9 /* Adjust.h */,
+				E07D745F1A30B1460039B9F9 /* Adjust.m */,
+				E07D74601A30B1460039B9F9 /* AIActivityHandler.h */,
+				E07D74611A30B1460039B9F9 /* AIActivityHandler.m */,
+				E07D74621A30B1460039B9F9 /* AIActivityKind.h */,
+				E07D74631A30B1460039B9F9 /* AIActivityKind.m */,
+				E07D74641A30B1460039B9F9 /* AIActivityPackage.h */,
+				E07D74651A30B1460039B9F9 /* AIActivityPackage.m */,
+				E07D74661A30B1460039B9F9 /* AIActivityState.h */,
+				E07D74671A30B1460039B9F9 /* AIActivityState.m */,
+				E07D74681A30B1460039B9F9 /* AIAdditions */,
+				E07D746F1A30B1460039B9F9 /* AIAdjustFactory.h */,
+				E07D74701A30B1460039B9F9 /* AIAdjustFactory.m */,
+				E07D74711A30B1460039B9F9 /* AILogger.h */,
+				E07D74721A30B1460039B9F9 /* AILogger.m */,
+				E07D74731A30B1460039B9F9 /* AIPackageBuilder.h */,
+				E07D74741A30B1460039B9F9 /* AIPackageBuilder.m */,
+				E07D74751A30B1460039B9F9 /* AIPackageHandler.h */,
+				E07D74761A30B1460039B9F9 /* AIPackageHandler.m */,
+				E07D74771A30B1460039B9F9 /* AIRequestHandler.h */,
+				E07D74781A30B1460039B9F9 /* AIRequestHandler.m */,
+				E07D74791A30B1460039B9F9 /* AIResponseData.h */,
+				E07D747A1A30B1460039B9F9 /* AIResponseData.m */,
+				E07D747B1A30B1460039B9F9 /* AITimer.h */,
+				E07D747C1A30B1460039B9F9 /* AITimer.m */,
+				E07D747D1A30B1460039B9F9 /* AIUtil.h */,
+				E07D747E1A30B1460039B9F9 /* AIUtil.m */,
+			);
+			path = adjust;
+			sourceTree = "<group>";
+		};
+		E07D74531A30B0E40039B9F9 /* adjustTests */ = {
+			isa = PBXGroup;
+			children = (
+				E07D74541A30B0E40039B9F9 /* Supporting Files */,
+			);
+			path = adjustTests;
+			sourceTree = "<group>";
+		};
+		E07D74541A30B0E40039B9F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E07D74551A30B0E40039B9F9 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E07D74681A30B1460039B9F9 /* AIAdditions */ = {
+			isa = PBXGroup;
+			children = (
+				E07D74691A30B1460039B9F9 /* NSData+AIAdditions.h */,
+				E07D746A1A30B1460039B9F9 /* NSData+AIAdditions.m */,
+				E07D746B1A30B1460039B9F9 /* NSString+AIAdditions.h */,
+				E07D746C1A30B1460039B9F9 /* NSString+AIAdditions.m */,
+				E07D746D1A30B1460039B9F9 /* UIDevice+AIAdditions.h */,
+				E07D746E1A30B1460039B9F9 /* UIDevice+AIAdditions.m */,
+			);
+			path = AIAdditions;
+			sourceTree = "<group>";
+		};
+		E07D74991A30B19A0039B9F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E07D74971A30B17A0039B9F9 /* iAd.framework */,
+				E07D74951A30B1750039B9F9 /* AdSupport.framework */,
+				E07D74931A30B1700039B9F9 /* Foundation.framework */,
+				E07D74911A30B1650039B9F9 /* UIKit.framework */,
+				E07D748F1A30B15F0039B9F9 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E07D74431A30B0E40039B9F9 /* adjust */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E07D74581A30B0E40039B9F9 /* Build configuration list for PBXNativeTarget "adjust" */;
+			buildPhases = (
+				E07D74401A30B0E40039B9F9 /* Sources */,
+				E07D74411A30B0E40039B9F9 /* Frameworks */,
+				E07D74421A30B0E40039B9F9 /* Copy Files */,
+				E07D749A1A30B41E0039B9F9 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = adjust;
+			productName = adjust;
+			productReference = E07D74441A30B0E40039B9F9 /* libadjust.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E07D743C1A30B0E40039B9F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "BlueRiver Interactive";
+				TargetAttributes = {
+					E07D74431A30B0E40039B9F9 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = E07D743F1A30B0E40039B9F9 /* Build configuration list for PBXProject "adjust" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E07D743B1A30B0E40039B9F9;
+			productRefGroup = E07D74451A30B0E40039B9F9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E07D74431A30B0E40039B9F9 /* adjust */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E07D749A1A30B41E0039B9F9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Version 2.0 (updated for Xcode 4, with some fixes)\n# Changes:\n#    - Works with xcode 4, even when running xcode 3 projects (Workarounds for apple bugs)\n#    - Faster / better: only runs lipo once, instead of once per recursion\n#    - Added some debugging statemetns that can be switched on/off by changing the DEBUG_THIS_SCRIPT variable to \"true\"\n#    - Fixed some typos\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#   Because Apple staff DELIBERATELY broke Xcode to make this impossible from the GUI (Xcode 3.2.3 specifically states this in the Release notes!)\n#   ...no, I don't understand why they did this!\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\"\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\n# * needs to be outside the double quotes?\ncp \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include/\"* \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\nfi\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E07D74401A30B0E40039B9F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E07D748C1A30B1460039B9F9 /* AIResponseData.m in Sources */,
+				E02883991A30C1CE002242D1 /* AEPriceMatrix.m in Sources */,
+				E07D747F1A30B1460039B9F9 /* Adjust.m in Sources */,
+				E07D74821A30B1460039B9F9 /* AIActivityPackage.m in Sources */,
+				E07D74841A30B1460039B9F9 /* NSData+AIAdditions.m in Sources */,
+				E07D74861A30B1460039B9F9 /* UIDevice+AIAdditions.m in Sources */,
+				E07D74801A30B1460039B9F9 /* AIActivityHandler.m in Sources */,
+				E07D74811A30B1460039B9F9 /* AIActivityKind.m in Sources */,
+				E07D74851A30B1460039B9F9 /* NSString+AIAdditions.m in Sources */,
+				E07D74891A30B1460039B9F9 /* AIPackageBuilder.m in Sources */,
+				E07D74881A30B1460039B9F9 /* AILogger.m in Sources */,
+				E07D748D1A30B1460039B9F9 /* AITimer.m in Sources */,
+				E07D748E1A30B1460039B9F9 /* AIUtil.m in Sources */,
+				E07D748A1A30B1460039B9F9 /* AIPackageHandler.m in Sources */,
+				E07D748B1A30B1460039B9F9 /* AIRequestHandler.m in Sources */,
+				E07D74831A30B1460039B9F9 /* AIActivityState.m in Sources */,
+				E07D74871A30B1460039B9F9 /* AIAdjustFactory.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E07D74561A30B0E40039B9F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+				);
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
+			};
+			name = Debug;
+		};
+		E07D74571A30B0E40039B9F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+				);
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s i386";
+			};
+			name = Release;
+		};
+		E07D74591A30B0E40039B9F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E07D745A1A30B0E40039B9F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E07D743F1A30B0E40039B9F9 /* Build configuration list for PBXProject "adjust" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E07D74561A30B0E40039B9F9 /* Debug */,
+				E07D74571A30B0E40039B9F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E07D74581A30B0E40039B9F9 /* Build configuration list for PBXNativeTarget "adjust" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E07D74591A30B0E40039B9F9 /* Debug */,
+				E07D745A1A30B0E40039B9F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E07D743C1A30B0E40039B9F9 /* Project object */;
+}
