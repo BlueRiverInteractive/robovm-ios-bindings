@@ -47,3 +47,7 @@
 /gamecenter/build
 *.iml
 tapstream/build
+adjust/libproj/adjust/build
+*.xcodeproj/xcuserdata
+*.xcodeproj/project.xcworkspace/xcuserdata
+*.xcodeproj/project.xcworkspace/xcshareddata
