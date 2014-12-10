@@ -3,14 +3,10 @@ package org.robovm.bindings.facebook.manager;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.robovm.apple.foundation.NSArray;
-import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.foundation.NSMutableDictionary;
 import org.robovm.apple.foundation.NSObject;
@@ -19,8 +15,10 @@ import org.robovm.apple.foundation.NSPropertyList;
 import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.foundation.NSURL;
 import org.robovm.apple.uikit.UIApplication;
+import org.robovm.apple.uikit.UIApplicationDelegate;
 import org.robovm.bindings.facebook.FBAppCall;
 import org.robovm.bindings.facebook.FBAppCallHandler;
+import org.robovm.bindings.facebook.FBAppEvents;
 import org.robovm.bindings.facebook.FBAppLinkData;
 import org.robovm.bindings.facebook.FBRequest;
 import org.robovm.bindings.facebook.FBRequestConnection;
@@ -30,16 +28,20 @@ import org.robovm.bindings.facebook.dialogs.FBWebDialogResult;
 import org.robovm.bindings.facebook.dialogs.FBWebDialogs;
 import org.robovm.bindings.facebook.error.FBErrorCategory;
 import org.robovm.bindings.facebook.error.FBErrorUtility;
+import org.robovm.bindings.facebook.manager.request.CommonFacebookRequests;
+import org.robovm.bindings.facebook.manager.request.CommonFacebookRequests.FacebookGrantedPermissionsRequestListener;
+import org.robovm.bindings.facebook.manager.request.FacebookRequest;
+import org.robovm.bindings.facebook.manager.request.FacebookRequestListener;
+import org.robovm.bindings.facebook.manager.request.GraphObject;
+import org.robovm.bindings.facebook.manager.request.GraphUser;
 import org.robovm.bindings.facebook.session.FBSession;
+import org.robovm.bindings.facebook.session.FBSessionDefaultAudience;
 import org.robovm.bindings.facebook.session.FBSessionRequestPermissionResultHandler;
 import org.robovm.bindings.facebook.session.FBSessionState;
 import org.robovm.bindings.facebook.session.FBSessionStateHandler;
 
-public class FacebookManager {
-    static final String TAG = "[FacebookManager] ";
-
+public final class FacebookManager implements FacebookActions {
     private static FacebookManager instance = null;
-    private FacebookConfiguration configuration = new FacebookConfiguration.Builder().build();
 
     private FacebookManager () {
     }
@@ -48,139 +50,71 @@ public class FacebookManager {
         if (instance == null) {
             instance = new FacebookManager();
         }
-
         return instance;
     }
 
-    /** Set the configuration for the FacebookManager.
-     * 
-     * @param configuration */
-    public void setConfiguration (FacebookConfiguration configuration) {
-        this.configuration = configuration;
-    }
-
-    public FacebookConfiguration getConfiguration () {
-        return configuration;
-    }
-
-    public void login (final FacebookLoginListener listener) {
-        // TODO change to use method session.open(FBSessionLoginBehaviour) and if successful then request for additional read and
-// then publish permissions.
+    @Override
+    public void login (final FacebookPermission[] permissions, final boolean allowLoginUI, final FacebookLoginListener listener) {
         NSOperationQueue.getMainQueue().addOperation(new Runnable() {
             @Override
             public void run () {
-                FBSession session = FBSession.getActiveSession();
-                if (session == null || !session.isOpen() || !containsRequiredPermissions(configuration.getReadPermissions())
-                    || !containsRequiredPermissions(configuration.getPublishPermissions())) {
-                    FBSession.openForRead(configuration.getReadPermissions(), true, new FBSessionStateHandler() {
-                        @Override
-                        public void invoke (final FBSession session, final FBSessionState status, final NSError error) {
-                            if (error != null) {
-                                NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                    @Override
-                                    public void run () {
-                                        if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-                                            listener.onCancel();
-                                        } else {
-                                            listener.onError(error.description());
-                                        }
-                                    }
-                                });
-                            } else if (status == FBSessionState.ClosedLoginFailed) {
+                final FBSession session = FBSession.getActiveSession();
+                final FBSessionStateHandler handler = new FBSessionStateHandler() {
+                    @Override
+                    public void invoke (final FBSession session, final FBSessionState status, final NSError error) {
+                        if (listener != null) {
+                            if (error == null && status == FBSessionState.Open) {
+                                logUser(listener);
+                            } else if (status == FBSessionState.Closed || status == FBSessionState.ClosedLoginFailed) {
                                 FBSession.getActiveSession().close(true);
-                                NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                    @Override
-                                    public void run () {
-                                        listener.onCancel();
-                                    }
-                                });
-                            } else if (status == FBSessionState.Open) {
-                                if (!containsRequiredPermissions(configuration.getReadPermissions())) {
-                                    NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                        @Override
-                                        public void run () {
-                                            listener.onError("Facebook read permissions couldn't be retrieved!");
-                                        }
-                                    });
-                                } else if (!containsRequiredPermissions(configuration.getPublishPermissions())) {
-                                    NSOperationQueue.getMainQueue().addOperation(new Runnable() {
-                                        @Override
-                                        public void run () {
-                                            session.requestNewPublishPermissions(configuration.getPublishPermissions(),
-                                                configuration.getSessionDefaultAudience(),
-                                                new FBSessionRequestPermissionResultHandler() {
-                                                    @Override
-                                                    public void invoke (final FBSession session, final NSError error) {
-                                                        NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                                            @Override
-                                                            public void run () {
-                                                                if (error != null) {
-                                                                    if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-                                                                        listener.onCancel();
-                                                                    } else {
-                                                                        listener.onError(error.description());
-                                                                    }
-                                                                } else if (session.getState() == FBSessionState.ClosedLoginFailed) {
-                                                                    FBSession.getActiveSession().close(true);
-                                                                    listener.onCancel();
-                                                                } else if (session.getState() == FBSessionState.OpenTokenExtended) {
-                                                                    if (!containsRequiredPermissions(configuration
-                                                                        .getPublishPermissions())) {
-                                                                        listener
-                                                                            .onError("Facebook publish permissions couldn't be retrieved!");
-                                                                    } else {
-                                                                        FBRequest.requestForMe().start(new FBRequestHandler() {
-                                                                            @Override
-                                                                            public void invoke (FBRequestConnection connection,
-                                                                                NSObject result, NSError error) {
-                                                                                if (error == null) {
-                                                                                    listener.onSuccess(createGraphObject(result));
-                                                                                } else {
-                                                                                    if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-                                                                                        listener.onCancel();
-                                                                                    } else {
-                                                                                        listener.onError(error.description());
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                }
-                                                            }
-                                                        });
-                                                    }
-                                                });
-                                        }
-                                    });
+                                listener.onCancel();
+                            } else if (error != null) {
+                                if (FBErrorUtility.shouldNotifyUser(error)) {
+                                    listener.onError(new FacebookError(FBErrorUtility.getUserMessage(error), true));
+                                } else if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
+                                    listener.onCancel();
+                                } else {
+                                    listener.onError(new FacebookError(error.getLocalizedDescription()));
                                 }
+                            } else {
+                                listener.onCancel();
                             }
                         }
-                    });
-                } else {
-                    NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                        @Override
-                        public void run () {
-                            FBRequest.requestForMe().start(new FBRequestHandler() {
-                                @Override
-                                public void invoke (FBRequestConnection connection, NSObject result, NSError error) {
-                                    if (error == null) {
-                                        listener.onSuccess(createGraphObject(result));
-                                    } else {
-                                        if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-                                            listener.onCancel();
-                                        } else {
-                                            listener.onError(error.description());
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    });
+                    }
+                };
+
+                if (session != null && session.getState() == FBSessionState.CreatedTokenLoaded) {
+                    FBSession.getActiveSession().open(handler);
+                } else if (permissions != null
+                    && (session == null || !session.isOpen() || !containsRequiredPermissions(permissions))) {
+                    FBSession.openForRead(FacebookPermission.getNamesOfPermissions(permissions), allowLoginUI, handler);
+                } else if (listener != null) {
+                    logUser(listener);
                 }
             }
         });
     }
 
+    private void logUser (final FacebookLoginListener listener) {
+        FBRequest.requestForMe().start(new FBRequestHandler() {
+            @Override
+            public void invoke (FBRequestConnection connection, NSObject result, final NSError error) {
+                if (result != null && error == null) {
+                    listener.onSuccess(new GraphUser(result));
+                } else {
+                    if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
+                        listener.onCancel();
+                    } else if (FBErrorUtility.shouldNotifyUser(error)) {
+                        listener.onError(new FacebookError(FBErrorUtility.getUserMessage(error), true));
+                    } else {
+                        listener.onError(new FacebookError(error.getLocalizedDescription()));
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
     public void logout () {
         FBSession session = FBSession.getActiveSession();
         if (session != null && session.getState() != FBSessionState.Closed) {
@@ -188,14 +122,51 @@ public class FacebookManager {
         }
     }
 
+    @Override
     public boolean isLoggedIn () {
         FBSession session = FBSession.getActiveSession();
         return session != null && session.isOpen();
     }
 
-    /** Makes the specified request(s) on the Facebook api. If multiple requests are specified, a batch request will be made (only
-     * works for requests without dialog ui).
-     * @param requests */
+    @Override
+    public void requestPublishPermissions (final FacebookPermission[] permissions, final FacebookRequestListener listener) {
+        NSOperationQueue.getMainQueue().addOperation(new Runnable() {
+            @Override
+            public void run () {
+                FBSession.getActiveSession().requestNewPublishPermissions(FacebookPermission.getNamesOfPermissions(permissions),
+                    FBSessionDefaultAudience.Everyone, new FBSessionRequestPermissionResultHandler() {
+                        @Override
+                        public void invoke (final FBSession session, final NSError error) {
+                            if (error != null) {
+                                if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
+                                    listener.onCancel();
+                                } else if (FBErrorUtility.shouldNotifyUser(error)) {
+                                    listener.onError(new FacebookError(FBErrorUtility.getUserMessage(error), true));
+                                } else {
+                                    listener.onError(new FacebookError(error.getLocalizedDescription()));
+                                }
+                            } else if (session.getState() == FBSessionState.ClosedLoginFailed) {
+                                FBSession.getActiveSession().close(true);
+                                listener.onCancel();
+                            } else if (session.getState() == FBSessionState.OpenTokenExtended
+                                || session.getState() == FBSessionState.Open) {
+                                if (!containsRequiredPermissions(permissions)) {
+                                    listener.onError(new FacebookError("Facebook publish permissions couldn't be retrieved!"));
+                                } else {
+                                    listener.onSuccess(null);
+                                }
+                            } else {
+                                listener.onError(new FacebookError(
+                                    "Facebook publish permissions request failed for unknown reason! Session state: "
+                                        + session.getState()));
+                            }
+                        }
+                    });
+            }
+        });
+    }
+
+    @Override
     public void request (final FacebookRequest... requests) {
         NSOperationQueue.getMainQueue().addOperation(new Runnable() {
             @Override
@@ -209,30 +180,28 @@ public class FacebookManager {
                                 FBWebDialogs.presentFeedDialog(session, request.getParameters(), new FBWebDialogHandler() {
                                     @Override
                                     public void invoke (final FBWebDialogResult result, final NSURL url, final NSError error) {
-                                        NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                            @Override
-                                            public void run () {
-                                                if (error != null) {
-                                                    if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-                                                        request.getListener().onCancel();
-                                                    } else {
-                                                        request.getListener().onError(error.description());
-                                                    }
+                                        if (error != null) {
+                                            if (FBErrorUtility.shouldNotifyUser(error)) {
+                                                request.getListener().onError(
+                                                    new FacebookError(FBErrorUtility.getUserMessage(error), true));
+                                            } else if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
+                                                request.getListener().onCancel();
+                                            } else {
+                                                request.getListener().onError(new FacebookError(error.getLocalizedDescription()));
+                                            }
+                                        } else {
+                                            if (result == FBWebDialogResult.NotCompleted) {
+                                                request.getListener().onCancel();
+                                            } else {
+                                                GraphObject r = parseURLParams(url.toString());
+                                                String postId = r.getString("post_id");
+                                                if (postId != null) {
+                                                    request.getListener().onSuccess(r);
                                                 } else {
-                                                    if (result == FBWebDialogResult.NotCompleted) {
-                                                        request.getListener().onCancel();
-                                                    } else {
-                                                        GraphObject result = parseURLParams(url.toString());
-                                                        String postId = result.getString("post_id");
-                                                        if (postId != null) {
-                                                            request.getListener().onSuccess(result);
-                                                        } else {
-                                                            request.getListener().onCancel();
-                                                        }
-                                                    }
+                                                    request.getListener().onCancel();
                                                 }
                                             }
-                                        });
+                                        }
                                     }
                                 });
                             } else {
@@ -240,30 +209,28 @@ public class FacebookManager {
                                     .getParameters().get("title"), request.getParameters(), new FBWebDialogHandler() {
                                     @Override
                                     public void invoke (final FBWebDialogResult result, final NSURL url, final NSError error) {
-                                        NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                            @Override
-                                            public void run () {
-                                                if (error != null) {
-                                                    if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-                                                        request.getListener().onCancel();
-                                                    } else {
-                                                        request.getListener().onError(error.description());
-                                                    }
+                                        if (error != null) {
+                                            if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
+                                                request.getListener().onCancel();
+                                            } else if (FBErrorUtility.shouldNotifyUser(error)) {
+                                                request.getListener().onError(
+                                                    new FacebookError(FBErrorUtility.getUserMessage(error), true));
+                                            } else {
+                                                request.getListener().onError(new FacebookError(error.getLocalizedDescription()));
+                                            }
+                                        } else {
+                                            if (result == FBWebDialogResult.NotCompleted) {
+                                                request.getListener().onCancel();
+                                            } else {
+                                                GraphObject r = parseURLParams(url.toString());
+                                                final String requestId = r.getString("request");
+                                                if (requestId != null) {
+                                                    request.getListener().onSuccess(r);
                                                 } else {
-                                                    if (result == FBWebDialogResult.NotCompleted) {
-                                                        request.getListener().onCancel();
-                                                    } else {
-                                                        GraphObject result = parseURLParams(url.toString());
-                                                        final String requestId = result.getString("request");
-                                                        if (requestId != null) {
-                                                            request.getListener().onSuccess(result);
-                                                        } else {
-                                                            request.getListener().onCancel();
-                                                        }
-                                                    }
+                                                    request.getListener().onCancel();
                                                 }
                                             }
-                                        });
+                                        }
                                     }
                                 });
                             }
@@ -272,24 +239,32 @@ public class FacebookManager {
                         FBRequestConnection batch = new FBRequestConnection();
 
                         for (final FacebookRequest requestOrder : requests) {
-                            FBRequest request = new FBRequest(session, requestOrder.getApi(), requestOrder.getParameters(),
+                            final FBRequest request = new FBRequest(session, requestOrder.getApi(), requestOrder.getParameters(),
                                 requestOrder.getHttpMethod());
                             batch.addRequest(request, new FBRequestHandler() {
+                                private int retryCount = 0;
+
                                 @SuppressWarnings("unchecked")
                                 @Override
                                 public void invoke (FBRequestConnection connection, NSObject result, final NSError error) {
                                     if (requestOrder.getListener() != null) {
-                                        if (error != null) {
-                                            NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                                @Override
-                                                public void run () {
-                                                    if (FBErrorUtility.getErrorCategory(error) == FBErrorCategory.UserCancelled) {
-                                                        requestOrder.getListener().onCancel();
-                                                    } else {
-                                                        requestOrder.getListener().onError(error.description());
-                                                    }
-                                                }
-                                            });
+                                        if (error != null || result == null) {
+                                            final FBRequestHandler handler = this;
+                                            FBErrorCategory category = FBErrorUtility.getErrorCategory(error);
+
+                                            retryCount++;
+                                            if (retryCount <= 2
+                                                && (category == FBErrorCategory.Retry || category == FBErrorCategory.Throttling)) {
+                                                request.start(handler);
+                                            } else if (category == FBErrorCategory.UserCancelled) {
+                                                requestOrder.getListener().onCancel();
+                                            } else if (FBErrorUtility.shouldNotifyUser(error)) {
+                                                requestOrder.getListener().onError(
+                                                    new FacebookError(FBErrorUtility.getUserMessage(error), true));
+                                            } else {
+                                                requestOrder.getListener().onError(
+                                                    new FacebookError(error.getLocalizedDescription()));
+                                            }
                                         } else {
                                             NSMutableDictionary<NSObject, NSObject> dict = ((NSMutableDictionary<NSObject, NSObject>)result);
                                             NSObject data;
@@ -298,13 +273,8 @@ public class FacebookManager {
                                             } else {
                                                 data = dict;
                                             }
-                                            final GraphObject graph = createGraphObject(data);
-                                            NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                                                @Override
-                                                public void run () {
-                                                    requestOrder.getListener().onSuccess(graph);
-                                                }
-                                            });
+                                            final GraphObject graph = new GraphObject(data);
+                                            requestOrder.getListener().onSuccess(graph);
                                         }
                                     }
                                 }
@@ -313,15 +283,18 @@ public class FacebookManager {
                         batch.start();
                     }
                 } else if (requests.length > 0) {
-                    NSOperationQueue.getCurrentQueue().addOperation(new Runnable() {
-                        @Override
-                        public void run () {
-                            requests[0].getListener().onError("Facebook session is not open!");
-                        }
-                    });
+                    requests[0].getListener().onError(new FacebookError("Facebook session is not open!"));
                 }
             }
         });
+    }
+
+    /** Use this method to get a list of all permissions that the user has granted access.
+     * <p>
+     * NOTE: You need to check if the user granted permissions for a specific action, before you make a request to that action.
+     * @param listener */
+    public void requestGrantedPermissions (FacebookGrantedPermissionsRequestListener listener) {
+        request(CommonFacebookRequests.requestGrantedPermissions(listener));
     }
 
     private GraphObject parseURLParams (String url) {
@@ -361,53 +334,12 @@ public class FacebookManager {
         return graph;
     }
 
-    @SuppressWarnings("unchecked")
-    private GraphObject createGraphObject (NSObject data) {
-        GraphObject graph = new GraphObject();
-        if (data instanceof NSArray) {
-            NSArray<NSObject> arrayData = (NSArray<NSObject>)data;
-            List<GraphObject> children = new ArrayList<GraphObject>();
-            for (NSObject entryData : arrayData) {
-                children.add(createGraphObject(entryData));
-            }
-            graph.addChildren(children);
-        } else {
-            Map<String, String> convertedParams = new HashMap<String, String>();
-            NSDictionary<NSObject, NSObject> parameters = (NSDictionary<NSObject, NSObject>)data;
-            for (Entry<NSObject, NSObject> entry : parameters.entrySet()) {
-                String key = String.valueOf(entry.getKey());
-                if (entry.getValue() instanceof NSArray || entry.getValue() instanceof NSDictionary
-                    || entry.getValue() instanceof NSMutableDictionary) {
-                    graph.addGraphParameter(key, createGraphObject(entry.getValue()));
-                } else if (entry.getValue() instanceof NSString && entry.getValue().toString().contains("{")) {
-                    String v = entry.getValue().toString();
-                    v = v.substring(1, v.length() - 1);
-                    String[] values = v.split(",");
-
-                    Map<String, String> p = new HashMap<String, String>();
-                    for (String value : values) {
-                        value = value.trim();
-                        String[] kv = value.split(":");
-                        kv[0] = kv[0].replace("\"", "");
-                        kv[1] = kv[1].replace("\"", "");
-                        p.put(kv[0], kv[1]);
-                    }
-                    graph.addGraphParameter(key, new GraphObject(p));
-                } else {
-                    convertedParams.put(key, String.valueOf(entry.getValue()));
-                }
-            }
-            graph.addParameters(convertedParams);
-        }
-        return graph;
-    }
-
-    private boolean containsRequiredPermissions (List<String> requiredPermissions) {
+    private boolean containsRequiredPermissions (FacebookPermission[] requiredPermissions) {
         FBSession session = FBSession.getActiveSession();
         List<String> permissions = session.getPermissionList();
 
-        for (String perm : requiredPermissions) {
-            if (!permissions.contains(perm)) {
+        for (FacebookPermission perm : requiredPermissions) {
+            if (!permissions.contains(perm.getName())) {
                 return false;
             }
         }
@@ -424,28 +356,50 @@ public class FacebookManager {
                 String requestIDParam = graph.getString("request_ids");
                 String[] requestIDs = requestIDParam.split(",");
 
-                // TODO fetch request data and invoke a listener.
+                // TODO
+// game.facebook.addUnhandledRequest(new FacebookRequest(requestIDs[0], null, HttpMethods.GET, false, null));
             }
         }
     }
 
-    public void didBecomeActive (UIApplication application) {
+    /** Add this to {@link UIApplicationDelegate#didBecomeActive(UIApplication)} in your application delegate.
+     * <p>
+     * NOTE: It is required that you invoke this method in your application delegate, otherwise Facebook will not work as
+     * expected!
+     * @param application */
+    public void handleDidBecomeActive (UIApplication application) {
+        FBAppEvents.activateApp();
         FBAppCall.handleDidBecomeActive();
         FBSession.getActiveSession().handleDidBecomeActive();
     }
 
-    public boolean openURL (UIApplication application, NSURL url, String sourceApplication, NSPropertyList annotation) {
+    /** Add this to {@link UIApplicationDelegate#openURL(UIApplication, NSURL, String, NSPropertyList)} in your application
+     * delegate.
+     * <p>
+     * NOTE: It is required that you invoke this method in your application delegate, otherwise Facebook will not work as
+     * expected!
+     * @param application
+     * @param url
+     * @param sourceApplication
+     * @param annotation
+     * @return */
+    public boolean handleOpenURL (UIApplication application, NSURL url, String sourceApplication, NSPropertyList annotation) {
         FBAppCall.handleOpenURL(url, sourceApplication, new FBAppCallHandler() {
             @Override
             public void invoke (FBAppCall call) {
-                // Launch app from facebook request.
+                // Launch app from Facebook request.
                 handleAppLinkData(call.getAppLinkData());
             }
         });
         return FBSession.getActiveSession().handleOpenURL(url);
     }
 
-    public void willTerminate (UIApplication application) {
+    /** Add this to {@link UIApplicationDelegate#willTerminate(UIApplication)} in your application delegate.
+     * <p>
+     * NOTE: It is required that you invoke this method in your application delegate, otherwise Facebook will not work as
+     * expected!
+     * @param application */
+    public void handleWillTerminate (UIApplication application) {
         FBSession.getActiveSession().closeSession();
     }
 }

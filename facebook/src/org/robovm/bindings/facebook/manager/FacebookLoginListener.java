@@ -1,10 +1,8 @@
 
 package org.robovm.bindings.facebook.manager;
 
-public interface FacebookLoginListener {
-	public void onSuccess (GraphObject user);
+import org.robovm.bindings.facebook.manager.request.GraphUser;
 
-	public void onCancel ();
-
-	public void onError (String error);
+public interface FacebookLoginListener extends FacebookListener {
+    public void onSuccess (GraphUser result);
 }
