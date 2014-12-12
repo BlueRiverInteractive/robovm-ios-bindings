@@ -6,18 +6,19 @@ import java.util.ArrayList;
 import org.robovm.apple.foundation.NSArray;
 import org.robovm.apple.foundation.NSData;
 import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSNumber;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.foundation.NSURL;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.bindings.gpgs.GPGAchievement;
+import org.robovm.bindings.gpgs.GPGAchievementAllMetadataBlock;
 import org.robovm.bindings.gpgs.GPGAchievementController;
 import org.robovm.bindings.gpgs.GPGAchievementControllerDelegate;
 import org.robovm.bindings.gpgs.GPGAchievementDidIncrementBlock;
 import org.robovm.bindings.gpgs.GPGAchievementDidRevealBlock;
 import org.robovm.bindings.gpgs.GPGAchievementDidUnlockBlock;
 import org.robovm.bindings.gpgs.GPGAchievementMetadata;
-import org.robovm.bindings.gpgs.GPGAchievementModel;
 import org.robovm.bindings.gpgs.GPGAchievementState;
 import org.robovm.bindings.gpgs.GPGAppStateConflictHandler;
 import org.robovm.bindings.gpgs.GPGAppStateLoadResultHandler;
@@ -25,11 +26,11 @@ import org.robovm.bindings.gpgs.GPGAppStateModel;
 import org.robovm.bindings.gpgs.GPGAppStateWriteResultHandler;
 import org.robovm.bindings.gpgs.GPGAppStateWriteStatus;
 import org.robovm.bindings.gpgs.GPGLeaderboard;
+import org.robovm.bindings.gpgs.GPGLeaderboardAllMetadataBlock;
 import org.robovm.bindings.gpgs.GPGLeaderboardController;
 import org.robovm.bindings.gpgs.GPGLeaderboardControllerDelegate;
 import org.robovm.bindings.gpgs.GPGLeaderboardLoadScoresBlock;
 import org.robovm.bindings.gpgs.GPGLeaderboardMetadata;
-import org.robovm.bindings.gpgs.GPGLeaderboardModel;
 import org.robovm.bindings.gpgs.GPGLeaderboardTimeScope;
 import org.robovm.bindings.gpgs.GPGLeaderboardsController;
 import org.robovm.bindings.gpgs.GPGLeaderboardsControllerDelegate;
@@ -285,7 +286,7 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	public void logout () {
 		if (isLoggedIn()) {
 			GPPSignIn.sharedInstance().signOut();
-			GPGManager.sharedInstance().signout();
+			GPGManager.sharedInstance().signOut();
 		}
 	}
 
@@ -345,31 +346,43 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	}
 
 	/** @return an ArrayList containing all data about your achievements and your user's progress. */
-	public ArrayList<GPGAchievementMetadata> getAchievementsList () {
-
-		// get the achievement model
-		GPGAchievementModel model = GPGManager.sharedInstance().applicationModel().achievement();
-
-		// obtain the data and put it in a list
-		ArrayList<GPGAchievementMetadata> list = new ArrayList<GPGAchievementMetadata>();
-		NSArray<GPGAchievementMetadata> dat = model.allMetadata();
-		for (int i = 0; i < dat.size(); i++) {
-			GPGAchievementMetadata n = dat.get(i);
-			if (n != null) {
-				list.add(n);
-			} else {
-				System.out.println("[Warning] PlayServicesManager: One of your achievements could not be listed.");
+	public ArrayList<GPGAchievementMetadata> getAchievementsList () 
+	{	
+  		final ArrayList<GPGAchievementMetadata> list = new ArrayList<GPGAchievementMetadata>();
+		
+		GPGAchievementMetadata.allMetadata(new GPGAchievementAllMetadataBlock() {
+			
+			@Override
+			public void invoke(NSArray metadata, NSError error)
+			{
+			      if (error == null){
+			          // Something went wrong.
+			      } 
+			      
+			      else
+			      {
+			  		// obtain the data and put it in a list
+			  		NSArray<GPGAchievementMetadata> dat = metadata;
+			  		for (int i = 0; i < dat.size(); i++) {
+			  			GPGAchievementMetadata n = dat.get(i);
+			  			if (n != null) {
+			  				list.add(n);
+			  			} else {
+			  				System.out.println("[Warning] PlayServicesManager: One of your achievements could not be listed.");
+			  			}
+			  		}
+			      }
 			}
-		}
-
-		// return the list
-		return list;
+		});
+		
+  		// return the list
+  		return list;
 	}
 
 	/** Reveals a hidden achievement.
 	 * @param identifier the achievement identifier. */
 	public void revealAchievement (String identifier) {
-		GPGAchievement a = GPGAchievement.achievementWithId(identifier);
+		GPGAchievement a = GPGAchievement.getAchievementWithId(identifier);
 		a.revealAchievementWithCompletionHandler(revealBlock);
 	}
 
@@ -378,7 +391,7 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	 * @param block a block that is invoked when the reveal process ends. Used to check whether it succeeded. Note: make the block
 	 *           an instance member to be sure it is not garbage collected. */
 	public void revealAchievement (String identifier, GPGAchievementDidRevealBlock block) {
-		GPGAchievement a = GPGAchievement.achievementWithId(identifier);
+		GPGAchievement a = GPGAchievement.getAchievementWithId(identifier);
 		a.revealAchievementWithCompletionHandler(block);
 	}
 
@@ -386,7 +399,7 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	 * @param identifier the achievement identifier.
 	 * @param steps number of steps to increment. */
 	public void incrementAchievement (String identifier, int steps) {
-		GPGAchievement a = GPGAchievement.achievementWithId(identifier);
+		GPGAchievement a = GPGAchievement.getAchievementWithId(identifier);
 		a.incrementAchievementNumSteps(steps, incrementBlock);
 	}
 
@@ -396,14 +409,14 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	 * @param block a block that is invoked when the increment process ends. Used to check whether it succeeded. Note: make the
 	 *           block an instance member to be sure it is not garbage collected. */
 	public void incrementAchievement (String identifier, int steps, GPGAchievementDidIncrementBlock block) {
-		GPGAchievement a = GPGAchievement.achievementWithId(identifier);
+		GPGAchievement a = GPGAchievement.getAchievementWithId(identifier);
 		a.incrementAchievementNumSteps(steps, block);
 	}
 
 	/** Unlocks an achievement.
 	 * @param identifier the achievement identifier. */
 	public void unlockAchievement (String identifier) {
-		GPGAchievement a = GPGAchievement.achievementWithId(identifier);
+		GPGAchievement a = GPGAchievement.getAchievementWithId(identifier);
 		a.unlockAchievementWithCompletionHandler(unlockBlock);
 	}
 
@@ -412,7 +425,7 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	 * @param block a block that is invoked when the unlock process ends. Used to check whether it succeeded. Note: make the block
 	 *           an instance member to be sure it is not garbage collected. */
 	public void unlockAchievement (String identifier, GPGAchievementDidUnlockBlock block) {
-		GPGAchievement a = GPGAchievement.achievementWithId(identifier);
+		GPGAchievement a = GPGAchievement.getAchievementWithId(identifier);
 		a.unlockAchievementWithCompletionHandler(block);
 	}
 
@@ -423,13 +436,13 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	 *           to implement this correctly. */
 	public void cloudSave (int stateKey, NSData data, GPGAppStateConflictHandler conflictHandler) {
 		// get the model
-		GPGAppStateModel model = GPGManager.sharedInstance().applicationModel().appState();
+		GPGAppStateModel model = GPGManager.sharedInstance().getApplicationModel().getAppState();
 
 		// add the data
-		model.setStateData(data, stateKey);
+		model.setStateData(data, NSNumber.valueOf(stateKey));
 
 		// post the data
-		model.updateForKey(stateKey, cloudCompletionHandler, conflictHandler);
+		model.update(NSNumber.valueOf(stateKey), cloudCompletionHandler, conflictHandler);
 	}
 
 	/** Posts data (savegame) to google.
@@ -441,13 +454,13 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	public void cloudSave (int stateKey, NSData data, GPGAppStateConflictHandler conflictHandler,
 		GPGAppStateWriteResultHandler resultHandler) {
 		// get the model
-		GPGAppStateModel model = GPGManager.sharedInstance().applicationModel().appState();
+		GPGAppStateModel model = GPGManager.sharedInstance().getApplicationModel().getAppState();
 
 		// add the data
-		model.setStateData(data, stateKey);
+		model.setStateData(data, NSNumber.valueOf(stateKey));
 
 		// post the data
-		model.updateForKey(stateKey, resultHandler, conflictHandler);
+		model.update(NSNumber.valueOf(stateKey), resultHandler, conflictHandler);
 	}
 
 	/** Loads data (savegame) from google.
@@ -459,10 +472,10 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	public void cloudLoad (int stateKey, GPGAppStateConflictHandler conflictHandler, GPGAppStateLoadResultHandler resultHandler) {
 
 		// get the model
-		final GPGAppStateModel model = GPGManager.sharedInstance().applicationModel().appState();
+		final GPGAppStateModel model = GPGManager.sharedInstance().getApplicationModel().getAppState();
 
 		// start the load request
-		model.loadForKey(stateKey, resultHandler, conflictHandler);
+		model.load(NSNumber.valueOf(stateKey), resultHandler, conflictHandler);
 	}
 
 	/** Clears data at google.
@@ -474,25 +487,10 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	public void cloudClear (int stateKey, GPGAppStateConflictHandler conflictHandler, GPGAppStateWriteResultHandler resultHandler) {
 
 		// get the model
-		final GPGAppStateModel model = GPGManager.sharedInstance().applicationModel().appState();
+		final GPGAppStateModel model = GPGManager.sharedInstance().getApplicationModel().getAppState();
 
 		// clear the state
-		model.clearForKey(stateKey, resultHandler, conflictHandler);
-	}
-
-	/** Retrieves data about the local player.
-	 * @param dataType the data that you want. Choose from DATA_NAME, DATA_AVATAR and DATA_ID. These values are available as static
-	 *           members of PlayServicesManager. */
-	public String getUserData (int dataType) {
-		switch (dataType) {
-		case DATA_NAME:
-			return GPGManager.sharedInstance().applicationModel().player().localPlayer().name();
-		case DATA_AVATAR:
-			return GPGManager.sharedInstance().applicationModel().player().localPlayer().avatarUrl().toString();
-		case DATA_ID:
-			return GPGManager.sharedInstance().applicationModel().player().localPlayer().playerId();
-		}
-		return "";
+		model.clear(NSNumber.valueOf(stateKey), resultHandler, conflictHandler);
 	}
 
 	/** Call to display a specific leaderboard.
@@ -552,20 +550,25 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 	/** @return an ArrayList containing all data about your leaderboards. */
 	public ArrayList<GPGLeaderboardMetadata> getLeaderboardsList () {
 
-		// get the leaderboard model
-		GPGLeaderboardModel model = GPGManager.sharedInstance().applicationModel().leaderboard();
-
 		// obtain the data and put it in a list
-		ArrayList<GPGLeaderboardMetadata> list = new ArrayList<GPGLeaderboardMetadata>();
-		NSArray<GPGLeaderboardMetadata> dat = model.allMetadata();
-		for (int i = 0; i < dat.size(); i++) {
-			GPGLeaderboardMetadata n = dat.get(i);
-			if (n != null) {
-				list.add(n);
-			} else {
-				System.out.println("[Warning] PlayServicesManager: One of your leaderboards could not be listed.");
+		final ArrayList<GPGLeaderboardMetadata> list = new ArrayList<GPGLeaderboardMetadata>();
+		
+		GPGLeaderboardMetadata.allMetadataWithCompletionHandler(new GPGLeaderboardAllMetadataBlock() {
+			
+			@Override
+			public void invoke(NSArray metadata, NSError error) 
+			{
+				NSArray<GPGLeaderboardMetadata> dat = metadata;
+				for (int i = 0; i < dat.size(); i++) {
+					GPGLeaderboardMetadata n = dat.get(i);
+					if (n != null) {
+						list.add(n);
+					} else {
+						System.out.println("[Warning] PlayServicesManager: One of your leaderboards could not be listed.");
+					}
+				}
 			}
-		}
+		});
 
 		// return the list
 		return list;
@@ -583,7 +586,7 @@ public class PlayServicesManager extends NSObject implements GPPSignInDelegate, 
 		scoresLoaded = callback;
 
 		// create the leaderboard class
-		GPGLeaderboard b = GPGLeaderboard.leaderboardWithId(leaderboardId);
+		GPGLeaderboard b = GPGLeaderboard.getLeaderboardWithId(leaderboardId);
 
 		// set options
 		b.setSocial(social);

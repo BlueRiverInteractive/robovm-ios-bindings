@@ -2,7 +2,6 @@
 // Google Play Games Platform Services
 // Copyright 2013 Google Inc. All rights reserved.
 //
-
 #import <Foundation/Foundation.h>
 
 #import "GPGMultiplayerConfig.h"

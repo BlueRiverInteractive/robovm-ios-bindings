@@ -2,7 +2,6 @@
 // Google Play Games Platform Services
 // Copyright 2013 Google Inc. All rights reserved.
 //
-
 #import <UIKit/UIKit.h>
 
 #import "GPGEnums.h"
@@ -23,10 +22,9 @@ typedef void (^GPGAllAchievementsDidResetBlock)(NSError *error);
 
 @interface GPGAchievement : NSObject
 
-// Designated initializer.
-- (id)initWithAchievementId:(NSString *)achievementId;
+- (instancetype)initWithAchievementId:(NSString *)achievementId;
 
-+ (id)achievementWithId:(NSString *)achievementId;
++ (instancetype)achievementWithId:(NSString *)achievementId;
 
 #pragma mark Constant Properties 
 
@@ -34,10 +32,9 @@ typedef void (^GPGAllAchievementsDidResetBlock)(NSError *error);
 
 #pragma mark Configurable Properties 
 
-@property(nonatomic, readwrite, assign) BOOL showsCompletionNotification;
+@property(nonatomic, assign) BOOL showsCompletionNotification;
 
 #pragma mark Actions 
-
 - (void)unlockAchievementWithCompletionHandler:(GPGAchievementDidUnlockBlock)completionHandler;
 
 - (void)revealAchievementWithCompletionHandler:(GPGAchievementDidRevealBlock)completionHandler;

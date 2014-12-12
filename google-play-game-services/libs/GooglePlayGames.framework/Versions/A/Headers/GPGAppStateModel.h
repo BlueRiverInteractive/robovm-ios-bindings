@@ -2,16 +2,16 @@
 // Google Play Games Platform Services
 // Copyright 2013 Google Inc. All rights reserved.
 //
-
 #import <Foundation/Foundation.h>
 
 #import "GPGEnums.h"
 
+__attribute__ ((deprecated))
 @interface GPGAppStateListInfo : NSObject
 
-@property(nonatomic, readwrite, assign) BOOL dataIsStale;
+@property(nonatomic, assign) BOOL dataIsStale;
 
-@property(nonatomic, readwrite, copy) NSNumber *key;
+@property(nonatomic, copy) NSNumber *key;
 
 @end
 
@@ -27,6 +27,7 @@ typedef NSData * (^GPGAppStateConflictHandler)(NSNumber *key,
                                                NSData *localState,
                                                NSData *remoteState);
 
+__attribute__ ((deprecated))
 @interface GPGAppStateModel : NSObject
 
 - (void)setStateData:(NSData *)state forKey:(NSNumber *)key;

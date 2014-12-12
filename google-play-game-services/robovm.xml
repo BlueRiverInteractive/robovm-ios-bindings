@@ -7,6 +7,7 @@
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<libs>
 		<lib>c++</lib>
+		<lib>z</lib>
 	</libs>
 	<resources>
 		<resource>
