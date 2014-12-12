@@ -2,16 +2,14 @@
 // Google Play Games Platform Services
 // Copyright 2013 Google Inc. All rights reserved.
 //
-
 #import <Foundation/Foundation.h>
 
 #import "GPGEnums.h"
 
 typedef void (^GPGReAuthenticationBlock)(BOOL requiresKeychainWipe, NSError *error);
-typedef void (^GPGRevisionCheckBlock)(GPGRevisionStatus revisionStatus, NSError *error);
+typedef void (^GPGReAuthenticationBlock)(GPGRevisionStatus revisionStatus, NSError *error);
 
 @class GPGApplicationModel;
-@class GPGError;
 @class GPPSignIn;
 @class GPGTurnBasedParticipant;
 @class GPGRealTimeRoomData;
@@ -21,9 +19,9 @@ typedef void (^GPGRevisionCheckBlock)(GPGRevisionStatus revisionStatus, NSError 
 @class GPGRealTimeRoom;
 @class GPGRealTimeRoomData;
 @class GPGRealTimeParticipant;
-@class GPGRealTimeRoomViewController;
 
 @protocol GPGRealTimeRoomDelegate;
+@protocol GPGQuestDelegate;
 
 @protocol GPGStatusDelegate <NSObject>
 
@@ -32,6 +30,14 @@ typedef void (^GPGRevisionCheckBlock)(GPGRevisionStatus revisionStatus, NSError 
 - (void)didFinishGamesSignInWithError:(NSError *)error;
 
 - (void)didFinishGamesSignOutWithError:(NSError *)error;
+
+- (void)didFinishGoogleAuthWithError:(NSError *)error;
+
+- (BOOL)shouldReauthenticateWithError:(NSError *)error;
+
+- (void)willReauthenticate:(NSError *)error;
+
+- (void)didDisconnectWithError:(NSError *)error;
 
 @end
 
@@ -55,63 +61,84 @@ typedef void (^GPGRevisionCheckBlock)(GPGRevisionStatus revisionStatus, NSError 
 
 @end
 
-extern NSString * const GPGUserDidSignOutNotification  __attribute__((deprecated));
-
 @interface GPGManager : NSObject
 
-+ (GPGManager *)sharedInstance;
++ (instancetype)sharedInstance;
 
 #pragma mark Application State 
 
-- (GPGApplicationModel *)applicationModel;
-- (NSString *)applicationId;
+@property(nonatomic, readonly, strong) GPGApplicationModel *applicationModel
+    __attribute__((deprecated));
+
+- (NSString *)applicationId __attribute__((deprecated));
 
 #pragma mark Authentication 
-- (BOOL)hasAuthorizer;
-
-- (void)signout __attribute__((deprecated));
+- (BOOL)hasAuthorizer __attribute__((deprecated));
 
 - (void)signOut;
 
 - (void)signIn:(GPPSignIn *)signIn
-    reauthorizeHandler:(GPGReAuthenticationBlock)reauthenticationBlock;
+    reauthorizeHandler:(GPGReAuthenticationBlock)reauthenticationBlock __attribute__((deprecated));
+
+- (void)signIn;
+
+- (BOOL)signInWithClientID:(NSString *)clientID silently:(BOOL)silently;
+
+- (BOOL)signInWithClientID:(NSString *)clientID silently:(BOOL)silently withExtraScopes:(NSArray *)scopes;
 
 #pragma mark Push Notifications 
 - (BOOL)tryHandleRemoteNotification:(NSDictionary *)userInfo;
+
+- (BOOL)tryHandleRemoteNotification:(NSDictionary *)userInfo
+            forActionWithIdentifier:(NSString *)identifier
+                  completionHandler:(void (^)())completionHandler;
 
 - (void)registerDeviceToken:(NSData *)deviceTokenData
              forEnvironment:(GPGPushNotificationEnvironment)environment;
 
 - (void)unregisterCurrentDeviceToken;
 
+#if defined(__IPHONE_8_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0)
++ (void)registerForInteractiveGamesNotificationsWithType:(UIUserNotificationType)type;
+#endif
 
-@property(nonatomic, readwrite, assign) id<GPGTurnBasedMatchDelegate> turnBasedMatchDelegate;
+#pragma mark - Properties 
+@property(nonatomic, weak) id<GPGTurnBasedMatchDelegate> turnBasedMatchDelegate;
 
-@property(nonatomic, readwrite, assign) id<GPGRealTimeRoomDelegate> realTimeRoomDelegate;
+@property(nonatomic, weak) id<GPGRealTimeRoomDelegate> realTimeRoomDelegate;
 
-@property(nonatomic, readwrite, assign) id<GPGStatusDelegate> statusDelegate;
+@property(nonatomic, weak) id<GPGStatusDelegate> statusDelegate;
+
+@property(nonatomic, weak) id<GPGQuestDelegate> questDelegate;
 
 @property(nonatomic, readonly, assign, getter = isSignedIn) BOOL signedIn;
 
+@property(nonatomic, assign) BOOL appStateEnabled;
+
+@property(nonatomic, assign) BOOL snapshotsEnabled;
+
+@property(nonatomic, assign) NSUInteger sdkTag;
+
 #pragma mark Device Orientation 
-@property(nonatomic, readwrite, assign) NSUInteger validOrientationFlags;
+@property(nonatomic, assign) NSUInteger validOrientationFlags __attribute__((deprecated));
 
-@property(nonatomic, readwrite, assign) NSUInteger welcomeBackOffset;
+@property(nonatomic, assign) NSUInteger welcomeBackOffset;
 
-@property(nonatomic, readwrite, assign) GPGToastPlacement welcomeBackToastPlacement;
+@property(nonatomic, assign) GPGToastPlacement welcomeBackToastPlacement;
 
-@property(nonatomic, readwrite, assign) NSUInteger achievementUnlockedOffset;
+@property(nonatomic, assign) NSUInteger achievementUnlockedOffset;
 
-@property(nonatomic, readwrite, assign) GPGToastPlacement achievementUnlockedToastPlacement;
+@property(nonatomic, assign) GPGToastPlacement achievementUnlockedToastPlacement;
 
-@property(nonatomic, readwrite, assign) NSUInteger sdkTag;
+@property(nonatomic, assign) NSUInteger questCompletedOffset;
 
-#pragma mark - SDK Deprecation Check
+@property(nonatomic, assign) GPGToastPlacement questCompletedToastPlacement;
 
+#pragma mark - SDK Revision Check 
 - (void)refreshRevisionStatus:(GPGRevisionCheckBlock)revisionCheckHandler;
 
-- (GPGRevisionStatus)revisionStatus;
+@property(nonatomic, readonly) GPGRevisionStatus revisionStatus;
 
-- (BOOL)isRevisionValid;
+@property(nonatomic, getter=isRevisionValid, readonly) BOOL revisionValid;
 
 @end

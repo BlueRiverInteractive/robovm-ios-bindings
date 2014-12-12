@@ -2,7 +2,6 @@
 // Google Play Games Platform Services
 // Copyright 2013 Google Inc. All rights reserved.
 //
-
 #import <Foundation/Foundation.h>
 
 #import "GPGEnums.h"
@@ -16,23 +15,25 @@ typedef void (^GPGScoreResetBlock)(NSError *error);
 @interface GPGLeaderboard : NSObject
 
 
-// Designated initializer.
-- (id)initWithLeaderboardId:(NSString *)leaderboardId;
+- (instancetype)initWithLeaderboardId:(NSString *)leaderboardId;
 
-+ (id)leaderboardWithId:(NSString *)leaderboardId;
++ (instancetype)leaderboardWithId:(NSString *)leaderboardId;
 
 #pragma mark Constant Properties 
-@property (nonatomic, readonly, copy) NSString * leaderboardId;
+@property(nonatomic, readonly, copy) NSString *leaderboardId;
 
 #pragma mark Configurable Properties 
-@property (nonatomic, readwrite, assign, getter=isPersonalWindow) BOOL personalWindow; // default: NO. NO means the window is focused around top players.
+@property(nonatomic, assign, getter=isPersonalWindow) BOOL personalWindow; // default: NO. NO means the window is focused around top players.
 
-@property (nonatomic, readwrite, assign) GPGLeaderboardTimeScope timeScope; // default: GPGLeaderboardTimeScopeAllTime
+@property(nonatomic, assign) GPGLeaderboardTimeScope timeScope; // default: GPGLeaderboardTimeScopeAllTime
 
-@property (nonatomic, readwrite, assign, getter=isSocial) BOOL social; // default: NO. NO means load the public leaderboard.
+@property(nonatomic, assign, getter=isSocial) BOOL social; // default: NO. NO means load the public leaderboard.
 
 #pragma mark Actions 
 - (void)loadScoresWithCompletionHandler:(GPGLeaderboardLoadScoresBlock)completionHandler;
+
+- (void)loadScoresFromDataSource:(GPGDataSource)dataSource
+               completionHandler:(GPGLeaderboardLoadScoresBlock)completionHandler;
 
 - (void)loadNextPageOfScoresWithCompletionHandler:(GPGLeaderboardLoadScoresBlock)completionHandler;
 
@@ -42,23 +43,23 @@ typedef void (^GPGScoreResetBlock)(NSError *error);
 
 #pragma mark In-Flight Status 
 
-- (BOOL)isLoading;
+@property(nonatomic, getter=isLoading, readonly) BOOL loading;
 
-- (BOOL)isLoadingPreviousPage;
+@property(nonatomic, readonly, assign) BOOL loadingPreviousPage;
 
-- (BOOL)isLoadingNextPage;
+@property(nonatomic, readonly, assign) BOOL loadingNextPage;
 
 #pragma mark Post-Load Results 
 
-@property (nonatomic, readonly, copy) NSArray *scores; // [GPGScore,...]
+@property(nonatomic, readonly, copy) NSArray *scores; // [GPGScore,...]
 
-@property (nonatomic, readonly, retain) GPGLocalPlayerScore *localPlayerScore;
+@property(nonatomic, readonly, strong) GPGLocalPlayerScore *localPlayerScore;
 
-@property (nonatomic, readonly, copy) NSString *name;
+@property(nonatomic, readonly, copy) NSString *name;
 
-@property (nonatomic, readonly, assign) BOOL hasPreviousPage;
+@property(nonatomic, readonly, assign) BOOL hasPreviousPage;
 
-@property (nonatomic, readonly, assign) BOOL hasNextPage;
+@property(nonatomic, readonly, assign) BOOL hasNextPage;
 
 @end
 

@@ -1,211 +1,162 @@
 
 package org.robovm.bindings.gpgs;
 
+import org.robovm.apple.foundation.NSArray;
+import org.robovm.apple.foundation.NSData;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.uikit.UIRemoteNotification;
+import org.robovm.apple.uikit.UIUserNotificationType;
 import org.robovm.bindings.gpp.GPPSignIn;
-import org.robovm.objc.ObjCBlock;
-import org.robovm.objc.ObjCClass;
-import org.robovm.objc.ObjCRuntime;
-import org.robovm.objc.Selector;
+import org.robovm.objc.annotation.Block;
+import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.annotation.Bridge;
+import org.robovm.objc.annotation.Property;
 import org.robovm.rt.bro.annotation.Library;
+import org.robovm.rt.bro.annotation.MachineSizedUInt;
 
 @Library(Library.INTERNAL)
 @NativeClass()
 public class GPGManager extends NSObject {
-	private static final ObjCClass objCClass = ObjCClass.getByType(GPGManager.class);
 
-	static {
-		ObjCRuntime.bind(GPGManager.class);
-	}
+	@Method(selector = "sharedInstance")
+	public static native GPGManager sharedInstance();
+	
+	@Deprecated
+	@Method(selector = "applicationModel")
+	public native GPGApplicationModel getApplicationModel();
+	
+	@Deprecated
+	@Method(selector = "applicationId")
+	public native String getApplicationId();
+	
+	@Deprecated
+	@Method(selector = "hasAuthorizer")
+	public native boolean hasAuthorizer();
 
-	// + (GPGManager *)sharedInstance;
-	private static final Selector sharedInstance$ = Selector.register("sharedInstance");
+	@Method(selector = "signOut")
+	public native void signOut();
 
-	@Bridge
-	private native static GPGManager objc_sharedInstance (ObjCClass __self__, Selector __cmd__);
+	@Deprecated
+	@Method(selector = "signIn:reauthorizeHandler:")
+	public native void signIn(GPPSignIn signIn, @Block GPGReAuthenticationBlock reauthenticationBlock);
+	
+	@Method(selector = "signIn")
+	public native void signIn();
+	
+	@Method(selector = "signInWithClientID:silently:")
+	public native void signInWithClientID(String clientID, boolean silently);
+	
+	@Method(selector = "signInWithClientID:silently:withExtraScopes:")
+	public native void signInWithClientID(String clientID, boolean silently, NSArray scopes);
+	
+	@Method(selector = "tryHandleRemoteNotification:")
+	public native boolean tryHandleRemoteNotification(UIRemoteNotification userInfo);
 
-	public static GPGManager sharedInstance () {
-		return objc_sharedInstance(objCClass, sharedInstance$);
-	}
+	@Method(selector = "tryHandleRemoteNotification:forActionWithIdentifier:completionHandler:")
+	public native boolean tryHandleRemoteNotification(UIRemoteNotification userInfo, String identifier, @Block Runnable completionHandler);
+    
+	@Method(selector = "registerDeviceToken:forEnvironment:")
+	public native boolean registerDeviceToken(NSData deviceTokenData, GPGPushNotificationEnvironment environment);
 
-	// - (GPGApplicationModel *)applicationModel;
-	private static final Selector applicationModel$ = Selector.register("applicationModel");
+	@Method(selector = "unregisterCurrentDeviceToken")
+	public native void unregisterCurrentDeviceToken();
+	
+	@Method(selector = "registerForInteractiveGamesNotificationsWithType:")
+	public native void registerForInteractiveGamesNotificationsWithType(UIUserNotificationType type);
+	
+	@Property(selector = "turnBasedMatchDelegate")
+	public native GPGTurnBasedMatchDelegate getturnBasedMatchDelegate();
+	
+	@Property(selector = "setTurnBasedMatchDelegate:", strongRef = true)
+	public native void setTurnBasedMatchDelegate(GPGTurnBasedMatchDelegate realTimeRoomDelegate);
+	
+	@Property(selector = "realTimeRoomDelegate")
+	public native GPGRealTimeRoomDelegate getRealTimeRoomDelegate();
+	
+	@Property(selector = "setRealTimeRoomDelegate:", strongRef = true)
+	public native void setRealTimeRoomDelegate(GPGRealTimeRoomDelegate realTimeRoomDelegate);
+	
+	@Property(selector = "statusDelegate")
+	public native GPGStatusDelegate getStatusDelegate();
+	
+	@Property(selector = "setStatusDelegate:", strongRef = true)
+	public native void setStatusDelegate(GPGStatusDelegate statusDelegate);
+	
+	@Property(selector = "questDelegate")
+	public native GPGQuestDelegate getQuestDelegate();
+	
+	@Property(selector = "setQuestDelegate:", strongRef = true)
+	public native void setQuestDelegate(GPGQuestDelegate questDelegate);
+	
+	@Property(selector = "signedIn")
+	public native boolean isSignedIn();
+	
+	@Property(selector = "appStateEnabled")
+	public native boolean getAppStateEnabled();
+	
+	@Property(selector = "setAppStateEnabled:", strongRef = true)
+	public native void setAppStateEnabled(boolean appStateEnabled);
+	
+	@Property(selector = "snapshotsEnabled")
+	public native boolean getSnapshotsEnabled();
+	
+	@Property(selector = "setSnapshotsEnabled:", strongRef = true)
+	public native void setSnapshotsEnabled(boolean snapshotsEnabled);
+	
+	@Property(selector = "sdkTag")
+	public native @MachineSizedUInt long getSdkTag();
 
-	@Bridge
-	private native static GPGApplicationModel objc_applicationModel (GPGManager __self__, Selector __cmd__);
+	@Property(selector = "setSdkTag:", strongRef = true)
+	public native void setSdkTag(@MachineSizedUInt long sdkTag);
+	
+	@Property(selector = "validOrientationFlags")
+	public native @MachineSizedUInt long getValidOrientationFlags();
 
-	public GPGApplicationModel applicationModel () {
-		return objc_applicationModel(this, applicationModel$);
-	}
+	@Property(selector = "setValidOrientationFlags:", strongRef = true)
+	public native void setValidOrientationFlags(@MachineSizedUInt long validOrientationFlags);
+	
+	@Property(selector = "welcomeBackOffset")
+	public native @MachineSizedUInt long getWelcomeBackOffset();
 
-	// - (NSString *)applicationId;
-	private static final Selector applicationId$ = Selector.register("applicationId");
+	@Property(selector = "setWelcomeBackOffset:", strongRef = true)
+	public native void setWelcomeBackOffset(@MachineSizedUInt long welcomeBackOffset);
+	
+	@Property(selector = "welcomeBackToastPlacement")
+	public native GPGToastPlacement getWelcomeBackToastPlacement();
 
-	@Bridge
-	private native static String objc_applicationId (GPGManager __self__, Selector __cmd__);
+	@Property(selector = "setWelcomeBackToastPlacement:", strongRef = true)
+	public native void setWelcomeBackToastPlacement(GPGToastPlacement welcomeBackToastPlacement);
 
-	public String applicationId () {
-		return objc_applicationId(this, applicationId$);
-	}
+	@Property(selector = "achievementUnlockedOffset")
+	public native @MachineSizedUInt long getAchievementUnlockedOffset();
 
-	// - (BOOL)hasAuthorizer;
-	private static final Selector hasAuthorizer$ = Selector.register("hasAuthorizer");
+	@Property(selector = "setAchievementUnlockedOffset:", strongRef = true)
+	public native void setAchievementUnlockedOffset(@MachineSizedUInt long achievementUnlockedOffset);
 
-	@Bridge
-	private native static boolean objc_hasAuthorizer (GPGManager __self__, Selector __cmd__);
+	@Property(selector = "achievementUnlockedToastPlacement")
+	public native GPGToastPlacement getAchievementUnlockedToastPlacement();
 
-	public boolean hasAuthorizer () {
-		return objc_hasAuthorizer(this, hasAuthorizer$);
-	}
+	@Property(selector = "setAchievementUnlockedToastPlacement:", strongRef = true)
+	public native void setAchievementUnlockedToastPlacement(GPGToastPlacement achievementUnlockedToastPlacement);
 
-	// - (void)signout;
-	private static final Selector signout$ = Selector.register("signout");
+	@Property(selector = "questCompletedOffset")
+	public native @MachineSizedUInt long getQuestCompletedOffset();
 
-	@Bridge
-	private native static boolean objc_signout (GPGManager __self__, Selector __cmd__);
+	@Property(selector = "setQuestCompletedOffset:", strongRef = true)
+	public native void setQuestCompletedOffset(@MachineSizedUInt long questCompletedOffset);
+	
+	@Property(selector = "questCompletedToastPlacement")
+	public native GPGToastPlacement getQuestCompletedToastPlacement();
 
-	public boolean signout () {
-		return objc_signout(this, signout$);
-	}
+	@Property(selector = "setQuestCompletedToastPlacement:", strongRef = true)
+	public native void setQuestCompletedToastPlacement(GPGToastPlacement questCompletedToastPlacement);
+	
+	@Method(selector = "refreshRevisionStatus:")
+	public native void refreshRevisionStatus(@Block GPGRevisionCheckBlock revisionCheckHandler);
+	
+	@Method(selector = "revisionStatus")
+	public native GPGRevisionStatus getRevisionStatus();
 
-	// - (void)signIn:(GPPSignIn *)signIn reauthorizeHandler:(GPGReAuthenticationBlock)reauthenticationBlock;
-	private static final Selector signIn$ = Selector.register("signIn:reauthorizeHandler:");
-
-	@Bridge
-	private native static void objc_signIn (GPGManager __self__, Selector __cmd__, GPPSignIn signIn,
-		ObjCBlock reauthenticationBlock);
-
-	public void signIn (GPPSignIn signIn, GPGReAuthenticationBlock reauthenticationBlock) {
-		objc_signIn(this, signIn$, signIn, GPGReAuthenticationBlock.Marshaler.toObjCBlock(reauthenticationBlock));
-	}
-
-	// @property(nonatomic, readwrite, assign) NSUInteger validOrientationFlags;
-	private static final Selector validOrientationFlags$ = Selector.register("validOrientationFlags");
-
-	@Bridge
-	private native static char objc_validOrientationFlags (GPGManager __self__, Selector __cmd__);
-
-	public char validOrientationFlags () {
-		return objc_validOrientationFlags(this, validOrientationFlags$);
-	}
-
-	private static final Selector setValidOrientationFlags$ = Selector.register("setValidOrientationFlags:");
-
-	@Bridge
-	private native static void objc_setValidOrientationFlags (GPGManager __self__, Selector __cmd__, char flags);
-
-	public void setValidOrientationFlags (char flags) {
-		objc_setValidOrientationFlags(this, setValidOrientationFlags$, flags);
-	}
-
-	// @property(nonatomic, readwrite, assign) NSUInteger welcomeBackOffset;
-	private static final Selector welcomeBackOffset$ = Selector.register("welcomeBackOffset");
-
-	@Bridge
-	private native static char objc_welcomeBackOffset (GPGManager __self__, Selector __cmd__);
-
-	public char welcomeBackOffset () {
-		return objc_welcomeBackOffset(this, welcomeBackOffset$);
-	}
-
-	private static final Selector setWelcomeBackOffset$ = Selector.register("setWelcomeBackOffset:");
-
-	@Bridge
-	private native static void objc_setWelcomeBackOffset (GPGManager __self__, Selector __cmd__, char offset);
-
-	public void setWelcomeBackOffset (char offset) {
-		objc_setWelcomeBackOffset(this, setWelcomeBackOffset$, offset);
-	}
-
-	// @property(nonatomic, readwrite, assign) GPGToastPlacement welcomeBackToastPlacement;
-	private static final Selector welcomeBackToastPlacement$ = Selector.register("welcomeBackToastPlacement");
-
-	@Bridge
-	private native static GPGToastPlacement objc_welcomeBackToastPlacement (GPGManager __self__, Selector __cmd__);
-
-	public GPGToastPlacement welcomeBackToastPlacement () {
-		return objc_welcomeBackToastPlacement(this, welcomeBackToastPlacement$);
-	}
-
-	private static final Selector setWelcomeBackToastPlacement$ = Selector.register("setWelcomeBackToastPlacement:");
-
-	@Bridge
-	private native static void objc_setWelcomeBackToastPlacement (GPGManager __self__, Selector __cmd__,
-		GPGToastPlacement welcomeBackToastPlacement);
-
-	public void setWelcomeBackToastPlacement (GPGToastPlacement welcomeBackToastPlacement) {
-		objc_setWelcomeBackToastPlacement(this, setWelcomeBackToastPlacement$, welcomeBackToastPlacement);
-	}
-
-	// @property(nonatomic, readwrite, assign) NSUInteger achievementUnlockedOffset;
-	private static final Selector achievementUnlockedOffset$ = Selector.register("achievementUnlockedOffset");
-
-	@Bridge
-	private native static char objc_achievementUnlockedOffset (GPGManager __self__, Selector __cmd__);
-
-	public char achievementUnlockedOffset () {
-		return objc_achievementUnlockedOffset(this, achievementUnlockedOffset$);
-	}
-
-	private static final Selector setAchievementUnlockedOffset$ = Selector.register("setAchievementUnlockedOffset:");
-
-	@Bridge
-	private native static void objc_setAchievementUnlockedOffset (GPGManager __self__, Selector __cmd__, char offset);
-
-	public void setAchievementUnlockedOffset (char offset) {
-		objc_setAchievementUnlockedOffset(this, setAchievementUnlockedOffset$, offset);
-	}
-
-	// @property(nonatomic, readwrite, assign) GPGToastPlacement achievementUnlockedToastPlacement;
-	private static final Selector achievementUnlockedToastPlacement$ = Selector.register("achievementUnlockedToastPlacement");
-
-	@Bridge
-	private native static GPGToastPlacement objc_achievementUnlockedToastPlacement (GPGManager __self__, Selector __cmd__);
-
-	public GPGToastPlacement achievementUnlockedToastPlacement () {
-		return objc_achievementUnlockedToastPlacement(this, achievementUnlockedToastPlacement$);
-	}
-
-	private static final Selector setAchievementUnlockedToastPlacement$ = Selector
-		.register("setAchievementUnlockedToastPlacement:");
-
-	@Bridge
-	private native static void objc_setAchievementUnlockedToastPlacement (GPGManager __self__, Selector __cmd__,
-		GPGToastPlacement achievementUnlockedToastPlacement);
-
-	public void setAchievementUnlockedToastPlacement (GPGToastPlacement achievementUnlockedToastPlacement) {
-		objc_setAchievementUnlockedToastPlacement(this, setAchievementUnlockedToastPlacement$, achievementUnlockedToastPlacement);
-	}
-
-	// - (void)refreshRevisionStatus:(GPGRevisionCheckBlock)revisionCheckHandler;
-	private static final Selector refreshRevisionStatus$ = Selector.register("refreshRevisionStatus:");
-
-	@Bridge
-	private native static void objc_refreshRevisionStatus (GPGManager __self__, Selector __cmd__, ObjCBlock revisionCheckHandler);
-
-	public void refreshRevisionStatus (GPGRevisionCheckBlock revisionCheckHandler) {
-		objc_refreshRevisionStatus(this, refreshRevisionStatus$, GPGRevisionCheckBlock.Marshaler.toObjCBlock(revisionCheckHandler));
-	}
-
-	// - (GPGRevisionStatus)revisionStatus;
-	private static final Selector revisionStatus$ = Selector.register("revisionStatus");
-
-	@Bridge
-	private native static GPGRevisionStatus objc_revisionStatus (GPGManager __self__, Selector __cmd__);
-
-	public GPGRevisionStatus revisionStatus () {
-		return objc_revisionStatus(this, revisionStatus$);
-	}
-
-	// - (BOOL)isRevisionValid;
-	private static final Selector isRevisionValid$ = Selector.register("isRevisionValid");
-
-	@Bridge
-	private native static boolean objc_isRevisionValid (GPGManager __self__, Selector __cmd__);
-
-	public boolean isRevisionValid () {
-		return objc_isRevisionValid(this, isRevisionValid$);
-	}
+	@Method(selector = "isRevisionValid")
+	public native boolean isRevisionValid();
 }

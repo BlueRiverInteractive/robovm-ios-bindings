@@ -10,12 +10,17 @@
 @class GPGRealTimeRoom;
 @class GPGRealTimeRoomData;
 @class GPGRealTimeParticipant;
-@class GPGRealTimeRoomViewController;
 
 typedef void(^GPGRealTimeParticipantIterator)(GPGRealTimeParticipant *participant);
 
+#pragma mark -
+
 @protocol GPGRealTimeRoomDelegate <NSObject>
 @optional
+
+- (void)didAcceptRealTimeInviteForRoom:(GPGRealTimeRoomData *)roomData;
+
+- (void)didDeclineRealTimeInviteForRoom:(GPGRealTimeRoomData *)roomData;
 
 - (void)didReceiveRealTimeInviteForRoom:(GPGRealTimeRoomData *)roomData;
 
@@ -38,9 +43,9 @@ typedef void(^GPGRealTimeParticipantIterator)(GPGRealTimeParticipant *participan
 
 - (void)room:(GPGRealTimeRoom *)room didFailWithError:(NSError *)error;
 
-- (void)roomViewControllerDidClose:(GPGRealTimeRoomViewController *)roomViewController;
-
 @end
+
+#pragma mark -
 
 @interface GPGRealTimeRoomCreationHandle : NSObject
 
@@ -48,25 +53,31 @@ typedef void(^GPGRealTimeParticipantIterator)(GPGRealTimeParticipant *participan
 
 @end
 
+#pragma mark -
+
 @interface GPGRealTimeRoomModifyDetails : NSObject
 
-@property(nonatomic, readonly, assign) long long lastUpdateTimestamp;
+@property(nonatomic, readonly, assign) int64_t lastUpdateTimestamp;
 
-@property(nonatomic, readonly, retain) GPGRealTimeParticipant *participant;
+@property(nonatomic, readonly, strong) GPGRealTimeParticipant *participant;
 
 @end
 
+#pragma mark -
+
 @interface GPGRealTimeReliableMessageResult : NSObject
 
-@property(nonatomic, readonly, retain) GPGRealTimeParticipant *participant;
+@property(nonatomic, readonly, strong) GPGRealTimeParticipant *participant;
 
 @property(nonatomic, readonly, assign) BOOL success;
 
 @end
 
+#pragma mark -
+
 @interface GPGRealTimeParticipant : NSObject
 
-- (BOOL)canCommunicate;
+@property (nonatomic, readonly) BOOL canCommunicate;
 
 - (int)sendReliableData:(NSData *)data;
 
@@ -86,15 +97,17 @@ typedef void(^GPGRealTimeParticipantIterator)(GPGRealTimeParticipant *participan
 
 @end
 
+#pragma mark -
+
 @interface GPGRealTimeRoom : NSObject
 
-@property(nonatomic, readonly, retain) GPGMultiplayerConfig *config;
+@property(nonatomic, readonly, strong) GPGMultiplayerConfig *config;
 
-@property(nonatomic, readonly, retain) NSArray *participants;
+@property(nonatomic, readonly, copy) NSArray *participants;
 
-@property(nonatomic, readonly, retain) NSArray *connectedParticipants;
+@property(nonatomic, readonly, copy) NSArray *connectedParticipants;
 
-@property(nonatomic, readonly, retain) GPGRealTimeParticipant *localParticipant;
+@property(nonatomic, readonly, strong) GPGRealTimeParticipant *localParticipant;
 
 @property(nonatomic, readonly, copy) NSString *roomDescription;
 
@@ -102,11 +115,11 @@ typedef void(^GPGRealTimeParticipantIterator)(GPGRealTimeParticipant *participan
 
 @property(nonatomic, readonly, assign) BOOL inConnectedSet;
 
-@property(nonatomic, readonly, retain) GPGRealTimeRoomModifyDetails *creationDetails;
+@property(nonatomic, readonly, strong) GPGRealTimeRoomModifyDetails *creationDetails;
 
 @property(nonatomic, readonly, assign) GPGRealTimeRoomStatus status;
 
-@property(nonatomic, readonly, retain) NSNumber *waitEstimateSeconds;
+@property(nonatomic, readonly, copy) NSNumber *waitEstimateSeconds;
 
 - (GPGRealTimeParticipant *)findParticipantById:(NSString *)participantId;
 

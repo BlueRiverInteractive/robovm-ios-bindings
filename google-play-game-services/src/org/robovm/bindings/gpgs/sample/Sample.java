@@ -28,13 +28,13 @@ import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.apple.uikit.UIWindow;
 import org.robovm.bindings.gpgs.GPGAchievement;
+import org.robovm.bindings.gpgs.GPGAchievementAllMetadataBlock;
 import org.robovm.bindings.gpgs.GPGAchievementController;
 import org.robovm.bindings.gpgs.GPGAchievementControllerDelegate;
 import org.robovm.bindings.gpgs.GPGAchievementDidIncrementBlock;
 import org.robovm.bindings.gpgs.GPGAchievementDidRevealBlock;
 import org.robovm.bindings.gpgs.GPGAchievementDidUnlockBlock;
 import org.robovm.bindings.gpgs.GPGAchievementMetadata;
-import org.robovm.bindings.gpgs.GPGAchievementModel;
 import org.robovm.bindings.gpgs.GPGAchievementState;
 import org.robovm.bindings.gpgs.GPGAppStateConflictHandler;
 import org.robovm.bindings.gpgs.GPGAppStateLoadResultHandler;
@@ -42,6 +42,7 @@ import org.robovm.bindings.gpgs.GPGAppStateLoadStatus;
 import org.robovm.bindings.gpgs.GPGAppStateModel;
 import org.robovm.bindings.gpgs.GPGAppStateWriteResultHandler;
 import org.robovm.bindings.gpgs.GPGAppStateWriteStatus;
+import org.robovm.bindings.gpgs.GPGLeaderboardAllMetadataBlock;
 import org.robovm.bindings.gpgs.GPGLeaderboardController;
 import org.robovm.bindings.gpgs.GPGLeaderboardControllerDelegate;
 import org.robovm.bindings.gpgs.GPGLeaderboardMetadata;
@@ -50,6 +51,8 @@ import org.robovm.bindings.gpgs.GPGLeaderboardTimeScope;
 import org.robovm.bindings.gpgs.GPGLeaderboardsController;
 import org.robovm.bindings.gpgs.GPGLeaderboardsControllerDelegate;
 import org.robovm.bindings.gpgs.GPGManager;
+import org.robovm.bindings.gpgs.GPGPlayer;
+import org.robovm.bindings.gpgs.GPGPlayerGetBlock;
 import org.robovm.bindings.gpgs.GPGReAuthenticationBlock;
 import org.robovm.bindings.gpgs.GPGScore;
 import org.robovm.bindings.gpgs.GPGScoreReport;
@@ -160,7 +163,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                 signIn.signOut();
                 GPGManager m = GPGManager.sharedInstance();
                 if (m.hasAuthorizer()) {
-                    m.signout();
+                    m.signOut();
                 }
                 signedIn = false;
             }
@@ -205,34 +208,40 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                      * System.out.println("Achievement: "+arr.get(i).name()); //... }
                      */
 
-                    // a simple other way to do it:
-                    GPGAchievementModel model = GPGManager.sharedInstance().applicationModel().achievement();
 
-                    ArrayList<String> achievements = new ArrayList<String>();
-                    achievements.add(ACH1);
-                    achievements.add(ACH2);
-                    achievements.add(ACH3);
-                    achievements.add(ACH4);
-                    achievements.add(ACH5);
-                    achievements.add(ACH6);
+                    GPGAchievementMetadata.allMetadata(new GPGAchievementAllMetadataBlock() {
+						
+						@Override
+						public void invoke(NSArray metadata, NSError error) 
+						{
+		                    ArrayList<String> achievements = new ArrayList<String>();
+		                    achievements.add(ACH1);
+		                    achievements.add(ACH2);
+		                    achievements.add(ACH3);
+		                    achievements.add(ACH4);
+		                    achievements.add(ACH5);
+		                    achievements.add(ACH6);
 
-                    for (int i = 0; i < achievements.size(); i++) {
-                        GPGAchievementMetadata a = model.metadataForAchievementId(achievements.get(i));
-                        System.out.println("Achievement #" + (i + 1));
-                        System.out.println("- identifier: " + a.achievementId());
-                        System.out.println("- state: " + a.state());
-                        System.out.println("- type: " + a.type());
-                        System.out.println("- name: " + a.name());
-                        System.out.println("- description: " + a.achievementDescription());
-                        System.out.println("- revealed icon: " + a.revealedIconUrl());
-                        System.out.println("- unlocked icon: " + a.unlockedIconUrl());
-                        System.out.println("- completed steps: " + a.completedSteps());
-                        System.out.println("- total steps: " + a.numberOfSteps());
-                        System.out.println("- formatted completed steps: " + a.formattedCompletedSteps());
-                        System.out.println("- formatted total steps: " + a.formattedNumberOfSteps());
-                        System.out.println("- last update timestamp: " + a.lastUpdatedTimestamp());
-                        System.out.println("- progress: " + a.progress());
-                    }
+		                    for (int i = 0; i < achievements.size(); i++) {
+		                    	GPGAchievementMetadata a = (GPGAchievementMetadata) metadata.get(i);
+		                        System.out.println("Achievement #" + (i + 1));
+		                        System.out.println("- identifier: " + a.getAchievementId());
+		                        System.out.println("- state: " + a.getState());
+		                        System.out.println("- type: " + a.getType());
+		                        System.out.println("- name: " + a.getName());
+		                        System.out.println("- description: " + a.getAchievementDescription());
+		                        System.out.println("- revealed icon: " + a.getRevealedIconUrl());
+		                        System.out.println("- unlocked icon: " + a.getUnlockedIconUrl());
+		                        System.out.println("- completed steps: " + a.getCompletedSteps());
+		                        System.out.println("- total steps: " + a.getNumberOfSteps());
+		                        System.out.println("- formatted completed steps: " + a.getFormattedCompletedSteps());
+		                        System.out.println("- formatted total steps: " + a.getFormattedNumberOfSteps());
+		                        System.out.println("- last update timestamp: " + a.getLastUpdatedTimestamp());
+		                        System.out.println("- progress: " + a.getProgress());
+		                    }
+						}
+					});
+                   
                 } else {
                     System.out.println("sign in first.");
                 }
@@ -250,7 +259,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                 if (signedIn) {
                     System.out.println("revealing achievement #3: " + ACH3);
 
-                    GPGAchievement a = GPGAchievement.achievementWithId(ACH3);
+                    GPGAchievement a = GPGAchievement.getAchievementWithId(ACH3);
                     revealBlock = new GPGAchievementDidRevealBlock() {
                         @Override
                         public void invoke (GPGAchievementState state, NSError error) {
@@ -280,7 +289,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                 if (signedIn) {
                     System.out.println("increasing achievement #2 by 1: " + ACH2);
 
-                    GPGAchievement a = GPGAchievement.achievementWithId(ACH2);
+                    GPGAchievement a = GPGAchievement.getAchievementWithId(ACH2);
                     incrementBlock = new GPGAchievementDidIncrementBlock() {
                         @Override
                         public void invoke (boolean newlyUnlocked, int currentSteps, NSError error) {
@@ -312,7 +321,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                 if (signedIn) {
                     System.out.println("unlocking achievement #1: " + ACH1);
 
-                    GPGAchievement a = GPGAchievement.achievementWithId(ACH6);
+                    GPGAchievement a = GPGAchievement.getAchievementWithId(ACH6);
                     unlockBlock = new GPGAchievementDidUnlockBlock() {
                         @Override
                         public void invoke (boolean newlyUnlocked, NSError error) {
@@ -372,13 +381,23 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
         b11tl = new OnTouchUpInsideListener() {
             @Override
             public void onTouchUpInside (UIControl control, UIEvent event) {
-                if (signedIn) {
-                    System.out.println("Welcome " + GPGManager.sharedInstance().applicationModel().player().localPlayer().name()
-                        + "!");
-                    System.out.println("Your avatar url is located here: "
-                        + GPGManager.sharedInstance().applicationModel().player().localPlayer().avatarUrl());
-                    System.out.println("Your playerId is: "
-                        + GPGManager.sharedInstance().applicationModel().player().localPlayer().playerId());
+                if (signedIn) 
+                {
+                	GPGPlayer.localPlayerWithCompletionHandler(new GPGPlayerGetBlock()
+                	{
+						@Override
+						public void invoke(GPGPlayer player, NSError error) 
+						{
+		                    System.out.println("Welcome " + player.getDisplayName()
+		                            + "!");
+		                    System.out.println("Your avatar url is located here: "
+		                            + player.getImageUrl());
+		                    System.out.println("Your playerId is: "
+		                            + player.getPlayerId());
+						}
+                	});
+                	
+
                 } else {
                     System.out.println("sign in first.");
                 }
@@ -462,20 +481,20 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                             if (error == null) {
                                 System.out.println("score post succeeded!");
                                 System.out.println("score analyzation:");
-                                System.out.println("- leaderboard identifier: " + report.leaderboardId());
-                                System.out.println("- reported value: " + report.reportedScoreValue());
+                                System.out.println("- leaderboard identifier: " + report.getLeaderboardId());
+                                System.out.println("- reported value: " + report.getReportedScoreValue());
                                 System.out.println("- is daily highscore: " + report.isHighScoreForLocalPlayerToday());
                                 if (!report.isHighScoreForLocalPlayerToday()) {
-                                    System.out.println("- daily highscore: " + report.highScoreForLocalPlayerToday().value());
+                                    System.out.println("- daily highscore: " + report.getHighScoreForLocalPlayerToday().getValue());
                                 }
                                 System.out.println("- is weekly highscore: " + report.isHighScoreForLocalPlayerThisWeek());
                                 if (!report.isHighScoreForLocalPlayerThisWeek()) {
-                                    System.out.println("- weekly highscore: " + report.highScoreForLocalPlayerThisWeek().value());
+                                    System.out.println("- weekly highscore: " + report.getHighScoreForLocalPlayerThisWeek().getValue());
                                 }
                                 System.out.println("- is all time highscore: " + report.isHighScoreForLocalPlayerAllTime());
                                 if (!report.isHighScoreForLocalPlayerAllTime()) {
                                     System.out
-                                        .println("- all time highscore: " + report.highScoreForLocalPlayerAllTime().value());
+                                        .println("- all time highscore: " + report.getHighScoreForLocalPlayerAllTime().getValue());
                                 }
                             } else {
                                 System.out.println("score post failed: " + error.description());
@@ -514,16 +533,23 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                      * System.out.println("- identifier: "+leaderboard.leaderboardId()+", name: "+leaderboard.title()); }
                      */
 
-                    // So I avoid it like this:
-                    GPGLeaderboardModel model = GPGManager.sharedInstance().applicationModel().leaderboard();
-                    ArrayList<String> leaderboards = new ArrayList<String>();
-                    leaderboards.add(LEAD1);
-                    leaderboards.add(LEAD2);
+                    GPGLeaderboardMetadata.allMetadataWithCompletionHandler(new GPGLeaderboardAllMetadataBlock()
+                    {
+						@Override
+						public void invoke(NSArray metadata, NSError error) 
+						{
+		                    // So I avoid it like this:
+		                    ArrayList<String> leaderboards = new ArrayList<String>();
+		                    leaderboards.add(LEAD1);
+		                    leaderboards.add(LEAD2);
 
-                    for (int i = 0; i < leaderboards.size(); i++) {
-                        GPGLeaderboardMetadata leaderboard = model.metadataForLeaderboardId(leaderboards.get(i));
-                        System.out.println("- identifier: " + leaderboard.leaderboardId() + ", name: " + leaderboard.title());
-                    }
+		                    for (int i = 0; i < leaderboards.size(); i++) {
+		                        GPGLeaderboardMetadata leaderboard = ((GPGLeaderboardModel) metadata.get(i)).metadataForLeaderboardId(leaderboards.get(i));
+		                        System.out.println("- identifier: " + leaderboard.getLeaderboardId() + ", name: " + leaderboard.getTitle());
+		                    }
+						}    	
+                    });
+                   
                 } else {
                     System.out.println("sign in first.");
                 }
@@ -589,7 +615,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
         System.out.println("saving state.");
 
         // get the model
-        GPGAppStateModel model = GPGManager.sharedInstance().applicationModel().appState();
+        GPGAppStateModel model = GPGManager.sharedInstance().getApplicationModel().getAppState();
 
         // choose a save state
         int playerAvatarKey = 2;// the state number. use 0 to 3.
@@ -599,7 +625,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
         b.put(new byte[] {1, 2, 3, 4, 5});
         NSData newAvatarData = new NSData(b);// add data that you wist to upload.
         // (NOTE: NSData is not implemented by robovm, so you can't actually add data until it is implemented.)
-        model.setStateData(newAvatarData, playerAvatarKey);
+        model.setStateData(newAvatarData, NSNumber.valueOf(playerAvatarKey));
 
         // the completion handler
         cloudCompletionHandler = new GPGAppStateWriteResultHandler() {
@@ -634,15 +660,13 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
         // the conflict handler
         cloudConflictHandler = new GPGAppStateConflictHandler() {
             @Override
-            public NSData invoke (NSNumber key, NSData localState, NSData remoteState) {
+            public void invoke (NSNumber key, NSData localState, NSData remoteState) {
                 System.out.println("conflict handler running! key: " + key);
-                // it is important that you implement this. Read the google docs for more information.
-                return remoteState;
             }
         };
 
         // post the data
-        model.updateForKey(playerAvatarKey, cloudCompletionHandler, cloudConflictHandler);
+        model.update(NSNumber.valueOf(playerAvatarKey), cloudCompletionHandler, cloudConflictHandler);
     }
 
     /** Loads data from the cloud. */
@@ -650,7 +674,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
         System.out.println("loading state.");
 
         // get the model
-        final GPGAppStateModel model = GPGManager.sharedInstance().applicationModel().appState();
+        final GPGAppStateModel model = GPGManager.sharedInstance().getApplicationModel().getAppState();
 
         // choose a save state
         final int playerAvatarKey = 2;// the state number. use 0 to 3.
@@ -668,7 +692,7 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
                     break;
                 case GPGAppStateLoadStatusSuccess:
                     System.out.println("cloud load succeeded");
-                    NSData savegame = model.stateDataForKey(playerAvatarKey);
+                    NSData savegame = model.setStateData(NSNumber.valueOf(playerAvatarKey));
                     ByteBuffer savegameBB = savegame.asByteBuffer();
                     System.out.print("Received savegame: ");
                     for (int i = 0; i < savegameBB.capacity(); i++) {
@@ -682,15 +706,13 @@ public class Sample extends UIApplicationDelegateAdapter implements GPPSignInDel
         // the conflict handler
         cloudConflictHandler = new GPGAppStateConflictHandler() {
             @Override
-            public NSData invoke (NSNumber key, NSData localState, NSData remoteState) {
+            public void invoke (NSNumber key, NSData localState, NSData remoteState) {
                 System.out.println("conflict handler running! key: " + key);
-                // it is important that you implement this. Read the google docs for more information.
-                return remoteState;
             }
         };
 
         // start the load request
-        model.loadForKey(playerAvatarKey, cloudLoadCompletionHandler, cloudConflictHandler);
+        model.load(NSNumber.valueOf(playerAvatarKey), cloudLoadCompletionHandler, cloudConflictHandler);
     }
 
     public static void main (String[] argv) {
