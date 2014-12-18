@@ -5,7 +5,7 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-	classpath 'org.robovm:robovm-gradle-plugin:1.0.0-alpha-01'
+        classpath 'org.robovm:robovm-gradle-plugin:1.0.0-beta-01'
     }
 }
 
@@ -15,10 +15,10 @@ allprojects {
     apply plugin: "java"
     apply plugin: "robovm"
 
-    version = '1.0.0-SNAPSHOT'
+    version = '1.0.0-beta-01'
 
     ext {
-        roboVMVersion = '1.0.0-SNAPSHOT'
+        roboVMVersion = '1.0.0-beta-01'
     }
 
     dependencies {
@@ -32,7 +32,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
-    sourceSets.main.java.srcDirs = [ "src/" ]
+    sourceSets.main.java.srcDirs = ["src/"]
     sourceCompatibility = '1.7'
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -42,15 +42,15 @@ allprojects {
     createIPA.dependsOn build
 
     jar {
-      into('META-INF/robovm/ios') {
-        from(".") { include "robovm.xml" }        
-      }
-      into('META-INF/robovm/ios/libs') {
-        from 'libs'
-      }
-      into('META-INF/robovm/ios/resources') {
-        from 'resources'
-      }
+        into('META-INF/robovm/ios') {
+            from(".") { include "robovm.xml" }
+        }
+        into('META-INF/robovm/ios/libs') {
+            from 'libs'
+        }
+        into('META-INF/robovm/ios/resources') {
+            from 'resources'
+        }
     }
 }
 
