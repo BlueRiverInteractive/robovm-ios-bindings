@@ -6,6 +6,7 @@ import org.robovm.apple.foundation.NSPropertyList;
 import org.robovm.apple.foundation.NSURL;
 import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
+import org.robovm.apple.uikit.UIApplicationLaunchOptions;
 import org.robovm.apple.uikit.UINavigationController;
 import org.robovm.apple.uikit.UIScreen;
 import org.robovm.apple.uikit.UIWindow;
@@ -43,7 +44,7 @@ public class Sample extends UIApplicationDelegateAdapter {
     private SampleViewController sampleViewController;
 
     @Override
-    public void didFinishLaunching (UIApplication application) {
+    public boolean didFinishLaunching (UIApplication application, UIApplicationLaunchOptions launchOptions) {
         sampleViewController = new SampleViewController();
         navigationController = new UINavigationController(sampleViewController);
 
@@ -76,6 +77,8 @@ public class Sample extends UIApplicationDelegateAdapter {
             public void onCancel () {
             }
         });
+
+        return true;
     }
 
     @Override
