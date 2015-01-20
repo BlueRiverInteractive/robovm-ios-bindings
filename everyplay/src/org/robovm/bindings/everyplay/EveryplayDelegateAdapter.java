@@ -3,65 +3,67 @@ package org.robovm.bindings.everyplay;
 import org.robovm.apple.foundation.NSNumber;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSURL;
+import org.robovm.objc.annotation.NotImplemented;
 
 public class EveryplayDelegateAdapter extends NSObject implements
 		EveryplayDelegate {
 
-	@Override
-	public void everyplayShown() {
+	@NotImplemented("everyplayShown")
+	public void shown() {
+		throw new UnsupportedOperationException();
+	}
+
+	@NotImplemented("everyplayHidden")
+	public void hidden() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void everyplayHidden() {
+	public void readyForRecording(NSNumber enabled) {
 	}
 
 	@Override
-	public void everyplayReadyForRecording(NSNumber enabled) {
+	public void recordingStarted() {
 	}
 
 	@Override
-	public void everyplayRecordingStarted() {
+	public void recordingStopped() {
 	}
 
 	@Override
-	public void everyplayRecordingStopped() {
+	public void faceCamSessionStarted() {
 	}
 
 	@Override
-	public void everyplayFaceCamSessionStarted() {
+	public void faceCamRecordingPermission(NSNumber granted) {
 	}
 
 	@Override
-	public void everyplayFaceCamRecordingPermission(NSNumber granted) {
+	public void faceCamSessionStopped() {
 	}
 
 	@Override
-	public void everyplayFaceCamSessionStopped() {
+	public void uploadDidStart(NSNumber videoId) {
 	}
 
 	@Override
-	public void everyplayUploadDidStart(NSNumber videoId) {
+	public void uploadDidProgress(NSNumber videoId, NSNumber progress) {
 	}
 
 	@Override
-	public void everyplayUploadDidProgress(NSNumber videoId, NSNumber progress) {
+	public void uploadDidComplete(NSNumber videoId) {
 	}
 
 	@Override
-	public void everyplayUploadDidComplete(NSNumber videoId) {
+	public void thumbnailReadyAtFilePath(String thumbnailFilePath) {
 	}
 
 	@Override
-	public void everyplayThumbnailReadyAtFilePath(String thumbnailFilePath) {
+	public void thumbnailReadyAtURL(NSURL thumbnailUrl) {
 	}
 
 	@Override
-	public void everyplayThumbnailReadyAtURL(NSURL thumbnailUrl) {
-	}
-
-	@Override
-	public void everyplayThumbnailReadyAtTextureId(NSNumber textureId,
-			NSNumber portrait) {
+	public void thumbnailReadyAtTextureId(NSNumber textureId, NSNumber portrait) {
 	}
 
 }

@@ -9,60 +9,60 @@ public interface EveryplayDelegate extends NSObjectProtocol {
 
 	// - (void)everyplayShown;
 	@Method(selector = "everyplayShown")
-	void everyplayShown();
+	void shown();
 
 	// - (void)everyplayHidden;
 	@Method(selector = "everyplayHidden")
-	void everyplayHidden();
+	void hidden();
 
 	// - (void)everyplayReadyForRecording:(NSNumber *)enabled;
 	@Method(selector = "everyplayReadyForRecording:")
-	void everyplayReadyForRecording(NSNumber enabled);
+	void readyForRecording(NSNumber enabled);
 
 	// - (void)everyplayRecordingStarted;
 	@Method(selector = "everyplayRecordingStarted")
-	void everyplayRecordingStarted();
+	void recordingStarted();
 
 	// - (void)everyplayRecordingStopped;
 	@Method(selector = "everyplayRecordingStopped")
-	void everyplayRecordingStopped();
+	void recordingStopped();
 
 	// - (void)everyplayFaceCamSessionStarted;
 	@Method(selector = "everyplayFaceCamSessionStarted")
-	void everyplayFaceCamSessionStarted();
+	void faceCamSessionStarted();
 
 	// - (void)everyplayFaceCamRecordingPermission:(NSNumber *)granted;
 	@Method(selector = "everyplayFaceCamRecordingPermission:")
-	void everyplayFaceCamRecordingPermission(NSNumber granted);
+	void faceCamRecordingPermission(NSNumber granted);
 
 	// - (void)everyplayFaceCamSessionStopped;
 	@Method(selector = "everyplayFaceCamSessionStopped")
-	void everyplayFaceCamSessionStopped();
+	void faceCamSessionStopped();
 
 	// - (void)everyplayUploadDidStart:(NSNumber *)videoId;
 	@Method(selector = "everyplayUploadDidStart:")
-	void everyplayUploadDidStart(NSNumber videoId);
+	void uploadDidStart(NSNumber videoId);
 
 	// - (void)everyplayUploadDidProgress:(NSNumber *)videoId progress:(NSNumber
 	// *)progress;
 	@Method(selector = "everyplayUploadDidProgress:progress:")
-	void everyplayUploadDidProgress(NSNumber videoId, NSNumber progress);
+	void uploadDidProgress(NSNumber videoId, NSNumber progress);
 
 	// - (void)everyplayUploadDidComplete:(NSNumber *)videoId;
 	@Method(selector = "everyplayUploadDidComplete:")
-	void everyplayUploadDidComplete(NSNumber videoId);
+	void uploadDidComplete(NSNumber videoId);
 
 	// - (void)everyplayThumbnailReadyAtFilePath:(NSString *)thumbnailFilePath;
 	@Method(selector = "everyplayThumbnailReadyAtFilePath:")
-	void everyplayThumbnailReadyAtFilePath(String thumbnailFilePath);
+	void thumbnailReadyAtFilePath(String thumbnailFilePath);
 
 	// - (void)everyplayThumbnailReadyAtURL:(NSURL *)thumbnailUrl;
 	@Method(selector = "everyplayThumbnailReadyAtURL:")
-	void everyplayThumbnailReadyAtURL(NSURL thumbnailUrl);
+	void thumbnailReadyAtURL(NSURL thumbnailUrl);
 
 	// - (void)everyplayThumbnailReadyAtTextureId:(NSNumber *)textureId
 	// portraitMode:(NSNumber *)portrait;
 	@Method(selector = "everyplayThumbnailReadyAtTextureId:portraitMode")
-	void everyplayThumbnailReadyAtTextureId(NSNumber textureId,
+	void thumbnailReadyAtTextureId(NSNumber textureId,
 			NSNumber portrait);
 }

@@ -36,17 +36,17 @@ public class Sample extends UIApplicationDelegateAdapter {
 		everyplayDelegate = new EveryplayDelegateAdapter() {
 
 			@Override
-			public void everyplayShown() {
+			public void shown() {
 				System.out.println("Everyplay Shown");
 			}
 
 			@Override
-			public void everyplayHidden() {
+			public void hidden() {
 				System.out.println("Everyplay hidden");
 			}
 
 			@Override
-			public void everyplayReadyForRecording(NSNumber enabled) {
+			public void readyForRecording(NSNumber enabled) {
 				System.out.println("Everyplay Ready for recording");
 			}
 
