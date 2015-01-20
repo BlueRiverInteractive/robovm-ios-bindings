@@ -1,0 +1,34 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+    <frameworks>
+        <framework>AssetsLibrary</framework>
+        <framework>AudioToolbox</framework>
+        <framework>AVFoundation</framework>
+        <framework>CoreGraphics</framework>
+        <framework>CoreMedia</framework>
+        <framework>CoreVideo</framework>
+       <!-- <framework>Foundation</framework> -->
+        <framework>MessageUI</framework>
+        <framework>MobileCoreServices</framework>
+        <framework>OpenGLES</framework>
+        <framework>QuartzCore</framework>
+        <framework>Security</framework>
+        <framework>StoreKit</framework>
+        <framework>SystemConfiguration</framework>
+        <framework>Twitter</framework>
+        <framework>UIKit</framework>
+        <!-- Everyplay -->
+        <framework>Everyplay</framework>
+    </frameworks>
+    <!-- AdMob and AdColony -->
+    <weakFrameworks>
+        <framework>AdSupport</framework>
+        <framework>CoreImage</framework>
+        <framework>Social</framework>
+    </weakFrameworks>
+</config>
