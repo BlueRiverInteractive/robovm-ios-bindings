@@ -51,8 +51,10 @@ public class Sample extends UIApplicationDelegateAdapter {
 			}
 
 		};
-		Everyplay.init(everyplayDelegate, rootViewController);
-		Everyplay.sharedInstance().showEveryplay();
+		Everyplay everyplay = Everyplay.init(everyplayDelegate,
+				rootViewController);
+
+		everyplay.showEveryplay();
 
 		return true;
 	}

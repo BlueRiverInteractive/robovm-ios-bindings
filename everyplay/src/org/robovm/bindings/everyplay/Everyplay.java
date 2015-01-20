@@ -1,7 +1,12 @@
 package org.robovm.bindings.everyplay;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.robovm.apple.foundation.NSDictionary;
+import org.robovm.apple.foundation.NSMutableDictionary;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.UIView;
 import org.robovm.apple.uikit.UIViewController;
 import org.robovm.objc.annotation.Method;
@@ -35,19 +40,40 @@ public class Everyplay extends NSObject {
 	// + (Everyplay *)initWithDelegate:(id
 	// <EveryplayDelegate>)everyplayDelegate;
 	@Method(selector = "initWithDelegate:")
-	public static native Everyplay init(EveryplayDelegate everyplayDelegate);
+	private static native Everyplay initWithDelegate(
+			EveryplayDelegate everyplayDelegate);
+
+	public static Everyplay init(EveryplayDelegate everyplayDelegate) {
+		Everyplay result = initWithDelegate(everyplayDelegate);
+		result.addStrongRef(everyplayDelegate);
+		return result;
+	}
 
 	// + (Everyplay *)initWithDelegate:(id <EveryplayDelegate>)everyplayDelegate
 	// andParentViewController:(UIViewController *)viewController;
 	@Method(selector = "initWithDelegate:andParentViewController:")
-	public static native Everyplay init(EveryplayDelegate everyplayDelegate,
-			UIViewController viewController);
+	private static native Everyplay initWithDelegate(
+			EveryplayDelegate everyplayDelegate, UIViewController viewController);
+
+	public static Everyplay init(EveryplayDelegate everyplayDelegate,
+			UIViewController viewController) {
+		Everyplay result = initWithDelegate(everyplayDelegate, viewController);
+		result.addStrongRef(everyplayDelegate);
+		return result;
+	}
 
 	// + (Everyplay *)initWithDelegate:(id <EveryplayDelegate>)everyplayDelegate
 	// andAddRootViewControllerForView:(UIView *)view;
 	@Method(selector = "initWithDelegate:andAddRootViewControllerForView:")
-	public static native Everyplay init(EveryplayDelegate everyplayDelegate,
-			UIView view);
+	private static native Everyplay initWithDelegate(
+			EveryplayDelegate everyplayDelegate, UIView view);
+
+	public static Everyplay init(EveryplayDelegate everyplayDelegate,
+			UIView view) {
+		Everyplay result = initWithDelegate(everyplayDelegate, view);
+		result.addStrongRef(everyplayDelegate);
+		return result;
+	}
 
 	// - (void)showEveryplay;
 	@Method(selector = "showEveryplay")
@@ -69,7 +95,17 @@ public class Everyplay extends NSObject {
 
 	// - (void)mergeSessionDeveloperData:(NSDictionary *)dictionary;
 	@Method(selector = "mergeSessionDeveloperData:")
-	public native void mergeSessionDeveloperData(NSDictionary dictionary);
+	private native void mergeSessionDeveloperData(
+			NSDictionary<NSString, NSString> dictionary);
+
+	public void mergeSessionDeveloperData(Map<String, String> data) {
+		NSDictionary<NSString, NSString> dictionary = new NSMutableDictionary<NSString, NSString>();
+		for (Entry<String, String> entry : data.entrySet()) {
+			dictionary.put(new NSString(entry.getKey()),
+					new NSString(entry.getValue()));
+		}
+		mergeSessionDeveloperData(dictionary);
+	}
 
 	// #pragma mark - Configuration
 	// + (void)setClientId:(NSString *)client
