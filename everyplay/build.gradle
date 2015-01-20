@@ -3,6 +3,6 @@ ext {
 }
 
 eclipse.project {
-    name = “everyplay-ios"
+    name = "everyplay-ios"
     natures 'org.robovm.eclipse.RoboVMNature'
 }

@@ -76,6 +76,6 @@ public class Everyplay extends NSObject {
 	// clientSecret:(NSString *)secret
 	// redirectURI:(NSString *)url;
 	@Method(selector = "setClientId:clientSecret:redirectURI:")
-	public static native void setClientId(String clientId, String clientSecret,
+	public static native void configure(String clientId, String clientSecret,
 			String url);
 }

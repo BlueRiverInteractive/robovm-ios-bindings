@@ -5,6 +5,15 @@
 	<arch>thumbv7</arch>
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
+    <resources>
+		<resource>
+			<directory>resources</directory>
+			<skipPngCrush>true</skipPngCrush>
+		</resource>
+	</resources>
+    <frameworkPaths>
+        <path>libs</path>
+    </frameworkPaths>
     <frameworks>
         <framework>AssetsLibrary</framework>
         <framework>AudioToolbox</framework>
@@ -20,7 +29,6 @@
         <framework>Security</framework>
         <framework>StoreKit</framework>
         <framework>SystemConfiguration</framework>
-        <framework>Twitter</framework>
         <framework>UIKit</framework>
         <!-- Everyplay -->
         <framework>Everyplay</framework>
@@ -30,5 +38,6 @@
         <framework>AdSupport</framework>
         <framework>CoreImage</framework>
         <framework>Social</framework>
+        <framework>Twitter</framework>
     </weakFrameworks>
 </config>
