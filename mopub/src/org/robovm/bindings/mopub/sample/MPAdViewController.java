@@ -10,46 +10,46 @@ import org.robovm.bindings.mopub.MPConstants;
 import org.robovm.bindings.mopub.MPNativeAdOrientation;
 
 public class MPAdViewController extends UIViewController {
-	private final MPAdView ad;
+    private final MPAdView ad;
 
-	public MPAdViewController (MPAdView ad) {
-		this.ad = ad;
-	}
+    public MPAdViewController (MPAdView ad) {
+        this.ad = ad;
+    }
 
-	@Override
-	public void willRotate (UIInterfaceOrientation toInterfaceOrientation, double duration) {
-		super.willRotate(toInterfaceOrientation, duration);
-		switch (toInterfaceOrientation) {
-		case LandscapeLeft:
-		case LandscapeRight:
-			ad.rotateToOrientation(MPNativeAdOrientation.Landscape);
-			break;
-		case Portrait:
-		case PortraitUpsideDown:
-			ad.rotateToOrientation(MPNativeAdOrientation.Portrait);
-			break;
-		}
-	}
+    @Override
+    public void willRotate (UIInterfaceOrientation toInterfaceOrientation, double duration) {
+        super.willRotate(toInterfaceOrientation, duration);
+        switch (toInterfaceOrientation) {
+        case LandscapeLeft:
+        case LandscapeRight:
+            ad.rotateToOrientation(MPNativeAdOrientation.Landscape);
+            break;
+        case Portrait:
+        case PortraitUpsideDown:
+            ad.rotateToOrientation(MPNativeAdOrientation.Portrait);
+            break;
+        }
+    }
 
-	@Override
-	public void didRotate (UIInterfaceOrientation fromInterfaceOrientation) {
-		super.didRotate(fromInterfaceOrientation);
+    @Override
+    public void didRotate (UIInterfaceOrientation fromInterfaceOrientation) {
+        super.didRotate(fromInterfaceOrientation);
 
-		double offset = UIScreen.getMainScreen().getApplicationFrame().size().height();
+        double offset = UIScreen.getMainScreen().getApplicationFrame().getSize().getHeight();
 
-		switch (fromInterfaceOrientation) {
-		case LandscapeLeft:
-		case LandscapeRight:
-			break;
-		case Portrait:
-		case PortraitUpsideDown:
-			offset = UIScreen.getMainScreen().getApplicationFrame().size().width();
-			break;
-		}
+        switch (fromInterfaceOrientation) {
+        case LandscapeLeft:
+        case LandscapeRight:
+            break;
+        case Portrait:
+        case PortraitUpsideDown:
+            offset = UIScreen.getMainScreen().getApplicationFrame().getSize().getWidth();
+            break;
+        }
 
-		// Position ad at the bottom.
-		double bannerWidth = UIScreen.getMainScreen().getApplicationFrame().size().width();
-		double bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
-		ad.setFrame(new CGRect(0, offset - bannerHeight, bannerWidth, bannerHeight));
-	}
+        // Position ad at the bottom.
+        double bannerWidth = UIScreen.getMainScreen().getApplicationFrame().getSize().getWidth();
+        double bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.getWidth() * MPConstants.MOPUB_BANNER_SIZE.getHeight();
+        ad.setFrame(new CGRect(0, offset - bannerHeight, bannerWidth, bannerHeight));
+    }
 }
