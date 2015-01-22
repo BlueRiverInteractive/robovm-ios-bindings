@@ -1,6 +1,6 @@
 AdMob iOS SDK
 ==================================
-SDK Version: 6.12.0
+SDK Version: 6.12.2
 
 Getting Started
 ----------------------------------
