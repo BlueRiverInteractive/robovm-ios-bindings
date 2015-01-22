@@ -73,14 +73,14 @@ public class Sample extends UIApplicationDelegateAdapter {
         final MPAdView banner = new MPAdView(BANNER_AD_UNIT_ID, MPConstants.MOPUB_BANNER_SIZE);
 
         // Let's calculate our banner size. We need to do this because the resolution of a retina and normal device is different.
-        double bannerWidth = UIScreen.getMainScreen().getBounds().size().width();
-        double bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.width() * MPConstants.MOPUB_BANNER_SIZE.height();
+        double bannerWidth = UIScreen.getMainScreen().getBounds().getSize().getWidth();
+        double bannerHeight = bannerWidth / MPConstants.MOPUB_BANNER_SIZE.getWidth() * MPConstants.MOPUB_BANNER_SIZE.getHeight();
 
         // Let's set the frame (bounds) of our banner view. Remember on iOS view coordinates have their origin top-left.
         // Position banner on the top.
         // banner.setFrame(new CGRect(0, 0, bannerWidth, bannerHeight));
         // Position banner on the bottom.
-        banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getBounds().size().height() - bannerHeight, bannerWidth,
+        banner.setFrame(new CGRect(0, UIScreen.getMainScreen().getBounds().getSize().getHeight() - bannerHeight, bannerWidth,
             bannerHeight));
         // Let's color the background for testing, so we can see if it is positioned correctly, even if no ad is loaded yet.
         banner.setBackgroundColor(new UIColor(1, 0, 0, 1)); // Remove this after testing.

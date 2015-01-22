@@ -3,6 +3,7 @@ package org.robovm.bindings.facebook;
 
 import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.objc.annotation.NativeClass;
+import org.robovm.objc.annotation.Property;
 
 /** The FBGraphPlace class enables typed access to a place object as represented in the Graph API.
  * 
@@ -11,30 +12,31 @@ import org.robovm.objc.annotation.NativeClass;
  * {@link NSDictionary} object that has been wrapped with an {@link FBGraphObject} facade. */
 @NativeClass
 public class FBGraphPlace extends FBGraphObject {
+    /** @return the place ID. */
+    @Property
+    public native String getId ();
 
-//
-// /*!
-// @property
-// @abstract Typed access to the place ID.
-// */
-// @property (retain, nonatomic) NSString *id;
-//
-// /*!
-// @property
-// @abstract Typed access to the place name.
-// */
-// @property (retain, nonatomic) NSString *name;
-//
-// /*!
-// @property
-// @abstract Typed access to the place category.
-// */
-// @property (retain, nonatomic) NSString *category;
-//
-// /*!
-// @property
-// @abstract Typed access to the place location.
-// */
-// @property (retain, nonatomic) id<FBGraphLocation> location;
+    @Property
+    public native void setId (String id);
 
+    /** @return the place name. */
+    @Property
+    public native String getName ();
+
+    @Property
+    public native void setName (String name);
+
+    /** @return the place category. */
+    @Property
+    public native String getCategory ();
+
+    @Property
+    public native void setCategory (String category);
+
+    /** @return the place location. */
+    @Property
+    public native FBGraphLocation getLocation ();
+
+    @Property
+    public native void setLocation (FBGraphLocation location);
 }
