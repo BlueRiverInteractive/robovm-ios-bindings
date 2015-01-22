@@ -35,7 +35,6 @@
 		E004EEDD18E263E100242A43 /* GADAdSizeWrapped.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GADAdSizeWrapped.h; sourceTree = "<group>"; };
 		E004EEDF18E263E100242A43 /* GADAdSizeWrapped.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GADAdSizeWrapped.m; sourceTree = "<group>"; };
 		E004EEE618E263E100242A43 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		E004EEFE18E264D200242A43 /* libgoogleadmobads.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgoogleadmobads.a; path = admob/libgoogleadmobads.a; sourceTree = "<group>"; };
 		E004EF0018E2679900242A43 /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
 		E061399E19CCA54F00A3B1BF /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		E061399F19CCA54F00A3B1BF /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
@@ -86,7 +85,6 @@
 			isa = PBXGroup;
 			children = (
 				719C9C501A709CEF00E73421 /* libGoogleAdMobAds.a */,
-				E004EEFE18E264D200242A43 /* libgoogleadmobads.a */,
 				E004EED818E263E100242A43 /* Foundation.framework */,
 				E004EEE618E263E100242A43 /* XCTest.framework */,
 			);
