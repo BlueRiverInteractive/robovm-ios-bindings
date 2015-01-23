@@ -1,0 +1,142 @@
+<!--
+     Copyright 2014 Google Inc. All rights reserved.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    body { margin: 0; width:100%%; height:100%%; }
+    html { width:100%%; height:100%%; }
+
+    .embed-container {
+        position: relative;
+        padding-bottom: 56.25%%; /* 16/9 ratio */
+        height: 0;
+        overflow: hidden;
+    }
+
+    .embed-container iframe,
+    .embed-container object,
+    .embed-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%% !important;
+        height: 100%% !important;
+    }
+    </style>
+</head>
+<body>
+    <div class="embed-container">
+        <div id="player"></div>
+    </div>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+    var player;
+    var error = false;
+
+    YT.ready(function() {
+        player = new YT.Player('player', %@);
+        player.setSize(window.innerWidth, window.innerHeight);
+        window.location.href = 'ytplayer://onYouTubeIframeAPIReady';
+    });
+
+    function onReady(event) {
+        player.paused = false;
+        player.interrupted = false;
+
+        player.oldPlayVideo = player.playVideo;
+        player.playVideo = function() {
+           this.paused = false;
+           this.interrupted = false;
+
+           this.oldPlayVideo();
+        }
+        player.oldPauseVideo = player.pauseVideo;
+        player.pauseVideo = function() {
+           this.paused = true;
+           this.interrupted = false;
+
+           this.oldPauseVideo();
+        }
+        player.oldStopVideo = player.stopVideo;
+        player.stopVideo = function() {
+           // This has to be done on some other place, because if replay is on, it won't work
+           this.paused = false;
+           this.interrupted = false;
+
+           this.oldStopVideo();
+        }
+
+        player.oldClearVideo = player.clearVideo;
+        player.clearVideo = function() {
+           this.paused = false;
+           this.interrupted = false;
+
+           this.oldClearVideo();
+        }
+
+        function forcePlay() {
+           if (player.interrupted) {
+               player.oldPlayVideo();
+               window.location.href = 'ytplayer://onStateChange?data=' + YT.PlayerState.PLAYING;
+           }
+        }
+
+        window.setInterval(forcePlay, 5000);
+        window.location.href = 'ytplayer://onReady?data=' + event.data;
+
+    }
+    function onStateChange(event) {
+        if (!error) {
+            // Send notification for all states but Paused and for Paused if the user did pause.
+            if (event.data != YT.PlayerState.PAUSED) {
+                // The player state has changed and obviously it is not interrupted.
+                // Notify the delegate that the state changed.
+                player.interrupted = false;
+
+                window.location.href = 'ytplayer://onStateChange?data=' + event.data;
+
+            } else {
+                if (player.paused == true){
+                    // User has paused. Notify the delegate that the state changed.
+                    window.location.href = 'ytplayer://onStateChange?data=' + event.data;
+                }
+                else {
+                    // Youtube player API tried to pause internaly, do not pause.
+                    player.interrupted = true;
+                }
+            }
+        }
+        else {
+            error = false;
+        }
+    }
+
+    function onPlaybackQualityChange(event) {
+        window.location.href = 'ytplayer://onPlaybackQualityChange?data=' + event.data;
+    }
+    function onPlayerError(event) {
+        if (event.data == 100) {
+            error = true;
+        }
+        window.location.href = 'ytplayer://onError?data=' + event.data;
+    }
+    window.onresize = function() {
+        player.setSize(window.innerWidth, window.innerHeight);
+    }
+    </script>
+</body>
+</html>
