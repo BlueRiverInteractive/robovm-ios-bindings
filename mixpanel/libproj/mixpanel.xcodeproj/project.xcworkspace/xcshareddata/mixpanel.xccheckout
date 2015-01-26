@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>94B9592E-D63E-46D9-A7C5-57521BAD0CC4</string>
+	<string>58B4BD85-A0B2-4F7B-BDB3-3575F3144316</string>
 	<key>IDESourceControlProjectName</key>
 	<string>mixpanel</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,11 +14,11 @@
 		<string>https://github.com/saqsun/robovm-ios-bindings.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>mixpanel/libproj/mixpanel/mixpanel.xcodeproj</string>
+	<string>mixpanel/libproj/mixpanel.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>996418491470870869C6A5D953FA576BC33F1338</key>
-		<string>../../../../..</string>
+		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/saqsun/robovm-ios-bindings.git</string>

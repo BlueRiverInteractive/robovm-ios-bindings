@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1C92C6B1A74E60700CDD48E"
+               BlueprintIdentifier = "F158A65A1A7621B2009AA0ED"
                BuildableName = "libmixpanel.a"
                BlueprintName = "mixpanel"
                ReferencedContainer = "container:mixpanel.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1C92C761A74E60700CDD48E"
+               BlueprintIdentifier = "F158A6651A7621B2009AA0ED"
                BuildableName = "mixpanelTests.xctest"
                BlueprintName = "mixpanelTests"
                ReferencedContainer = "container:mixpanel.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F1C92C761A74E60700CDD48E"
+               BlueprintIdentifier = "F158A6651A7621B2009AA0ED"
                BuildableName = "mixpanelTests.xctest"
                BlueprintName = "mixpanelTests"
                ReferencedContainer = "container:mixpanel.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F1C92C6B1A74E60700CDD48E"
+            BlueprintIdentifier = "F158A65A1A7621B2009AA0ED"
             BuildableName = "libmixpanel.a"
             BlueprintName = "mixpanel"
             ReferencedContainer = "container:mixpanel.xcodeproj">
@@ -75,7 +75,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F1C92C6B1A74E60700CDD48E"
+            BlueprintIdentifier = "F158A65A1A7621B2009AA0ED"
             BuildableName = "libmixpanel.a"
             BlueprintName = "mixpanel"
             ReferencedContainer = "container:mixpanel.xcodeproj">
@@ -93,7 +93,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F1C92C6B1A74E60700CDD48E"
+            BlueprintIdentifier = "F158A65A1A7621B2009AA0ED"
             BuildableName = "libmixpanel.a"
             BlueprintName = "mixpanel"
             ReferencedContainer = "container:mixpanel.xcodeproj">
