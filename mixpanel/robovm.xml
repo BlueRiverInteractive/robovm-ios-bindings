@@ -6,6 +6,7 @@
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
 	<libs>
+		<lib>icucore</lib>
 		<lib>libs/libmixpanel.a</lib>
 	</libs>
 	<frameworkPaths>
