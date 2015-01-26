@@ -35,6 +35,20 @@ public class Mixpanel extends NSObject {
      @property
 
      @abstract
+     Accessor to the Mixpanel People API object.
+
+     @discussion
+     See the documentation for MixpanelDelegate below for more information.
+     */
+    //@property (atomic, readonly, strong) MixpanelPeople *people;
+    @Property(selector = "people")
+    public native MixpanelPeople getPeople();
+
+
+    /*!
+     @property
+
+     @abstract
      The distinct ID of the current user.
 
      @discussion
