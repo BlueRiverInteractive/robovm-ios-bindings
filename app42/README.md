@@ -1,7 +1,7 @@
-Tapjoy iOS SDK
+App42 iOS SDK
 ==================================
-SDK Version: 10.1
+SDK Version: 3.1
 
 Getting Started
 ----------------------------------
-https://knowledge.tapjoy.com/en/integration/getting-started-guide-for-publishers#ios
+http://api.shephertz.com/app42-dev/ios-backend-apis.php
