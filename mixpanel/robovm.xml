@@ -1,0 +1,27 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<libs>
+		<lib>libs/libmixpanel.a</lib>
+	</libs>
+	<frameworkPaths>
+		<path>libs</path>
+	</frameworkPaths>
+	<frameworks>
+		<framework>QuartzCore</framework>
+		<framework>CoreGraphics</framework>
+		<framework>Accelerate</framework>
+		<framework>CoreTelephony</framework>
+		<framework>SystemConfiguration</framework>
+		<framework>Foundation</framework>
+		<framework>UIKit</framework>
+	</frameworks>
+	<weakFrameworks>
+		<framework>AdSupport</framework>
+		<framework>StoreKit</framework>
+	</weakFrameworks>
+</config>
