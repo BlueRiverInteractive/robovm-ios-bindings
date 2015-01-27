@@ -1,9 +1,6 @@
 package org.robovm.bindings.mixpanel;
 
-import org.robovm.apple.foundation.NSData;
-import org.robovm.apple.foundation.NSDictionary;
-import org.robovm.apple.foundation.NSNumber;
-import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.*;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.rt.bro.annotation.Pointer;
@@ -135,7 +132,7 @@ public class MixpanelPeople extends NSObject {
      */
     //- (void)increment:(NSString *)property by:(NSNumber *)amount;
     @Method(selector = "increment:by:")
-    public native void incrementBy(NSDictionary properties, NSNumber amount);
+    public native void incrementBy(NSString property, NSNumber amount);
 
     /*!
      @method
