@@ -659,7 +659,7 @@ public class Mixpanel extends NSObject {
 
     //- (void)createAlias:(NSString*)alias forDistinctID:(NSString *)distinctID;
     @Method(selector = "createAlias:forDistinctID:")
-    public native void joinExperiments(String alias, String distinctID);
+    public native void createAlias(String alias, String distinctID);
 
     //- (NSString *)libVersion;
     @Method(selector = "libVersion:")
