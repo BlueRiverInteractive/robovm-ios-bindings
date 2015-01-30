@@ -2,6 +2,7 @@ package org.robovm.bindings.mixpanel;
 
 import org.robovm.apple.foundation.NSDictionary;
 import org.robovm.apple.foundation.NSObject;
+import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 import org.robovm.objc.annotation.Property;
@@ -657,6 +658,20 @@ public class Mixpanel extends NSObject {
     @Method(selector = "joinExperiments:")
     public native void joinExperiments();
 
+    /*!
+     @method
+
+     @abstract
+     Join any experiments (A/B tests) that are available for the current user.
+
+     @discussion
+     Same as joinExperiments but will fire the given callback after all experiments
+     have been loaded and applied.
+     */
+    //- (void)joinExperimentsWithCallback:(void(^)())experimentsLoadedCallback;
+    @Method(selector = "joinExperimentsWithCallback:")
+    public native void joinExperiments(@Block ExperimentsLoadedHandler experimentsLoadedHandler);
+
     //- (void)createAlias:(NSString*)alias forDistinctID:(NSString *)distinctID;
     @Method(selector = "createAlias:forDistinctID:")
     public native void createAlias(String alias, String distinctID);
@@ -664,5 +679,9 @@ public class Mixpanel extends NSObject {
     //- (NSString *)libVersion;
     @Method(selector = "libVersion:")
     public native String libVersion();
+
+    public interface ExperimentsLoadedHandler {
+        void invoke();
+    }
 
 }
