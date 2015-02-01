@@ -13,7 +13,7 @@
 
 @interface MPImageDownloadQueue ()
 
-@property (atomic, retain) NSOperationQueue *imageDownloadQueue;
+@property (atomic, strong) NSOperationQueue *imageDownloadQueue;
 @property (atomic, assign) BOOL isCanceled;
 
 @end
@@ -35,9 +35,6 @@
 - (void)dealloc
 {
     [_imageDownloadQueue cancelAllOperations];
-    [_imageDownloadQueue release];
-
-    [super dealloc];
 }
 
 - (void)addDownloadImageURLs:(NSArray *)imageURLs completionBlock:(MPImageDownloadQueueCompletionBlock)completionBlock
@@ -84,7 +81,7 @@
                         }
 
                         if (errors == nil) {
-                            errors = [[NSMutableArray array] retain];
+                            errors = [NSMutableArray array];
                         }
 
                         [errors addObject:error];
@@ -98,10 +95,7 @@
     [self.imageDownloadQueue addOperationWithBlock:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!self.isCanceled) {
-                completionBlock([errors autorelease]);
-            }
-            else {
-                [errors release];
+                completionBlock(errors);
             }
         });
     }];

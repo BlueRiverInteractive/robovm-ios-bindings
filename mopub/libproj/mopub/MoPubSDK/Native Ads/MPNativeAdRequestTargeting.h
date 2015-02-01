@@ -49,6 +49,6 @@
  *
  * The MoPub ad server will attempt to only return the assets in desiredAssets.
  */
-@property (nonatomic, retain) NSSet *desiredAssets;
+@property (nonatomic, strong) NSSet *desiredAssets;
 
 @end

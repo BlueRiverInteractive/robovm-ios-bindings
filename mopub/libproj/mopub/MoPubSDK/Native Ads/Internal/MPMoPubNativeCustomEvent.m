@@ -16,10 +16,10 @@
 
 - (void)requestAdWithCustomEventInfo:(NSDictionary *)info
 {
-    MPMoPubNativeAdAdapter *adAdapter = [[MPMoPubNativeAdAdapter alloc] initWithAdProperties:[[info mutableCopy] autorelease]];
+    MPMoPubNativeAdAdapter *adAdapter = [[MPMoPubNativeAdAdapter alloc] initWithAdProperties:[info mutableCopy]];
 
     if (adAdapter.properties) {
-        MPNativeAd *interfaceAd = [[[MPNativeAd alloc] initWithAdAdapter:adAdapter] autorelease];
+        MPNativeAd *interfaceAd = [[MPNativeAd alloc] initWithAdAdapter:adAdapter];
         [interfaceAd.impressionTrackers addObjectsFromArray:adAdapter.impressionTrackers];
 
         // Get the image urls so we can download them prior to returning the ad.
@@ -45,7 +45,6 @@
         [self.delegate nativeCustomEvent:self didFailToLoadAdWithError:[NSError errorWithDomain:MoPubNativeAdsSDKDomain code:MPNativeAdErrorInvalidServerResponse userInfo:nil]];
     }
 
-    [adAdapter release];
 }
 
 @end

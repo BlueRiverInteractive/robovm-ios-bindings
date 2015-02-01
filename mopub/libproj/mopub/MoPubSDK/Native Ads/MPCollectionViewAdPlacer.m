@@ -16,12 +16,12 @@
 
 @interface MPCollectionViewAdPlacer () <UICollectionViewDataSource, UICollectionViewDelegate, MPStreamAdPlacerDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, retain) MPStreamAdPlacer *streamAdPlacer;
-@property (nonatomic, retain) UICollectionView *collectionView;
-@property (nonatomic, assign) id<UICollectionViewDataSource> originalDataSource;
-@property (nonatomic, assign) id<UICollectionViewDelegate> originalDelegate;
+@property (nonatomic, strong) MPStreamAdPlacer *streamAdPlacer;
+@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, weak) id<UICollectionViewDataSource> originalDataSource;
+@property (nonatomic, weak) id<UICollectionViewDelegate> originalDelegate;
 @property (nonatomic, assign) Class defaultAdRenderingClass;
-@property (nonatomic, retain) MPTimer *insertionTimer;
+@property (nonatomic, strong) MPTimer *insertionTimer;
 
 @end
 
@@ -29,10 +29,15 @@
 
 @implementation MPCollectionViewAdPlacer
 
++ (instancetype)placerWithCollectionView:(UICollectionView *)collectionView viewController:(UIViewController *)controller defaultAdRenderingClass:(Class)defaultAdRenderingClass
+{
+    return [[self class] placerWithCollectionView:collectionView viewController:controller adPositioning:[MPServerAdPositioning positioning] defaultAdRenderingClass:defaultAdRenderingClass];
+}
+
 + (instancetype)placerWithCollectionView:(UICollectionView *)collectionView viewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:(Class)defaultAdRenderingClass
 {
     MPCollectionViewAdPlacer *collectionViewAdPlacer = [[MPCollectionViewAdPlacer alloc] initWithCollectionView:collectionView viewController:controller adPositioning:positioning defaultAdRenderingClass:defaultAdRenderingClass];
-    return [collectionViewAdPlacer autorelease];
+    return collectionViewAdPlacer;
 }
 
 - (instancetype)initWithCollectionView:(UICollectionView *)collectionView viewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:(Class)defaultAdRenderingClass
@@ -40,11 +45,11 @@
     NSAssert([defaultAdRenderingClass isSubclassOfClass:[UICollectionViewCell class]], @"A collection view ad placer must be instantiated with a rendering class that is a UICollectionViewCell");
 
     if (self = [super init]) {
-        _collectionView = [collectionView retain];
-        _streamAdPlacer = [[[MPInstanceProvider sharedProvider] buildStreamAdPlacerWithViewController:controller adPositioning:positioning defaultAdRenderingClass:defaultAdRenderingClass] retain];
+        _collectionView = collectionView;
+        _streamAdPlacer = [[MPInstanceProvider sharedProvider] buildStreamAdPlacerWithViewController:controller adPositioning:positioning defaultAdRenderingClass:defaultAdRenderingClass];
         _streamAdPlacer.delegate = self;
 
-        _insertionTimer = [[MPTimer timerWithTimeInterval:kUpdateVisibleCellsInterval target:self selector:@selector(updateVisibleCells) repeats:YES] retain];
+        _insertionTimer = [MPTimer timerWithTimeInterval:kUpdateVisibleCellsInterval target:self selector:@selector(updateVisibleCells) repeats:YES];
         _insertionTimer.runLoopMode = NSRunLoopCommonModes;
         [_insertionTimer scheduleNow];
 
@@ -65,11 +70,6 @@
 - (void)dealloc
 {
     [_insertionTimer invalidate];
-    [_insertionTimer release];
-    [_collectionView release];
-    [_streamAdPlacer release];
-
-    [super dealloc];
 }
 
 - (void)registerNibOrClass
@@ -104,7 +104,7 @@
 
 - (void)updateVisibleCells
 {
-    NSArray *visiblePaths = self.collectionView.indexPathsForVisibleItems;
+    NSArray *visiblePaths = self.collectionView.mp_indexPathsForVisibleItems;
 
     if ([visiblePaths count]) {
         [self.streamAdPlacer setVisibleIndexPaths:visiblePaths];

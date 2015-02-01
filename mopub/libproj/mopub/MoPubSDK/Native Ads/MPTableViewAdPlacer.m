@@ -17,12 +17,12 @@
 
 @interface MPTableViewAdPlacer () <UITableViewDataSource, UITableViewDelegate, MPStreamAdPlacerDelegate>
 
-@property (nonatomic, retain) MPStreamAdPlacer *streamAdPlacer;
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, assign) id<UITableViewDataSource> originalDataSource;
-@property (nonatomic, assign) id<UITableViewDelegate> originalDelegate;
+@property (nonatomic, strong) MPStreamAdPlacer *streamAdPlacer;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, weak) id<UITableViewDataSource> originalDataSource;
+@property (nonatomic, weak) id<UITableViewDelegate> originalDelegate;
 @property (nonatomic, assign) Class defaultAdRenderingClass;
-@property (nonatomic, retain) MPTimer *insertionTimer;
+@property (nonatomic, strong) MPTimer *insertionTimer;
 @property (nonatomic, assign) BOOL didRegisterNibOrClassForCells;
 
 @end
@@ -31,10 +31,15 @@
 
 @implementation MPTableViewAdPlacer
 
++ (instancetype)placerWithTableView:(UITableView *)tableView viewController:(UIViewController *)controller defaultAdRenderingClass:(Class)defaultAdRenderingClass
+{
+    return [[self class] placerWithTableView:tableView viewController:controller adPositioning:[MPServerAdPositioning positioning] defaultAdRenderingClass:defaultAdRenderingClass];
+}
+
 + (instancetype)placerWithTableView:(UITableView *)tableView viewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:(Class)defaultAdRenderingClass
 {
     MPTableViewAdPlacer *tableViewAdPlacer = [[MPTableViewAdPlacer alloc] initWithTableView:tableView viewController:controller adPositioning:positioning defaultAdRenderingClass:defaultAdRenderingClass];
-    return [tableViewAdPlacer autorelease];
+    return tableViewAdPlacer;
 }
 
 - (instancetype)initWithTableView:(UITableView *)tableView viewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:(Class)defaultAdRenderingClass
@@ -42,8 +47,8 @@
     NSAssert([defaultAdRenderingClass isSubclassOfClass:[UITableViewCell class]], @"A table view ad placer must be instantiated with a rendering class that is a UITableViewCell");
 
     if (self = [super init]) {
-        _tableView = [tableView retain];
-        _streamAdPlacer = [[[MPInstanceProvider sharedProvider] buildStreamAdPlacerWithViewController:controller adPositioning:positioning defaultAdRenderingClass:defaultAdRenderingClass] retain];
+        _tableView = tableView;
+        _streamAdPlacer = [[MPInstanceProvider sharedProvider] buildStreamAdPlacerWithViewController:controller adPositioning:positioning defaultAdRenderingClass:defaultAdRenderingClass];
         _streamAdPlacer.delegate = self;
 
         _originalDataSource = tableView.dataSource;
@@ -62,11 +67,6 @@
 - (void)dealloc
 {
     [_insertionTimer invalidate];
-    [_insertionTimer release];
-    [_tableView release];
-    [_streamAdPlacer release];
-
-    [super dealloc];
 }
 
 - (void)registerNibOrClassIfNecessary
@@ -115,7 +115,7 @@
 
 - (void)updateVisibleCells
 {
-    NSArray *visiblePaths = self.tableView.indexPathsForVisibleRows;
+    NSArray *visiblePaths = self.tableView.mp_indexPathsForVisibleRows;
 
     if ([visiblePaths count]) {
         [self.streamAdPlacer setVisibleIndexPaths:visiblePaths];
@@ -173,7 +173,7 @@
         }
 
         if (!cell) {
-            cell = [[[self.streamAdPlacer.defaultAdRenderingClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
+            cell = [[self.streamAdPlacer.defaultAdRenderingClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
 
         cell.clipsToBounds = YES;

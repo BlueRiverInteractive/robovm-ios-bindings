@@ -8,6 +8,7 @@
 #import "MPLegacyInterstitialCustomEventAdapter.h"
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
+#import "MPInternalUtils.h"
 
 @interface MPLegacyInterstitialCustomEventAdapter ()
 
@@ -27,8 +28,10 @@
 
     SEL customEventSelector = NSSelectorFromString(configuration.customSelectorName);
     if ([self.delegate.interstitialDelegate respondsToSelector:customEventSelector]) {
-        [self.delegate.interstitialDelegate performSelector:customEventSelector];
-        return;
+        SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(
+            [self.delegate.interstitialDelegate performSelector:customEventSelector withObject:nil]
+        );
+       return;
     }
 
     NSString *oneArgumentSelectorName = [configuration.customSelectorName
@@ -38,8 +41,9 @@
 
     SEL customEventOneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
     if ([self.delegate.interstitialDelegate respondsToSelector:customEventOneArgumentSelector]) {
-        [self.delegate.interstitialDelegate performSelector:customEventOneArgumentSelector
-                                                 withObject:self.delegate.interstitialAdController];
+        SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(
+            [self.delegate.interstitialDelegate performSelector:customEventOneArgumentSelector withObject:self.delegate.interstitialAdController]
+        );
         return;
     }
 

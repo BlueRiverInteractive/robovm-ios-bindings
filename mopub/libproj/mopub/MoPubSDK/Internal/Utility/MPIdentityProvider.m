@@ -67,12 +67,12 @@
     if (obfuscate) {
         return @"ifa:XXXX";
     }
-    
+
     NSString *identifier = nil;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
     identifier = [[ASIdentifierManager sharedManager].advertisingIdentifier UUIDString];
 #endif
-    
+
     return [NSString stringWithFormat:@"ifa:%@", [identifier uppercaseString]];
 }
 
@@ -85,9 +85,8 @@
     NSString *identifier = [[NSUserDefaults standardUserDefaults] objectForKey:MOPUB_IDENTIFIER_DEFAULTS_KEY];
     if (!identifier) {
         CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
-        NSString *uuidStr = (NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuidObject);
+        NSString *uuidStr = (NSString *)CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, uuidObject));
         CFRelease(uuidObject);
-        [uuidStr autorelease];
 
         identifier = [NSString stringWithFormat:@"mopub:%@", [uuidStr uppercaseString]];
         [[NSUserDefaults standardUserDefaults] setObject:identifier forKey:MOPUB_IDENTIFIER_DEFAULTS_KEY];

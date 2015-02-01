@@ -52,11 +52,9 @@
     [self enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
          if ([obj isEqual:[NSNull null]]) {
              [nullKeys addObject:key];
-         }
-         else if ([obj isKindOfClass:[NSDictionary  class]]) {
+         } else if ([obj isKindOfClass:[NSDictionary  class]]) {
              [dictionaryKeys addObject:key];
-         }
-         else if ([obj isKindOfClass:[NSArray class]]) {
+         } else if ([obj isKindOfClass:[NSArray class]]) {
              [arrayKeys addObject:key];
          }
      }];

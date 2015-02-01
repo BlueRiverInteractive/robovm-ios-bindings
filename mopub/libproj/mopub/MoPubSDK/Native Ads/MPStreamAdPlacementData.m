@@ -15,11 +15,11 @@ static const NSUInteger kMaximumNumberOfAdsPerStream = 255;
 
 @interface MPStreamAdPlacementData ()
 
-@property (nonatomic, retain) NSMutableDictionary *desiredOriginalPositions;
-@property (nonatomic, retain) NSMutableDictionary *desiredInsertionPositions;
-@property (nonatomic, retain) NSMutableDictionary *originalAdIndexPaths;
-@property (nonatomic, retain) NSMutableDictionary *adjustedAdIndexPaths;
-@property (nonatomic, retain) NSMutableDictionary *adDataObjects;
+@property (nonatomic, strong) NSMutableDictionary *desiredOriginalPositions;
+@property (nonatomic, strong) NSMutableDictionary *desiredInsertionPositions;
+@property (nonatomic, strong) NSMutableDictionary *originalAdIndexPaths;
+@property (nonatomic, strong) NSMutableDictionary *adjustedAdIndexPaths;
+@property (nonatomic, strong) NSMutableDictionary *adDataObjects;
 
 @end
 
@@ -39,15 +39,6 @@ static const NSUInteger kMaximumNumberOfAdsPerStream = 255;
     return self;
 }
 
-- (void)dealloc
-{
-    [_desiredOriginalPositions release];
-    [_desiredInsertionPositions release];
-    [_originalAdIndexPaths release];
-    [_adjustedAdIndexPaths release];
-    [_adDataObjects release];
-    [super dealloc];
-}
 
 - (NSMutableArray *)positioningArrayForSection:(NSUInteger)section inDictionary:(NSMutableDictionary *)dictionary
 {
@@ -95,10 +86,10 @@ static const NSUInteger kMaximumNumberOfAdsPerStream = 255;
 {
     NSMutableArray *desiredOriginalPositions = [self positioningArrayForSection:indexPath.section inDictionary:self.desiredOriginalPositions];
     NSIndexPath *insertionIndexPath = [NSIndexPath indexPathForRow:indexPath.row - [desiredOriginalPositions count] inSection:indexPath.section];
-    [desiredOriginalPositions addObject:[[insertionIndexPath copy] autorelease]];
+    [desiredOriginalPositions addObject:[insertionIndexPath copy]];
 
     NSMutableArray *desiredInsertionPositions = [self positioningArrayForSection:indexPath.section inDictionary:self.desiredInsertionPositions];
-    [desiredInsertionPositions addObject:[[insertionIndexPath copy] autorelease]];
+    [desiredInsertionPositions addObject:[insertionIndexPath copy]];
 }
 
 - (NSUInteger)adjustedNumberOfItems:(NSUInteger)numberOfItems inSection:(NSUInteger)section
@@ -310,11 +301,11 @@ static const NSUInteger kMaximumNumberOfAdsPerStream = 255;
 - (void)moveSection:(NSInteger)section toSection:(NSInteger)newSection
 {
     // Store the data at the section we're moving and retain it so it doesn't get deleted.
-    NSMutableArray *desiredInsertionPositions = [[self positioningArrayForSection:section inDictionary:self.desiredInsertionPositions] retain];
-    NSMutableArray *desiredOriginalPositions = [[self positioningArrayForSection:section inDictionary:self.desiredOriginalPositions] retain];
-    NSMutableArray *adjustedAdIndexPaths = [[self positioningArrayForSection:section inDictionary:self.adjustedAdIndexPaths] retain];
-    NSMutableArray *originalAdIndexPaths = [[self positioningArrayForSection:section inDictionary:self.originalAdIndexPaths] retain];
-    NSMutableArray *adDataObjects = [[self positioningArrayForSection:section inDictionary:self.adDataObjects] retain];
+    NSMutableArray *desiredInsertionPositions = [self positioningArrayForSection:section inDictionary:self.desiredInsertionPositions];
+    NSMutableArray *desiredOriginalPositions = [self positioningArrayForSection:section inDictionary:self.desiredOriginalPositions];
+    NSMutableArray *adjustedAdIndexPaths = [self positioningArrayForSection:section inDictionary:self.adjustedAdIndexPaths];
+    NSMutableArray *originalAdIndexPaths = [self positioningArrayForSection:section inDictionary:self.originalAdIndexPaths];
+    NSMutableArray *adDataObjects = [self positioningArrayForSection:section inDictionary:self.adDataObjects];
 
     // Delete it from our dictionaries.
     [self deleteSections:[NSIndexSet indexSetWithIndex:section]];
@@ -330,12 +321,6 @@ static const NSUInteger kMaximumNumberOfAdsPerStream = 255;
     self.adDataObjects[@(newSection)] = adDataObjects;
 
     [self updateAllSectionsForPositioningArraysAtSection:newSection];
-
-    [desiredInsertionPositions release];
-    [desiredOriginalPositions release];
-    [adjustedAdIndexPaths release];
-    [originalAdIndexPaths release];
-    [adDataObjects release];
 }
 
 - (void)insertItemsAtIndexPaths:(NSArray *)originalIndexPaths

@@ -7,7 +7,7 @@
 //
 
 #import "MPAdView.h"
-#import "MRAdView.h"
+#import "MPClosableView.h"
 #import "MPBannerAdManager.h"
 #import "MPInstanceProvider.h"
 #import "MPBannerAdManagerDelegate.h"
@@ -15,8 +15,8 @@
 
 @interface MPAdView () <MPBannerAdManagerDelegate>
 
-@property (nonatomic, retain) MPBannerAdManager *adManager;
-@property (nonatomic, assign) UIView *adContentView;
+@property (nonatomic, strong) MPBannerAdManager *adManager;
+@property (nonatomic, weak) UIView *adContentView;
 @property (nonatomic, assign) CGSize originalSize;
 @property (nonatomic, assign) MPNativeAdOrientation allowedNativeAdOrientation;
 
@@ -54,24 +54,16 @@
 
 - (void)dealloc
 {
-    self.delegate = nil;
-    self.adUnitId = nil;
-    self.location = nil;
-    self.keywords = nil;
     self.adManager.delegate = nil;
-    self.adManager = nil;
-    [super dealloc];
 }
 
 #pragma mark -
 
 - (void)setAdContentView:(UIView *)view
 {
-    [view retain];
     [self.adContentView removeFromSuperview];
     _adContentView = view;
     [self addSubview:view];
-    [view release];
 }
 
 - (BOOL)ignoresAutorefresh
@@ -94,7 +86,8 @@
 
 - (CGSize)adContentViewSize
 {
-    if (!self.adContentView || [self.adContentView isKindOfClass:[MRAdView class]]) {
+    // MPClosableView represents an MRAID ad.
+    if (!self.adContentView || [self.adContentView isKindOfClass:[MPClosableView class]]) {
         return self.originalSize;
     } else {
         return self.adContentView.bounds.size;
@@ -176,10 +169,10 @@
 - (void)managerDidFailToLoadAd
 {
     if ([self.delegate respondsToSelector:@selector(adViewDidFailToLoadAd:)]) {
-        // Make sure we're not deallocated immediately as a result of a delegate
-        // action in reponse to this callback.
-        [[self retain] autorelease];
-        
+        // make sure we are not released synchronously as objects owned by us
+        // may do additional work after this callback
+        [[MPCoreInstanceProvider sharedProvider] keepObjectAliveForCurrentRunLoopIteration:self];
+
         [self.delegate adViewDidFailToLoadAd:self];
     }
 }

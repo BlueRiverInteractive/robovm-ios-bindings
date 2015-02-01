@@ -13,7 +13,7 @@
 
 @interface MPNativeAdSourceQueue : NSObject
 
-@property (nonatomic, assign) id <MPNativeAdSourceQueueDelegate> delegate;
+@property (nonatomic, weak) id <MPNativeAdSourceQueueDelegate> delegate;
 @property (nonatomic, assign) NSUInteger currentSequence;
 
 

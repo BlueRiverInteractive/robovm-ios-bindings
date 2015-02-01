@@ -8,6 +8,7 @@
 #import "MPLegacyBannerCustomEventAdapter.h"
 #import "MPAdConfiguration.h"
 #import "MPLogging.h"
+#import "MPInternalUtils.h"
 
 @implementation MPLegacyBannerCustomEventAdapter
 
@@ -17,7 +18,9 @@
 
     SEL customEventSelector = NSSelectorFromString(configuration.customSelectorName);
     if ([self.delegate.bannerDelegate respondsToSelector:customEventSelector]) {
-        [self.delegate.bannerDelegate performSelector:customEventSelector];
+        SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(
+            [self.delegate.bannerDelegate performSelector:customEventSelector withObject:nil]
+        );
         return;
     }
 
@@ -28,8 +31,9 @@
 
     SEL customEventOneArgumentSelector = NSSelectorFromString(oneArgumentSelectorName);
     if ([self.delegate.bannerDelegate respondsToSelector:customEventOneArgumentSelector]) {
-        [self.delegate.bannerDelegate performSelector:customEventOneArgumentSelector
-                                           withObject:self.delegate.banner];
+        SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(
+            [self.delegate.bannerDelegate performSelector:customEventOneArgumentSelector withObject:self.delegate.banner]
+        );
         return;
     }
 

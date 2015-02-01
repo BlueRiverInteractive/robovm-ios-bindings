@@ -2,14 +2,13 @@
 //  MRCommand.m
 //  MoPub
 //
-//  Created by Andrew He on 12/19/11.
 //  Copyright (c) 2011 MoPub, Inc. All rights reserved.
 //
 
 #import "MRCommand.h"
-#import "MRAdView.h"
 #import "MPGlobal.h"
 #import "MPLogging.h"
+#import "MRConstants.h"
 
 @implementation MRCommand
 
@@ -18,12 +17,12 @@
 + (NSMutableDictionary *)sharedCommandClassMap
 {
     static NSMutableDictionary *sharedMap = nil;
-    
+
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         sharedMap = [[NSMutableDictionary alloc] init];
     });
-    
+
     return sharedMap;
 }
 
@@ -51,13 +50,19 @@
 + (id)commandForString:(NSString *)string
 {
     Class commandClass = [self commandClassForString:string];
-    return [[[commandClass alloc] init] autorelease];
+    return [[commandClass alloc] init];
 }
 
 // return YES by default for user safety
 - (BOOL)requiresUserInteractionForPlacementType:(NSUInteger)placementType
 {
     return YES;
+}
+
+// Default to NO to avoid race conditions.
+- (BOOL)executableWhileBlockingRequests
+{
+    return NO;
 }
 
 - (BOOL)executeWithParams:(NSDictionary *)params
@@ -146,37 +151,36 @@
 
 - (BOOL)executeWithParams:(NSDictionary *)params
 {
-    CGRect applicationFrame = MPApplicationFrame();
-    CGFloat afWidth = CGRectGetWidth(applicationFrame);
-    CGFloat afHeight = CGRectGetHeight(applicationFrame);
-
-    // If the ad has expandProperties, we should use the width and height values specified there.
-    CGFloat w = [self floatFromParameters:params forKey:@"w" withDefault:afWidth];
-    CGFloat h = [self floatFromParameters:params forKey:@"h" withDefault:afHeight];
-
-    // Constrain the ad to the application frame size.
-    if (w > afWidth) w = afWidth;
-    if (h > afHeight) h = afHeight;
-
-    // Center the ad within the application frame.
-    CGFloat x = applicationFrame.origin.x + floor((afWidth - w) / 2);
-    CGFloat y = applicationFrame.origin.y + floor((afHeight - h) / 2);
-
     NSURL *url = [self urlFromParameters:params forKey:@"url"];
-    
-    MPLogDebug(@"Expanding to (%.1f, %.1f, %.1f, %.1f); displaying %@.", x, y, w, h, url);
 
-    CGRect newFrame = CGRectMake(x, y, w, h);
-    
     NSDictionary *expandParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  NSStringFromCGRect(newFrame), @"expandToFrame",
                                   (url == nil) ? [NSNull null] : url , @"url",
                                   [NSNumber numberWithBool:[self boolFromParameters:params forKey:@"shouldUseCustomClose"]], @"useCustomClose",
-                                  [NSNumber numberWithBool:NO], @"isModal",
-                                  [NSNumber numberWithBool:[self boolFromParameters:params forKey:@"lockOrientation"]], @"shouldLockOrientation",
                                   nil];
-    
+
     [self.delegate mrCommand:self expandWithParams:expandParams];
+
+    return YES;
+}
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@implementation MRResizeCommand
+
++ (void)load
+{
+    [MRCommand registerCommand:self];
+}
+
++ (NSString *)commandType
+{
+    return @"resize";
+}
+
+- (BOOL)executeWithParams:(NSDictionary *)params
+{
+    [self.delegate mrCommand:self resizeWithParams:params];
 
     return YES;
 }
@@ -192,6 +196,13 @@
     [MRCommand registerCommand:self];
 }
 
+// We allow useCustomClose to run while we're blocking requests because it only controls how we present a UIButton.
+// It can't present/dismiss any view or view controllers. It also doesn't affect any mraid ad/screen metrics.
+- (BOOL)executableWhileBlockingRequests
+{
+    return YES;
+}
+
 - (BOOL)requiresUserInteractionForPlacementType:(NSUInteger)placementType
 {
     return NO;
@@ -205,7 +216,91 @@
 - (BOOL)executeWithParams:(NSDictionary *)params
 {
     [self.delegate mrCommand:self shouldUseCustomClose:[self boolFromParameters:params forKey:@"shouldUseCustomClose"]];
-    
+
+    return YES;
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@implementation MRSetOrientationPropertiesCommand
+
++ (void)load
+{
+    [MRCommand registerCommand:self];
+}
+
++ (NSString *)commandType
+{
+    return @"setOrientationProperties";
+}
+
+- (BOOL)requiresUserInteractionForPlacementType:(NSUInteger)placementType
+{
+    return NO;
+}
+
+- (BOOL)executeWithParams:(NSDictionary *)params
+{
+    // We can take the forceOrientation and allowOrientationChange values and boil them down to an orientation mask
+    // that will represent the intention of the ad.
+    UIInterfaceOrientationMask forceOrientationMaskValue;
+
+    NSString *forceOrientationString = params[@"forceOrientation"];
+
+    // Give a default value of "none" for forceOrientationString if it didn't come in through the params.
+    if (!forceOrientationString) {
+        forceOrientationString = kOrientationPropertyForceOrientationNoneKey;
+    }
+
+    // Do not allow orientation changing if we're given a force orientation other than none. Based on the spec,
+    // we believe that forceOrientation takes precedence over allowOrientationChange and should not allow
+    // orientation changes when a forceOrientation other than 'none' is given.
+    if ([forceOrientationString isEqualToString:kOrientationPropertyForceOrientationPortraitKey]) {
+        forceOrientationMaskValue = UIInterfaceOrientationMaskPortrait;
+    } else if ([forceOrientationString isEqualToString:kOrientationPropertyForceOrientationLandscapeKey]) {
+        forceOrientationMaskValue = UIInterfaceOrientationMaskLandscape;
+    } else {
+        // Default allowing orientation change to YES. We will change this only if we received a value for this in our params.
+        BOOL allowOrientationChangeValue = YES;
+
+        // If we end up allowing orientation change, then we're going to allow any orientation.
+        forceOrientationMaskValue = UIInterfaceOrientationMaskAll;
+
+        NSObject *allowOrientationChangeObj = params[@"allowOrientationChange"];
+
+        if (allowOrientationChangeObj) {
+            allowOrientationChangeValue = [self boolFromParameters:params forKey:@"allowOrientationChange"];
+        }
+
+        // If we don't allow orientation change, we're locking the user into the current orientation.
+        if (!allowOrientationChangeValue) {
+            UIInterfaceOrientation currentOrientation = MPInterfaceOrientation();
+
+            if (UIInterfaceOrientationIsLandscape(currentOrientation)) {
+                forceOrientationMaskValue = UIInterfaceOrientationMaskLandscape;
+            } else if (currentOrientation == UIInterfaceOrientationPortrait) {
+                forceOrientationMaskValue = UIInterfaceOrientationMaskPortrait;
+            } else if (currentOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+                forceOrientationMaskValue = UIInterfaceOrientationMaskPortraitUpsideDown;
+            }
+        }
+    }
+
+    [self.delegate mrCommand:self setOrientationPropertiesWithForceOrientation:forceOrientationMaskValue];
+
+    return YES;
+}
+/*
+ * We allow setOrientationProperties to run while we're blocking requests because this command can occur during the presentation
+ * animation of an interstitial, and has a strong effect on how an ad is presented so we want to make sure it's executed.
+ *
+ * Even though we return YES here, updating orientation while blocking requests is not safe. MRController receives the appropriate
+ * delegate call, and caches the intended call in a block, which it executes when request-blocking is disabled.
+ */
+- (BOOL)executableWhileBlockingRequests
+{
     return YES;
 }
 
@@ -228,7 +323,7 @@
 - (BOOL)executeWithParams:(NSDictionary *)params
 {
     [self.delegate mrCommand:self openURL:[self urlFromParameters:params forKey:@"url"]];
-    
+
     return YES;
 }
 
@@ -251,7 +346,7 @@
 - (BOOL)executeWithParams:(NSDictionary *)params
 {
     [self.delegate mrCommand:self createCalendarEventWithParams:params];
-    
+
     return YES;
 }
 
@@ -280,7 +375,7 @@
 - (BOOL)executeWithParams:(NSDictionary *)params
 {
     [self.delegate mrCommand:self playVideoWithURL:[self urlFromParameters:params forKey:@"uri"]];
-    
+
     return YES;
 }
 
@@ -303,7 +398,7 @@
 - (BOOL)executeWithParams:(NSDictionary *)params
 {
     [self.delegate mrCommand:self storePictureWithURL:[self urlFromParameters:params forKey:@"uri"]];
-    
+
     return YES;
 }
 

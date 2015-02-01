@@ -13,7 +13,7 @@
 
 @interface MPBannerAdManager : NSObject <MPAdServerCommunicatorDelegate, MPBannerAdapterDelegate>
 
-@property (nonatomic, assign) id<MPBannerAdManagerDelegate> delegate;
+@property (nonatomic, weak) id<MPBannerAdManagerDelegate> delegate;
 
 - (id)initWithDelegate:(id<MPBannerAdManagerDelegate>)delegate;
 

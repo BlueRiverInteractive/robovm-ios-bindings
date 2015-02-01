@@ -30,6 +30,7 @@ NSString * const kScrollableHeaderKey = @"X-Scrollable";
 NSString * const kWidthHeaderKey = @"X-Width";
 NSString * const kDspCreativeIdKey = @"X-DspCreativeid";
 NSString * const kPrecacheRequiredKey = @"X-PrecacheRequired";
+NSString * const kIsVastVideoPlayerKey = @"X-VastVideoPlayer";
 
 NSString * const kInterstitialAdTypeHeaderKey = @"X-Fulladtype";
 NSString * const kOrientationTypeHeaderKey = @"X-Orientation";
@@ -123,6 +124,8 @@ NSString * const kAdTypeNative = @"json";
 
         self.precacheRequired = [[headers objectForKey:kPrecacheRequiredKey] boolValue];
 
+        self.isVastVideoPlayer = [[headers objectForKey:kIsVastVideoPlayerKey] boolValue];
+
         self.creationTimestamp = [NSDate date];
     }
     return self;
@@ -170,23 +173,6 @@ NSString * const kAdTypeNative = @"json";
     return result;
 }
 
-- (void)dealloc
-{
-    self.networkType = nil;
-    self.clickTrackingURL = nil;
-    self.impressionTrackingURL = nil;
-    self.failoverURL = nil;
-    self.interceptURLPrefix = nil;
-    self.adResponseData = nil;
-    self.adResponseHTMLString = nil;
-    self.nativeSDKParameters = nil;
-    self.customSelectorName = nil;
-    self.customEventClassData = nil;
-    self.dspCreativeId = nil;
-    self.creationTimestamp = nil;
-
-    [super dealloc];
-}
 
 - (BOOL)hasPreferredSize
 {
@@ -196,8 +182,8 @@ NSString * const kAdTypeNative = @"json";
 - (NSString *)adResponseHTMLString
 {
     if (!_adResponseHTMLString) {
-        self.adResponseHTMLString = [[[NSString alloc] initWithData:self.adResponseData
-                                                           encoding:NSUTF8StringEncoding] autorelease];
+        self.adResponseHTMLString = [[NSString alloc] initWithData:self.adResponseData
+                                                           encoding:NSUTF8StringEncoding];
     }
 
     return _adResponseHTMLString;

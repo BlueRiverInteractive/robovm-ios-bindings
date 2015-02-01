@@ -2,12 +2,12 @@
 //  MRProperty.h
 //  MoPub
 //
-//  Created by Andrew He on 12/13/11.
 //  Copyright (c) 2011 MoPub, Inc. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "MRAdView.h"
+#import "MRConstants.h"
 
 @interface MRProperty : NSObject
 

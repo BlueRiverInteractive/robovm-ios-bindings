@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.openkit.sample.Sample"
-}
-
-eclipse.project {
-    name = "openkit-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

@@ -110,7 +110,7 @@
         return defaultReturnValue;
     }
 
-    id returnValue;
+    __unsafe_unretained id returnValue;
     [invocation getReturnValue:&returnValue];
     return returnValue;
 }

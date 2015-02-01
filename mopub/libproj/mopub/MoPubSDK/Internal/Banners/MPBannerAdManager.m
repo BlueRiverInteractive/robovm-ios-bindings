@@ -18,12 +18,12 @@
 
 @interface MPBannerAdManager ()
 
-@property (nonatomic, retain) MPAdServerCommunicator *communicator;
-@property (nonatomic, retain) MPBaseBannerAdapter *onscreenAdapter;
-@property (nonatomic, retain) MPBaseBannerAdapter *requestingAdapter;
-@property (nonatomic, retain) UIView *requestingAdapterAdContentView;
-@property (nonatomic, retain) MPAdConfiguration *requestingConfiguration;
-@property (nonatomic, retain) MPTimer *refreshTimer;
+@property (nonatomic, strong) MPAdServerCommunicator *communicator;
+@property (nonatomic, strong) MPBaseBannerAdapter *onscreenAdapter;
+@property (nonatomic, strong) MPBaseBannerAdapter *requestingAdapter;
+@property (nonatomic, strong) UIView *requestingAdapterAdContentView;
+@property (nonatomic, strong) MPAdConfiguration *requestingConfiguration;
+@property (nonatomic, strong) MPTimer *refreshTimer;
 @property (nonatomic, assign) BOOL adActionInProgress;
 @property (nonatomic, assign) BOOL automaticallyRefreshesContents;
 @property (nonatomic, assign) BOOL hasRequestedAtLeastOneAd;
@@ -59,6 +59,11 @@
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:[UIApplication sharedApplication]];
 
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterBackground)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:[UIApplication sharedApplication]];
+
         self.automaticallyRefreshesContents = YES;
         self.currentOrientation = MPInterfaceOrientation();
     }
@@ -71,20 +76,13 @@
 
     [self.communicator cancel];
     [self.communicator setDelegate:nil];
-    self.communicator = nil;
 
     [self.refreshTimer invalidate];
-    self.refreshTimer = nil;
 
     [self.onscreenAdapter unregisterDelegate];
-    self.onscreenAdapter = nil;
 
     [self.requestingAdapter unregisterDelegate];
-    self.requestingAdapter = nil;
-    self.requestingAdapterAdContentView = nil;
-    self.requestingConfiguration = nil;
 
-    [super dealloc];
 }
 
 - (BOOL)loading
@@ -118,13 +116,23 @@
     }
 }
 
+- (void)applicationDidEnterBackground
+{
+    [self pauseRefreshTimer];
+}
+
+- (void)pauseRefreshTimer
+{
+    if ([self.refreshTimer isValid]) {
+        [self.refreshTimer pause];
+    }
+}
+
 - (void)stopAutomaticallyRefreshingContents
 {
     self.automaticallyRefreshesContents = NO;
 
-    if ([self.refreshTimer isValid]) {
-        [self.refreshTimer pause];
-    }
+    [self pauseRefreshTimer];
 }
 
 - (void)startAutomaticallyRefreshingContents
@@ -140,7 +148,7 @@
 
 - (void)loadAdWithURL:(NSURL *)URL
 {
-    URL = [[URL copy] autorelease]; //if this is the URL from the requestingConfiguration, it's about to die...
+    URL = [URL copy]; //if this is the URL from the requestingConfiguration, it's about to die...
     // Cancel the current request/requesting adapter
     self.requestingConfiguration = nil;
     [self.requestingAdapter unregisterDelegate];

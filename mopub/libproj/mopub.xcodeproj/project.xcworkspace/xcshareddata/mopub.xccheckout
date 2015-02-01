@@ -14,7 +14,7 @@
 		<string>https://github.com/BlueRiverInteractive/robovm-ios-bindings.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>mopub/libproj/mopub.xcodeproj/project.xcworkspace</string>
+	<string>mopub/libproj/mopub.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>996418491470870869C6A5D953FA576BC33F1338</key>

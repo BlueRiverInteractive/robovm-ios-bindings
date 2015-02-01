@@ -9,7 +9,7 @@
 
 @interface MRPictureManager : NSObject <UIAlertViewDelegate, MRImageDownloaderDelegate>
 
-@property (nonatomic, assign) id<MRPictureManagerDelegate> delegate;
+@property (nonatomic, weak) id<MRPictureManagerDelegate> delegate;
 
 - (id)initWithDelegate:(id<MRPictureManagerDelegate>)delegate;
 - (void)storePicture:(NSURL *)url;

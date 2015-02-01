@@ -11,7 +11,7 @@
 
 @interface MPMRAIDInterstitialCustomEvent ()
 
-@property (nonatomic, retain) MPMRAIDInterstitialViewController *interstitial;
+@property (nonatomic, strong) MPMRAIDInterstitialViewController *interstitial;
 
 @end
 
@@ -24,16 +24,10 @@
     MPLogInfo(@"Loading MoPub MRAID interstitial");
     self.interstitial = [[MPInstanceProvider sharedProvider] buildMPMRAIDInterstitialViewControllerWithDelegate:self
                                                                                                   configuration:[self.delegate configuration]];
-    [self.interstitial setCloseButtonStyle:MPInterstitialCloseButtonStyleAdControlled];
+
+    // The MRAID ad view will handle the close button so we don't need the MPInterstitialViewController's close button.
+    [self.interstitial setCloseButtonStyle:MPInterstitialCloseButtonStyleAlwaysHidden];
     [self.interstitial startLoading];
-}
-
-- (void)dealloc
-{
-    self.interstitial.delegate = nil;
-    self.interstitial = nil;
-
-    [super dealloc];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)controller
@@ -87,6 +81,11 @@
 {
     MPLogInfo(@"MoPub MRAID interstitial did disappear");
     [self.delegate interstitialCustomEventDidDisappear:self];
+
+    // Deallocate the interstitial as we don't need it anymore. If we don't deallocate the interstitial after dismissal,
+    // then the html in the webview will continue to run which could lead to bugs such as continuing to play the sound of an inline
+    // video since the app may hold onto the interstitial ad controller. Moreover, we keep an array of controllers around as well.
+    self.interstitial = nil;
 }
 
 - (void)interstitialDidReceiveTapEvent:(MPInterstitialViewController *)interstitial

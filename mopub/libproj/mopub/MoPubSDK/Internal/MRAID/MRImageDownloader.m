@@ -7,8 +7,8 @@
 
 @interface MRAIDStorePictureOperation : NSOperation
 
-@property (nonatomic, retain) NSURL *URL;
-@property (nonatomic, retain) NSData *imageData;
+@property (nonatomic, strong) NSURL *URL;
+@property (nonatomic, strong) NSData *imageData;
 
 - (id)initWithURL:(NSURL *)URL;
 
@@ -27,12 +27,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_URL release];
-    [_imageData release];
-    [super dealloc];
-}
 
 - (void)main
 {
@@ -59,12 +53,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_queue release];
-    [_pendingOperations release];
-    [super dealloc];
-}
 
 - (void)downloadImageWithURL:(NSURL *)URL
 {
@@ -77,7 +65,7 @@
         return;
     }
 
-    MRAIDStorePictureOperation *operation = [[[MRAIDStorePictureOperation alloc] initWithURL:URL] autorelease];
+    MRAIDStorePictureOperation *operation = [[MRAIDStorePictureOperation alloc] initWithURL:URL];
     [operation addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:nil];
     [self.pendingOperations setObject:operation forKey:URL];
     [self.queue addOperation:operation];
@@ -98,12 +86,12 @@
 - (void)saveImageForOperation:(MRAIDStorePictureOperation *)operation
 {
     UIImage *image = [UIImage imageWithData:operation.imageData];
-    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), operation);
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), (__bridge void *)(operation));
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    MRAIDStorePictureOperation *operation = contextInfo;
+    MRAIDStorePictureOperation *operation = (__bridge MRAIDStorePictureOperation *)(contextInfo);
 
     if (error) {
         [self.delegate downloaderDidFailToSaveImageWithURL:operation.URL error:error];

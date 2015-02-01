@@ -94,9 +94,9 @@
 /** @name Playback */
 
 /**
- * Pauses the video component of the native ad if it is currently playing. 
+ * Pauses the video component of the native ad if it is currently playing.
  * This should be used when the native ad goes off-screen temporarily: for
- * example, when it is contained in a UITableViewCell that has been scrolled 
+ * example, when it is contained in a UITableViewCell that has been scrolled
  * off-screen; or when the ad is contained in a UIViewController and that view
  * controller has called the method `viewWillDisappear`.
  * Any use of this method must be paired with a corresponding call to `resume`.

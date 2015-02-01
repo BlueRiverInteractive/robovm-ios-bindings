@@ -7,7 +7,7 @@
 
 @interface MRPictureManager ()
 
-@property (nonatomic, retain) MRImageDownloader *imageDownloader;
+@property (nonatomic, strong) MRImageDownloader *imageDownloader;
 @property (nonatomic, copy) NSURL *imageURL;
 
 @end
@@ -31,9 +31,6 @@
 - (void)dealloc
 {
     [_imageDownloader setDelegate:nil];
-    [_imageDownloader release];
-    [_imageURL release];
-    [super dealloc];
 }
 
 - (void)storePicture:(NSURL *)url
@@ -46,11 +43,11 @@
         return;
     }
 
-    UIAlertView *alertView = [[[UIAlertView alloc] initWithTitle:nil
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
                                                          message:@"Save this image to your photos?"
                                                         delegate:self
                                                cancelButtonTitle:@"Cancel"
-                                               otherButtonTitles:@"Save Image", nil] autorelease];
+                                               otherButtonTitles:@"Save Image", nil];
     [alertView show];
 }
 

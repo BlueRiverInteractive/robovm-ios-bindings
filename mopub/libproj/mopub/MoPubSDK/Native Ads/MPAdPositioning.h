@@ -10,6 +10,6 @@
 @interface MPAdPositioning : NSObject <NSCopying>
 
 @property (nonatomic, assign) NSUInteger repeatingInterval;
-@property (nonatomic, retain, readonly) NSMutableOrderedSet *fixedPositions;
+@property (nonatomic, strong, readonly) NSMutableOrderedSet *fixedPositions;
 
 @end

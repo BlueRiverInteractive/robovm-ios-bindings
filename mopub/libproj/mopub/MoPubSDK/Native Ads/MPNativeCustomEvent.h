@@ -59,11 +59,11 @@
 /** @name Communicating with the MoPub SDK */
 
 /**
- * The `MPNativeCustomEventDelegate` to send messages to as events occur.
+ * The `MPNativeCustomEventDelegate` receives messages concerning the status of loading a native ad.
  *
  * The `delegate` object defines several methods that you should call in order to inform MoPub
  * of the progress of your custom event.
  */
-@property (nonatomic, assign) id<MPNativeCustomEventDelegate> delegate;
+@property (nonatomic, weak) id<MPNativeCustomEventDelegate> delegate;
 
 @end

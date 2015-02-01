@@ -8,6 +8,7 @@
 #import "MPAdServerURLBuilder.h"
 
 #import "MPConstants.h"
+#import "MPGeolocationProvider.h"
 #import "MPGlobal.h"
 #import "MPKeywordProvider.h"
 #import "MPIdentityProvider.h"
@@ -176,14 +177,25 @@ static NSInteger const kAdSequenceNone = -1;
 {
     NSString *result = @"";
 
-    if (location && location.horizontalAccuracy >= 0) {
-        result = [NSString stringWithFormat:@"&ll=%@,%@",
-                  [NSNumber numberWithDouble:location.coordinate.latitude],
-                  [NSNumber numberWithDouble:location.coordinate.longitude]];
+    CLLocation *bestLocation = location;
+    CLLocation *locationFromProvider = [[[MPCoreInstanceProvider sharedProvider] sharedMPGeolocationProvider] lastKnownLocation];
 
-        if (location.horizontalAccuracy) {
+    if (locationFromProvider) {
+        bestLocation = locationFromProvider;
+    }
+
+    if (bestLocation && bestLocation.horizontalAccuracy >= 0) {
+        result = [NSString stringWithFormat:@"&ll=%@,%@",
+                  [NSNumber numberWithDouble:bestLocation.coordinate.latitude],
+                  [NSNumber numberWithDouble:bestLocation.coordinate.longitude]];
+
+        if (bestLocation.horizontalAccuracy) {
             result = [result stringByAppendingFormat:@"&lla=%@",
-                      [NSNumber numberWithDouble:location.horizontalAccuracy]];
+                      [NSNumber numberWithDouble:bestLocation.horizontalAccuracy]];
+        }
+
+        if (bestLocation == locationFromProvider) {
+            result = [result stringByAppendingString:@"&llsdk=1"];
         }
     }
 

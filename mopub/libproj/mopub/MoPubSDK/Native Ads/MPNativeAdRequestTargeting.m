@@ -6,17 +6,18 @@
 #import "MPNativeAdRequestTargeting.h"
 #import "MPNativeAdConstants.h"
 
+#import <CoreLocation/CoreLocation.h>
+
 @implementation MPNativeAdRequestTargeting
 
 + (MPNativeAdRequestTargeting *)targeting
 {
-    return [[[MPNativeAdRequestTargeting alloc] init] autorelease];
+    return [[MPNativeAdRequestTargeting alloc] init];
 }
 
 - (void)setDesiredAssets:(NSSet *)desiredAssets
 {
     if (_desiredAssets != desiredAssets) {
-        [_desiredAssets release];
 
         NSMutableSet *allowedAdAssets = [NSMutableSet setWithObjects:kAdTitleKey,
                                          kAdTextKey,
@@ -26,16 +27,9 @@
                                          kAdStarRatingKey,
                                          nil];
         [allowedAdAssets intersectSet:desiredAssets];
-        _desiredAssets = [allowedAdAssets retain];
+        _desiredAssets = allowedAdAssets;
     }
 }
 
-- (void)dealloc
-{
-    [_keywords release];
-    [_location release];
-    [_desiredAssets release];
-    [super dealloc];
-}
 
 @end

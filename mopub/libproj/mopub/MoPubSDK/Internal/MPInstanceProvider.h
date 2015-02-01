@@ -33,10 +33,13 @@
 @protocol MPAdWebViewAgentDelegate;
 
 // MRAID
-@class MRAdView;
-@protocol MRAdViewDelegate;
+@class MRController;
+@protocol MRControllerDelegate;
+@class MPClosableView;
+@class MRBridge;
+@protocol MRBridgeDelegate;
+@protocol MPClosableViewDelegate;
 @class MRBundleManager;
-@class MRJavaScriptEventEmitter;
 @class MRCalendarManager;
 @protocol MRCalendarManagerDelegate;
 @class EKEventStore;
@@ -49,12 +52,15 @@
 @class MRVideoPlayerManager;
 @protocol MRVideoPlayerManagerDelegate;
 @class MPMoviePlayerViewController;
+@class MRNativeCommandHandler;
+@protocol MRNativeCommandHandlerDelegate;
 
 //Native
 @protocol MPNativeCustomEventDelegate;
 @class MPNativeCustomEvent;
 @class MPNativeAdSource;
 @protocol MPNativeAdSourceDelegate;
+@class MPNativePositionSource;
 @class MPStreamAdPlacementData;
 @class MPStreamAdPlacer;
 @class MPAdPositioning;
@@ -91,14 +97,12 @@
                                          customMethodDelegate:(id)customMethodDelegate;
 
 #pragma mark - MRAID
-- (MRAdView *)buildMRAdViewWithFrame:(CGRect)frame
-                     allowsExpansion:(BOOL)allowsExpansion
-                    closeButtonStyle:(NSUInteger)style
-                       placementType:(NSUInteger)type
-                            delegate:(id<MRAdViewDelegate>)delegate;
+- (MPClosableView *)buildMRAIDMPClosableViewWithFrame:(CGRect)frame webView:(UIWebView *)webView delegate:(id<MPClosableViewDelegate>)delegate;
 - (MRBundleManager *)buildMRBundleManager;
+- (MRController *)buildBannerMRControllerWithFrame:(CGRect)frame delegate:(id<MRControllerDelegate>)delegate;
+- (MRController *)buildInterstitialMRControllerWithFrame:(CGRect)frame delegate:(id<MRControllerDelegate>)delegate;
+- (MRBridge *)buildMRBridgeWithWebView:(UIWebView *)webView delegate:(id<MRBridgeDelegate>)delegate;
 - (UIWebView *)buildUIWebViewWithFrame:(CGRect)frame;
-- (MRJavaScriptEventEmitter *)buildMRJavaScriptEventEmitterWithWebView:(UIWebView *)webView;
 - (MRCalendarManager *)buildMRCalendarManagerWithDelegate:(id<MRCalendarManagerDelegate>)delegate;
 - (EKEventEditViewController *)buildEKEventEditViewControllerWithEditViewDelegate:(id<EKEventEditViewDelegate>)editViewDelegate;
 - (EKEventStore *)buildEKEventStore;
@@ -106,12 +110,14 @@
 - (MRImageDownloader *)buildMRImageDownloaderWithDelegate:(id<MRImageDownloaderDelegate>)delegate;
 - (MRVideoPlayerManager *)buildMRVideoPlayerManagerWithDelegate:(id<MRVideoPlayerManagerDelegate>)delegate;
 - (MPMoviePlayerViewController *)buildMPMoviePlayerViewControllerWithURL:(NSURL *)URL;
+- (MRNativeCommandHandler *)buildMRNativeCommandHandlerWithDelegate:(id<MRNativeCommandHandlerDelegate>)delegate;
 
 #pragma mark - Native
 
 - (MPNativeCustomEvent *)buildNativeCustomEventFromCustomClass:(Class)customClass
                                                       delegate:(id<MPNativeCustomEventDelegate>)delegate;
 - (MPNativeAdSource *)buildNativeAdSourceWithDelegate:(id<MPNativeAdSourceDelegate>)delegate;
+- (MPNativePositionSource *)buildNativePositioningSource;
 - (MPStreamAdPlacementData *)buildStreamAdPlacementDataWithPositioning:(MPAdPositioning *)positioning;
 - (MPStreamAdPlacer *)buildStreamAdPlacerWithViewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:defaultAdRenderingClass;
 

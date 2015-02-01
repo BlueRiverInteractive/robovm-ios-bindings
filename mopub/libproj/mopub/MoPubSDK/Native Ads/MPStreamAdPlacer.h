@@ -55,12 +55,12 @@
  * It calculates an on-screen range and uses a small look-ahead to place ads where the user is
  * likely to view them.
  */
-@property (nonatomic, retain) NSArray *visibleIndexPaths;
+@property (nonatomic, strong) NSArray *visibleIndexPaths;
 
-@property (nonatomic, assign) UIViewController *viewController;
-@property (nonatomic, assign) id<MPStreamAdPlacerDelegate> delegate;
-@property (nonatomic, readonly) MPAdPositioning *adPositioning;
-@property (nonatomic, readonly) Class defaultAdRenderingClass;
+@property (nonatomic, weak) UIViewController *viewController;
+@property (nonatomic, weak) id<MPStreamAdPlacerDelegate> delegate;
+@property (nonatomic, readonly, copy) MPAdPositioning *adPositioning;
+@property (nonatomic, readonly, assign) Class defaultAdRenderingClass;
 
 /**
  * Creates and returns a new ad placer that can display ads in a stream.

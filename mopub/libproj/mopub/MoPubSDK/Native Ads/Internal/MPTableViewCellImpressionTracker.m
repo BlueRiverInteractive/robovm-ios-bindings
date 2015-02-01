@@ -7,9 +7,9 @@
 
 @interface MPTableViewCellImpressionTracker ()
 
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, assign) id<MPTableViewCellImpressionTrackerDelegate> delegate;
-@property (nonatomic, retain) NSTimer *timer;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, weak) id<MPTableViewCellImpressionTrackerDelegate> delegate;
+@property (nonatomic, strong) NSTimer *timer;
 
 @end
 
@@ -21,7 +21,7 @@
 {
     self = [super init];
     if (self) {
-        _tableView = [tableView retain];
+        _tableView = tableView;
         _delegate = delegate;
     }
     return self;
@@ -29,11 +29,7 @@
 
 - (void)dealloc
 {
-    [_tableView release];
     [_timer invalidate];
-    [_timer release];
-    _delegate = nil;
-    [super dealloc];
 }
 
 - (void)startTracking
@@ -54,7 +50,7 @@
 
 - (void)tick:(NSTimer *)timer
 {
-    NSMutableArray *indexPathsForVisibleRows = [[[self.tableView indexPathsForVisibleRows] mutableCopy] autorelease];
+    NSMutableArray *indexPathsForVisibleRows = [[self.tableView indexPathsForVisibleRows] mutableCopy];
     NSUInteger rowCount = [indexPathsForVisibleRows count];
 
     // For our purposes, "visible" means that more than half of the cell is on-screen.

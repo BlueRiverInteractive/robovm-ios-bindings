@@ -12,15 +12,17 @@
  * The `MPClientAdPositioning` class is a model that allows you to control the positions where
  * native advertisements should appear within a stream. A positioning object works in conjunction
  * with an ad placer, giving the ad placer the information it needs to configure the positions and
- * frequency of ads.
+ * frequency of ads. You can specify that ads should appear at fixed index paths and/or at equally
+ * spaced intervals throughout your content.
  *
- * You can specify that ads should appear at fixed index paths and/or at equally spaced intervals
- * throughout your content.
+ * Unlike with `MPServerAdPositioning`, which tells an ad placer to obtain its positioning
+ * information from the MoPub ad server, client ad positioning does not allow you to control your ad
+ * positions via the MoPub website.
  */
 
 @interface MPClientAdPositioning : MPAdPositioning
 
-/** @name Creating a Positioning Object */
+/** @name Creating a Client Positioning Object */
 
 /**
  * Creates and returns an empty positioning object. In order for ads to display in a stream, the

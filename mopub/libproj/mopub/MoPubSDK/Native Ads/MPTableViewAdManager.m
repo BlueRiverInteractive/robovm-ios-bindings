@@ -13,10 +13,10 @@
 
 @interface MPTableViewAdManager () <MPTableViewCellImpressionTrackerDelegate>
 
-@property (nonatomic, retain) NSMutableSet *ads;
-@property (nonatomic, retain) NSMutableSet *cells;
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) MPTableViewCellImpressionTracker *impressionTracker;
+@property (nonatomic, strong) NSMutableSet *ads;
+@property (nonatomic, strong) NSMutableSet *cells;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) MPTableViewCellImpressionTracker *impressionTracker;
 
 @end
 
@@ -28,7 +28,7 @@
 {
     self = [super init];
     if (self) {
-        _tableView = [tableView retain];
+        _tableView = tableView;
         _impressionTracker = [[MPTableViewCellImpressionTracker alloc] initWithTableView:tableView
                                                                                  delegate:self];
         [_impressionTracker startTracking];
@@ -43,13 +43,7 @@
 {
     [self removeAssociatedAdObjectsFromCells];
 
-    [_tableView release];
     [_impressionTracker stopTracking];
-    [_impressionTracker release];
-    [_ads release];
-    [_cells release];
-
-    [super dealloc];
 }
 
 - (void)removeAssociatedAdObjectsFromCells
@@ -64,7 +58,7 @@
     NSString *identifier = [NSString stringWithFormat:@"MP_Cell_Class_%@", NSStringFromClass(cellClass)];
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
+        cell = [[cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         [self.cells addObject:cell];
     }
 

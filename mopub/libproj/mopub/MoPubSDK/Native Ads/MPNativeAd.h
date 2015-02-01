@@ -7,6 +7,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol MPNativeAdAdapter;
+@protocol MPNativeAdDelegate;
 @class MPAdConfiguration;
 
 /**
@@ -18,6 +19,11 @@
 @interface MPNativeAd : NSObject
 
 /** @name Ad Resources */
+
+/**
+ * The delegate of the `MPNativeAd` object.
+ */
+@property (nonatomic, weak) id<MPNativeAdDelegate> delegate;
 
 /**
  * A dictionary representing the native ad properties.
@@ -89,8 +95,11 @@
  *
  * When this method is called, a click event will automatically be recorded, so there is no
  * need to additionally invoke -trackClick.
+ *
+ * WARNING: This method has been deprecated in favor of displayContentWithCompletion:. Using the new
+ * method requires the MPNativeAd to have an MPNativeAdDelegate that implements viewControllerForPresentingModalView.
  */
-- (void)displayContentFromRootViewController:(UIViewController *)controller completion:(void (^)(BOOL success, NSError *error))completionBlock;
+- (void)displayContentFromRootViewController:(UIViewController *)controller completion:(void (^)(BOOL success, NSError *error))completionBlock __deprecated;
 
 /**
  * Opens a URL using an appropriate mechanism (typically, an in-application modal web browser or a
@@ -106,9 +115,43 @@
  *
  * When this method is called, a click event will automatically be recorded, so there is no
  * need to additionally invoke -trackClick.
+ *
+ * WARNING: This method has been deprecated in favor of displayContentForURL:withCompletion:. Using the new
+ * method requires the MPNativeAd to have an MPNativeAdDelegate that implements viewControllerForPresentingModalView.
+ *
  */
 - (void)displayContentForURL:(NSURL *)URL rootViewController:(UIViewController *)controller
-       completion:(void (^)(BOOL success, NSError *error))completionBlock;
+       completion:(void (^)(BOOL success, NSError *error))completionBlock __deprecated;
+/**
+ * Opens a resource defined by the ad using an appropriate mechanism (typically, an in-application
+ * modal web browser or a modal App Store controller).
+ *
+ * @param completionBlock The block to be executed when the action defined by the URL has been
+ * completed, returning control to your application.
+ *
+ * You should call this method when you detect that a user has tapped on the ad (i.e. via button,
+ * table view selection, or gesture recognizer).
+ *
+ * When this method is called, a click event will automatically be recorded, so there is no
+ * need to additionally invoke -trackClick.
+ */
+- (void)displayContentWithCompletion:(void (^)(BOOL success, NSError *error))completionBlock;
+
+/**
+ * Opens a URL using an appropriate mechanism (typically, an in-application modal web browser or a
+ * modal App Store controller).
+ *
+ * @param URL The URL to be opened.
+ * @param completionBlock The block to be executed when the action defined by the URL has been
+ * completed, returning control to your application.
+ *
+ * You should call this method when you detect that a user has tapped on the ad (i.e. via button,
+ * table view selection, or gesture recognizer).
+ *
+ * When this method is called, a click event will automatically be recorded, so there is no
+ * need to additionally invoke -trackClick.
+ */
+- (void)displayContentForURL:(NSURL *)URL completion:(void (^)(BOOL success, NSError *error))completionBlock;
 
 - (void)trackMetricForURL:(NSURL *)URL;
 

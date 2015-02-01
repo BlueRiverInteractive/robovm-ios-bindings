@@ -11,6 +11,8 @@
 #import "MPLogging.h"
 #import <QuartzCore/QuartzCore.h>
 
+static NSString * const kCloseButtonXImageName = @"MPCloseButtonX.png";
+
 @interface MPProgressOverlayView ()
 
 - (void)updateCloseButtonPosition;
@@ -55,13 +57,13 @@ static void exponentialDecayInterpolation(void *info, const CGFloat *input, CGFl
         self.opaque = NO;
 
         // Close button.
-        _closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
+        _closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _closeButton.alpha = 0.0;
         _closeButton.hidden = YES;
         [_closeButton addTarget:self
                          action:@selector(closeButtonPressed)
                forControlEvents:UIControlEventTouchUpInside];
-        UIImage *image = [UIImage imageNamed:@"MPCloseButtonX.png"];
+        UIImage *image = [UIImage imageNamed:MPResourcePathForResource(kCloseButtonXImageName)];
         [_closeButton setImage:image forState:UIControlStateNormal];
         [_closeButton sizeToFit];
 
@@ -119,11 +121,6 @@ static void exponentialDecayInterpolation(void *info, const CGFloat *input, CGFl
 - (void)dealloc
 {
     [self unregisterForDeviceOrientationNotifications];
-    [_activityIndicator release];
-    [_closeButton release];
-    [_innerContainer release];
-    [_outerContainer release];
-    [super dealloc];
 }
 
 #pragma mark - Public Methods
@@ -156,6 +153,11 @@ static void exponentialDecayInterpolation(void *info, const CGFloat *input, CGFl
 
 - (void)hide
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(enableCloseButton) object:nil];
+
+    self.closeButton.hidden = YES;
+    self.closeButton.alpha = 0.0f;
+
     if (MP_ANIMATED) {
         [UIView animateWithDuration:0.2 animations:^{
             self.alpha = 0.0;
@@ -180,7 +182,7 @@ static void exponentialDecayInterpolation(void *info, const CGFloat *input, CGFl
     static const CGFloat output_value_range[8] = {0, 1, 0, 1, 0, 1, 0, 1};
     CGFunctionCallbacks callbacks = {0, exponentialDecayInterpolation, NULL};
 
-    CGFunctionRef shadingFunction = CGFunctionCreate(self, 1, input_value_range, 4,
+    CGFunctionRef shadingFunction = CGFunctionCreate((__bridge void *)(self), 1, input_value_range, 4,
                                                      output_value_range, &callbacks);
 
     CGPoint startPoint = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));

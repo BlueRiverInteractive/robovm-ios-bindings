@@ -26,6 +26,8 @@
 @class MPAnalyticsTracker;
 @class MPReachability;
 @class MPTimer;
+@class MPGeolocationProvider;
+@class CLLocationManager;
 
 typedef id(^MPSingletonProviderBlock)();
 
@@ -40,6 +42,8 @@ typedef enum {
 + (instancetype)sharedProvider;
 - (id)singletonForClass:(Class)klass provider:(MPSingletonProviderBlock)provider;
 
+- (void)keepObjectAliveForCurrentRunLoopIteration:(id)anObject;
+
 #pragma mark - Fetching Ads
 - (NSMutableURLRequest *)buildConfiguredURLRequestWithURL:(NSURL *)URL;
 - (MPAdServerCommunicator *)buildMPAdServerCommunicatorWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate;
@@ -49,6 +53,8 @@ typedef enum {
 - (MPAdDestinationDisplayAgent *)buildMPAdDestinationDisplayAgentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate;
 
 #pragma mark - Utilities
+- (MPGeolocationProvider *)sharedMPGeolocationProvider;
+- (CLLocationManager *)buildCLLocationManager;
 - (id<MPAdAlertManagerProtocol>)buildMPAdAlertManagerWithDelegate:(id)delegate;
 - (MPAdAlertGestureRecognizer *)buildMPAdAlertGestureRecognizerWithTarget:(id)target action:(SEL)action;
 - (NSOperationQueue *)sharedOperationQueue;

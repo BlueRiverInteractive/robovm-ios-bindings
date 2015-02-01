@@ -14,8 +14,8 @@
 
 @interface MPHTMLInterstitialViewController : MPInterstitialViewController <MPAdWebViewAgentDelegate>
 
-@property (nonatomic, retain) MPAdWebViewAgent *backingViewAgent;
-@property (nonatomic, assign) id customMethodDelegate;
+@property (nonatomic, strong) MPAdWebViewAgent *backingViewAgent;
+@property (nonatomic, weak) id customMethodDelegate;
 
 - (void)loadConfiguration:(MPAdConfiguration *)configuration;
 

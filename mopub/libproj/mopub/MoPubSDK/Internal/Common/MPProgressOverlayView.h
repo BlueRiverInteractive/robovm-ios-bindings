@@ -11,7 +11,7 @@
 @protocol MPProgressOverlayViewDelegate;
 
 @interface MPProgressOverlayView : UIView {
-    id<MPProgressOverlayViewDelegate> _delegate;
+    id<MPProgressOverlayViewDelegate> __weak _delegate;
     UIView *_outerContainer;
     UIView *_innerContainer;
     UIActivityIndicatorView *_activityIndicator;
@@ -19,8 +19,8 @@
     CGPoint _closeButtonPortraitCenter;
 }
 
-@property (nonatomic, assign) id<MPProgressOverlayViewDelegate> delegate;
-@property (nonatomic, retain) UIButton *closeButton;
+@property (nonatomic, weak) id<MPProgressOverlayViewDelegate> delegate;
+@property (nonatomic, strong) UIButton *closeButton;
 
 - (id)initWithDelegate:(id<MPProgressOverlayViewDelegate>)delegate;
 - (void)show;

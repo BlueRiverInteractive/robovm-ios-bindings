@@ -12,7 +12,7 @@
 @interface MPNativeAdData : NSObject
 
 @property (nonatomic, copy) NSString *adUnitID;
-@property (nonatomic, retain) MPNativeAd *ad;
+@property (nonatomic, strong) MPNativeAd *ad;
 @property (nonatomic, assign) Class renderingClass;
 
 @end

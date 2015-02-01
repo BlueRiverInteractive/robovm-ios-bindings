@@ -12,13 +12,23 @@
 
 @interface MPHTMLInterstitialCustomEvent ()
 
-@property (nonatomic, retain) MPHTMLInterstitialViewController *interstitial;
+@property (nonatomic, strong) MPHTMLInterstitialViewController *interstitial;
+@property (nonatomic, assign) BOOL trackedImpression;
 
 @end
 
 @implementation MPHTMLInterstitialCustomEvent
 
 @synthesize interstitial = _interstitial;
+
+- (BOOL)enableAutomaticImpressionAndClickTracking
+{
+    // An HTML interstitial tracks its own clicks. Turn off automatic tracking to prevent the tap event callback
+    // from generating an additional click.
+    // However, an HTML interstitial does not track its own impressions so we must manually do it in this class.
+    // See interstitialDidAppear:
+    return NO;
+}
 
 - (void)requestInterstitialWithCustomEventInfo:(NSDictionary *)info
 {
@@ -30,14 +40,6 @@
                                                                                                orientationType:configuration.orientationType
                                                                                           customMethodDelegate:[self.delegate interstitialDelegate]];
     [self.interstitial loadConfiguration:configuration];
-}
-
-- (void)dealloc
-{
-    [self.interstitial setDelegate:nil];
-    [self.interstitial setCustomMethodDelegate:nil];
-    self.interstitial = nil;
-    [super dealloc];
 }
 
 - (void)showInterstitialFromRootViewController:(UIViewController *)rootViewController
@@ -79,6 +81,11 @@
 {
     MPLogInfo(@"MoPub HTML interstitial did appear");
     [self.delegate interstitialCustomEventDidAppear:self];
+
+    if (!self.trackedImpression) {
+        self.trackedImpression = YES;
+        [self.delegate trackImpression];
+    }
 }
 
 - (void)interstitialWillDisappear:(MPInterstitialViewController *)interstitial
@@ -91,6 +98,11 @@
 {
     MPLogInfo(@"MoPub HTML interstitial did disappear");
     [self.delegate interstitialCustomEventDidDisappear:self];
+
+    // Deallocate the interstitial as we don't need it anymore. If we don't deallocate the interstitial after dismissal,
+    // then the html in the webview will continue to run which could lead to bugs such as continuing to play the sound of an inline
+    // video since the app may hold onto the interstitial ad controller. Moreover, we keep an array of controllers around as well.
+    self.interstitial = nil;
 }
 
 - (void)interstitialDidReceiveTapEvent:(MPInterstitialViewController *)interstitial

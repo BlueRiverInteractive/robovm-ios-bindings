@@ -39,33 +39,33 @@ static NSDictionary *priceMatrix = nil;
         NSLog(@"AEPriceMatrix couldn't find AEPriceMatrix.plist file");
         return nil;
     }
-
+    
     NSArray *tiersIn  = [self.priceMatrix valueForKey:currencyIn];
     if (tiersIn == nil) {
         NSLog(@"AEPriceMatrix couldn't find prices for currency '%@'", currencyIn);
         return nil;
     }
-
+    
     NSArray *tiersOut = [self.priceMatrix valueForKey:currencyOut];
     if (tiersOut == nil) {
         NSLog(@"AEPriceMatrix couldn't find prices for currency '%@'", currencyOut);
         return nil;
     }
-
+    
     int tier = [self findTierFor:value in:tiersIn];
-
+    
     NSNumber *valueIn  = [tiersIn  objectAtIndex:tier];
     if (valueIn == nil) {
         NSLog(@"AEPriceMatrix couldn't find tier %d for currency %@", tier, currencyIn);
         return nil;
     }
-
+    
     NSNumber *valueOut = [tiersOut objectAtIndex:tier];
     if (valueOut == nil) {
         NSLog(@"AEPriceMatrix couldn't find tier %d for currency %@", tier, currencyOut);
         return nil;
     }
-
+    
     return [NSNumber numberWithFloat:value.floatValue * valueOut.floatValue / valueIn.floatValue];
 }
 

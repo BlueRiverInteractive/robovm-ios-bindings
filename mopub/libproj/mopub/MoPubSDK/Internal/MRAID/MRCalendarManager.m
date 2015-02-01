@@ -10,8 +10,8 @@
 
 @interface MRCalendarManager ()
 
-@property (nonatomic, retain) EKEventEditViewController *eventEditViewController;
-@property (nonatomic, retain) NSArray *acceptedDateFormatters;
+@property (nonatomic, strong) EKEventEditViewController *eventEditViewController;
+@property (nonatomic, strong) NSArray *acceptedDateFormatters;
 
 - (EKEvent *)calendarEventWithParameters:(NSDictionary *)parameters
                               eventStore:(EKEventStore *)eventStore;
@@ -40,34 +40,30 @@
 
 - (void)dealloc
 {
-    self.acceptedDateFormatters = nil;
-    // XXX:
     [_eventEditViewController setEditViewDelegate:[MPLastResortDelegate sharedDelegate]];
-    [_eventEditViewController release];
-    [super dealloc];
 }
 
 #pragma mark - NSDateFormatterss
 
 - (NSDateFormatter *)dateFormatterForFormat:(NSString *)format
 {
-    NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:format];
-    
+
     return formatter;
 }
 
 - (NSDate *)parseDateFromString:(NSString *)dateString
 {
     NSDate *result = nil;
-    
+
     for (NSDateFormatter *formatter in self.acceptedDateFormatters) {
         result = [formatter dateFromString:dateString];
         if (result != nil) {
             break;
         }
     }
-    
+
     return result;
 }
 
@@ -188,7 +184,7 @@
     NSArray *daysInYear = [self getDaysOfTheYearFromParameters:parameters];
     NSArray *monthsInYear = [self getMonthsOfTheYearFromParameters:parameters];
 
-    return [[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:frequency
+    return [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:frequency
                                                          interval:interval
                                                     daysOfTheWeek:daysOfTheWeek
                                                    daysOfTheMonth:daysInMonth
@@ -196,7 +192,7 @@
                                                    weeksOfTheYear:nil // not in MRAID
                                                     daysOfTheYear:daysInYear
                                                      setPositions:nil
-                                                              end:recurrenceEnd] autorelease];
+                                                              end:recurrenceEnd];
 }
 
 - (EKRecurrenceFrequency)getFrequencyWithParameters:(NSDictionary *)parameters {

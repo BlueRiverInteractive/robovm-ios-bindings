@@ -2,7 +2,6 @@
 //  MPConstants.h
 //  MoPub
 //
-//  Created by Nafis Jamal on 2/9/11.
 //  Copyright 2011 MoPub, Inc. All rights reserved.
 //
 
@@ -14,13 +13,19 @@
 #define HOSTNAME_FOR_TESTING        @"testing.ads.mopub.com"
 #define DEFAULT_PUB_ID              @"agltb3B1Yi1pbmNyDAsSBFNpdGUYkaoMDA"
 #define MP_SERVER_VERSION           @"8"
-#define MP_SDK_VERSION              @"2.4.0"
+#define MP_BUNDLE_IDENTIFIER        @"com.mopub.mopub"
+
+#ifdef MP_FABRIC
+    #define MP_SDK_VERSION              @"3.4.0+kit"
+#else
+    #define MP_SDK_VERSION              @"3.4.0"
+#endif
 
 // Sizing constants.
-#define MOPUB_BANNER_SIZE           CGSizeMake(320, 50)
-#define MOPUB_MEDIUM_RECT_SIZE      CGSizeMake(300, 250)
-#define MOPUB_LEADERBOARD_SIZE      CGSizeMake(728, 90)
-#define MOPUB_WIDE_SKYSCRAPER_SIZE  CGSizeMake(160, 600)
+extern CGSize const MOPUB_BANNER_SIZE;
+extern CGSize const MOPUB_MEDIUM_RECT_SIZE;
+extern CGSize const MOPUB_LEADERBOARD_SIZE;
+extern CGSize const MOPUB_WIDE_SKYSCRAPER_SIZE;
 
 // Miscellaneous constants.
 #define MINIMUM_REFRESH_INTERVAL            5.0

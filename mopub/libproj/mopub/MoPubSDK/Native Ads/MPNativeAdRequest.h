@@ -32,7 +32,7 @@ typedef void(^MPNativeAdRequestHandler)(MPNativeAdRequest *request,
  * An object representing targeting parameters that can be passed to the MoPub ad server to
  * serve more relevant advertising.
  */
-@property (nonatomic, retain) MPNativeAdRequestTargeting *targeting;
+@property (nonatomic, strong) MPNativeAdRequestTargeting *targeting;
 
 /** @name Initializing and Starting an Ad Request */
 

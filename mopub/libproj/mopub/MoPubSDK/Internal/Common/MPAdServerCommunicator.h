@@ -20,7 +20,7 @@
 @interface MPAdServerCommunicator : NSObject
 #endif
 
-@property (nonatomic, assign) id<MPAdServerCommunicatorDelegate> delegate;
+@property (nonatomic, weak) id<MPAdServerCommunicatorDelegate> delegate;
 @property (nonatomic, assign, readonly) BOOL loading;
 
 - (id)initWithDelegate:(id<MPAdServerCommunicatorDelegate>)delegate;

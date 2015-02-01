@@ -9,11 +9,4 @@
 
 @implementation MPNativeAdData
 
-- (void)dealloc
-{
-    [_adUnitID release];
-    [_ad release];
-    [super dealloc];
-}
-
 @end

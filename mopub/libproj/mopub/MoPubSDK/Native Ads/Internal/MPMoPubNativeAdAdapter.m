@@ -15,8 +15,8 @@
 
 @interface MPMoPubNativeAdAdapter () <MPAdDestinationDisplayAgentDelegate>
 
-@property (nonatomic, readonly, retain) MPAdDestinationDisplayAgent *destinationDisplayAgent;
-@property (nonatomic, assign) UIViewController *rootViewController;
+@property (nonatomic, readonly, strong) MPAdDestinationDisplayAgent *destinationDisplayAgent;
+@property (nonatomic, weak) UIViewController *rootViewController;
 @property (nonatomic, copy) void (^actionCompletionBlock)(BOOL, NSError *);
 
 @end
@@ -35,27 +35,26 @@
         if (![impressionTrackers isKindOfClass:[NSArray class]] || [impressionTrackers count] < 1) {
             valid = NO;
         } else {
-            _impressionTrackers = [impressionTrackers retain];
+            _impressionTrackers = impressionTrackers;
         }
 
         NSString *engagementTracker = [properties objectForKey:kClickTrackerURLKey];
         if (engagementTracker == nil) {
             valid = NO;
         } else {
-            _engagementTrackingURL = [[NSURL URLWithString:engagementTracker] retain];
+            _engagementTrackingURL = [NSURL URLWithString:engagementTracker];
         }
 
-        _defaultActionURL = [[NSURL URLWithString:[properties objectForKey:kDefaultActionURLKey]] retain];
+        _defaultActionURL = [NSURL URLWithString:[properties objectForKey:kDefaultActionURLKey]];
 
         [properties removeObjectsForKeys:[NSArray arrayWithObjects:kImpressionTrackerURLsKey, kClickTrackerURLKey, kDefaultActionURLKey, nil]];
-        _properties = [properties retain];
+        _properties = properties;
 
         if (!valid) {
-            [self release];
             return nil;
         }
 
-        _destinationDisplayAgent = [[[MPCoreInstanceProvider sharedProvider] buildMPAdDestinationDisplayAgentWithDelegate:self] retain];
+        _destinationDisplayAgent = [[MPCoreInstanceProvider sharedProvider] buildMPAdDestinationDisplayAgentWithDelegate:self];
     }
 
     return self;
@@ -63,15 +62,8 @@
 
 - (void)dealloc
 {
-    [_impressionTrackers release];
-    [_engagementTrackingURL release];
-    [_actionCompletionBlock release];
     [_destinationDisplayAgent cancel];
     [_destinationDisplayAgent setDelegate:nil];
-    [_destinationDisplayAgent release];
-    [_properties release];
-    [_defaultActionURL release];
-    [super dealloc];
 }
 
 - (void)displayContentForURL:(NSURL *)URL rootViewController:(UIViewController *)controller

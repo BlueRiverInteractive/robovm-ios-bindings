@@ -5,6 +5,7 @@
  *  Created by Ty Heath on 7/17/12.
  */
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
 #pragma mark -

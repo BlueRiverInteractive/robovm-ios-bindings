@@ -14,20 +14,24 @@
 #import "MPNativeAdData.h"
 #import "MPNativeAdRendering.h"
 #import "MPLogging.h"
+#import "MPServerAdPositioning.h"
+#import "MPNativePositionSource.h"
+#import "MPNativeAdDelegate.h"
 
 static NSString * const kReuseIdentifierPrefix = @"MoPub";
 static NSInteger const kAdInsertionLookAheadAmount = 3;
 static const NSUInteger kIndexPathItemIndex = 1;
 
-@interface MPStreamAdPlacer () <MPNativeAdSourceDelegate>
+@interface MPStreamAdPlacer () <MPNativeAdSourceDelegate, MPNativeAdDelegate>
 
-@property (nonatomic, retain) MPNativeAdSource *adSource;
+@property (nonatomic, strong) MPNativeAdSource *adSource;
+@property (nonatomic, strong) MPNativePositionSource *positioningSource;
 @property (nonatomic, copy) MPAdPositioning *adPositioning;
-@property (nonatomic, retain) MPStreamAdPlacementData *adPlacementData;
+@property (nonatomic, strong) MPStreamAdPlacementData *adPlacementData;
 @property (nonatomic, copy) NSString *adUnitID;
-@property (nonatomic, retain) NSMutableDictionary *sectionCounts;
-@property (nonatomic, retain) NSIndexPath *topConsideredIndexPath;
-@property (nonatomic, retain) NSIndexPath *bottomConsideredIndexPath;
+@property (nonatomic, strong) NSMutableDictionary *sectionCounts;
+@property (nonatomic, strong) NSIndexPath *topConsideredIndexPath;
+@property (nonatomic, strong) NSIndexPath *bottomConsideredIndexPath;
 
 @end
 
@@ -38,7 +42,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
 + (instancetype)placerWithViewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:(Class)defaultAdRenderingClass
 {
     MPStreamAdPlacer *placer = [[self alloc] initWithViewController:controller adPositioning:positioning defaultAdRenderingClass:defaultAdRenderingClass];
-    return [placer autorelease];
+    return placer;
 }
 
 - (instancetype)initWithViewController:(UIViewController *)controller adPositioning:(MPAdPositioning *)positioning defaultAdRenderingClass:(Class)defaultAdRenderingClass
@@ -51,8 +55,8 @@ static const NSUInteger kIndexPathItemIndex = 1;
     if (self) {
         _viewController = controller;
         _adPositioning = [positioning copy];
-        _adSource = [[[MPInstanceProvider sharedProvider] buildNativeAdSourceWithDelegate:self] retain];
-        _adPlacementData = [[[MPInstanceProvider sharedProvider] buildStreamAdPlacementDataWithPositioning:_adPositioning] retain];
+        _adSource = [[MPInstanceProvider sharedProvider] buildNativeAdSourceWithDelegate:self];
+        _adPlacementData = [[MPInstanceProvider sharedProvider] buildStreamAdPlacementDataWithPositioning:_adPositioning];
         _defaultAdRenderingClass = defaultAdRenderingClass;
         _sectionCounts = [[NSMutableDictionary alloc] init];
     }
@@ -61,22 +65,11 @@ static const NSUInteger kIndexPathItemIndex = 1;
 
 - (void)dealloc
 {
-    [_adSource release];
-    [_adPositioning release];
-    [_adPlacementData release];
-    [_adUnitID release];
-    [_visibleIndexPaths release];
-    [_sectionCounts release];
-    [_topConsideredIndexPath release];
-    [_bottomConsideredIndexPath release];
-
-    [super dealloc];
+    [_positioningSource cancel];
 }
 
 - (void)setVisibleIndexPaths:(NSArray *)visibleIndexPaths
 {
-    [_visibleIndexPaths release];
-
     if (visibleIndexPaths.count == 0) {
         _visibleIndexPaths = nil;
         self.topConsideredIndexPath = nil;
@@ -84,7 +77,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
         return;
     }
 
-    _visibleIndexPaths = [[visibleIndexPaths sortedArrayUsingSelector:@selector(compare:)] retain];
+    _visibleIndexPaths = [visibleIndexPaths sortedArrayUsingSelector:@selector(compare:)];
     self.topConsideredIndexPath = self.visibleIndexPaths.firstObject;
     self.bottomConsideredIndexPath = [self furthestValidIndexPathAfterIndexPath:self.visibleIndexPaths.lastObject withinDistance:visibleIndexPaths.count + kAdInsertionLookAheadAmount];
 
@@ -100,7 +93,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
 {
     MPNativeAdData *adData = [self.adPlacementData adDataAtAdjustedIndexPath:indexPath];
 
-    [adData.ad displayContentFromRootViewController:self.viewController completion:nil];
+    [adData.ad displayContentWithCompletion:nil];
 }
 
 - (NSString *)reuseIdentifierForRenderingClassAtIndexPath:(NSIndexPath *)indexPath
@@ -152,9 +145,37 @@ static const NSUInteger kIndexPathItemIndex = 1;
     if (!adUnitID) {
         // We need some placement data.  Pass nil to it so it doesn't do any unnecessary work.
         self.adPlacementData = [[MPInstanceProvider sharedProvider] buildStreamAdPlacementDataWithPositioning:nil];
-    } else {
-        // Remove all ads by creating a new placement data.
+    } else if ([self.adPositioning isKindOfClass:[MPClientAdPositioning class]]) {
+        // Reset to a placement data that has "desired" ads but not "placed" ones.
         self.adPlacementData = [[MPInstanceProvider sharedProvider] buildStreamAdPlacementDataWithPositioning:self.adPositioning];
+    } else if ([self.adPositioning isKindOfClass:[MPServerAdPositioning class]]) {
+        // Reset to a placement data that has no "desired" ads at all.
+        self.adPlacementData = [[MPInstanceProvider sharedProvider] buildStreamAdPlacementDataWithPositioning:nil];
+
+        // Get positioning information from the server.
+        self.positioningSource = [[MPInstanceProvider sharedProvider] buildNativePositioningSource];
+        __typeof__(self) __weak weakSelf = self;
+        [self.positioningSource loadPositionsWithAdUnitIdentifier:self.adUnitID completionHandler:^(MPAdPositioning *positioning, NSError *error) {
+            __typeof__(self) strongSelf = weakSelf;
+
+            if (!strongSelf) {
+                return;
+            }
+
+            if (error) {
+                if ([error code] == MPNativePositionSourceEmptyResponse) {
+                    MPLogError(@"ERROR: Ad placer cannot show any ads because ad positions have "
+                               @"not been configured for your ad unit %@. You must assign positions "
+                               @"by editing the ad unit's settings on the MoPub website.",
+                               strongSelf.adUnitID);
+                } else {
+                    MPLogError(@"ERROR: Ad placer failed to get positions from the ad server for "
+                               @"ad unit ID %@. Error: %@", strongSelf.adUnitID, error);
+                }
+            } else {
+                strongSelf.adPlacementData = [[MPInstanceProvider sharedProvider] buildStreamAdPlacementDataWithPositioning:positioning];
+            }
+        }];
     }
 
     if (adIndexPaths.count > 0) {
@@ -195,7 +216,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
     for (NSIndexPath *indexPath in indexPaths) {
         [adjustedIndexPaths addObject:[self adjustedIndexPathForOriginalIndexPath:indexPath]];
     }
-    return [[adjustedIndexPaths copy] autorelease];
+    return [adjustedIndexPaths copy];
 }
 
 - (NSArray *)originalIndexPathsForAdjustedIndexPaths:(NSArray *)indexPaths
@@ -207,7 +228,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
             [originalIndexPaths addObject:originalIndexPath];
         }
     }
-    return [[originalIndexPaths copy] autorelease];
+    return [originalIndexPaths copy];
 }
 
 - (void)insertItemsAtIndexPaths:(NSArray *)originalIndexPaths
@@ -363,7 +384,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
     NSInteger itemIndex = [startingPath indexAtPosition:1];
 
     NSNumber *sectionCountNumber = self.sectionCounts[@(section)];
-    NSUInteger sectionItemCount = [self.adPlacementData adjustedNumberOfItems:[sectionCountNumber unsignedIntegerValue] inSection:section];
+    NSUInteger sectionItemCount = [sectionCountNumber unsignedIntegerValue];
     NSUInteger itemsPassed = 0;
     while (itemsPassed < numberOfItems) {
         if (sectionItemCount > (itemIndex + 1)) {
@@ -375,7 +396,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
             do {
                 ++trySection;
                 sectionCountNumber = self.sectionCounts[@(trySection)];
-                sectionItemCount = [self.adPlacementData adjustedNumberOfItems:[sectionCountNumber unsignedIntegerValue] inSection:trySection];
+                sectionItemCount = [sectionCountNumber unsignedIntegerValue];
             } while (sectionCountNumber && sectionItemCount == 0);
 
             // We can exit and use the last known valid index path if we can't get a section count number.
@@ -413,7 +434,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
             do {
                 --trySection;
                 sectionCountNumber = self.sectionCounts[@(trySection)];
-                trySectionCount = [self.adPlacementData adjustedNumberOfItems:[sectionCountNumber unsignedIntegerValue] inSection:trySection];
+                trySectionCount = [sectionCountNumber unsignedIntegerValue];
             } while (sectionCountNumber && trySectionCount == 0);
 
             // Exit and use the last known valid index path.
@@ -447,7 +468,10 @@ static const NSUInteger kIndexPathItemIndex = 1;
         return NO;
     }
 
-    return ([self.topConsideredIndexPath compare:insertionPath] != NSOrderedDescending) && ([self.bottomConsideredIndexPath compare:insertionPath] != NSOrderedAscending);
+    NSIndexPath *topAdjustedIndexPath = [self adjustedIndexPathForOriginalIndexPath:self.topConsideredIndexPath];
+    NSIndexPath *bottomAdjustedIndexPath = [self adjustedIndexPathForOriginalIndexPath:self.bottomConsideredIndexPath];
+
+    return ([topAdjustedIndexPath compare:insertionPath] != NSOrderedDescending) && ([bottomAdjustedIndexPath compare:insertionPath] != NSOrderedAscending);
 }
 
 - (MPNativeAdData *)retrieveAdDataForInsertionPath:(NSIndexPath *)insertionPath
@@ -458,7 +482,7 @@ static const NSUInteger kIndexPathItemIndex = 1;
         return nil;
     }
 
-    MPNativeAdData *adData = [[[MPNativeAdData alloc] init] autorelease];
+    MPNativeAdData *adData = [[MPNativeAdData alloc] init];
     adData.adUnitID = self.adUnitID;
     adData.ad = adObject;
     adData.renderingClass = self.defaultAdRenderingClass;
@@ -472,10 +496,12 @@ static const NSUInteger kIndexPathItemIndex = 1;
         return;
     }
 
-    NSIndexPath *insertionPath = [self.adPlacementData nextAdInsertionIndexPathForAdjustedIndexPath:self.topConsideredIndexPath];
+    NSIndexPath *topAdjustedIndexPath = [self adjustedIndexPathForOriginalIndexPath:self.topConsideredIndexPath];
+    NSIndexPath *insertionPath = [self.adPlacementData nextAdInsertionIndexPathForAdjustedIndexPath:topAdjustedIndexPath];
 
     while ([self shouldPlaceAdAtIndexPath:insertionPath]) {
         MPNativeAdData *adData = [self retrieveAdDataForInsertionPath:insertionPath];
+        adData.ad.delegate = self;
 
         if (!adData) {
             break;
@@ -493,6 +519,13 @@ static const NSUInteger kIndexPathItemIndex = 1;
 - (void)adSourceDidFinishRequest:(MPNativeAdSource *)source
 {
     [self fillAdsInConsideredRange];
+}
+
+#pragma mark - <MPNativeAdDelegate>
+
+- (UIViewController *)viewControllerForPresentingModalView
+{
+    return self.viewController;
 }
 
 @end

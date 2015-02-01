@@ -18,10 +18,10 @@ static CGFloat const kBaseBackoffTimeMultiplier = 1.5;
 
 @interface MPNativeAdSourceQueue ()
 
-@property (nonatomic, retain) NSMutableArray *adQueue;
+@property (nonatomic, strong) NSMutableArray *adQueue;
 @property (nonatomic, assign) NSUInteger backoffCounter;
 @property (nonatomic, copy) NSString *adUnitIdentifier;
-@property (nonatomic, retain) MPNativeAdRequestTargeting *targeting;
+@property (nonatomic, strong) MPNativeAdRequestTargeting *targeting;
 @property (nonatomic, assign) BOOL isAdLoading;
 
 @end
@@ -35,26 +35,18 @@ static CGFloat const kBaseBackoffTimeMultiplier = 1.5;
     self = [super init];
     if (self) {
         _adUnitIdentifier = [identifier copy];
-        _targeting = [targeting retain];
+        _targeting = targeting;
         _adQueue = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
-- (void)dealloc
-{
-    [_adUnitIdentifier release];
-    [_targeting release];
-    [_adQueue release];
-
-    [super dealloc];
-}
 
 #pragma mark - Public Methods
 
 - (MPNativeAd *)dequeueAd
 {
-    MPNativeAd *nextAd = [[[self.adQueue firstObject] retain] autorelease];
+    MPNativeAd *nextAd = [self.adQueue firstObject];
     [self.adQueue removeObject:nextAd];
     [self loadAds];
     return nextAd;
@@ -129,8 +121,7 @@ static CGFloat const kBaseBackoffTimeMultiplier = 1.5;
             if ([self count] == 1) {
                 [self.delegate adSourceQueueAdIsAvailable:self];
             }
-        }
-        else {
+        } else {
             MPLogDebug(@"%@", error);
             //increment in this failure case to prevent retrying a request that wasn't bid on.
             //currently under discussion on whether we do this or not.

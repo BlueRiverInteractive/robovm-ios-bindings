@@ -8,8 +8,8 @@
 
 @interface MPMoPubNativeAdAdapter : NSObject <MPNativeAdAdapter>
 
-@property (nonatomic, retain) NSArray *impressionTrackers;
-@property (nonatomic, retain) NSURL *engagementTrackingURL;
+@property (nonatomic, strong) NSArray *impressionTrackers;
+@property (nonatomic, strong) NSURL *engagementTrackingURL;
 
 - (instancetype)initWithAdProperties:(NSMutableDictionary *)properties;
 

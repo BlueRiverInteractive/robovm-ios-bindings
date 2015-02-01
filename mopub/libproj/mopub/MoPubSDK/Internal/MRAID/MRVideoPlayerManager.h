@@ -8,7 +8,7 @@
 
 @interface MRVideoPlayerManager : NSObject
 
-@property (nonatomic, assign) id<MRVideoPlayerManagerDelegate> delegate;
+@property (nonatomic, weak) id<MRVideoPlayerManagerDelegate> delegate;
 
 - (id)initWithDelegate:(id<MRVideoPlayerManagerDelegate>)delegate;
 - (void)playVideo:(NSURL *)url;

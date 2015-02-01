@@ -21,9 +21,9 @@
 
 @property (nonatomic, assign) BOOL loading;
 @property (nonatomic, assign, readwrite) BOOL ready;
-@property (nonatomic, retain) MPBaseInterstitialAdapter *adapter;
-@property (nonatomic, retain) MPAdServerCommunicator *communicator;
-@property (nonatomic, retain) MPAdConfiguration *configuration;
+@property (nonatomic, strong) MPBaseInterstitialAdapter *adapter;
+@property (nonatomic, strong) MPAdServerCommunicator *communicator;
+@property (nonatomic, strong) MPAdConfiguration *configuration;
 
 - (void)setUpAdapterWithConfiguration:(MPAdConfiguration *)configuration;
 
@@ -54,21 +54,15 @@
 {
     [self.communicator cancel];
     [self.communicator setDelegate:nil];
-    self.communicator = nil;
 
     self.adapter = nil;
-
-    self.configuration = nil;
-
-    [super dealloc];
 }
 
 - (void)setAdapter:(MPBaseInterstitialAdapter *)adapter
 {
     if (self.adapter != adapter) {
         [self.adapter unregisterDelegate];
-        [_adapter release];
-        _adapter = [adapter retain];
+        _adapter = adapter;
     }
 }
 
@@ -129,7 +123,7 @@
 {
     self.configuration = configuration;
 
-    MPLogInfo(@"Interstatial ad view is fetching ad network type: %@", self.configuration.networkType);
+    MPLogInfo(@"Interstitial ad view is fetching ad network type: %@", self.configuration.networkType);
 
     if ([self.configuration.networkType isEqualToString:kAdTypeClear]) {
         MPLogInfo(kMPClearErrorLogFormatWithAdUnitID, self.delegate.interstitialAdController.adUnitId);

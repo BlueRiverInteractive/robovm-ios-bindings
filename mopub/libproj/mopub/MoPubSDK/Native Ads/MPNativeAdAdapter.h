@@ -5,6 +5,45 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol MPNativeAdAdapter;
+
+/**
+ * Classes that conform to the `MPNativeAdAdapter` protocol can have an
+ * `MPNativeAdAdapterDelegate` delegate object. You use this delegate to communicate
+ * native ad events (such as impressions and clicks occurring) back to the MoPub SDK.
+ */
+@protocol MPNativeAdAdapterDelegate <NSObject>
+
+@required
+
+/**
+ * Asks the delegate for a view controller to use for presenting modal content, such as the in-app
+ * browser that can appear when an ad is tapped.
+ *
+ * @return A view controller that should be used for presenting modal content.
+ */
+- (UIViewController *)viewControllerForPresentingModalView;
+
+@optional
+
+/**
+ * This method is called before the backing native ad logs an impression.
+ *
+ * @param adAdapter You should pass `self` to allow the MoPub SDK to associate this event with the
+ * correct instance of your ad adapter.
+ */
+- (void)nativeAdWillLogImpression:(id<MPNativeAdAdapter>)adAdapter;
+
+/**
+ * This method is called when the user interacts with the ad.
+ *
+ * @param adAdapter You should pass `self` to allow the MoPub SDK to associate this event with the
+ * correct instance of your ad adapter.
+ */
+- (void)nativeAdDidClick:(id<MPNativeAdAdapter>)adAdapter;
+
+@end
+
 /**
  * The `MPNativeAdAdapter` protocol allows the MoPub SDK to interact with native ad objects obtained
  * from third-party ad networks. An object that adopts this protocol acts as a wrapper for a native
@@ -47,6 +86,8 @@
 
 /** @name Handling Ad Interactions */
 
+@optional
+
 /**
  * Tells the object to open the specified URL using an appropriate mechanism.
  *
@@ -63,7 +104,23 @@
           rootViewController:(UIViewController *)controller
                   completion:(void (^)(BOOL success, NSError *error))completionBlock;
 
-@optional
+/**
+ * Determines whether MPNativeAd should track impressions
+ *
+ * If not implemented, this will be assumed to return NO, and MPNativeAd will track impressions.
+ * If this returns YES, then MPNativeAd will defer to the MPNativeAdAdapterDelegate callbacks to
+ * track impressions.
+ */
+- (BOOL)enableThirdPartyImpressionTracking;
+
+/**
+ * Determines whether MPNativeAd should track clicks
+ *
+ * If not implemented, this will be assumed to return NO, and MPNativeAd will track clicks.
+ * If this returns YES, then MPNativeAd will defer to the MPNativeAdAdapterDelegate callbacks to
+ * track clicks.
+ */
+- (BOOL)enableThirdPartyClickTracking;
 
 /**
  * Tracks an impression for this ad.
@@ -80,6 +137,15 @@
  * network requires clicks to be reported manually.
  */
 - (void)trackClick;
+
+/**
+ * The `MPNativeAdAdapterDelegate` to send messages to as events occur.
+ *
+ * The `delegate` object defines several methods that you should call in order to inform MoPub
+ * of interactions with the ad. This delegate needs to be implemented if third party impression and/or
+ * click tracking is enabled.
+ */
+@property (nonatomic, weak) id<MPNativeAdAdapterDelegate> delegate;
 
 /**
  * Specifies how long your ad must be on screen before an impression is tracked.
@@ -103,5 +169,15 @@
  * of this event.
  */
 - (void)willAttachToView:(UIView *)view;
+
+/**
+ * This method will be called when your ad's content is removed from a view.
+ *
+ * @param view A view that did contain the ad content.
+ *
+ * You should implement this method if the underlying third-party ad object needs to be informed
+ * of this event while not invalidating the ad.
+ */
+-  (void)didDetachFromView:(UIView *)view;
 
 @end

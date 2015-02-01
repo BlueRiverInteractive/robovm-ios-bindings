@@ -15,7 +15,7 @@
 
 @interface MPAdDestinationDisplayAgent : NSObject <MPURLResolverDelegate, MPProgressOverlayViewDelegate, MPAdBrowserControllerDelegate, MPSKStoreProductViewControllerDelegate>
 
-@property (nonatomic, assign) id<MPAdDestinationDisplayAgentDelegate> delegate;
+@property (nonatomic, weak) id<MPAdDestinationDisplayAgentDelegate> delegate;
 
 + (MPAdDestinationDisplayAgent *)agentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate;
 - (void)displayDestinationForURL:(NSURL *)URL;

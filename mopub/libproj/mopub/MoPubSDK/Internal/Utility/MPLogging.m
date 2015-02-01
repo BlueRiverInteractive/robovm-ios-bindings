@@ -2,28 +2,29 @@
 //  MPLogging.m
 //  MoPub
 //
-//  Created by Andrew He on 2/10/11.
 //  Copyright 2011 MoPub, Inc. All rights reserved.
 //
 
 #import "MPLogging.h"
 #import "MPIdentityProvider.h"
+#import "MPLogProvider.h"
 
 NSString * const kMPClearErrorLogFormatWithAdUnitID = @"No ads found for ad unit: %@";
+NSString * const kMPSystemLogPrefix = @"MOPUB: %@";
 
-static MPLogLevel MPLOG_LEVEL = MPLogLevelInfo;
+static MPLogLevel systemLogLevel = MPLogLevelInfo;
 
 MPLogLevel MPLogGetLevel()
 {
-    return MPLOG_LEVEL;
+    return systemLogLevel;
 }
 
 void MPLogSetLevel(MPLogLevel level)
 {
-    MPLOG_LEVEL = level;
+    systemLogLevel = level;
 }
 
-void _MPLog(NSString *format, va_list args)
+void _MPLog(MPLogLevel level, NSString *format, va_list args)
 {
     static NSString *sIdentifier;
     static NSString *sObfuscatedIdentifier;
@@ -36,82 +37,64 @@ void _MPLog(NSString *format, va_list args)
         sObfuscatedIdentifier = [[MPIdentityProvider obfuscatedIdentifier] copy];
     }
 
-    NSString *logString = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
+    NSString *logString = [[NSString alloc] initWithFormat:format arguments:args];
 
     // Replace identifier with a obfuscated version when logging.
     logString = [logString stringByReplacingOccurrencesOfString:sIdentifier withString:sObfuscatedIdentifier];
 
-    NSLog(@"%@", logString);
+    [[MPLogProvider sharedLogProvider] logMessage:logString atLogLevel:level];
 }
 
 void _MPLogTrace(NSString *format, ...)
 {
-    if (MPLOG_LEVEL <= MPLogLevelTrace)
-    {
-        format = [NSString stringWithFormat:@"MOPUB: %@", format];
-        va_list args;
-        va_start(args, format);
-        _MPLog(format, args);
-        va_end(args);
-    }
+    format = [NSString stringWithFormat:kMPSystemLogPrefix, format];
+    va_list args;
+    va_start(args, format);
+    _MPLog(MPLogLevelTrace, format, args);
+    va_end(args);
 }
 
 void _MPLogDebug(NSString *format, ...)
 {
-    if (MPLOG_LEVEL <= MPLogLevelDebug)
-    {
-        format = [NSString stringWithFormat:@"MOPUB: %@", format];
-        va_list args;
-        va_start(args, format);
-        _MPLog(format, args);
-        va_end(args);
-    }
+    format = [NSString stringWithFormat:kMPSystemLogPrefix, format];
+    va_list args;
+    va_start(args, format);
+    _MPLog(MPLogLevelDebug, format, args);
+    va_end(args);
 }
 
 void _MPLogWarn(NSString *format, ...)
 {
-    if (MPLOG_LEVEL <= MPLogLevelWarn)
-    {
-        format = [NSString stringWithFormat:@"MOPUB: %@", format];
-        va_list args;
-        va_start(args, format);
-        _MPLog(format, args);
-        va_end(args);
-    }
+    format = [NSString stringWithFormat:kMPSystemLogPrefix, format];
+    va_list args;
+    va_start(args, format);
+    _MPLog(MPLogLevelWarn, format, args);
+    va_end(args);
 }
 
 void _MPLogInfo(NSString *format, ...)
 {
-    if (MPLOG_LEVEL <= MPLogLevelInfo)
-    {
-        format = [NSString stringWithFormat:@"MOPUB: %@", format];
-        va_list args;
-        va_start(args, format);
-        _MPLog(format, args);
-        va_end(args);
-    }
+    format = [NSString stringWithFormat:kMPSystemLogPrefix, format];
+    va_list args;
+    va_start(args, format);
+    _MPLog(MPLogLevelInfo, format, args);
+    va_end(args);
 }
 
 void _MPLogError(NSString *format, ...)
 {
-    if (MPLOG_LEVEL <= MPLogLevelError)
-    {
-        format = [NSString stringWithFormat:@"MOPUB: %@", format];
-        va_list args;
-        va_start(args, format);
-        _MPLog(format, args);
-        va_end(args);
-    }
+    format = [NSString stringWithFormat:kMPSystemLogPrefix, format];
+    va_list args;
+    va_start(args, format);
+    _MPLog(MPLogLevelError, format, args);
+    va_end(args);
 }
 
 void _MPLogFatal(NSString *format, ...)
 {
-    if (MPLOG_LEVEL <= MPLogLevelFatal)
-    {
-        format = [NSString stringWithFormat:@"MOPUB: %@", format];
-        va_list args;
-        va_start(args, format);
-        _MPLog(format, args);
-        va_end(args);
-    }
+    format = [NSString stringWithFormat:kMPSystemLogPrefix, format];
+    va_list args;
+    va_start(args, format);
+    _MPLog(MPLogLevelFatal, format, args);
+    va_end(args);
 }

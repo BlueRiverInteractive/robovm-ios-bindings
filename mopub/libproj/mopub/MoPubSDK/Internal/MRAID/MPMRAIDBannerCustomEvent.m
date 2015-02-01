@@ -9,16 +9,15 @@
 #import "MPLogging.h"
 #import "MPAdConfiguration.h"
 #import "MPInstanceProvider.h"
+#import "MRController.h"
 
-@interface MPMRAIDBannerCustomEvent ()
+@interface MPMRAIDBannerCustomEvent () <MRControllerDelegate>
 
-@property (nonatomic, retain) MRAdView *banner;
+@property (nonatomic, strong) MRController *mraidController;
 
 @end
 
 @implementation MPMRAIDBannerCustomEvent
-
-@synthesize banner = _banner;
 
 - (void)requestAdWithSize:(CGSize)size customEventInfo:(NSDictionary *)info
 {
@@ -31,31 +30,11 @@
                                  configuration.preferredSize.height);
     }
 
-    self.banner = [[MPInstanceProvider sharedProvider] buildMRAdViewWithFrame:adViewFrame
-                                                              allowsExpansion:YES
-                                                             closeButtonStyle:MRAdViewCloseButtonStyleAdControlled
-                                                                placementType:MRAdViewPlacementTypeInline
-                                                                     delegate:self];
-    
-    self.banner.delegate = self;
-    [self.banner loadCreativeWithHTMLString:[configuration adResponseHTMLString]
-                                    baseURL:nil];
+    self.mraidController = [[MPInstanceProvider sharedProvider] buildBannerMRControllerWithFrame:adViewFrame delegate:self];
+    [self.mraidController loadAdWithConfiguration:configuration];
 }
 
-- (void)dealloc
-{
-    self.banner.delegate = nil;
-    self.banner = nil;
-
-    [super dealloc];
-}
-
-- (void)rotateToOrientation:(UIInterfaceOrientation)newOrientation
-{
-    [self.banner rotateToOrientation:newOrientation];
-}
-
-#pragma mark - MRAdViewDelegate
+#pragma mark - MRControllerDelegate
 
 - (CLLocation *)location
 {
@@ -77,13 +56,13 @@
     return [self.delegate viewControllerForPresentingModalView];
 }
 
-- (void)adDidLoad:(MRAdView *)adView
+- (void)adDidLoad:(UIView *)adView
 {
     MPLogInfo(@"MoPub MRAID banner did load");
     [self.delegate bannerCustomEvent:self didLoadAd:adView];
 }
 
-- (void)adDidFailToLoad:(MRAdView *)adView
+- (void)adDidFailToLoad:(UIView *)adView
 {
     MPLogInfo(@"MoPub MRAID banner did fail");
     [self.delegate bannerCustomEvent:self didFailToLoadAdWithError:nil];
@@ -94,13 +73,13 @@
     //don't care
 }
 
-- (void)appShouldSuspendForAd:(MRAdView *)adView
+- (void)appShouldSuspendForAd:(UIView *)adView
 {
     MPLogInfo(@"MoPub MRAID banner will begin action");
     [self.delegate bannerCustomEventWillBeginAction:self];
 }
 
-- (void)appShouldResumeFromAd:(MRAdView *)adView
+- (void)appShouldResumeFromAd:(UIView *)adView
 {
     MPLogInfo(@"MoPub MRAID banner did end action");
     [self.delegate bannerCustomEventDidFinishAction:self];

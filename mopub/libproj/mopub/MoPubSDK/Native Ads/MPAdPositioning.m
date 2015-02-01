@@ -9,7 +9,7 @@
 
 @interface MPAdPositioning ()
 
-@property (nonatomic, retain) NSMutableOrderedSet *fixedPositions;
+@property (nonatomic, strong) NSMutableOrderedSet *fixedPositions;
 
 @end
 
@@ -25,18 +25,13 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_fixedPositions release];
-    [super dealloc];
-}
 
 #pragma mark - <NSCopying>
 
 - (id)copyWithZone:(NSZone *)zone
 {
     MPAdPositioning *newPositioning = [[[self class] allocWithZone:zone] init];
-    newPositioning.fixedPositions = [[self.fixedPositions copyWithZone:zone] autorelease];
+    newPositioning.fixedPositions = [self.fixedPositions copyWithZone:zone];
     newPositioning.repeatingInterval = self.repeatingInterval;
     return newPositioning;
 }

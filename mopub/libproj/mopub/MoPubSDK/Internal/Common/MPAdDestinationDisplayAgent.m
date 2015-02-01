@@ -13,16 +13,16 @@
 
 @interface MPAdDestinationDisplayAgent ()
 
-@property (nonatomic, retain) MPURLResolver *resolver;
-@property (nonatomic, retain) MPProgressOverlayView *overlayView;
+@property (nonatomic, strong) MPURLResolver *resolver;
+@property (nonatomic, strong) MPProgressOverlayView *overlayView;
 @property (nonatomic, assign) BOOL isLoadingDestination;
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
-@property (nonatomic, retain) SKStoreProductViewController *storeKitController;
+@property (nonatomic, strong) SKStoreProductViewController *storeKitController;
 #endif
 
-@property (nonatomic, retain) MPAdBrowserController *browserController;
-@property (nonatomic, retain) MPTelephoneConfirmationController *telephoneConfirmationController;
+@property (nonatomic, strong) MPAdBrowserController *browserController;
+@property (nonatomic, strong) MPTelephoneConfirmationController *telephoneConfirmationController;
 
 - (void)presentStoreKitControllerWithItemIdentifier:(NSString *)identifier fallbackURL:(NSURL *)URL;
 - (void)hideOverlay;
@@ -41,10 +41,10 @@
 
 + (MPAdDestinationDisplayAgent *)agentWithDelegate:(id<MPAdDestinationDisplayAgentDelegate>)delegate
 {
-    MPAdDestinationDisplayAgent *agent = [[[MPAdDestinationDisplayAgent alloc] init] autorelease];
+    MPAdDestinationDisplayAgent *agent = [[MPAdDestinationDisplayAgent alloc] init];
     agent.delegate = delegate;
     agent.resolver = [[MPCoreInstanceProvider sharedProvider] buildMPURLResolver];
-    agent.overlayView = [[[MPProgressOverlayView alloc] initWithDelegate:agent] autorelease];
+    agent.overlayView = [[MPProgressOverlayView alloc] initWithDelegate:agent];
     return agent;
 }
 
@@ -52,23 +52,17 @@
 {
     [self dismissAllModalContent];
 
-    self.telephoneConfirmationController = nil;
     self.overlayView.delegate = nil;
-    self.overlayView = nil;
     self.resolver.delegate = nil;
-    self.resolver = nil;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= MP_IOS_6_0
     // XXX: If this display agent is deallocated while a StoreKit controller is still on-screen,
     // nil-ing out the controller's delegate would leave us with no way to dismiss the controller
     // in the future. Therefore, we change the controller's delegate to a singleton object which
     // implements SKStoreProductViewControllerDelegate and is always around.
     self.storeKitController.delegate = [MPLastResortDelegate sharedDelegate];
-    self.storeKitController = nil;
 #endif
     self.browserController.delegate = nil;
-    self.browserController = nil;
 
-    [super dealloc];
 }
 
 - (void)dismissAllModalContent
@@ -103,9 +97,9 @@
 {
     [self hideOverlay];
 
-    self.browserController = [[[MPAdBrowserController alloc] initWithURL:URL
+    self.browserController = [[MPAdBrowserController alloc] initWithURL:URL
                                                               HTMLString:HTMLString
-                                                                delegate:self] autorelease];
+                                                                delegate:self];
     self.browserController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [[self.delegate viewControllerForPresentingModalView] mp_presentModalViewController:self.browserController
                                                                                animated:MP_ANIMATED];
@@ -135,15 +129,18 @@
 
 - (void)interceptTelephoneURL:(NSURL *)URL
 {
-    __block MPAdDestinationDisplayAgent *blockSelf = self;
-    self.telephoneConfirmationController = [[[MPTelephoneConfirmationController alloc] initWithURL:URL clickHandler:^(NSURL *targetTelephoneURL, BOOL confirmed) {
-        if (confirmed) {
-            [blockSelf.delegate displayAgentWillLeaveApplication];
-            [[UIApplication sharedApplication] openURL:targetTelephoneURL];
+    __weak MPAdDestinationDisplayAgent *weakSelf = self;
+    self.telephoneConfirmationController = [[MPTelephoneConfirmationController alloc] initWithURL:URL clickHandler:^(NSURL *targetTelephoneURL, BOOL confirmed) {
+        MPAdDestinationDisplayAgent *strongSelf = weakSelf;
+        if (strongSelf) {
+            if (confirmed) {
+                [strongSelf.delegate displayAgentWillLeaveApplication];
+                [[UIApplication sharedApplication] openURL:targetTelephoneURL];
+            }
+            strongSelf.isLoadingDestination = NO;
+            [strongSelf.delegate displayAgentDidDismissModal];
         }
-        blockSelf.isLoadingDestination = NO;
-        [blockSelf.delegate displayAgentDidDismissModal];
-    }] autorelease];
+    }];
 
     [self.telephoneConfirmationController show];
 }

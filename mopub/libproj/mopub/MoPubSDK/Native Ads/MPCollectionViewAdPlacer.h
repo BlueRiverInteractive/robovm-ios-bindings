@@ -8,14 +8,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "MPClientAdPositioning.h"
+#import "MPServerAdPositioning.h"
 
 @class MPNativeAdRequestTargeting;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * The `MPCollectionViewAdPlacer` class allows you to request native ads from the MoPub ad server and
- * place them into a `UICollectionView` object.
+ * The `MPCollectionViewAdPlacer` class allows you to request native ads from the MoPub ad server
+ * and place them into a `UICollectionView` object.
  *
  * When an instance of this class is initialized with a collection view, it wraps the collection
  * view's data source and delegate in order to insert ads and adjust the positions of your regular
@@ -24,10 +25,44 @@
 
 @interface MPCollectionViewAdPlacer : NSObject
 
-/** @name Initializing a Table View Ad Placer */
+/** @name Initializing a Collection View Ad Placer */
+
+/**
+ * Creates and returns an ad placer that will insert ads into a collection view at positions that can
+ * be configured dynamically on the MoPub website.
+ *
+ * When you make an ad request, the ad placer will ask the MoPub ad server for the positions where
+ * ads should be inserted into the collection view. You can configure these positioning values by
+ * editing your ad unit's settings on the MoPub website.
+ *
+ * Using this method is equivalent to calling
+ * +placerWithCollectionView:viewController:adPositioning:defaultAdRenderingClass: and passing in an
+ * `MPServerAdPositioning` object as the `positioning` parameter.
+ *
+ * @param collectionView The collection view in which to insert ads.
+ * @param controller The view controller which should be used to present modal content.
+ * @param defaultAdRenderingClass The class that will be used to render ads. This class must
+ * implement the `MPNativeAdRendering` protocol and must be a subclass of `UICollectionViewCell`.
+ *
+ * @return An `MPCollectionViewAdPlacer` object.
+ */
++ (instancetype)placerWithCollectionView:(UICollectionView *)collectionView viewController:(UIViewController *)controller defaultAdRenderingClass:(Class)defaultAdRenderingClass;
 
 /**
  * Creates and returns an ad placer that will insert ads into a collection view.
+ *
+ * When using this method, there are two options for controlling the positions where ads appear
+ * within the collection view.
+ *
+ * First, you may pass an `MPServerAdPositioning` object as the `positioning` parameter, which tells
+ * the ad placer to obtain positioning information dynamically from the ad server, which you can
+ * configure on the MoPub website. In many cases, this is the preferred approach, since it allows
+ * you to modify the positions without rebuilding your application. Note that calling the
+ * convenience method +placerWithCollectionView:viewController:defaultAdRenderingClass: accomplishes
+ * this as well.
+ *
+ * Alternatively, if you wish to hard-code your positions, you may pass an `MPClientAdPositioning`
+ * object instead.
  *
  * @param collectionView The collection view in which to insert ads.
  * @param controller The view controller which should be used to present modal content.
@@ -126,7 +161,7 @@
  * view's original delegate object. If your application needs to access the original delegate, use
  * this method instead of -[UICollectionView delegate].
  *
- * @return The original table view delegate.
+ * @return The original collection view delegate.
  */
 - (id<UICollectionViewDelegate>)mp_delegate;
 

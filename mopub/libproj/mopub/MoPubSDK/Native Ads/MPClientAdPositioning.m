@@ -12,7 +12,7 @@
 
 + (instancetype)positioning
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 - (void)addFixedIndexPath:(NSIndexPath *)indexPath

@@ -14,7 +14,7 @@ static NSTimeInterval const kCacheTimeoutInterval = 900; //15 minutes
 
 @interface MPNativeAdSource () <MPNativeAdSourceQueueDelegate>
 
-@property (nonatomic, retain) NSMutableDictionary *adQueueDictionary;
+@property (nonatomic, strong) NSMutableDictionary *adQueueDictionary;
 
 @end
 
@@ -24,7 +24,7 @@ static NSTimeInterval const kCacheTimeoutInterval = 900; //15 minutes
 
 + (instancetype)source
 {
-    return [[[MPNativeAdSource alloc] init] autorelease];
+    return [[MPNativeAdSource alloc] init];
 }
 
 - (instancetype)init
@@ -42,9 +42,6 @@ static NSTimeInterval const kCacheTimeoutInterval = 900; //15 minutes
     for (NSString *queueKey in [_adQueueDictionary allKeys]) {
         [self deleteCacheForAdUnitIdentifier:queueKey];
     }
-    [_adQueueDictionary release];
-
-    [super dealloc];
 }
 
 #pragma mark - Ad Source Interface
@@ -53,7 +50,7 @@ static NSTimeInterval const kCacheTimeoutInterval = 900; //15 minutes
 {
     [self deleteCacheForAdUnitIdentifier:identifier];
 
-    MPNativeAdSourceQueue *adQueue = [[[MPNativeAdSourceQueue alloc] initWithAdUnitIdentifier:identifier andTargeting:targeting] autorelease];
+    MPNativeAdSourceQueue *adQueue = [[MPNativeAdSourceQueue alloc] initWithAdUnitIdentifier:identifier andTargeting:targeting];
     adQueue.delegate = self;
     [self.adQueueDictionary setObject:adQueue forKey:identifier];
 

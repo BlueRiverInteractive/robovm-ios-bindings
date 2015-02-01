@@ -11,6 +11,6 @@
 
 @interface MPHTMLInterstitialCustomEvent : MPInterstitialCustomEvent <MPInterstitialViewControllerDelegate>
 
-@property (nonatomic, assign) id<MPPrivateInterstitialCustomEventDelegate> delegate;
+@property (nonatomic, weak) id<MPPrivateInterstitialCustomEventDelegate> delegate;
 
 @end

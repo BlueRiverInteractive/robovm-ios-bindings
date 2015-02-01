@@ -14,8 +14,8 @@
 
 @interface MPBannerCustomEventAdapter ()
 
-@property (nonatomic, retain) MPBannerCustomEvent *bannerCustomEvent;
-@property (nonatomic, retain) MPAdConfiguration *configuration;
+@property (nonatomic, strong) MPBannerCustomEvent *bannerCustomEvent;
+@property (nonatomic, strong) MPAdConfiguration *configuration;
 @property (nonatomic, assign) BOOL hasTrackedImpression;
 @property (nonatomic, assign) BOOL hasTrackedClick;
 
@@ -35,15 +35,12 @@
         [self.bannerCustomEvent performSelector:@selector(invalidate)];
     }
     self.bannerCustomEvent.delegate = nil;
-    [[_bannerCustomEvent retain] autorelease]; //make sure the custom event isn't released immediately
-    self.bannerCustomEvent = nil;
+
+    // make sure the custom event isn't released synchronously as objects owned by the custom event
+    // may do additional work after a callback that results in unregisterDelegate being called
+    [[MPCoreInstanceProvider sharedProvider] keepObjectAliveForCurrentRunLoopIteration:_bannerCustomEvent];
 
     [super unregisterDelegate];
-}
-
-- (void)dealloc {
-    self.configuration = nil;
-    [super dealloc];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

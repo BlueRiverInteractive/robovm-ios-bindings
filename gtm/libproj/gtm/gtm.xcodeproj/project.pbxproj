@@ -8,23 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E01BDF271954876000AD72D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01BDF261954876000AD72D2 /* Foundation.framework */; };
-		E01BDF351954876000AD72D2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01BDF341954876000AD72D2 /* XCTest.framework */; };
-		E01BDF361954876000AD72D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01BDF261954876000AD72D2 /* Foundation.framework */; };
-		E01BDF3B1954876000AD72D2 /* libgtm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E01BDF231954876000AD72D2 /* libgtm.a */; };
-		E01BDF411954876000AD72D2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E01BDF3F1954876000AD72D2 /* InfoPlist.strings */; };
-		E01BDF431954876000AD72D2 /* gtmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E01BDF421954876000AD72D2 /* gtmTests.m */; };
 		E01BDF4F195487D000AD72D2 /* GTMStringEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = E01BDF4E195487D000AD72D2 /* GTMStringEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E01BDF391954876000AD72D2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E01BDF1B1954876000AD72D2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E01BDF221954876000AD72D2;
-			remoteInfo = gtm;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E01BDF211954876000AD72D2 /* CopyFiles */ = {
@@ -42,7 +27,6 @@
 		E01BDF231954876000AD72D2 /* libgtm.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libgtm.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01BDF261954876000AD72D2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E01BDF2A1954876000AD72D2 /* gtm-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gtm-Prefix.pch"; sourceTree = "<group>"; };
-		E01BDF331954876000AD72D2 /* gtmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gtmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01BDF341954876000AD72D2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E01BDF3E1954876000AD72D2 /* gtmTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "gtmTests-Info.plist"; sourceTree = "<group>"; };
 		E01BDF401954876000AD72D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -58,16 +42,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E01BDF271954876000AD72D2 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E01BDF301954876000AD72D2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E01BDF351954876000AD72D2 /* XCTest.framework in Frameworks */,
-				E01BDF3B1954876000AD72D2 /* libgtm.a in Frameworks */,
-				E01BDF361954876000AD72D2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +62,6 @@
 			isa = PBXGroup;
 			children = (
 				E01BDF231954876000AD72D2 /* libgtm.a */,
-				E01BDF331954876000AD72D2 /* gtmTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,24 +133,6 @@
 			productReference = E01BDF231954876000AD72D2 /* libgtm.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		E01BDF321954876000AD72D2 /* gtmTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E01BDF491954876000AD72D2 /* Build configuration list for PBXNativeTarget "gtmTests" */;
-			buildPhases = (
-				E01BDF2F1954876000AD72D2 /* Sources */,
-				E01BDF301954876000AD72D2 /* Frameworks */,
-				E01BDF311954876000AD72D2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E01BDF3A1954876000AD72D2 /* PBXTargetDependency */,
-			);
-			name = gtmTests;
-			productName = gtmTests;
-			productReference = E01BDF331954876000AD72D2 /* gtmTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -200,21 +155,9 @@
 			projectRoot = "";
 			targets = (
 				E01BDF221954876000AD72D2 /* gtm */,
-				E01BDF321954876000AD72D2 /* gtmTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		E01BDF311954876000AD72D2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E01BDF411954876000AD72D2 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		E01BDF501954888200AD72D2 /* ShellScript */ = {
@@ -241,23 +184,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E01BDF2F1954876000AD72D2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E01BDF431954876000AD72D2 /* gtmTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E01BDF3A1954876000AD72D2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E01BDF221954876000AD72D2 /* gtm */;
-			targetProxy = E01BDF391954876000AD72D2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E01BDF3F1954876000AD72D2 /* InfoPlist.strings */ = {
@@ -354,7 +281,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 armv7 armv7s";
+				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -372,43 +299,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "i386 armv7 armv7s";
-			};
-			name = Release;
-		};
-		E01BDF4A1954876000AD72D2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "gtm/gtm-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "gtmTests/gtmTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		E01BDF4B1954876000AD72D2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "gtm/gtm-Prefix.pch";
-				INFOPLIST_FILE = "gtmTests/gtmTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
+				VALID_ARCHS = "i386 armv7 armv7s arm64 x86_64";
 			};
 			name = Release;
 		};
@@ -431,14 +322,7 @@
 				E01BDF481954876000AD72D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		E01BDF491954876000AD72D2 /* Build configuration list for PBXNativeTarget "gtmTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E01BDF4A1954876000AD72D2 /* Debug */,
-				E01BDF4B1954876000AD72D2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

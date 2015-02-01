@@ -17,8 +17,8 @@
 
 @interface MPBaseBannerAdapter ()
 
-@property (nonatomic, retain) MPAdConfiguration *configuration;
-@property (nonatomic, retain) MPTimer *timeoutTimer;
+@property (nonatomic, strong) MPAdConfiguration *configuration;
+@property (nonatomic, strong) MPTimer *timeoutTimer;
 
 - (void)startTimeoutTimer;
 
@@ -43,12 +43,7 @@
 - (void)dealloc
 {
     [self unregisterDelegate];
-    self.configuration = nil;
-
     [self.timeoutTimer invalidate];
-    self.timeoutTimer = nil;
-
-    [super dealloc];
 }
 
 - (void)unregisterDelegate
@@ -70,9 +65,8 @@
 
     [self startTimeoutTimer];
 
-    [self retain];
-    [self getAdWithConfiguration:configuration containerSize:size];
-    [self release];
+    MPBaseBannerAdapter *strongSelf = self;
+    [strongSelf getAdWithConfiguration:configuration containerSize:size];
 }
 
 - (void)didStopLoading
@@ -89,13 +83,13 @@
 {
     NSTimeInterval timeInterval = (self.configuration && self.configuration.adTimeoutInterval >= 0) ?
     self.configuration.adTimeoutInterval : BANNER_TIMEOUT_INTERVAL;
-    
+
     if (timeInterval > 0) {
         self.timeoutTimer = [[MPCoreInstanceProvider sharedProvider] buildMPTimerWithTimeInterval:timeInterval
                                                                                        target:self
                                                                                      selector:@selector(timeout)
                                                                                       repeats:NO];
-        
+
         [self.timeoutTimer scheduleNow];
     }
 }
