@@ -1,6 +1,7 @@
 //
 // Copyright (c) 2014 Mixpanel. All rights reserved.
 #include <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 @interface MPPassThroughValueTransformer : NSValueTransformer
 
 @end

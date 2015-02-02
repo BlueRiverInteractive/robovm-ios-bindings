@@ -1,6 +1,7 @@
-Xplode iOS SDK
+Mixpanel iOS SDK
 ==================================
+SDK Version: 2.7.1
 
 Getting Started
 ----------------------------------
-https://xplode.iddiction.com/#!wiki/readme_ios
+https://mixpanel.com/help/reference/ios
