@@ -74,7 +74,7 @@ public class RecommenderService extends App42Service
 	 *
 	 */
 	@Method(selector = "loadPreferenceFileWithData:completionBlock:")
-	public native void loadPreferenceFileWithData(NSData preferenceData, @Block App42ResponseBlock completionBlock);
+	public native void loadPreferenceFile(NSData preferenceData, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Add or Update preference list on the cloud.

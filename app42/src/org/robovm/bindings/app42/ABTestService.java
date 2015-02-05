@@ -24,7 +24,7 @@ public class ABTestService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "goalAchievedForTest:withVariant:completionBlock:")
-	public native void goalAchievedForTest(String testName, String variantName, @Block App42ResponseBlock completionBlock);
+	public native void goalAchieved(String testName, String variantName, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Executes given TestCase and returns variant profile from server

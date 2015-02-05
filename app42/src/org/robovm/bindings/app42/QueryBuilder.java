@@ -16,7 +16,7 @@ public class QueryBuilder extends NSObject
 	 * @throws JSONException
 	 */
 	@Method(selector = "buildQueryWithKey:value:andOperator:")
-	public native static Query buildQueryWithKey(String key, NSObject value, String op);
+	public native static Query build(String key, NSObject value, String op);
 	
 	/**
 	 * @param q1
@@ -25,7 +25,7 @@ public class QueryBuilder extends NSObject
 	 * @return Query object
 	 */
 	@Method(selector = "combineQuery:withQuery:usingOperator:")
-	public native static Query combineQuery(Query q1, Query q2, String op);
+	public native static Query combine(Query q1, Query q2, String op);
 
 	/**
 	 * @param getTag
@@ -34,7 +34,7 @@ public class QueryBuilder extends NSObject
 	 * @throws JSONException
 	 */
 	@Method(selector = "buildGeoQueryWithTag:andOperator:")
-	public native static Query buildGeoQueryWithTag(GeoTag geoTag, String op);
+	public native static Query buildGeoQuery(GeoTag geoTag, String op);
 	
 	/**
 	 * @param getTag
@@ -44,7 +44,7 @@ public class QueryBuilder extends NSObject
 	 * @throws JSONException
 	 */
 	@Method(selector = "buildGeoQueryWithTag:andOperator:maxDistance:")
-	public native static Query buildGeoQueryWithTag(GeoTag geoTag, String op, double maxDistance);
+	public native static Query buildGeoQuery(GeoTag geoTag, String op, double maxDistance);
 	
 	/**
 	 * @param logged

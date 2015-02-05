@@ -43,7 +43,7 @@ public class AlbumService extends App42Service
 	 *
 	 */
 	@Method(selector = "getAlbumsCount:completionBlock:")
-	public native void createAlbum(String userName, @Block App42ResponseBlock completionBlock);
+	public native void getAlbumsCount(String userName, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Fetches all the Albums based on the userName

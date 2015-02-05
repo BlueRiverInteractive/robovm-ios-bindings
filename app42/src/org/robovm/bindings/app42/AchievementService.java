@@ -28,7 +28,7 @@ public class AchievementService extends App42Service
 	 */
 
 	@Method(selector = "createAchievementWithName:description:completionBlock:")
-	public native void createAchievementWithName(String achievementName, String description, @Block App42ResponseBlock completionBlock);
+	public native void createAchievement(String achievementName, String description, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 *   App users can earn achievements based on your custom rules in your game.
@@ -41,7 +41,7 @@ public class AchievementService extends App42Service
 	 */
 
 	@Method(selector = "earnAchievementWithName:userName:gameName:description:completionBlock:")
-	public native void earnAchievementWithName(String achievementName, String userName, String gameName, String description, @Block App42ResponseBlock completionBlock);
+	public native void earnAchievement(String achievementName, String userName, String gameName, String description, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 *  Fetch all the achievements of user.

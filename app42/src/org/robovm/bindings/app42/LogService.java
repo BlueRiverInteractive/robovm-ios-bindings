@@ -343,12 +343,12 @@ public class LogService extends App42Service
 	 * @param eventName
 	 */
 	@Method(selector = "setEventWithName:forModule:completionBlock:")
-	public native void setEventWithName(String eventName, String moduleName, @Block App42ResponseBlock completionBlock);
+	public native void setEvent(String eventName, String moduleName, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	* Log event on App42 cloud for analytics purpose
 	* @param eventName
 	*/
 	@Method(selector = "setEventWithName:completionBlock:")
-	public native void setEventWithName(String eventName, @Block App42ResponseBlock completionBlock);
+	public native void setEvent(String eventName, @Block App42ResponseBlock completionBlock);
 }

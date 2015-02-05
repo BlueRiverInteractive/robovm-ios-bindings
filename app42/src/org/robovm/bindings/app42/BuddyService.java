@@ -31,7 +31,7 @@ public class BuddyService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "sendFriendRequestFromUser:toBuddy:withMessage:completionBlock:")
-	public native void sendFriendRequestFromUser(String userName, String buddyName, String message, @Block App42ResponseBlock completionBlock);
+	public native void sendFriendRequest(String userName, String buddyName, String message, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Fetch all the friend request for the user.
@@ -55,7 +55,7 @@ public class BuddyService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "acceptFriendRequestFromBuddy:toUser:completionBlock:")
-	public native void acceptFriendRequestFromBuddy(String buddyName, String userName, @Block App42ResponseBlock completionBlock);
+	public native void acceptFriendRequest(String buddyName, String userName, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Reject the friend request of the user
@@ -68,7 +68,7 @@ public class BuddyService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "rejectFriendRequestFromBuddy:toUser:completionBlock:")
-	public native void rejectFriendRequestFromBuddy(String buddyName, String userName, @Block App42ResponseBlock completionBlock);
+	public native void rejectFriendRequest(String buddyName, String userName, @Block App42ResponseBlock completionBlock);
 
 	/**
 	 *
@@ -116,7 +116,7 @@ public class BuddyService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "checkedInWithUser:geoLocation:completionBlock:")
-	public native void checkedInWithUser(String userName, GeoPoint point, @Block App42ResponseBlock completionBlock);
+	public native void checkedInGeoLocation(String userName, GeoPoint point, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 *
@@ -129,7 +129,7 @@ public class BuddyService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "getFriendsOfUser:withLatitude:andLongitude:inRadius:max:completionBlock:")
-	public native void getFriendsOfUser(String userName, double latitude, double longitude, double maxDistance, int max, @Block App42ResponseBlock completionBlock);
+	public native void getFriendsByLocation(String userName, double latitude, double longitude, double maxDistance, int max, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Get All groups created by user
@@ -155,7 +155,7 @@ public class BuddyService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "getAllFriendsOfUser:inGroup:ofOwner:completionBlock:")
-	public native void getAllFriendsOfUser(String userName, String groupName, String ownerName, @Block App42ResponseBlock completionBlock);
+	public native void getAllFriends(String userName, String groupName, String ownerName, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 *
@@ -190,7 +190,7 @@ public class BuddyService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "blockFriendRequestFromBuddy:userName:completionBlock:")
-	public native void blockFriendRequestFromBuddy(String buddyName, String userName, @Block App42ResponseBlock completionBlock);
+	public native void blockFriendRequest(String buddyName, String userName, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Never get any request by this user

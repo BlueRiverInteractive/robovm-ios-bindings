@@ -40,7 +40,7 @@ public class AvatarService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "createAvatarWithName:userName:filePath:description:completionBlock:")
-	public native void createAvatarWithName(String name, String userName, String filePath, String description, @Block App42ResponseBlock completionBlock);
+	public native void createAvatar(String name, String userName, String filePath, String description, @Block App42ResponseBlock completionBlock);
 
 	/**
 	 * Import your avatar from Facebook based of given access token.
@@ -58,7 +58,7 @@ public class AvatarService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "createAvatarFromFacebookWithName:userName:accessToken:description:completionBlock:")
-	public native void createAvatarFromFacebookWithName(String avatarName, String userName, String accessToken, String description, @Block App42ResponseBlock completionBlock);
+	public native void createAvatarFromFacebook(String avatarName, String userName, String accessToken, String description, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Create avatar from any web media using URL
@@ -75,7 +75,7 @@ public class AvatarService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "createAvatarFromWebURLWithName:userName:webUrl:description:completionBlock:")
-	public native void createAvatarFromWebURLWithName(String avatarName, String userName, String webUrl, String description, @Block App42ResponseBlock completionBlock);
+	public native void createAvatarFromWebURL(String avatarName, String userName, String webUrl, String description, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Get detail description of avatar
@@ -124,7 +124,7 @@ public class AvatarService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "changeCurrentAvatarWithName:forUser:completionBlock:")
-	public native void changeCurrentAvatarWithName(String avatarName, String userName, @Block App42ResponseBlock completionBlock);
+	public native void changeCurrentAvatar(String avatarName, String userName, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 *

@@ -34,7 +34,7 @@ public class GiftService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "createGiftWithName:giftIconPath:displayName:giftTag:description:completionBlock:")
-	public native void createGiftWithName(String giftName, String giftIconPath, String displayName, String tag, String description, @Block App42ResponseBlock completionBlock);
+	public native void createGift(String giftName, String giftIconPath, String displayName, String tag, String description, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Get all gifts available.
@@ -93,7 +93,7 @@ public class GiftService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "sendGiftWithName:from:to:withMessage:completionBlock:")
-	public native void sendGiftWithName(String giftName, String sender, NSArray<?> recipients, String message, @Block App42ResponseBlock completionBlock);
+	public native void sendGift(String giftName, String sender, NSArray<?> recipients, String message, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Request a gift with name from other users.
@@ -110,7 +110,7 @@ public class GiftService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "requestGiftWithName:from:to:withMessage:completionBlock:")
-	public native void requestGiftWithName(String giftName, String sender, NSArray<?> recipients, String message, @Block App42ResponseBlock completionBlock);
+	public native void requestGift(String giftName, String sender, NSArray<?> recipients, String message, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Get a gift request from a user.
@@ -123,20 +123,20 @@ public class GiftService extends App42Service
 	 * @throws App42Exception
 	 */
 	@Method(selector = "getGiftRequestWithName:fromUser:completionBlock:")
-	public native void getGiftRequestWithName(String giftName, String userName, @Block App42ResponseBlock completionBlock);
+	public native void getGiftRequest(String giftName, String userName, @Block App42ResponseBlock completionBlock);
 
 	@Method(selector = "distributeGiftsWithName:to:recipients:count:completionBlock:")
-	public native void distributeGiftsWithName(String giftName, NSArray<?> recipients, int count, @Block App42ResponseBlock completionBlock);
+	public native void distributeGifts(String giftName, NSArray<?> recipients, int count, @Block App42ResponseBlock completionBlock);
 	
 	@Method(selector = "getGiftCountWithName:forUser:completionBlock:")
-	public native void getGiftCountWithName(String giftName, String userName, @Block App42ResponseBlock completionBlock);
+	public native void getGiftCount(String giftName, String userName, @Block App42ResponseBlock completionBlock);
 
 	@Method(selector = "acceptGiftRequestWithId:by:completionBlock:")
-	public native void acceptGiftRequestWithId(String requestId, String recipient, @Block App42ResponseBlock completionBlock);
+	public native void acceptGiftRequest(String requestId, String recipient, @Block App42ResponseBlock completionBlock);
 	
 	@Method(selector = "rejectGiftRequestWithId:by:completionBlock:")
-	public native void rejectGiftRequestWithId(String requestId, String recipient, @Block App42ResponseBlock completionBlock);
+	public native void rejectGiftRequest(String requestId, String recipient, @Block App42ResponseBlock completionBlock);
 	
 	@Method(selector = "removeGiftWithRequestId:by:completionBlock:")
-	public native void removeGiftWithRequestId(String requestId, String recipient, @Block App42ResponseBlock completionBlock);
+	public native void removeGift(String requestId, String recipient, @Block App42ResponseBlock completionBlock);
 }

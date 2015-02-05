@@ -46,7 +46,7 @@ public class EmailService extends App42Service
 	 *
 	 */
 	@Method(selector = "sendMail:subject:Message:fromEmail:emailMIME:completionBlock:")
-	public native void goalAchievedForTest(String sendTo, String sendSubject, String sendMsg, String fromEmail, String emailMIME, @Block App42ResponseBlock completionBlock);
+	public native void sendMail(String sendTo, String sendSubject, String sendMsg, String fromEmail, String emailMIME, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Creates Email Configuration using which in future the App developer can

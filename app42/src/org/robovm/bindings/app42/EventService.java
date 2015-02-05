@@ -18,13 +18,13 @@ public class EventService extends App42Service
 	private native @Pointer long init(String apiKey, String secretKey);
 	
 	@Method(selector = "trackEventWithName:andProperties:completionBlock:")
-	public native void trackEventWithName(String eventName, NSDictionary<?, ?> properties, @Block App42ResponseBlock completionBlock);
+	public native void trackEvent(String eventName, NSDictionary<?, ?> properties, @Block App42ResponseBlock completionBlock);
 	
 	@Method(selector = "startActivityWithName:andProperties:completionBlock:")
-	public native void startActivityWithName(String eventName, NSDictionary<?, ?> properties, @Block App42ResponseBlock completionBlock);
+	public native void startActivity(String eventName, NSDictionary<?, ?> properties, @Block App42ResponseBlock completionBlock);
 	
 	@Method(selector = "endActivityWithName:andProperties:completionBlock:")
-	public native void endActivityWithName(String eventName, NSDictionary<?, ?> properties, @Block App42ResponseBlock completionBlock);
+	public native void endActivity(String eventName, NSDictionary<?, ?> properties, @Block App42ResponseBlock completionBlock);
 	
 	@Method(selector = "setLoggedInUserProperties:completionBlock:")
 	public native void setLoggedInUserProperties(NSDictionary<?, ?> properties, @Block App42ResponseBlock completionBlock);

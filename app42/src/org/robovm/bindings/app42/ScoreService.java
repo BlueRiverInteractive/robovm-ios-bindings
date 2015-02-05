@@ -15,10 +15,7 @@ public class ScoreService extends App42Service
 	
 	@Method(selector = "initWithAPIKey:secretKey:")
 	private native @Pointer long init(String apiKey, String secretKey);
-	
-	@Method(selector = "goalAchievedForTest:withVariant:completionBlock:")
-	public native void goalAchievedForTest(String testName, String variantName, @Block App42ResponseBlock completionBlock);
-	
+
 	/**
 	 * Adds game score for the specified user.
 	 *

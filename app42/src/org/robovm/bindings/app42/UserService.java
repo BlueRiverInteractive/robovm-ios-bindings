@@ -239,7 +239,7 @@ public class UserService extends App42Service
 	 *
 	 */
 	@Method(selector = "authenticateUser:password:completionBlock:")
-	public native void authenticateUser(String userName, String password, @Block App42ResponseBlock completionBlock);
+	public native void authenticate(String userName, String password, @Block App42ResponseBlock completionBlock);
 	
 	/**
 	 * Locks the user based on the userName. Apps can use these feature to lock
