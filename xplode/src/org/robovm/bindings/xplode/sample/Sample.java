@@ -4,6 +4,7 @@ import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.uikit.*;
+import org.robovm.bindings.xplode.Xplode;
 import org.robovm.bindings.xplode.XplodeBinding;
 
 public class Sample extends UIApplicationDelegateAdapter {
@@ -11,13 +12,18 @@ public class Sample extends UIApplicationDelegateAdapter {
     private static final String APP_SECRET = "3be79ba6b97f5025c91195249a235182";
     private UIWindow window;
 
+    public static void main(String[] argv) {
+        try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
+            UIApplication.main(argv, null, Sample.class);
+        }
+    }
 
     @Override
     public boolean didFinishLaunching(UIApplication application, UIApplicationLaunchOptions launchOptions) {
         window = new UIWindow(UIScreen.getMainScreen().getBounds());
         window.makeKeyAndVisible();
 
-        XplodeBinding.initialize(APP_HANDLE, APP_SECRET, new XplodeBinding.InitializeHandler() {
+        Xplode.initialize(APP_HANDLE, APP_SECRET, new Xplode.InitializeHandler() {
             @Override
             public void invoke(NSError error) {
                 System.out.println("[XplodeBinding] (PROMOTIONS): initialize");
@@ -73,11 +79,5 @@ public class Sample extends UIApplicationDelegateAdapter {
                 System.out.println("[XplodeBinding] (PROMOTIONS): Breakpoint " + breakpoint + " closed.");
             }
         });
-    }
-
-    public static void main(String[] argv) {
-        try (NSAutoreleasePool pool = new NSAutoreleasePool()) {
-            UIApplication.main(argv, null, Sample.class);
-        }
     }
 }
