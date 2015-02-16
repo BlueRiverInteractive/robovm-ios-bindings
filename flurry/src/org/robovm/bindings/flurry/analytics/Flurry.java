@@ -10,6 +10,8 @@ import org.robovm.apple.foundation.NSMutableDictionary;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSString;
 import org.robovm.apple.uikit.UIApplicationLaunchOptions;
+import org.robovm.apple.uikit.UINavigationController;
+import org.robovm.apple.uikit.UITabBarController;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
 
@@ -79,6 +81,12 @@ public class Flurry extends NSObject {
     @Method(selector = "startSession:withOptions:")
     public static native void startSession (String apiKey, UIApplicationLaunchOptions launchOptions);
 
+    /** @since 6.0.0
+     * 
+     * @return */
+    @Method
+    public static native boolean activeSessionExists ();
+
     /** <p>
      * Pauses a Flurry session.
      * </p>
@@ -94,6 +102,37 @@ public class Flurry extends NSObject {
      * @since 4.2.2 */
     @Method(selector = "pauseBackgroundSession")
     public static native void pauseBackgroundSession ();
+
+    /** Adds an SDK origin specified by {@code originName} and {@code originVersion}.
+     * 
+     * This method allows you to specify origin within your Flurry SDK wrapper. As a general rule you should capture all the
+     * origin info related to your wrapper for Flurry SDK after every session start.
+     *
+     * @param originName Name of the origin.
+     * @param originVersion Version string of the origin wrapper
+     * 
+     * @see #addOrigin(String, String, NSDictionary) for details on reporting origin info with parameters.
+     * @since 5.0.0 */
+    @Method(selector = "addOrigin:withVersion:")
+    public static native void addOrigin (String originName, String originVersion);
+
+    /** Adds a custom parameterized origin specified by {@code originName} with {@code originVersion} and {@code parameters}.
+     * 
+     *
+     * This method overrides {@link #addOrigin(String, String)} to allow you to associate parameters with an origin attribute.
+     * Parameters are valuable as they allow you to store characteristics of an origin.
+     *
+     * You should not pass private or confidential information about your origin info in a custom origin.<br/>
+     * A maximum of 9 parameter names may be associated with any origin. Sending over 10 parameter names with a single origin will
+     * result in no parameters being logged for that origin.
+     *
+     * @param originName Name of the origin.
+     * @param originVersion Version string of the origin wrapper
+     * @param parameters An immutable copy of map containing Name-Value pairs of parameters.
+     * 
+     * @since 5.0.0 */
+    @Method(selector = "addOrigin:withVersion:withParameters:")
+    public static native void addOrigin (String originName, String originVersion, NSDictionary<?, ?> parameters);
 
     /** <p>
      * Records an app exception. Commonly used to catch unhandled exceptions.
@@ -154,9 +193,10 @@ public class Flurry extends NSObject {
      * 
      * @since 2.8.4
      * @param eventName Name of the event. For maximum effectiveness, we recommend using a naming scheme that can be easily
-     *            understood by non-technical people in your business domain. */
-    public static void logEvent (String eventName) {
-        logEvent(eventName, null, false);
+     *            understood by non-technical people in your business domain.
+     * @return enum FlurryEventRecordStatus for the recording status of the logged event. */
+    public static FlurryEventRecordStatus logEvent (String eventName) {
+        return logEvent(eventName, null, false);
     }
 
     /** <p>
@@ -186,21 +226,22 @@ public class Flurry extends NSObject {
      * 
      * @param eventName Name of the event. For maximum effectiveness, we recommend using a naming scheme that can be easily
      *            understood by non-technical people in your business domain.
-     * @param parameters A map containing Name-Value pairs of parameters. */
-    public static void logEvent (String eventName, NSDictionary<NSString, NSString> parameters) {
-        logEvent(eventName, parameters, false);
+     * @param parameters A map containing Name-Value pairs of parameters.
+     * @return enum FlurryEventRecordStatus for the recording status of the logged event. */
+    public static FlurryEventRecordStatus logEvent (String eventName, NSDictionary<NSString, NSString> parameters) {
+        return logEvent(eventName, parameters, false);
     }
 
-    public static void logEvent (String eventName, Map<String, String> parameters) {
+    public static FlurryEventRecordStatus logEvent (String eventName, Map<String, String> parameters) {
         if (parameters != null) {
             NSMutableDictionary<NSString, NSString> nsParams = new NSMutableDictionary<NSString, NSString>();
             for (java.util.Map.Entry<String, String> entry : parameters.entrySet()) {
                 nsParams.put(new NSString(null != entry.getKey() ? entry.getKey() : ""), new NSString(
                     null != entry.getValue() ? entry.getValue() : ""));
             }
-            logEvent(eventName, nsParams, false);
+            return logEvent(eventName, nsParams, false);
         } else {
-            logEvent(eventName, false);
+            return logEvent(eventName, false);
         }
     }
 
@@ -226,9 +267,10 @@ public class Flurry extends NSObject {
      * 
      * @param eventName Name of the event. For maximum effectiveness, we recommend using a naming scheme that can be easily
      *            understood by non-technical people in your business domain.
-     * @param timed Specifies the event will be timed. */
-    public static void logEvent (String eventName, boolean timed) {
-        logEvent(eventName, null, timed);
+     * @param timed Specifies the event will be timed.
+     * @return enum FlurryEventRecordStatus for the recording status of the logged event. */
+    public static FlurryEventRecordStatus logEvent (String eventName, boolean timed) {
+        return logEvent(eventName, null, timed);
     }
 
     /** <p>
@@ -252,9 +294,11 @@ public class Flurry extends NSObject {
      * @param eventName Name of the event. For maximum effectiveness, we recommend using a naming scheme that can be easily
      *            understood by non-technical people in your business domain.
      * @param parameters A map containing Name-Value pairs of parameters.
-     * @param timed Specifies the event will be timed. */
+     * @param timed Specifies the event will be timed.
+     * @return enum FlurryEventRecordStatus for the recording status of the logged event. */
     @Method(selector = "logEvent:withParameters:timed:")
-    public static native void logEvent (String eventName, NSDictionary<NSString, NSString> parameters, boolean timed);
+    public static native FlurryEventRecordStatus logEvent (String eventName, NSDictionary<NSString, NSString> parameters,
+        boolean timed);
 
     /** <p>
      * Ends a timed event specified by {@code eventName} and optionally updates parameters with {@code parameters}.
@@ -404,24 +448,6 @@ public class Flurry extends NSObject {
     public static native void setSessionContinueSeconds (int seconds);
 
     /** <p>
-     * Send data over a secure transport.
-     * </p>
-     * 
-     * <p>
-     * This is an optional method that sends data over an SSL connection when enabled. The default value is {@code false}.
-     * </p>
-     * 
-     * <p>
-     * This method must be called prior to invoking {@link #startSession(String)}.
-     * </p>
-     * 
-     * @since 3.0
-     * 
-     * @param enabled {@code true} to send data over secure connection. */
-    @Method(selector = "setSecureTransportEnabled:")
-    public static native void setSecureTransportEnabled (boolean enabled);
-
-    /** <p>
      * Enable automatic collection of crash reports.
      * </p>
      * 
@@ -439,26 +465,32 @@ public class Flurry extends NSObject {
     @Method(selector = "setCrashReportingEnabled:")
     public static native void setCrashReportingEnabled (boolean enabled);
 
-    /** <p>
-     * Automatically track page views on a {@code UINavigationController} or {@code UITabBarController}.
-     * </p>
+    /** Automatically track page views on a {@code UINavigationController} or {@code UITabBarController}.
      * 
-     * <p>
      * This method increments the page view count for a session based on traversing a UINavigationController or
      * UITabBarController. The page view count is only a counter for the number of transitions in your app. It does not associate
-     * a name with the page count. To associate a name with a count of occurences see {@link #logEvent(String)}.
-     * </p>
+     * a name with the page count. To associate a name with a count of occurrences see {@link #logEvent(String)}
      * 
-     * <p>
-     * Please make sure you assign the Tab and Navigation controllers to the view controllers before passing them to this method.
-     * </p>
+     * If you need to release passed target, you should call counterpart method {@link #stopLogPageViews(NSObject)}.
+     *
+     * @param target The navigation or tab bar controller.
      * 
-     * @see #logPageView()
-     * @since 2.7
-     * 
-     * @param target The navigation or tab bar controller. */
-    @Method(selector = "logAllPageViews:")
+     * @see #logPageView() for details on explictly incrementing page view count.
+     * @since 4.3 */
+    @Method(selector = "logAllPageViewsForTarget:")
     public static native void logAllPageViews (NSObject target);
+
+    /** Stops logging page views on previously observed with logAllPageViewsForTarget: {@link UINavigationController} or
+     * {@link UITabBarController}.
+     * 
+     * Call this method before instance of {@code UINavigationController} or {@code UITabBarController} observed with
+     * logAllPageViewsForTarget: is released.
+     *
+     * @param target The navigation or tab bar controller.
+     * 
+     * @since 4.3 */
+    @Method(selector = "stopLogPageViewsForTarget:")
+    public static native void stopLogPageViews (NSObject target);
 
     /** <p>
      * Explicitly track a page view during a session.
@@ -620,18 +652,4 @@ public class Flurry extends NSObject {
      * @param enabled {@code true} to enable event logging, {@code false} to stop custom logging. */
     @Method(selector = "setEventLoggingEnabled:")
     public static native void setEventLoggingEnabled (boolean enabled);
-
-    /** <p>
-     * Set device push token.
-     * </p>
-     * 
-     * <p>
-     * After the device has successfully registered with APNS, call this method to set the push token received from APNS.
-     * </p>
-     * 
-     * @since 2.7
-     * 
-     * @param pushToken */
-    @Method(selector = "setPushToken:")
-    public static native void setPushToken (String pushToken);
 }
