@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.splunkmint.sample.Sample"
+}
+
+eclipse.project {
+    name = "splunkmint-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
