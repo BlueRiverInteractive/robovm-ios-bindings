@@ -69,6 +69,11 @@ public class FlurryAdDelegateAdapter implements FlurryAdDelegate {
     }
 
     @Override
+    public String getFANAppPlacementID () {
+        return null;
+    }
+
+    @Override
     public String getAdMobPublisherID () {
         return null;
     }
