@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.mixpanel.sample.Sample"
+}
+
+eclipse.project {
+    name = "mixpanel-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
