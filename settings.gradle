@@ -1,5 +1,6 @@
 include 'adcolony'
 include 'admob'
+include 'app42'
 include 'appfireworks'
 include 'appirater'
 include 'apsalar'

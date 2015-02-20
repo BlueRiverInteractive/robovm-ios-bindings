@@ -88,7 +88,7 @@ public class GPGManager extends NSObject {
 	@Property(selector = "setQuestDelegate:", strongRef = true)
 	public native void setQuestDelegate(GPGQuestDelegate questDelegate);
 	
-	@Property(selector = "signedIn")
+	@Property(selector = "isSignedIn")
 	public native boolean isSignedIn();
 	
 	@Property(selector = "appStateEnabled")
