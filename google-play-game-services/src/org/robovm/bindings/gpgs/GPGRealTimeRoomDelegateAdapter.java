@@ -16,17 +16,15 @@ public class GPGRealTimeRoomDelegateAdapter extends NSObject implements GPGRealT
 	@NotImplemented("didReceiveRealTimeInviteForRoom:")
 	public void didReceiveRealTimeInvite(GPGRealTimeRoomData roomData){ throw new UnsupportedOperationException(); }
 	@NotImplemented("room:didChangeStatus:")
-	public void room(GPGRealTimeRoom room, GPGRealTimeRoomStatus status){ throw new UnsupportedOperationException(); }
+	public void didChangeRoomStatus(GPGRealTimeRoom room, GPGRealTimeRoomStatus status){ throw new UnsupportedOperationException(); }
  	@NotImplemented("room:didChangeConnectedSet:")
-	public void room(GPGRealTimeRoom room, boolean connected){ throw new UnsupportedOperationException(); }
+	public void didChangeConnectedSet(GPGRealTimeRoom room, boolean connected){ throw new UnsupportedOperationException(); }
  	@NotImplemented("room:participant:didChangeStatus:")
-	public void room(GPGRealTimeRoom room, GPGRealTimeParticipant participant, GPGRealTimeParticipantStatus status){ throw new UnsupportedOperationException(); }
+	public void didChangeParticipentStatus(GPGRealTimeRoom room, GPGRealTimeParticipant participant, GPGRealTimeParticipantStatus status){ throw new UnsupportedOperationException(); }
  	@NotImplemented("room:didReceiveData:fromParticipant:dataMode:")
-	public void room(GPGRealTimeRoom room, NSData data, GPGRealTimeParticipant participant, GPGRealTimeDataMode dataMode){ throw new UnsupportedOperationException(); }
+	public void didReceiveData(GPGRealTimeRoom room, NSData data, GPGRealTimeParticipant participant, GPGRealTimeDataMode dataMode){ throw new UnsupportedOperationException(); }
  	@NotImplemented("room:didSendReliableId:results:")
-	public void room(GPGRealTimeRoom room, int reliableId, NSArray results){ throw new UnsupportedOperationException(); }
+	public void didSendReliableId(GPGRealTimeRoom room, int reliableId, NSArray results){ throw new UnsupportedOperationException(); }
  	@NotImplemented("room:didFailWithError:")
-	public void room(GPGRealTimeRoom room, NSError error){ throw new UnsupportedOperationException(); }
-	@NotImplemented("roomViewControllerDidClose:")
-	public void didClose(GPGRealTimeRoomViewController roomViewController){ throw new UnsupportedOperationException(); }
+	public void didFailWithError(GPGRealTimeRoom room, NSError error){ throw new UnsupportedOperationException(); }
 }
