@@ -5,7 +5,6 @@ import org.robovm.apple.foundation.NSAutoreleasePool;
 import org.robovm.apple.foundation.NSError;
 import org.robovm.apple.uikit.*;
 import org.robovm.bindings.xplode.Xplode;
-import org.robovm.bindings.xplode.XplodeBinding;
 
 public class Sample extends UIApplicationDelegateAdapter {
     private static final String APP_HANDLE = "SampleApp";
@@ -26,7 +25,11 @@ public class Sample extends UIApplicationDelegateAdapter {
         Xplode.initialize(APP_HANDLE, APP_SECRET, new Xplode.InitializeHandler() {
             @Override
             public void invoke(NSError error) {
-                System.out.println("[XplodeBinding] (PROMOTIONS): initialize");
+                if (error == null) {
+                    System.out.println("[Xplode] (PROMOTIONS): initialized!");
+                } else {
+                    System.out.println("[Xplode] (PROMOTIONS): initialization error : " + error.getLocalizedDescription());
+                }
                 initView();
             }
         });
@@ -64,7 +67,7 @@ public class Sample extends UIApplicationDelegateAdapter {
     }
 
     private void showPromotion(final String breakpoint) {
-        XplodeBinding.presentPromotionForBreakpoint(breakpoint, new XplodeBinding.CompletionHandler() {
+        Xplode.presentPromotionForBreakpoint(breakpoint, new Xplode.PromotionBreakpointCompletionHandler() {
             @Override
             public void invoke(boolean isReadyToPresent, NSError error) {
                 if (isReadyToPresent) {
@@ -73,7 +76,7 @@ public class Sample extends UIApplicationDelegateAdapter {
                     System.out.println("[XplodeBinding] (PROMOTIONS): Breakpoint " + breakpoint + " returned no promotion!");
                 }
             }
-        }, new XplodeBinding.DismissHandler() {
+        }, new Xplode.PromotionBreakpointDismissHandler() {
             @Override
             public void invoke() {
                 System.out.println("[XplodeBinding] (PROMOTIONS): Breakpoint " + breakpoint + " closed.");

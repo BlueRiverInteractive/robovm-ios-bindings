@@ -1,22 +1,17 @@
 package org.robovm.bindings.xplode;
 
-import org.robovm.apple.foundation.NSData;
-import org.robovm.apple.foundation.NSDictionary;
-import org.robovm.apple.foundation.NSError;
-import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.*;
 import org.robovm.apple.uikit.UIBackgroundFetchResult;
 import org.robovm.apple.uikit.UIInterfaceOrientationMask;
 import org.robovm.objc.annotation.Block;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.annotation.NativeClass;
-import org.robovm.rt.bro.ValuedEnum;
 
 /**
  * Created by sargis on 2/3/15.
  */
 @NativeClass
 public class Xplode extends NSObject {
-
     /// Initializes the Xplode SDK using the assigned app credentials and allows all subsequent SDK calls to be executed.
     /// This method should be called on every app launch from within applicationDidFinishLaunching:withOptions: in your app delegate.
     ///
@@ -29,6 +24,11 @@ public class Xplode extends NSObject {
     //+ (void)initializeWithAppHandle:(NSString*)appHandle
     //appSecret:(NSString *)appSecret
     //andCompletionHandler:(void(^)(NSError*error))completionHandler;
+
+    /**
+     * @deprecated Since Xplode SDK v2.8. Use initializeWithOrganizationSecret:launchOptions:andCompletionHandler: instead.
+     */
+    @Deprecated
     @Method(selector = "initializeWithAppHandle:appSecret:andCompletionHandler:")
     public static native void initialize(String appHandle, String appSecret, @Block InitializeHandler initializeHandler);
 
@@ -47,22 +47,27 @@ public class Xplode extends NSObject {
     //appSecret:(NSString *)appSecret
     //launchOptions:(NSDictionary*)launchOptions
     //andCompletionHandler:(void(^)(NSError *error))completionHandler;
+
+    /**
+     * @deprecated Since Xplode SDK v2.8. Use initializeWithOrganizationSecret:launchOptions:andCompletionHandler: instead.
+     */
+    @Deprecated
     @Method(selector = "initializeWithAppHandle:appSecret:launchOptions:andCompletionHandler:")
     public static native void initialize(String appHandle, String appSecret, NSDictionary launchOptions, @Block InitializeHandler initializeHandler);
 
-    /// Returns the app handle that was provided to initializeWithAppHandle:appSecret:onCompletion:.
+    /// Initializes the Xplode SDK using the assigned organization credentials and allows all subsequent SDK calls to be executed. Use this method if you want to use Xplode push notifications.
+    /// This method should be called on every app launch from within applicationDidFinishLaunching:withOptions: in your app delegate.
     ///
-    /// @return The app handle.
-    //+ (NSString*)appHandle;
-    @Method(selector = "appHandle")
-    public static native String appHandle();
-
-    /// Returns the app secret that was provided to initializeWithAppHandle:appSecret:onCompletion:.
+    /// @note The classes IDDCore and IddictionSDK have been deprecated, please use Xplode as an entry point.
     ///
-    /// @return The app secret.
-    //+ (NSString*)appSecret;
-    @Method(selector = "appSecret")
-    public static native String appSecret();
+    /// @param organizationSecret		The organization secret assigned to your organization on the Xplode portal.
+    ///	@param launchOptions		A dictionary with the launch options as received in the app delegate.
+    /// @param completionHandler	A block that is executed when the SDK is initialized.
+    //+ (void)initializeWithOrganizationSecret:(NSString*)organizationSecret
+    //launchOptions:(NSDictionary *)launchOptions
+    //andCompletionHandler:(void(^)(NSError *error))completionHandler;
+    @Method(selector = "initializeWithOrganizationSecret:launchOptions:andCompletionHandler:")
+    public static native void initialize(String organizationSecret, NSDictionary launchOptions, @Block InitializeHandler initializeHandler);
 
     /// Returns *YES* if initializeWithAppHandle:appSecret:onCompletion: has been called and successfully registered with the server.
     /// If this method returns *NO*, no other operations with the SDK will work.
@@ -135,7 +140,7 @@ public class Xplode extends NSObject {
     //atPosition:(XPLPromotionDockingPosition)position
     //withCompletionHandler:(void(^)(BOOL isReadyToPresent, NSError *error))completionHandler;
     @Method(selector = "setupPromotionDockForBreakpoint:atPosition:withCompletionHandler:")
-    public static native void setupPromotionDock(String breakpoint, XPLPromotionDockingPosition position, @Block PromotionDockForBreakpointCompletionHandler completionHandler);
+    public static native void setupPromotionDock(String breakpoint, XplodeConstants.XPLPromotionDockingPosition position, @Block PromotionDockForBreakpointCompletionHandler completionHandler);
 
 
     // Initializes a dockable always-on-screen promotion for a specific breakpoint and dimensions, optionally shown at a specific position.
@@ -159,7 +164,7 @@ public class Xplode extends NSObject {
     //withDimensions:(XPLPromotionDockDimensions)dimensions
     //andCompletionHandler:(void(^)(BOOL isReadyToPresent, NSError *error))completionHandler;
     @Method(selector = "setupPromotionDockForBreakpoint:atPosition:withDimensions:andCompletionHandler:")
-    public static native void setupPromotionDock(String breakpoint, XPLPromotionDockingPosition position, XPLPromotionDockDimensions dimensions, @Block PromotionDockForBreakpointCompletionHandler completionHandler);
+    public static native void setupPromotionDock(String breakpoint, XplodeConstants.XPLPromotionDockingPosition position, XplodeConstants.XPLPromotionDockDimensions dimensions, @Block PromotionDockForBreakpointCompletionHandler completionHandler);
 
     /// Shows the promotion dock if a promotion has been set up as dockable.
     /// If you call this method with bounce *YES* while the dock is already visible then only the bounce animation is performed.
@@ -227,8 +232,8 @@ public class Xplode extends NSObject {
     /// @param completionHandler	The completion handler.
     //+ (void)registerDeviceTokenWithData:(NSData*)deviceToken
     //withCompletionHandler:(void(^)(NSError *error))completionHandler;
-//    @Method(selector = "registerDeviceTokenWithData:withCompletionHandler:")
-//    public static native void registerDeviceToken(NSData deviceToken, RegisterDeviceTokenCompletionHandler parameters);
+    @Method(selector = "registerDeviceTokenWithData:withCompletionHandler:")
+    public static native void registerDeviceToken(NSData deviceToken, @Block RegisterDeviceTokenCompletionHandler parameters);
 
     /// Registers the parsed push token received from Apple with Xplode.
     ///
@@ -236,49 +241,32 @@ public class Xplode extends NSObject {
     /// @param completionHandler	The completion handler.
     //+ (void)registerDeviceTokenWithString:(NSString*)deviceToken
     //withCompletionHandler:(void(^)(NSError *error))completionHandler;
-//    @Method(selector = "registerDeviceTokenWithString:withCompletionHandler:")
-//    public static native void registerDeviceToken(String deviceToken, RegisterDeviceTokenCompletionHandler parameters);
+    @Method(selector = "registerDeviceTokenWithString:withCompletionHandler:")
+    public static native void registerDeviceToken(String deviceToken, @Block RegisterDeviceTokenCompletionHandler parameters);
 
     /// Handles the received push payload content.
     ///
     /// @param userInfo				The received push payload that is returned by application:didReceiveRemoteNotification: as an NSDictionary.
     //+ (void)handlePushNotificationPayload:(NSDictionary *)userInfo
     //withFetchCompletionHandler:(void(^)(UIBackgroundFetchResult result))completionHandler;
-//    @Method(selector = "handlePushNotificationPayload:withFetchCompletionHandler:")
-//    public static native void handlePushNotificationPayload(NSDictionary userInfo, PushNotificationPayloadFetchCompletionHandler parameters);
+    @Method(selector = "handlePushNotificationPayload:withFetchCompletionHandler:")
+    public static native void handlePushNotificationPayload(NSDictionary userInfo, @Block PushNotificationPayloadFetchCompletionHandler parameters);
 
-    public enum XPLPromotionDockingPosition implements ValuedEnum {
-        Bottom(0),
-        Top(1);
 
-        private final long n;
+    //************** Xplode+Rewards.h *************
 
-        private XPLPromotionDockingPosition(long n) {
-            this.n = n;
-        }
+    /// To provide custom UI for sharing affiliate links, use this method. Before using it, configure breakpoint with rewarded content on the Xplode portal.
+    /// @param breakpoint			The name of the breakpoint configured with the rewarded content
+    /// @param completionHandler	A block that is executed when the shareLink is loaded from the server. Parameter shareLink may be nil if rewarded content is not configured or if an error occurs while downloading content
+    //+ (void)affiliateLinkForBreakpoint:(NSString*)breakpoint withCompletionHandler:(void (^)(NSURL*shareLink))completionHandler;
+    @Method(selector = "affiliateLinkForBreakpoint:withCompletionHandler:")
+    public static native void affiliateLinkForBreakpoint(String breakpoint, @Block AffiliateLinkCompletionHandler completionHandler);
 
-        @Override
-        public long value() {
-            return n;
-        }
-    }
-
-    public enum XPLPromotionDockDimensions implements ValuedEnum {
-        Default(0),
-        IAd(1),
-        IAB(2);
-
-        private final long n;
-
-        private XPLPromotionDockDimensions(long n) {
-            this.n = n;
-        }
-
-        @Override
-        public long value() {
-            return n;
-        }
-    }
+    /// Call this method to load all awailable rewards for this user.
+    /// @param completionHandler	A block that is executed when the rewards are loaded from the server. Parameter rewards contains objects of type XPLReward. Parameter rewards may be nil if rewards are not available or if an error occurs while downloading content
+    //+ (void)loadAvailableRewards:(void (^)(NSArray *rewards))completionHandler;
+    @Method(selector = "loadAvailableRewards:")
+    public static native void loadAvailableRewards(@Block LoadAvailableRewardsCompletionHandler completionHandler);
 
     public interface InitializeHandler {
         void invoke(NSError error);
@@ -302,6 +290,14 @@ public class Xplode extends NSObject {
 
     public interface PromotionBreakpointDismissHandler {
         void invoke();
+    }
+
+    public interface AffiliateLinkCompletionHandler {
+        void invoke(NSURL shareLink);
+    }
+
+    public interface LoadAvailableRewardsCompletionHandler {
+        void invoke(NSArray rewards);
     }
 
 }
