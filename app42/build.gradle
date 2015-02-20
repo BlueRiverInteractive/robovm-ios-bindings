@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.app42.sample.Sample"
+}
+
+eclipse.project {
+    name = "app42-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
