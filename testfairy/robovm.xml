@@ -1,0 +1,18 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<arch>thumbv7</arch>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<libs>
+		<lib>libs/libtestfairy.a</lib>
+	</libs>
+	<frameworks>
+		<framework>CoreMedia</framework>
+		<framework>CoreMotion</framework>
+		<framework>AVFoundation</framework>
+		<framework>SystemConfiguration</framework>
+		<framework>OpenGLES</framework>
+	</frameworks>
+</config>

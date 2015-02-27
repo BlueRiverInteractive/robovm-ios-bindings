@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.testfairy.sample.Sample"
+}
+
+eclipse.project {
+    name = "testfairy-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
