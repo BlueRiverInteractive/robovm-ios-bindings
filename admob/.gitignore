@@ -1,3 +1,4 @@
-build
+/build
+/bin
 *.xcodeproj/xcuserdata
 *.xcodeproj/project.xcworkspace/xcuserdata

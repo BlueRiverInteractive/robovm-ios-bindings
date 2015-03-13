@@ -1,4 +1,5 @@
 include 'adcolony'
+include 'adjust'
 include 'admob'
 include 'app42'
 include 'appfireworks'

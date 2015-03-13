@@ -1,0 +1,8 @@
+ext {
+    mainClassName = "org.robovm.bindings.adjust.sample.Sample"
+}
+
+eclipse.project {
+    name = "adjust-ios"
+    natures 'org.robovm.eclipse.RoboVMNature'
+}
