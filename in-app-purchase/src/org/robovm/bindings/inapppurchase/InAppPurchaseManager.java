@@ -98,7 +98,7 @@ public class InAppPurchaseManager {
         purchasingProduct = true;
 
         System.out.println(TAG + "Purchasing product '" + product.getLocalizedTitle() + "'...");
-        SKPayment payment = SKPayment.createFromProduct(product);
+        SKPayment payment = SKPayment.create(product);
         SKPaymentQueue.getDefaultQueue().addPayment(payment);
     }
 
