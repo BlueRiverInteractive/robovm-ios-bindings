@@ -66,5 +66,33 @@ public class ChartboostDelegateAdapter extends NSObject implements
 	@Override
 	public void didFailToLoadMoreApps(String location, CBLoadError loadError) {
 	}
+	
+	@Override
+	boolean shouldDisplayRewardedVideo(String location) {
+		return true;
+	}
 
+	@Override
+	void didCacheRewardedVideo(String location) {
+	}
+
+	@Override
+	void didDismissRewardedVideo(String location) {
+	}
+
+	@Override
+	void didCloseRewardedVideo(String location) {
+	}
+
+	@Override
+	void didClickRewardedVideo(String location) {
+	}
+
+	@Override
+	void didFailToLoadRewardedVideo(String location, CBLoadError loadError) {
+	}
+	
+	@Override
+	void didCompleteRewardedVideo(String location, int reward) {
+	}
 }
