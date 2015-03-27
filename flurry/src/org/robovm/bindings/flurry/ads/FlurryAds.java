@@ -160,7 +160,7 @@ public class FlurryAds extends NSObject {
      * @see FlurryAdDelegate
      * @param delegate The object to receive notifications of various ad actions. */
     @Method(selector = "setAdDelegate:")
-    private static native void setAdDelegate (FlurryAdDelegate delegate);
+    public static native void setAdDelegate (FlurryAdDelegate delegate);
 
     /** Informs server to send test ads.
      * 

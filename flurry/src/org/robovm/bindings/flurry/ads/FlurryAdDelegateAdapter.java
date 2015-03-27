@@ -2,8 +2,9 @@
 package org.robovm.bindings.flurry.ads;
 
 import org.robovm.apple.foundation.NSError;
+import org.robovm.apple.foundation.NSObject;
 
-public class FlurryAdDelegateAdapter implements FlurryAdDelegate {
+public class FlurryAdDelegateAdapter extends NSObject implements FlurryAdDelegate {
     @Override
     public void didReceiveAd (String adSpace) {
     }
