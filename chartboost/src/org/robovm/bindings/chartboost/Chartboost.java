@@ -52,6 +52,36 @@ public class Chartboost extends NSObject {
     public static void showInterstitial (CBLocation location) {
         showInterstitial(location.value());
     }
+    
+    /** Determine if a locally cached rewarded video exists for the given CBLocation. A return value of YES here indicates that the
+     * corresponding {@link #showRewardedVideo(String)} method will present without making additional Chartboost API server
+     * requests to fetch data to present.
+     * 
+     * @param location The location for the Chartboost impression type.
+     * 
+     * @return true if there a locally cached rewarded video, and false if not. */
+    
+    @Method(selector = "hasRewardedVideo:")
+    public static native boolean hasRewardedVideo (String location);
+
+    public static boolean hasRewardedVideo (CBLocation location) {
+        return hasRewardedVideo(location.value());
+    }
+    
+    /** Present a rewarded video for the given CBLocation.
+     * 
+     * This method will first check if there is a locally cached rewarded video for the given CBLocation and, if found, will
+     * present it using the locally cached data. If no locally cached data exists the method will attempt to fetch data from
+     * the Chartboost API server and present it.  If the Chartboost API server is unavailable or there is no eligible
+     * rewarded video to present in the given CBLocation this method is a no-op.
+     * 
+     * @param location The location for the Chartboost impression type. */
+    @Method(selector = "showRewardedVideo:")
+    public static native void showRewardedVideo (String location);
+
+    public static void showRewardedVideo (CBLocation location) {
+        showRewardedVideo(location.value());
+    }
 
     /** Determine if a locally cached "more applications" exists for the given CBLocation.
      * 
@@ -124,6 +154,19 @@ public class Chartboost extends NSObject {
 
     public static void cacheMoreApps (CBLocation location) {
         cacheMoreApps(location.value());
+    }
+    
+    /** Cache a rewarded video at the given CBLocation.
+     *
+     * This method will first check if there is a locally cached rewarded video for the given CBLocation and, if found, will do
+     * nothing. If no locally cached data exists the method will attempt to fetch data from the Chartboost API server.
+     * 
+     * @param location The location for the Chartboost impression type. */
+    @Method(selector = "cacheRewardedVideo:")
+    public static native void cacheRewardedVideo (String location);
+
+    public static void cacheRewardedVideo (CBLocation location) {
+        cacheRewardedVideo(location.value());
     }
 
     /** Set to enable and disable the auto cache feature (Enabled by default).

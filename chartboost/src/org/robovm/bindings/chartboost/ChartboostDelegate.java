@@ -49,5 +49,25 @@ public interface ChartboostDelegate extends NSObjectProtocol {
 
 	@Method(selector = "didFailToLoadMoreApps:withError:")
 	void didFailToLoadMoreApps(String location, CBLoadError loadError);
+	
+	@Method(selector = "shouldDisplayRewardedVideo:")
+	boolean shouldDisplayRewardedVideo(String location);
 
+	@Method(selector = "didCacheRewardedVideo:")
+	void didCacheRewardedVideo(String location);
+
+	@Method(selector = "didDismissRewardedVideo:")
+	void didDismissRewardedVideo(String location);
+
+	@Method(selector = "didCloseRewardedVideo:")
+	void didCloseRewardedVideo(String location);
+
+	@Method(selector = "didClickRewardedVideo:")
+	void didClickRewardedVideo(String location);
+
+	@Method(selector = "didFailToLoadRewardedVideo:withError:")
+	void didFailToLoadRewardedVideo(String location, CBLoadError loadError);
+	
+	@Method(selector = "didCompleteRewardedVideo:withReward:")
+	void didCompleteRewardedVideo(String location, int reward);
 }
