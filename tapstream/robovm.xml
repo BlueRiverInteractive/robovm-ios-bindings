@@ -5,9 +5,9 @@
 	<arch>thumbv7</arch>
 	<target>ios</target>
 	<iosInfoPList>Info.plist.xml</iosInfoPList>
-	<lib>
+	<libs>
 	    <lib>libs/libtapstream.a</lib>
-	</lib>
+	</libs>
 	<weakFrameworks>
 		<framework>StoreKit</framework>
 	</weakFrameworks>
