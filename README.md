@@ -1,6 +1,10 @@
 RoboVM iOS Bindings
 ===================
 
+### NOTE: These bindings are going to be deprecated in favor of [RoboPods](https://github.com/robovm/robovm-robopods)
+
+
+
 A collection of third party bindings for RoboVM iOS.
 
 ## How do I use these bindings?
