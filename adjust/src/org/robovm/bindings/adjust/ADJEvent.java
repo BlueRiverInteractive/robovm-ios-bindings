@@ -61,7 +61,7 @@ public class ADJEvent extends NSObject {
      * @param amount The amount in units (example: for 1.50 EUR is 1.5)
      * @param currency String of the currency with ISO 4217 format. It should be 3 characters long (example: for 1.50 EUR is
      * @"EUR") */
-    @Method(selector = "setRevenue:curreny:")
+    @Method(selector = "setRevenue:currency:")
     public native void setRevenue (double amount, String currency);
 
     /** Set the transaction ID of a In-App Purchases to avoid revenue duplications.
