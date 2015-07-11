@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.googleanalytics.sample.Sample"
-}
-
-eclipse.project {
-    name = "google-analytics-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

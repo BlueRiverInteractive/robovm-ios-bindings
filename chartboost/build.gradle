@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.chartboost.sample.Sample"
-}
-
-eclipse.project {
-    name = "chartboost-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.facebook.sample.Sample"
-}
-
-eclipse.project {
-    name = "facebook-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

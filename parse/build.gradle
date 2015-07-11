@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.parse.sample.Sample"
-}
-
-eclipse.project {
-    name = "parse-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}

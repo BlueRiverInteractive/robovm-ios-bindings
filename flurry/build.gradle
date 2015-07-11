@@ -1,8 +1,0 @@
-ext {
-    mainClassName = "org.robovm.bindings.flurry.sample.Sample"
-}
-
-eclipse.project {
-    name = "flurry-ios"
-    natures 'org.robovm.eclipse.RoboVMNature'
-}
