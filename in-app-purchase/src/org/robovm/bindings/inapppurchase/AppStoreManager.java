@@ -115,7 +115,7 @@ public class AppStoreManager {
         }
 
         System.out.println(TAG + "Purchasing product '" + product.getLocalizedTitle() + "'...");
-        SKPayment payment = SKPayment.create(product);
+        SKPayment payment = new SKPayment(product);
         SKPaymentQueue.getDefaultQueue().addPayment(payment);
     }
 
