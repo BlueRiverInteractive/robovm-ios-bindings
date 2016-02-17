@@ -80,21 +80,35 @@ public class SingleVideo extends UIViewController implements YTPlayerViewDelegat
 
     }
 
+
     @Override
-    public void playerViewDidBecomeReady (YTPlayerView playerView) {
+    public void didBecomeReady(YTPlayerView playerView) {
         System.out.println("video ready");
         playerView.playVideo();
     }
 
     @Override
-    public void playerView (YTPlayerView playerView, YTPlayerState state) {
+    public void didChangeState(YTPlayerView playerView, YTPlayerState didChangeToState) {
+        System.out.println("video state:"+didChangeToState);
     }
 
     @Override
-    public void playerView (YTPlayerView playerView, YTPlaybackQuality quality) {
+    public void didChangeQuality(YTPlayerView playerView, YTPlaybackQuality didChangeToQuality) {
+
     }
 
     @Override
-    public void playerView (YTPlayerView playerView, YTPlayerError error) {
+    public void didReceivedError(YTPlayerView playerView, YTPlayerError receivedError) {
+
+    }
+
+    @Override
+    public void didReceivePlayTime(YTPlayerView playerView, float didPlayTime) {
+
+    }
+
+    @Override
+    public UIColor preferredWebViewBackgroundColor(YTPlayerView playerView) {
+        return null;
     }
 }

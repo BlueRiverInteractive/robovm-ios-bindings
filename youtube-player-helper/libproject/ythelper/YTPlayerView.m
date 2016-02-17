@@ -44,16 +44,21 @@ NSString static *const kYTPlayerErrorHTML5ErrorCode = @"5";
 NSString static *const kYTPlayerErrorVideoNotFoundErrorCode = @"100";
 NSString static *const kYTPlayerErrorNotEmbeddableErrorCode = @"101";
 NSString static *const kYTPlayerErrorCannotFindVideoErrorCode = @"105";
+NSString static *const kYTPlayerErrorSameAsNotEmbeddableErrorCode = @"150";
 
 // Constants representing player callbacks.
 NSString static *const kYTPlayerCallbackOnReady = @"onReady";
 NSString static *const kYTPlayerCallbackOnStateChange = @"onStateChange";
 NSString static *const kYTPlayerCallbackOnPlaybackQualityChange = @"onPlaybackQualityChange";
 NSString static *const kYTPlayerCallbackOnError = @"onError";
+NSString static *const kYTPlayerCallbackOnPlayTime = @"onPlayTime";
+
 NSString static *const kYTPlayerCallbackOnYouTubeIframeAPIReady = @"onYouTubeIframeAPIReady";
 
 NSString static *const kYTPlayerEmbedUrlRegexPattern = @"^http(s)://(www.)youtube.com/embed/(.*)$";
 NSString static *const kYTPlayerAdUrlRegexPattern = @"^http(s)://pubads.g.doubleclick.net/pagead/conversion/";
+NSString static *const kYTPlayerOAuthRegexPattern = @"^http(s)://accounts.google.com/o/oauth2/(.*)$";
+NSString static *const kYTPlayerStaticProxyRegexPattern = @"^https://content.googleapis.com/static/proxy.html(.*)$";
 
 @interface YTPlayerView()
 
@@ -562,15 +567,22 @@ NSString static *const kYTPlayerAdUrlRegexPattern = @"^http(s)://pubads.g.double
         error = kYTPlayerErrorInvalidParam;
       } else if ([data isEqual:kYTPlayerErrorHTML5ErrorCode]) {
         error = kYTPlayerErrorHTML5Error;
-      } else if ([data isEqual:kYTPlayerErrorNotEmbeddableErrorCode]) {
+      } else if ([data isEqual:kYTPlayerErrorNotEmbeddableErrorCode] ||
+                 [data isEqual:kYTPlayerErrorSameAsNotEmbeddableErrorCode]) {
         error = kYTPlayerErrorNotEmbeddable;
       } else if ([data isEqual:kYTPlayerErrorVideoNotFoundErrorCode] ||
-          [data isEqual:kYTPlayerErrorCannotFindVideoErrorCode]) {
+                 [data isEqual:kYTPlayerErrorCannotFindVideoErrorCode]) {
         error = kYTPlayerErrorVideoNotFound;
       }
 
       [self.delegate playerView:self receivedError:error];
     }
+  } else if ([action isEqualToString:kYTPlayerCallbackOnPlayTime]) {
+      if ([self.delegate respondsToSelector:@selector(playerView:didPlayTime:)]) {
+          float time = [data floatValue];
+          [self.delegate playerView:self didPlayTime:time];
+      }
+      
   }
 }
 
@@ -597,7 +609,26 @@ NSString static *const kYTPlayerAdUrlRegexPattern = @"^http(s)://pubads.g.double
       [adRegex firstMatchInString:url.absoluteString
                         options:0
                           range:NSMakeRange(0, [url.absoluteString length])];
-  if (ytMatch || adMatch) {
+
+  NSRegularExpression *oauthRegex =
+      [NSRegularExpression regularExpressionWithPattern:kYTPlayerOAuthRegexPattern
+                                              options:NSRegularExpressionCaseInsensitive
+                                                error:&error];
+  NSTextCheckingResult *oauthMatch =
+    [oauthRegex firstMatchInString:url.absoluteString
+                           options:0
+                             range:NSMakeRange(0, [url.absoluteString length])];
+    
+  NSRegularExpression *staticProxyRegex =
+    [NSRegularExpression regularExpressionWithPattern:kYTPlayerStaticProxyRegexPattern
+                                              options:NSRegularExpressionCaseInsensitive
+                                                error:&error];
+  NSTextCheckingResult *staticProxyMatch =
+    [staticProxyRegex firstMatchInString:url.absoluteString
+                                  options:0
+                                    range:NSMakeRange(0, [url.absoluteString length])];
+
+  if (ytMatch || adMatch || oauthMatch || staticProxyMatch) {
     return YES;
   } else {
     [[UIApplication sharedApplication] openURL:url];
@@ -629,16 +660,20 @@ NSString static *const kYTPlayerAdUrlRegexPattern = @"^http(s)://pubads.g.double
   if (![playerParams objectForKey:@"width"]) {
     [playerParams setValue:@"100%" forKey:@"width"];
   }
-  if (![playerParams objectForKey:@"origin"]) {
-    self.originURL = [NSURL URLWithString:@"about:blank"];
-  } else {
-    self.originURL = [NSURL URLWithString: [playerParams objectForKey:@"origin"]];
-  }
 
   [playerParams setValue:playerCallbacks forKey:@"events"];
 
-  // This must not be empty so we can render a '{}' in the output JSON
-  if (![playerParams objectForKey:@"playerVars"]) {
+  if ([playerParams objectForKey:@"playerVars"]) {
+    NSMutableDictionary *playerVars = [[NSMutableDictionary alloc] init];
+    [playerVars addEntriesFromDictionary:[playerParams objectForKey:@"playerVars"]];
+      
+    if (![playerVars objectForKey:@"origin"]) {
+        self.originURL = [NSURL URLWithString:@"about:blank"];
+    } else {
+        self.originURL = [NSURL URLWithString: [playerVars objectForKey:@"origin"]];
+    }
+  } else {
+    // This must not be empty so we can render a '{}' in the output JSON
     [playerParams setValue:[[NSDictionary alloc] init] forKey:@"playerVars"];
   }
 
@@ -648,11 +683,18 @@ NSString static *const kYTPlayerAdUrlRegexPattern = @"^http(s)://pubads.g.double
   [self addSubview:self.webView];
 
   NSError *error = nil;
-//  NSString *path = [[NSBundle mainBundle] pathForResource:@"YTPlayerView-iframe-player"
-//                                                   ofType:@"html"
-//                                              inDirectory:@"Assets"];
-  NSString *path = [[NSBundle mainBundle] pathForResource:@"YTPlayerView-iframe-player"
-                                                     ofType:@"html"];
+  NSString *path = [[NSBundle bundleForClass:[YTPlayerView class]] pathForResource:@"YTPlayerView-iframe-player"
+                                                   ofType:@"html"
+                                              inDirectory:@"Assets"];
+    
+  // in case of using Swift and embedded frameworks, resources included not in main bundle,
+  // but in framework bundle
+  if (!path) {
+      path = [[[self class] frameworkBundle] pathForResource:@"YTPlayerView-iframe-player"
+                                                     ofType:@"html"
+                                                inDirectory:@"Assets"];
+  }
+    
   NSString *embedHTMLTemplate =
       [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
 
@@ -772,16 +814,35 @@ NSString static *const kYTPlayerAdUrlRegexPattern = @"^http(s)://pubads.g.double
 }
 
 - (UIWebView *)createNewWebView {
-  UIWebView *webView = [[UIWebView alloc] initWithFrame:self.bounds];
-  webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  webView.scrollView.scrollEnabled = NO;
-  webView.scrollView.bounces = NO;
-  return webView;
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.bounds];
+    webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+    webView.scrollView.scrollEnabled = NO;
+    webView.scrollView.bounces = NO;
+    
+    if ([self.delegate respondsToSelector:@selector(playerViewPreferredWebViewBackgroundColor:)]) {
+        webView.backgroundColor = [self.delegate playerViewPreferredWebViewBackgroundColor:self];
+        if (webView.backgroundColor == [UIColor clearColor]) {
+            webView.opaque = NO;
+        }
+    }
+    
+    return webView;
 }
 
 - (void)removeWebView {
   [self.webView removeFromSuperview];
   self.webView = nil;
+}
+
++ (NSBundle *)frameworkBundle {
+    static NSBundle* frameworkBundle = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        NSString* mainBundlePath = [[NSBundle bundleForClass:[self class]] resourcePath];
+        NSString* frameworkBundlePath = [mainBundlePath stringByAppendingPathComponent:@"Assets.bundle"];
+        frameworkBundle = [NSBundle bundleWithPath:frameworkBundlePath];
+    });
+    return frameworkBundle;
 }
 
 @end
